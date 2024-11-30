@@ -1,15 +1,15 @@
 {% extends 'base-layout.html.twig' %}
 
-{% block title %}Liste des courriers internes{% endblock %}
-{% block header %}Courriers internes{% endblock %}
+{% block title %}Liste des courier_departs{% endblock %}
+{% block header %}courier_departs{% endblock %}
 {% block breadcrumb %}{% endblock %}
 {% block body %}
 <div class="card shadow-sm">
     <div class="card-header card-header-sm">
-        <h3 class="card-title"> Liste des courriers internes </h3>
+        <h3 class="card-title"> Liste des couriers departs</h3>
         <div class="card-toolbar">
             {% if permition in ["CR","CRU","CRUD"] %}
-            <a href="{{ path('app_courrier_courier_interne_new') }}" class="btn btn-main btn-sm"  
+            <a href="{{ path('app_courrier_courier_depart_new') }}" class="btn btn-main btn-sm"  
                 data-bs-toggle="modal" data-bs-target="#exampleModalSizeSm2">
                 <i class="bi bi-plus-square text-light"></i>
                 Nouveau
@@ -21,7 +21,7 @@
         <div class="row">
             <div class="col-sm-12">
                 {% if permition != null %}
-                <div id="grid_app_courrier_courier_interne" class="grid-dt-wrapper">Chargement....</div>
+                <div id="grid_app_courrier_courier_depart" class="grid-dt-wrapper">Chargement....</div>
                 {% else %}
                 <div class="d-flex flex-column flex-center flex-column-fluid">
                     <!--begin::Content-->
@@ -55,9 +55,9 @@
     <script src="{{ asset('assets/js/datatables.js') }}"></script>
     <script> 
         $(function() { 
-              $('#grid_app_courrier_courier_interne').initDataTables({{ datatable_settings(datatable) }}, {
+              $('#grid_app_courrier_courier_depart').initDataTables({{ datatable_settings(datatable) }}, {
                   searching: true,
-                  ajaxUrl: "{{ path('app_courrier_courier_interne_index') }}",
+                  ajaxUrl: "{{ path('app_courrier_courier_depart_index') }}",
                   language: {
                       url: asset_base_path + "/js/i18n/French.json"
                   }
