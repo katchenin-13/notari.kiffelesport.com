@@ -14,19 +14,16 @@ use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 use Symfony\Component\Serializer\Serializer;
 
-#[Route('/admin/config/parametre/constitution')]
-class ConfigConstitutionController extends BaseController
+#[Route('/admin/config/parametre/compte')]
+class ConfigCompteController extends BaseController
 {
 
-    const INDEX_ROOT_NAME = 'app_config_parametre_constitution_index';
+    const INDEX_ROOT_NAME = 'app_config_parametre_compte_index';
 
 
-    /* private $menu;
-     public function __construct(Menu $menu){
-         $this->menu = $menu;
-     }*/
+    
 
-    #[Route(path: '/', name: 'app_config_parametre_constitution_index', methods: ['GET', 'POST'])]
+    #[Route(path: '/', name: 'app_config_parametre_compte_index', methods: ['GET', 'POST'])]
     public function index(Request $request, Breadcrumb $breadcrumb): Response
     {
 
@@ -36,18 +33,17 @@ class ConfigConstitutionController extends BaseController
              $redirect = $this->generateUrl('app_default');
              return $this->redirect($redirect);
              //dd($this->menu->getPermission());
-         }*/
+         } */
         $modules = [
             [
-                'label' => 'En cours de traitement',
+                'label' => 'Compte non soldé ',
                 'icon' => 'bi bi-list',
-                'href' => $this->generateUrl('app_actes_acte_constitution_index', ['etat' => 'cree'])
+                'href' => $this->generateUrl('app_compte_frais_index', ['etat' => 'nonsolde'])
             ],
-            
             [
-                'label' => 'Finalisés',
+                'label' => 'Compte non soldé',
                 'icon' => 'bi bi-users',
-                'href' => $this->generateUrl('app_actes_acte_constitution_index', ['etat' => 'termine'])
+                'href' => $this->generateUrl('app_compte_frais_index', ['etat' => 'solde'])
             ]
 
 
@@ -67,8 +63,9 @@ class ConfigConstitutionController extends BaseController
             'modules' => $modules,
             'breadcrumb' => $breadcrumb,
             'permition' => $permission,
-            'titre' => 'Configuration acte de constitution',
-            'type' => 'constitution'
+            'titre' => 'Paiement des frais et honoraires',
+            'type' => 'frais',
+            
         ]);
     }
 

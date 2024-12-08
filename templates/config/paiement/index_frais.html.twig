@@ -1,0 +1,159 @@
+{% block inline_stylesheets %}
+
+<style type="text/css" media="screen">
+    .card-header {
+        padding: 2rem 2.25rem;
+        margin-bottom: 0;
+        background-color: var(--color-main);
+
+    }
+
+    .card.card-custom>.card-header {
+        min-height: 0;
+    }
+
+    .card.card-custom>.card-header.card-header-tabs-line .nav .nav-link {
+        padding-bottom: 1rem;
+        padding-top: 1rem;
+    }
+
+    .card.card-custom.card-sticky>.card-header {
+        min-height: 50px;
+    }
+
+    .card-header-nav {
+        padding-left: 0;
+    }
+
+    .nav.nav-tabs .nav-item {
+        margin-right: 0.25rem;
+    }
+
+    /*.sw-nav-tabs .nav-link:not(.active) {
+            border: 1px solid #ddd;
+           
+        }
+
+
+        .nav-tabs .nav-item {
+            margin-bottom: -1px;
+        }
+
+        .nav-tabs {
+            border-bottom: 1px solid #E4E6EF;
+        }
+
+        
+        .card .card-header .card-toolbar {
+            margin-top: 0;
+            margin-bottom: 0;
+        }*/
+</style>
+{% endblock %}
+{% block page_content %}
+<div class="modal-header">
+    <h5 class="modal-title" id="exampleModalLabel"></h5>
+    <div class="btn btn-icon btn-sm  ms-2" data-bs-dismiss="modal" aria-label="Close">
+        <span class="svg-icon svg-icon-2x text-white">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect opacity="0.5" x="6" y="17.3137" width="16" height="2" rx="1" transform="rotate(-45 6 17.3137)"
+                    fill="currentColor"></rect>
+                <rect x="7.41422" y="6" width="16" height="2" rx="1" transform="rotate(45 7.41422 6)"
+                    fill="currentColor"></rect>
+            </svg>
+        </span>
+    </div>
+</div>
+
+
+<div class="modal-body p-0 config_form">
+    <div class="card card-tabs card-custom card-sticky">
+        <div class="card-header card-header-stretch card-header-custom">
+
+            <div class="card-toolbar">
+                <ul class="nav nav-tabs  nav-stretch fs-6 nav-custom sw-nav-tabs" id="parametre-tabs">
+                    {# {% for key, module in modules | filter(module => is_config_granted(module.module | default('')))
+                    %} #}
+                    {% for key, module in modules %}
+
+                    <li class="nav-item">
+                        <a class="nav-link {% if key == 0 %}active{% endif %}" data-bs-toggle="tab"
+                            href="#{{ module.name|default('module'~ key) }}" data-href="{{ module.href }}">
+                            <span class="nav-icon">
+                                <i class="{{ module.icon }}"></i>
+                            </span>
+                            <span class="nav-text">
+                                {{ module.label }}
+                            </span>
+
+                        </a>
+                    </li>
+                    {% endfor %}
+                </ul>
+
+            </div>
+            <div class="row">
+                <a title="Modification" href="{{ path('app_comptabilte_ligneversementfrais_edit',{'id':id }) }}"
+                    class="btn btn-primary btn-sm test" data-bs-stacked-toggle="modal" data-bs-stacked-modal="#modal-xl2"><i
+                        class="bi bi-pen text-light"></i>
+                    Faire un versement
+                </a>
+               
+            </div>
+        </div>
+        <div class="card-body p-0">
+            <div class="tab-content" id="myTabContent">
+                {# {% for key, module in modules | filter(module => is_config_granted(module.module | default(''))) %}
+                #}
+                {% for key, module in modules %}
+                {% set id = module.name | default('module' ~ key) %}
+                <div class="tab-pane fade {% if key == 0 %}show active{% endif %}" id="{{ id }}" role="tabpanel"
+                    aria-labelledby="{{ id }}"></div>
+                {% endfor %}
+
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    {# {{ include('_includes/ajax/loader.html.twig') }} #}
+    <button type="button" class="btn btn-default btn-sm" data-bs-dismiss="modal">Annuler</button>
+    {# <button type="submit" class="btn btn-main btn-ajax btn-sm"><span
+            class="spinner-border d-none  spinner-ajax spinner-border-sm" role="status" aria-hidden="true"></span>
+        Valider</button> #}
+</div>
+
+{% endblock %}
+
+{% block java %}
+<script>
+    $(document).ready(function () {
+        load_tab('parametre-tabs');
+    });
+
+    var elements = Array.from(document.querySelectorAll("[data-bs-stacked-modal]"));
+
+        if (elements && elements.length > 0) {
+            elements.forEach((element) => {
+                if (element.getAttribute("data-kt-initialized") === "1") {
+                    return;
+                }
+
+                const url = element.getAttribute('href');
+                element.setAttribute("data-kt-initialized", "1");
+
+
+                element.addEventListener("click", function (e) {
+                    e.preventDefault();
+
+                    const modalEl = document.querySelector(this.getAttribute("data-bs-stacked-modal"));
+
+                    if (modalEl) {
+                        const modal = new bootstrap.Modal(modalEl);
+                        modal.show(element);
+                    }
+                });
+            });
+        }
+</script>
+{% endblock %}

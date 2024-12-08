@@ -45,46 +45,10 @@ class HomeController extends AbstractController
     {
         dd($idR);
 
-        $table = $dataTableFactory->create()
-            ->add('compte', TextColumn::class, ['label' => 'N° Compte', 'field' => 'c.id'])
-            ->add('dateversementfrais', DateTimeColumn::class, ['label' => 'Date de paiement', 'format' => 'd/m/Y'])
-            ->add('montantverse', TextColumn::class, ['label' => 'Montant'])
-            ->createAdapter(ORMAdapter::class, [
-                'entity' => Ligneversementfrais::class,
-                'query' => function (QueryBuilder $qb) use ($idR) {
-                    $qb->select('l, c')
-                    ->from(Ligneversementfrais::class, 'l')
-                        ->join('l.compte', 'c')
-                        ->andWhere('c.id = :id')
-                        ->setParameter('id', $idR);
-                }
-            ])
-            ->setName('dt_app_comptabilte_ligneversementfrais' . $idR);
-
-        // Gestion des actions
-        $table->add('id', TextColumn::class, [
-            'label' => 'Actions',
-            'orderable' => false,
-            'globalSearchable' => false,
-            'render' => function ($value, Ligneversementfrais $context) {
-                $options = [
-                    'default_class' => 'btn btn-xs btn-clean btn-icon mr-2',
-                    'target' => '#exampleModalSizeLg2',
-                    'actions' => []
-                ];
-                return $this->renderView('_includes/default_actions.html.twig', compact('options', 'context'));
-            }
-        ]);
-
-        $table->handleRequest($request);
-
-        if ($table->isCallback()) {
-            return $table->getResponse();
-        }
+        
 
         return $this->render('comptabilte/ligneversementfrais/index.html.twig', [
-            'datatable' => $table,
-            'id' => $idR
+            
         ]);
     }
 

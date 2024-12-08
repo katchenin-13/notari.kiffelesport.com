@@ -1599,7 +1599,7 @@ et indication du nombre des rôles, mots et chiffres nuls
         
        
         $ii = 1;
-
+     
 
         if (!$dossier->getPaiementFrais()->count()) {
           
@@ -1609,6 +1609,8 @@ et indication du nombre des rôles, mots et chiffres nuls
                 $paiement->setAttribut($value->getAttribut());
                 $paiement->setClient($value->getClients());
                 $dossier->addPaiementFrai($paiement);
+                
+
             }
 
         } 
@@ -1710,10 +1712,11 @@ et indication du nombre des rôles, mots et chiffres nuls
                     foreach ($datas as $key => $value) {
 
                         if($value->getMontant() > 0){
-                              $compte = new Compte();
+                        $compte = new Compte();
                         $compte->setClient($value->getClient());
                         $compte->setDossier($dossier);
                         $compte->setMontant($value->getMontant());
+                        $compte->setSolde($value->getMontant());
                         $em->persist($compte);
                         $em->flush();
                         }
