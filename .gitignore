@@ -60,7 +60,7 @@ settings.json
 /public/uploads/
 /var/
 /vendor/
-/djdjdj/
+
 ###< symfony/framework-bundle ###
 
 ###> phpunit/phpunit ###

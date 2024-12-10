@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller\compte;
+namespace App\Controller\Compte;
 
 use App\Entity\Calendar;
 use App\Form\Calendar1Type;

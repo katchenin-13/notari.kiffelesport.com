@@ -135,13 +135,13 @@ public function getdata($idR){
 
     
     #[Route('/{id}/new', name: 'app_comptabilte_ligneversementfrais_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, Compte $compte, LigneversementfraisRepository $ligneversementfraisRepository, EntityManagerInterface $entityManager, FormError $formError): Response
+    public function new(Request $request, Ligneversementfrais $ligneversementfrai, LigneversementfraisRepository $ligneversementfraisRepository, EntityManagerInterface $entityManager, FormError $formError): Response
     {
 
-        $form = $this->createForm(LigneversementfraisType::class, $compte, [
+        $form = $this->createForm(LigneversementfraisType::class, $ligneversementfrai, [
             'method' => 'POST',
             'action' => $this->generateUrl('app_comptabilte_ligneversementfrais_new', [
-                'id' => $compte->getId()
+                'id' => $ligneversementfrai->getId()
             ])
         ]);
 
@@ -270,7 +270,7 @@ public function getdata($idR){
 
         if ($form->isSubmitted()) {
             $response = [];
-            $redirect = $this->generateUrl('app_comptabilte_ligneversementfraiss_index', [ 'id' => $ligneversementfrai->getCompte()->getId() ]);
+            $redirect = $this->generateUrl('app_comptabilte_ligneversementfrais_index', [ 'id' => $ligneversementfrai->getCompte()->getId() ]);
 
 
             if ($form->isValid()) {
