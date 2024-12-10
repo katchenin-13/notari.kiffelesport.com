@@ -129,12 +129,125 @@ public function getdata($idR){
     }
 
 
-    
+    // #[Route('/{id}/new', name: 'app_comptabilte_ligneversementfrais_new', methods: ['GET', 'POST'])]
+    // public function new(Request $request, Ligneversementfrais $ligneversementfrais,LigneversementfraisRepository $ligneversementfraisRepository,  EntityManagerInterface $entityManager, FormError $formError): Response
+    // {
+
+    //     $form = $this->createForm(LigneversementfraisType::class, $ligneversementfrais, [
+    //         'method' => 'POST',
+    //         'action' => $this->generateUrl('app_comptabilte_ligneversementfrais_new', [
+    //             'id' => $ligneversementfrais->getId()
+    //         ])
+    //     ]);
+
+    //     $data = null;
+    //     $url = null;
+    //     $tabId = null;
+    //     $statut = null;
+    //     $statutCode = Response::HTTP_OK;
+
+    //     $isAjax = $request->isXmlHttpRequest();
+
+
+    //     $form->handleRequest($request);
+
+    //     if ($form->isSubmitted()) {
+    //         $response = [];
+    //         $redirect = '';
+
+    //         $montant = (int) $form->get('montant')->getData();
+    //         $date = $form->get('datePaiement')->getData();
+    //         $compte = $form->get('compte')->getData();
+    //         $somme = 0;
+
+
+    //         $lignes = $ligneversementfraisRepository->findBy(['compte' => $compte->getId()]);
+
+    //         if ($lignes) {
+
+    //             foreach ($lignes as $key => $info) {
+    //                 $somme += (int)$info->getMontantverse();
+    //                 $resteAPayer = abs((int)$compte->getMontant() - $somme);
+    //             }
+    //         } else {
+    //             $resteAPayer = abs((int)$compte->getMontant());
+    //         }
+
+
+    //         if ($form->isValid()) {
+
+    //             if ($resteAPayer >= $montant) {
+
+    //                 $ligneversementfrais = new Ligneversementfrais();
+    //                 $ligneversementfrais->setDateversementfrais($date);
+    //                 $ligneversementfrais->setCompte($compte);
+    //                 $ligneversementfrais->setMontantverse($montant);
+    //                 $entityManager->persist($ligneversementfrais);
+    //                 $entityManager->flush();
+
+    //                 $compte->setSolde($resteAPayer);
+
+    //                 $entityManager->persist($compte);   
+    //                 $entityManager->flush();
+
+    //                 $load_tab = true;
+    //                 $statut = 1;
+
+    //                 $message = sprintf('Opération effectuée avec succès');
+    //                 $this->addFlash('success', $message);
+    //             } else {
+
+    //                 $statut = 0;
+
+    //                 $message = sprintf('Désole échec de paiement car le montant  saisi est superieur au montant  [%s] qui reste à payer pour un montant total de  %s', $montant, $resteAPayer);
+    //                 $this->addFlash('danger', $message);
+    //             }
+
+
+    //             $url = [
+    //                 'url' => $this->generateUrl('app_config_frais_paiement_index', [
+    //                     'id' => $compte->getId()
+    //                 ]),
+    //                 'tab' => '#module0',
+    //                 'current' => '#module0'
+    //             ];
+
+    //             $tabId = self::TAB_ID;
+    //             $redirect = $url['url'];
+
+    //             $data = true;
+    //             $message = 'Opération effectuée avec succès';
+    //             $statut = 1;
+    //             $this->addFlash('success', $message);
+    //         } else {
+    //             $message = $formError->all($form);
+    //             $statut = 0;
+    //             $statutCode = 500;
+    //             if (!$isAjax) {
+    //                 $this->addFlash('warning', $message);
+    //             }
+    //         }
+
+    //         if ($isAjax) {
+    //             return $this->json(compact('statut', 'message', 'redirect', 'data', 'url', 'tabId'), $statutCode);
+
+    //         } else {
+    //             if ($statut == 1) {
+    //                 return $this->redirect($redirect, Response::HTTP_OK);
+    //             }
+    //         }
+    //     }
+
+    //     return $this->renderForm('comptabilte/ligneversementfrais/new.html.twig', [
+    //        'ligneversementfrais' => $ligneversementfrais,
+    //         'form' => $form,
+    //     ]);
+    // } 
     #[Route('/{id}/new', name: 'app_comptabilte_ligneversementfrais_new', methods: ['GET', 'POST'])]
     public function new(Request $request, Compte $compte, LigneversementfraisRepository $ligneversementfraisRepository, EntityManagerInterface $entityManager, FormError $formError): Response
     {
 
-        $form = $this->createForm(LigneversementfraisType::class, $compte, [
+        $form = $this->createForm(Com::class, $compte, [
             'method' => 'POST',
             'action' => $this->generateUrl('app_comptabilte_ligneversementfrais_new', [
                 'id' => $compte->getId()
@@ -240,7 +353,6 @@ public function getdata($idR){
 
         return $this->renderForm('comptabilte/ligneversementfrais/new.html.twig', [
             // 'ligneversementfrai' => $ligneversementfrai,
-            'compte' => $compte,
             'form' => $form,
         ]);
     }
