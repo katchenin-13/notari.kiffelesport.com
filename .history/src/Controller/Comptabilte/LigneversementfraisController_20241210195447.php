@@ -128,7 +128,7 @@ public function getdata($idR){
         ]);
     }
 
-
+    
     // #[Route('/{id}/new', name: 'app_comptabilte_ligneversementfrais_new', methods: ['GET', 'POST'])]
     // public function new(Request $request, Ligneversementfrais $ligneversementfrais,LigneversementfraisRepository $ligneversementfraisRepository,  EntityManagerInterface $entityManager, FormError $formError): Response
     // {
@@ -160,9 +160,9 @@ public function getdata($idR){
     //         $compte = $form->get('compte')->getData();
     //         $somme = 0;
 
-
+            
     //         $lignes = $ligneversementfraisRepository->findBy(['compte' => $compte->getId()]);
-
+      
     //         if ($lignes) {
 
     //             foreach ($lignes as $key => $info) {
@@ -177,7 +177,7 @@ public function getdata($idR){
     //         if ($form->isValid()) {
 
     //             if ($resteAPayer >= $montant) {
-
+                   
     //                 $ligneversementfrais = new Ligneversementfrais();
     //                 $ligneversementfrais->setDateversementfrais($date);
     //                 $ligneversementfrais->setCompte($compte);
@@ -243,62 +243,7 @@ public function getdata($idR){
     //         'form' => $form,
     //     ]);
     // }
-    #[Route('/{id}/new', name: 'app_comptabilte_ligneversementfrais_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, Ligneversementfrais $ligneversementfrai, EntityManagerInterface $entityManager, FormError $formError): Response
-    {
-        dd($ligneversementfrai->getCompte()->getId());
-        $form = $this->createForm(LigneversementfraisType::class, $ligneversementfrai, [
-            'method' => 'POST',
-            'action' => $this->generateUrl('app_comptabilte_ligneversementfrais_new', [
-                'id' => $ligneversementfrai->getId()
-            ])
-        ]);
 
-        $data = null;
-        $statutCode = Response::HTTP_OK;
-
-        $isAjax = $request->isXmlHttpRequest();
-
-
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted()) {
-            $response = [];
-            $redirect = $this->generateUrl('app_config_frais_paiement_index', ['id' => $ligneversementfrai->getCompte()->getId()]);
-
-
-            if ($form->isValid()) {
-
-                $entityManager->persist($ligneversementfrai);
-                $entityManager->flush();
-
-                $data = true;
-                $message = 'Opération effectuée avec succès';
-                $statut = 1;
-                $this->addFlash('success', $message);
-            } else {
-                $message = $formError->all($form);
-                $statut = 0;
-                $statutCode = 500;
-                if (!$isAjax) {
-                    $this->addFlash('warning', $message);
-                }
-            }
-
-            if ($isAjax) {
-                return $this->json(compact('statut', 'message', 'redirect', 'data'), $statutCode);
-            } else {
-                if ($statut == 1) {
-                    return $this->redirect($redirect, Response::HTTP_OK);
-                }
-            }
-        }
-
-        return $this->renderForm('comptabilte/ligneversementfrais/new.html.twig', [
-            'ligneversementfrai' => $ligneversementfrai,
-            'form' => $form,
-        ]);
-    }
 
     #[Route('/{id}/edit', name: 'app_comptabilte_ligneversementfrais_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Ligneversementfrais $ligneversementfrai, EntityManagerInterface $entityManager, FormError $formError): Response

@@ -243,13 +243,13 @@ public function getdata($idR){
     //         'form' => $form,
     //     ]);
     // }
-    #[Route('/{id}/new', name: 'app_comptabilte_ligneversementfrais_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, Ligneversementfrais $ligneversementfrai, EntityManagerInterface $entityManager, FormError $formError): Response
+    #[Route('/{id}/new', name: 'app_comptabilte_ligneversementfrais_edit', methods: ['GET', 'POST'])]
+    public function edit(Request $request, Ligneversementfrais $ligneversementfrai, EntityManagerInterface $entityManager, FormError $formError): Response
     {
-        dd($ligneversementfrai->getCompte()->getId());
+
         $form = $this->createForm(LigneversementfraisType::class, $ligneversementfrai, [
             'method' => 'POST',
-            'action' => $this->generateUrl('app_comptabilte_ligneversementfrais_new', [
+            'action' => $this->generateUrl('app_comptabilte_ligneversementfrais_edit', [
                 'id' => $ligneversementfrai->getId()
             ])
         ]);
@@ -264,7 +264,7 @@ public function getdata($idR){
 
         if ($form->isSubmitted()) {
             $response = [];
-            $redirect = $this->generateUrl('app_config_frais_paiement_index', ['id' => $ligneversementfrai->getCompte()->getId()]);
+            $redirect = $this->generateUrl('app_comptabilte_ligneversementfraiss_index', ['id' => $ligneversementfrai->getCompte()->getId()]);
 
 
             if ($form->isValid()) {
@@ -294,7 +294,7 @@ public function getdata($idR){
             }
         }
 
-        return $this->renderForm('comptabilte/ligneversementfrais/new.html.twig', [
+        return $this->renderForm('comptabilte/ligneversementfrais/edit.html.twig', [
             'ligneversementfrai' => $ligneversementfrai,
             'form' => $form,
         ]);

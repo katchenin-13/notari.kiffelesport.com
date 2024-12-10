@@ -19,7 +19,7 @@ class ConfigController extends AbstractController
 
     #[Route(path: '/frais/compte/{id}', name: 'app_config_frais_paiement_index', methods: ['GET', 'POST'])]
     // #[RoleMethod(title: 'Gestion des Paramètres', as: 'index')]
-    public function indexConfigFraisScolarite(Request $request, Breadcrumb $breadcrumb,int $idR): Response
+    public function indexConfigFraisScolarite(Request $request, Breadcrumb $breadcrumb,int $id): Response
     {
         $module = $request->query->get('module');
 
@@ -37,7 +37,7 @@ class ConfigController extends AbstractController
                 'label' => 'PAIEMENT',
                 'icon' => 'bi bi-list',
                 'module' => 'general',
-                'href' => $this->generateUrl('app_compte_frais_show', ['id' => $idR])
+                'href' => $this->generateUrl('app_compte_frais_show', ['id' => $id])
                 // 'href' => $this->generateUrl('app_inscription_inscription_paiement_ok', ['id' => $id])
             ],
 
