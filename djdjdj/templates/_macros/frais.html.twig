@@ -1,0 +1,69 @@
+{% macro frais(colonne) %}
+
+
+<tr class="row-colonne even pointer table-light">
+    <td class="p-2">
+        <div style="display:non" class="field-matiere">{{ form_widget(colonne.client,{'attr':{'readOnly':'readOnly'}}) }}</div>
+       
+    </td>
+    <td class="p-2">
+        <div style="display:no " class="field-matiere">{{ form_widget(colonne.attribut,{'attr':{'readOnly':'readOnly'}}) }}</div>
+       
+    </td>
+    <td class="p-2">
+        <div style="display:no " class="field-matiere">{{ form_widget(colonne.montant) }}</div>
+       
+    </td>
+  
+    <td class="p-2 del-col " data-parent=".row-colonne"></td>
+</tr>
+
+
+{% endmacro %}
+
+{% macro prototype_frais(form) %}
+<div class="list-colonne" data-prototype="{{ _self.frais(form.paiementFrais.vars.prototype)|e }}">
+</div>
+
+
+<table class="table table-bordered table-custom">
+    <thead class="thead-dark">
+
+        <tr>
+            <th width="40%" class="p-2">Client conserné</th>
+            <th width="40%" class="p-2">Attribut</th>
+            <th width="40%" class="p-2">Montant à payer</th>
+    
+    
+          
+    
+            <th colspan="2" width="20%">
+                {# <button type="button" data-protoname="__name__" class="btn btn-default add_line btn-xs " id="add_ligne"
+                    data-protoclass=".list-colonne" data-container=".column-container">
+                    <i class="fa fa-plus"></i> Ajouter
+                </button> #}
+            </th>
+        </tr>
+    </thead>
+  
+
+    
+    <tbody class="column-container proto-container" data-childclass="">
+            {% for item in form.paiementFrais %}
+                {{ _self.frais(item|e) }}
+            {% endfor %}
+ </tbody>
+   <tfoot>
+
+    <tr>
+   <td class="p-2" colspan="2" style="color:red;font-weight:bolder;font-size: 18px;text-align:right">
+       Montant total
+    </td>
+     <th class="total text-center p-2 fw-bolder col-total"  style="color:red;font-weight:bolder;font-size: 18px;"  data-class="col-total">0</td>
+     <td class="p-2">
+       
+    </td>
+</tr>
+    </tfoot>
+    </table>
+{% endmacro %}

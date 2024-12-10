@@ -1,0 +1,53 @@
+
+{% macro ligne_workflow(colonne) %}
+    <tr class="row-colonne even pointer table-light">
+        <td class="p-2">
+           
+            <div style="display:no " class="field-matiere">{{ form_widget(colonne.numeroEtape,{'attr':{'class':'form-control numero ','id':'userinput16','placeholder':'Numéro étape','readonly':'readonly'}}) }}</div>
+        </td>
+        <td class="p-2">
+           
+            <div style="display:no " class="field-matiere">{{ form_widget(colonne.libelleEtape) }}</div>
+        </td>
+        <td class="p-2">
+           
+            <div style="display:no " class="field-matiere">{{ form_widget(colonne.NombreJours) }}</div>
+        </td>
+        <td class="p-2">
+           
+            <div style="display:no " class="field-matiere">{{ form_widget(colonne.propriete) }}</div>
+        </td>
+        <td class="p-2">
+           
+            <div style="display:no " class="field-matiere">{{ form_widget(colonne.route) }}</div>
+        </td>
+    
+        <td class="p-2 del-col " data-parent=".row-colonne">{# <a href="#" class="btn btn-danger btn-xs"><span class="bi bi-trash"></span></a> #}</td>
+    </tr>
+{% endmacro  %}
+
+
+{% macro prototype_ligne_workflow(form) %}
+    <div class="list-colonne"  data-prototype="{{ _self.ligne_workflow(form.workflows.vars.prototype)|e }}"></div>
+
+      <button type="button" data-protoname="__name__" class="btn btn-default add_line btn-xs" id="add_ligne"  data-protoclass=".list-colonne" data-container=".column-container">
+        <i class="fa fa-plus"></i> Ajouter une étape
+    </button><br>
+    <table class="table table-bordered table-custom">
+        <thead class="thead-dark">
+            <tr>
+                <th width="10%" class="p-2">N</th>
+                <th width="30%" class="p-2">Libelle étape</th>
+                <th width="10%" class="p-2">Nombre de jours</th>
+                <th width="25%" class="p-2">Propriété</th>
+                <th width="25%" class="p-2">Route</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody  class="column-container proto-container" data-childclass=""">
+            {% for item in form.workflows %}
+                {{ _self.ligne_workflow(item|e) }}
+            {% endfor %}
+        </tbody>
+    </table>
+{% endmacro %}

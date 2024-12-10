@@ -1,0 +1,51 @@
+{% macro identification(colonne) %}
+
+
+<tr class="row-colonne even pointer table-light">
+    <td class="p-2">
+        <div style="display:non" class="field-matiere">{{ form_widget(colonne.clients) }}</div>
+        {# <div style="display:non" class="field-matiere">{{ colonne.document_type_client.vars.value }} </div>
+        #}
+    </td>
+    <td class="p-2">
+        <div style="display:no " class="field-matiere">{{ form_widget(colonne.attribut) }}</div>
+        {# <div style="display:non" class="field-matiere">{{ colonne.document_type_client.vars.value }} </div>
+        #}
+    </td>
+ 
+    <td class="p-2 del-col " data-parent=".row-colonne">{# <a href="#" class="btn btn-danger btn-xs"><span
+                class="bi bi-trash"></span></a> #}</td>
+</tr>
+{% endmacro %}
+
+{% macro prototype_identification(form) %}
+<div class="list-colonne" data-prototype="{{ _self.identification(form.identifications.vars.prototype)|e }}">
+</div>
+
+
+<table class="table table-bordered table-custom">
+    <thead class="thead-dark">
+
+        <tr>
+            <th width="40%" class="p-2">Client conserné</th>
+            <th width="50%" class="p-2">Attribut</th>
+    
+    
+          
+    
+            <th colspan="2" width="10%">
+                <button type="button" data-protoname="__name__" class="btn btn-default add_line btn-xs " id="add_ligne"
+                    data-protoclass=".list-colonne" data-container=".column-container">
+                    <i class="fa fa-plus"></i> Ajouter
+                </button>
+            </th>
+        </tr>
+    </thead>
+    
+    <tbody class="column-container proto-container" data-childclass=""">
+            {% for item in form.identifications %}
+                {{ _self.identification(item|e) }}
+            {% endfor %}
+ </tbody>
+    </table>
+{% endmacro %}

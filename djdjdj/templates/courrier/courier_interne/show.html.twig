@@ -1,0 +1,73 @@
+{% block page_content %}
+    <div class="modal-header">
+        <h4 class="modal-title">Détails du courrier</h4>
+        <div class="btn btn-icon btn-sm  ms-2" data-bs-dismiss="modal" aria-label="Close">
+            <span class="svg-icon svg-icon-2x text-white">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+					<rect opacity="0.5" x="6" y="17.3137" width="16" height="2" rx="1" transform="rotate(-45 6 17.3137)" fill="currentColor"></rect>
+					<rect x="7.41422" y="6" width="16" height="2" rx="1" transform="rotate(45 7.41422 6)" fill="currentColor"></rect>
+				</svg>
+            </span>
+        </div>
+    </div>
+   
+    <div class="modal-body">
+        <table class="table table-bordered">
+        <tbody>
+                            <tr>
+                    <th>Id</th>
+                    <td>{{ courier_arrive.id }}</td>
+                </tr>
+                            <tr>
+                    <th>Numero</th>
+                    <td>{{ courier_arrive.numero }}</td>
+                </tr>
+                            <tr>
+                    <th>dateCreation</th>
+                    <td>{{ courier_arrive.dateCreation ? courier_arrive.dateCreation|date('Y-m-d H:i:s') : '' }}</td>
+                </tr>
+                            <tr>
+                    <th>Objet</th>
+                    <td>{{ courier_arrive.objet }}</td>
+                </tr>
+                            <tr>
+                    <th>Categorie</th>
+                    <td>{{ courier_arrive.categorie }}</td>
+                </tr>
+                            <tr>
+                    <th>Active</th>
+                    <td>{{ courier_arrive.active }}</td>
+                </tr>
+                            <tr>
+                    <th>Etat</th>
+                    <td>{{ courier_arrive.etat ? 'Yes' : 'No' }}</td>
+                </tr>
+                            <tr>
+                    <th>Type</th>
+                    <td>{{ courier_arrive.type }}</td>
+                </tr>
+                            <tr>
+                    <th>Existe</th>
+                    <td>{{ courier_arrive.existe ? 'Yes' : 'No' }}</td>
+                </tr>
+                            <tr>
+                    <th>Rangement</th>
+                    <td>{{ courier_arrive.rangement }}</td>
+                </tr>
+                            <tr>
+                    <th>Expediteur</th>
+                    <td>{{ courier_arrive.expediteur }}</td>
+                </tr>
+                    </tbody>
+    </table>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn dark btn-outline" data-bs-dismiss="modal">Fermer</button>
+    </div>
+
+{% endblock %}
+{% block java %}
+    <script>
+        
+    </script>
+{% endblock %}

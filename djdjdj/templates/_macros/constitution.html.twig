@@ -1,0 +1,65 @@
+
+
+
+
+{% macro ligne_document_constitution(colonne) %}
+    <tr class="row-colonne even pointer table-light">
+        <td class="p-2">
+          
+            <div style="display:no " class="field-matiere">{{ form_widget(colonne.libelle) }}</div>
+        </td>
+        <td class="p-2">
+          
+            <div style="display:no " class="field-matiere">{{ form_widget(colonne.dateObtention) }}</div>
+        </td>
+        <td class="p-2">
+          
+            <div style="display:no " class="field-matiere">{{ form_widget(colonne.path) }}</div>
+        </td>
+        <td class="p-2">
+          
+            <div style="display:no " class="field-matiere">{{ form_widget(colonne.etat) }}</div>
+        </td>
+        <td class="p-2">
+          
+            <div style="display:no " class="field-matiere">
+              {% if colonne.vars.value and colonne.vars.value.path %}
+              
+           {#  <a class="btn btn-dark btn-sm" target="_blank" href="{{ path('fichier_index', {id:  colonne.vars.value.path.id}) }}" download> <i class="bi bi-upload"></i>
+                </a> #}
+                 <a class="btn btn-dark btn-sm" target="_blank" href="{{ asset('uploads/media_entreprise/' ~ colonne.vars.value.path.alt) }} " download> <i class="bi bi-upload"></i>
+                </a>
+             {% endif %}
+            </div>
+        </td>
+    
+        <td class="p-2 del-col " data-parent=".row-colonne">{# <a href="#" class="btn btn-danger btn-xs"><span class="bi bi-trash"></span></a> #}</td>
+    </tr>
+{% endmacro  %}
+
+
+{% macro prototype_ligne_document_constitution(form) %}
+    <div class="list-colonne"  data-prototype="{{ _self.ligne_document_constitution(form.fichierConstitutions.vars.prototype)|e }}"></div>
+
+      <button type="button" data-protoname="__name__" class="btn btn-default add_line btn-xs" id="add_ligne"  data-protoclass=".list-colonne" data-container=".column-container">
+        <i class="fa fa-plus"></i> Ajouter un document
+    </button><br>
+    <table class="table table-bordered table-custom">
+        <thead class="thead-dark">
+            <tr>
+                <th width="25%" class="p-2">Libelle</th>
+                <th width="25%" class="p-2">Date obtention</th>
+                <th width="37%" class="p-2">Document</th>
+                <th width="3%" class="p-2">etat</th>
+                <th width="5%"></th>
+               
+                <th width="5%"></th>
+            </tr>
+        </thead>
+        <tbody  class="column-container proto-container" data-childclass=""">
+            {% for item in form.fichierConstitutions %}
+                {{ _self.ligne_document_constitution(item|e) }}
+            {% endfor %}
+        </tbody>
+    </table>
+{% endmacro %}

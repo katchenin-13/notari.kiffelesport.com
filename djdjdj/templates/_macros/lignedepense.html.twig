@@ -1,0 +1,60 @@
+
+{% macro ligne_depenses(colonne) %}
+
+
+    <tr class="row-colonne even pointer table-light">
+        <td class="p-2">
+            <div style="display:non" class="field-matiere">{{ form_widget(colonne.typedepense) }}</div>
+             
+        </td>
+            <td class="p-2">
+                <div style="display:non" class="field-matiere">{{ form_widget(colonne.montant) }}</div>
+            
+            </td>
+       
+        <td class="p-2">
+        
+            <div style="display:no " class="field-matiere">{{ form_widget(colonne.fichier) }}</div>
+        </td>
+        <td class="p-2">
+        
+            <div style="display:no " class="field-matiere">
+        
+                {% if colonne.children.fichier.vars.data %}
+                <a class="btn btn-dark btn-sm" style="margin-top: 0px;" target="_blank"
+                    href="{{ asset('uploads/media_entreprise/' ~ colonne.vars.value.fichier.alt) }} " download> <i
+                        class="bi bi-upload"></i>
+                </a>
+                {% endif %}
+        
+               
+            </div>
+        </td>
+        
+        <td class="p-2 del-col " data-parent=".row-colonne">
+    </tr>
+{% endmacro  %}
+
+
+{% macro prototype_ligne_depenses(form) %}
+    <div class="list-colonne"  data-prototype="{{ _self.ligne_depenses(form.lignedepenses.vars.prototype)|e }}"></div>
+
+     
+    <table class="table table-bordered table-custom">
+        <thead class="thead-dark">
+            <tr>
+                <th width="20%" class="p-2">Type de dépenses</th>
+                <th width="30%" class="p-2">Montants</th>
+                <th width="40%" class="p-2">Justificatif</th>
+                <th width="5%" class="p-2"></th>
+               
+                <th></th>
+            </tr>
+        </thead>
+        <tbody  class="column-container proto-container" data-childclass=""">
+            {% for item in form.lignedepenses %}
+                {{ _self.ligne_depenses(item|e) }}
+            {% endfor %}
+        </tbody>
+    </table>
+{% endmacro %}
