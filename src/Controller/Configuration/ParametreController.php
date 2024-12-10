@@ -176,6 +176,12 @@ class ParametreController extends BaseController
                     'id' => 'param_soci',
                     'href' => $this->generateUrl('app_parametre_type_societe_index')
                 ],
+
+                [
+                    'label' => 'Type de Dépense',
+                    'id' => 'param_depen',
+                    'href' => $this->generateUrl('app_parametre_typedepense_index')
+                ],
                 
                 //encien menu
                 // [

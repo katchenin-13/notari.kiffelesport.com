@@ -180,11 +180,7 @@ class Client
     private $acteConstitutions;
 
 
-    #[ORM\OneToMany(targetEntity: Identification::class, mappedBy: 'vendeur')]
-    private $pieceVendeurs;
 
-    #[ORM\OneToMany(targetEntity: Identification::class, mappedBy: 'acheteur')]
-    private $pieceAcheteurs;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private $emailEntreprise;

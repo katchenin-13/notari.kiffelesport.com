@@ -5,7 +5,7 @@ namespace App\Controller\Configuration;
 
 use App\Attribute\RoleMethod;
 
-use App\Entity\Ligneversementfrais;
+
 
 use App\Service\Breadcrumb;
 
@@ -25,7 +25,7 @@ class ConfigController extends AbstractController
 
     #[Route(path: '/frais/compte/{id}', name: 'app_config_frais_paiement_index', methods: ['GET', 'POST'])]
     // #[RoleMethod(title: 'Gestion des Paramètres', as: 'index')]
-    public function indexConfigFraisScolarite(Request $request, Breadcrumb $breadcrumb, $id, Ligneversementfrais $ligneversementfrais): Response
+    public function indexConfigFraisScolarite(Request $request, Breadcrumb $breadcrumb, $id): Response
     {
         $module = $request->query->get('module');
         $modules = [
@@ -65,7 +65,6 @@ class ConfigController extends AbstractController
         return $this->render('config/paiement/index_frais.html.twig', [
             'modules' => $modules,
             'breadcrumb' => $breadcrumb,
-            'ligneversementfrais' => $ligneversementfrais,
             'id' => $id
         ]);
     }

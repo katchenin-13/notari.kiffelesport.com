@@ -16,9 +16,7 @@
           
             <div style="display:no " class="field-matiere">
 
-             {% if colonne.children.fichier.vars.data %}
-              
-            
+             {% if colonne.children.fichier.vars.data %}           
                  <a class="btn btn-dark btn-sm" style="margin-top: 0px;" target="_blank" href="{{ asset('uploads/media_entreprise/' ~ colonne.vars.value.fichier.alt) }} " download> <i class="bi bi-upload"></i>
                 </a>
              {% endif %}

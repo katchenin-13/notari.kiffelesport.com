@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Controller;
+namespace App\Controller\Gestionfournisseur\Marche;
 
-use App\Entity\Fournisseur;
-use App\Form\FournisseurType;
-use App\Repository\FournisseurRepository;
+use App\Entity\Marche;
+use App\Form\MarcheType;
+use App\Repository\MarcheRepository;
 use App\Service\ActionRender;
 use App\Service\FormError;
 use Omines\DataTablesBundle\Adapter\Doctrine\ORMAdapter;
@@ -19,12 +19,12 @@ use Symfony\Component\Routing\Annotation\Route;
 use App\Controller\BaseController;
 use Doctrine\ORM\EntityManagerInterface;
 
-#[Route('/ads/fournisseur')]
-class FournisseurController extends BaseController
+#[Route('/ads/gestionfournisseur/marche/marche')]
+class MarcheController extends BaseController
 {
-const INDEX_ROOT_NAME = 'app_fournisseur_index';
+const INDEX_ROOT_NAME = 'app_gestionfournisseur_marche_marche_index';
 
-    #[Route('/', name: 'app_fournisseur_index', methods: ['GET', 'POST'])]
+    #[Route('/', name: 'app_gestionfournisseur_marche_marche_index', methods: ['GET', 'POST'])]
     public function index(Request $request, DataTableFactory $dataTableFactory): Response
     {
 
@@ -34,9 +34,9 @@ const INDEX_ROOT_NAME = 'app_fournisseur_index';
     $table = $dataTableFactory->create()
     ->add('id', TextColumn::class, ['label' => 'Identifiant'])
     ->createAdapter(ORMAdapter::class, [
-    'entity' => Fournisseur::class,
+    'entity' => Marche::class,
     ])
-    ->setName('dt_app_fournisseur');
+    ->setName('dt_app_gestionfournisseur_marche_marche');
     if($permission != null){
 
     $renders = [
@@ -108,21 +108,21 @@ const INDEX_ROOT_NAME = 'app_fournisseur_index';
     , 'orderable' => false
     ,'globalSearchable' => false
     ,'className' => 'grid_row_actions'
-    , 'render' => function ($value, Fournisseur $context) use ($renders) {
+    , 'render' => function ($value, Marche $context) use ($renders) {
     $options = [
     'default_class' => 'btn btn-xs btn-clean btn-icon mr-2 ',
     'target' => '#exampleModalSizeLg2',
 
     'actions' => [
     'edit' => [
-    'url' => $this->generateUrl('app_fournisseur_edit', ['id' => $value])
+    'url' => $this->generateUrl('app_gestionfournisseur_marche_marche_edit', ['id' => $value])
     , 'ajax' => true
     , 'icon' => '%icon% bi bi-pen'
     , 'attrs' => ['class' => 'btn-default']
     , 'render' => $renders['edit']
     ],
     'show' => [
-    'url' => $this->generateUrl('app_fournisseur_show', ['id' => $value])
+    'url' => $this->generateUrl('app_gestionfournisseur_marche_marche_show', ['id' => $value])
     , 'ajax' => true
     , 'icon' => '%icon% bi bi-eye'
     , 'attrs' => ['class' => 'btn-primary']
@@ -130,7 +130,7 @@ const INDEX_ROOT_NAME = 'app_fournisseur_index';
     ],
     'delete' => [
     'target' => '#exampleModalSizeNormal',
-    'url' => $this->generateUrl('app_fournisseur_delete', ['id' => $value])
+    'url' => $this->generateUrl('app_gestionfournisseur_marche_marche_delete', ['id' => $value])
     , 'ajax' => true
     , 'icon' => '%icon% bi bi-trash'
     , 'attrs' => ['class' => 'btn-main']
@@ -152,19 +152,19 @@ const INDEX_ROOT_NAME = 'app_fournisseur_index';
     }
 
 
-    return $this->render('fournisseur/index.html.twig', [
+    return $this->render('gestionfournisseur/marche/marche/index.html.twig', [
     'datatable' => $table,
     'permition' => $permission
     ]);
     }
 
-    #[Route('/new', name: 'app_fournisseur_new', methods: ['GET', 'POST'])]
+    #[Route('/new', name: 'app_gestionfournisseur_marche_marche_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager, FormError $formError): Response
 {
-$fournisseur = new Fournisseur();
-$form = $this->createForm(FournisseurType::class, $fournisseur, [
+$marche = new Marche();
+$form = $this->createForm(MarcheType::class, $marche, [
 'method' => 'POST',
-'action' => $this->generateUrl('app_fournisseur_new')
+'action' => $this->generateUrl('app_gestionfournisseur_marche_marche_new')
 ]);
 $form->handleRequest($request);
 
@@ -175,12 +175,12 @@ $isAjax = $request->isXmlHttpRequest();
 
     if ($form->isSubmitted()) {
     $response = [];
-    $redirect = $this->generateUrl('app_fournisseur_index');
+    $redirect = $this->generateUrl('app_gestionfournisseur_marche_marche_index');
 
 
     if ($form->isValid()) {
 
-    $entityManager->persist($fournisseur);
+    $entityManager->persist($marche);
     $entityManager->flush();
 
     $data = true;
@@ -211,28 +211,28 @@ $isAjax = $request->isXmlHttpRequest();
 
     }
 
-    return $this->renderForm('fournisseur/new.html.twig', [
-    'fournisseur' => $fournisseur,
+    return $this->renderForm('gestionfournisseur/marche/marche/new.html.twig', [
+    'marche' => $marche,
     'form' => $form,
     ]);
 }
 
-    #[Route('/{id}/show', name: 'app_fournisseur_show', methods: ['GET'])]
-public function show(Fournisseur $fournisseur): Response
+    #[Route('/{id}/show', name: 'app_gestionfournisseur_marche_marche_show', methods: ['GET'])]
+public function show(Marche $marche): Response
 {
-return $this->render('fournisseur/show.html.twig', [
-'fournisseur' => $fournisseur,
+return $this->render('gestionfournisseur/marche/marche/show.html.twig', [
+'marche' => $marche,
 ]);
 }
 
-    #[Route('/{id}/edit', name: 'app_fournisseur_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Fournisseur $fournisseur, EntityManagerInterface $entityManager, FormError $formError): Response
+    #[Route('/{id}/edit', name: 'app_gestionfournisseur_marche_marche_edit', methods: ['GET', 'POST'])]
+    public function edit(Request $request, Marche $marche, EntityManagerInterface $entityManager, FormError $formError): Response
 {
 
-$form = $this->createForm(FournisseurType::class, $fournisseur, [
+$form = $this->createForm(MarcheType::class, $marche, [
 'method' => 'POST',
-'action' => $this->generateUrl('app_fournisseur_edit', [
-'id' => $fournisseur->getId()
+'action' => $this->generateUrl('app_gestionfournisseur_marche_marche_edit', [
+'id' => $marche->getId()
 ])
 ]);
 
@@ -246,12 +246,12 @@ $form->handleRequest($request);
 
     if ($form->isSubmitted()) {
     $response = [];
-    $redirect = $this->generateUrl('app_fournisseur_index');
+    $redirect = $this->generateUrl('app_gestionfournisseur_marche_marche_index');
 
 
     if ($form->isValid()) {
 
-    $entityManager->persist($fournisseur);
+    $entityManager->persist($marche);
     $entityManager->flush();
 
     $data = true;
@@ -280,21 +280,21 @@ $form->handleRequest($request);
 
     }
 
-    return $this->renderForm('fournisseur/edit.html.twig', [
-    'fournisseur' => $fournisseur,
+    return $this->renderForm('gestionfournisseur/marche/marche/edit.html.twig', [
+    'marche' => $marche,
     'form' => $form,
     ]);
 }
 
-    #[Route('/{id}/delete', name: 'app_fournisseur_delete', methods: ['DELETE', 'GET'])]
-    public function delete(Request $request, Fournisseur $fournisseur, EntityManagerInterface $entityManager): Response
+    #[Route('/{id}/delete', name: 'app_gestionfournisseur_marche_marche_delete', methods: ['DELETE', 'GET'])]
+    public function delete(Request $request, Marche $marche, EntityManagerInterface $entityManager): Response
 {
 $form = $this->createFormBuilder()
 ->setAction(
 $this->generateUrl(
-'app_fournisseur_delete'
+'app_gestionfournisseur_marche_marche_delete'
 , [
-'id' => $fournisseur->getId()
+'id' => $marche->getId()
 ]
 )
 )
@@ -303,10 +303,10 @@ $this->generateUrl(
 $form->handleRequest($request);
     if ($form->isSubmitted() && $form->isValid()) {
     $data = true;
-    $entityManager->remove($fournisseur);
+    $entityManager->remove($marche);
     $entityManager->flush();
 
-    $redirect = $this->generateUrl('app_fournisseur_index');
+    $redirect = $this->generateUrl('app_gestionfournisseur_marche_marche_index');
 
     $message = 'Opération effectuée avec succès';
 
@@ -326,8 +326,8 @@ $form->handleRequest($request);
     }
     }
 
-return $this->renderForm('fournisseur/delete.html.twig', [
-'fournisseur' => $fournisseur,
+return $this->renderForm('gestionfournisseur/marche/marche/delete.html.twig', [
+'marche' => $marche,
 'form' => $form,
 ]);
 }

@@ -19,7 +19,14 @@ class DocumentClientType extends AbstractType
 
             ->add('fichier', FichierType::class, ['label' => 'Fichier', 'label' => false, 'doc_options' => $options['doc_options'], 'required' => $options['doc_required'] ?? true])
             // ->add('fichier', DocumentTypeClient::class, ['label' => 'Libelle', 'label' => false, 'doc_options' => $options['doc_options'], 'required' => $options['doc_required'] ?? true]);
-            ->add('document_type_client', EntityType::class, ['label' => false, 'class' => DocumentTypeClient::class, 'choice_label' => 'libelle', 'attr' => ['class' => 'form-control has-select2']]);
+            ->add('document_type_client', EntityType::class, [
+                'label' => false,
+                 'class' => DocumentTypeClient::class, 
+                 'choice_label' => 'libelle',
+                  'attr' => [
+                    'class' => 'form-control has-select2'
+                    ]
+                ]);
             // ->add('libelle', null, ['label' => false, 'empty_data' => '']);;
     }
 

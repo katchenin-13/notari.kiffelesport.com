@@ -32,9 +32,55 @@ public function getdata($idR){
         
 }
 
+ #[Route('/kkliste/paiement/{idR}', name: 'app_comptabilte_ligneversementfraiss_index', methods: ['GET', 'POST'])]
+    public function indexgg(Request $request, DataTableFactory $dataTableFactory, int $idR): Response
+    {
+      
 
+        $table = $dataTableFactory->create()
+            ->add('compte', TextColumn::class, ['label' => 'N° Compte', 'field' => 'c.id'])
+            ->add('dateversementfrais', DateTimeColumn::class, ['label' => 'Date de paiement', 'format' => 'd/m/Y'])
+            ->add('montantverse', TextColumn::class, ['label' => 'Montant'])
+            ->createAdapter(ORMAdapter::class, [
+                'entity' => Ligneversementfrais::class,
+                'query' => function (QueryBuilder $qb) use ($idR) {
+                    $qb->select('l, c')
+                    ->from(Ligneversementfrais::class, 'l')
+                        ->join('l.compte', 'c')
+                        ->andWhere('c.id = :id')
+                        ->setParameter('id', $idR);
+                }
+            ])
+            ->setName('dt_app_comptabilte_ligneversementfrais' . $idR);
+
+        // Gestion des actions
+        $table->add('id', TextColumn::class, [
+            'label' => 'Actions',
+            'orderable' => false,
+            'globalSearchable' => false,
+            'render' => function ($value, Ligneversementfrais $context) {
+                $options = [
+                    'default_class' => 'btn btn-xs btn-clean btn-icon mr-2',
+                    'target' => '#exampleModalSizeLg2',
+                    'actions' => []
+                ];
+                return $this->renderView('_includes/default_actions.html.twig', compact('options', 'context'));
+            }
+        ]);
+
+        $table->handleRequest($request);
+
+        if ($table->isCallback()) {
+            return $table->getResponse();
+        }
+
+        return $this->render('comptabilte/ligneversementfrais/index.html.twig', [
+            'datatable' => $table,
+            'id' => $idR
+        ]);
+    }
     #[Route('/{id}/edit', name: 'app_comptabilte_ligneversementfrais_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Compte $compte,LigneversementfraisRepository $ligneversementfraisRepository, Inscription $inscription, TypeFrais $typeFrais, EntityManagerInterface $entityManager, FormError $formError): Response
+    public function edit(Request $request, Compte $compte,LigneversementfraisRepository $ligneversementfraisRepository,  EntityManagerInterface $entityManager, FormError $formError): Response
     {
 
         $form = $this->createForm(LigneversementfraisType::class, $compte, [
@@ -65,7 +111,7 @@ public function getdata($idR){
 
             
             $lignes = $ligneversementfraisRepository->findBy(['compte' => $compte->getId()]);
-
+      
             if ($lignes) {
 
                 foreach ($lignes as $key => $info) {
@@ -79,14 +125,13 @@ public function getdata($idR){
 
             if ($form->isValid()) {
 
-
                 if ($resteAPayer >= $montant) {
                    
-                    $ligneversementfrai = new Ligneversementfrais();
-                    $ligneversementfrai->setDateversementfrais($date);
-                    $ligneversementfrai->setCompte($compte);
-                    $ligneversementfrai->setMontantverse($montant);
-                    $entityManager->persist($ligneversementfrai);
+                    $ligneversementfrais = new Ligneversementfrais();
+                    $ligneversementfrais->setDateversementfrais($date);
+                    $ligneversementfrais->setCompte($compte);
+                    $ligneversementfrais->setMontantverse($montant);
+                    $entityManager->persist($ligneversementfrais);
                     $entityManager->flush();
 
                     $compte->setSolde($resteAPayer);
@@ -143,7 +188,7 @@ public function getdata($idR){
         }
 
         return $this->renderForm('comptabilte/ligneversementfrais/edit.html.twig', [
-            'ligneversementfrai' => $ligneversementfrai,
+            'ligneversementfrais' => $ligneversementfrais,
             'form' => $form,
         ]);
     }
