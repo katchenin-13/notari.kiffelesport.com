@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller\Compte;
+namespace App\Controller\compte;
 
 use App\Entity\Calendar;
 use App\Form\Calendar1Type;
@@ -41,7 +41,7 @@ class CompteController extends BaseController
             ->add('datecreation', DateTimeColumn::class,  ['label' => 'Date de creation ', 'format' => 'd/m/Y', 'searchable' => false])
             ->add('montant', TextColumn::class,  ['label' => 'Montant dû '])
             ->add('montantpaye', TextColumn::class, ['label' => 'Total payé', "searchable" => false, 'render' => function ($value, Compte $context) {
-                $montantpaye = $context->getMontant() - $context->getSolde();
+                $montantpaye = (float)$context->getMontant() - (float)$context->getSolde();
                 return $montantpaye ;
             }])
 

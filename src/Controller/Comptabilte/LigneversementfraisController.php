@@ -18,6 +18,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Controller\BaseController;
 use App\Entity\Compte;
+use App\Form\LigneVersementFaisEditType;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\QueryBuilder;
 #[Route('/ads/comptabilte/ligneversementfrais')]
@@ -84,12 +85,13 @@ public function getdata($idR){
                 'render' => function ($value, Ligneversementfrais $context) use ($renders) {
                     $options = [
                         'default_class' => 'btn btn-xs btn-clean btn-icon mr-2 ',
-                        'target' => '#exampleModalSizeLg2',
+                        'target' => '#modal-xl2',
 
                         'actions' => [
                             'edit' => [
                                 'url' => $this->generateUrl('app_comptabilte_ligneversementfrais_edit', ['id' => $value]),
                                 'ajax' => true,
+                                'stacked' => true,
                                 'icon' => '%icon% bi bi-pen',
                                 'attrs' => ['class' => 'btn-default'],
                                 'render' => $renders['edit']
@@ -97,6 +99,7 @@ public function getdata($idR){
                             'show' => [
                                 'url' => $this->generateUrl('app_comptabilte_ligneversementfrais_show', ['id' => $value]),
                                 'ajax' => true,
+                                   'stacked' => true,
                                 'icon' => '%icon% bi bi-eye',
                                 'attrs' => ['class' => 'btn-primary'],
                                 'render' => $renders['show']
@@ -105,6 +108,7 @@ public function getdata($idR){
                                 'target' => '#exampleModalSizeNormal',
                                 'url' => $this->generateUrl('app_comptabilte_ligneversementfrais_delete', ['id' => $value]),
                                 'ajax' => true,
+                                   'stacked' => true,
                                 'icon' => '%icon% bi bi-trash',
                                 'attrs' => ['class' => 'btn-main'],
                                 'render' => $renders['delete']
@@ -249,7 +253,7 @@ public function getdata($idR){
     public function edit(Request $request, Ligneversementfrais $ligneversementfrai, EntityManagerInterface $entityManager, FormError $formError): Response
     {
 
-        $form = $this->createForm(LigneversementfraisType::class, $ligneversementfrai, [
+        $form = $this->createForm(LigneVersementFaisEditType::class, $ligneversementfrai, [
             'method' => 'POST',
             'action' => $this->generateUrl('app_comptabilte_ligneversementfrais_edit', [
                 'id' => $ligneversementfrai->getId()

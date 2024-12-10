@@ -21,7 +21,10 @@
             <div class="col-md-3">{{ form_row(form.datedepense) }}</div>
             <div class="col-md-6">{{ form_row(form.mois) }}</div>
         </div>
-        {{ prototype_ligne_depenses(form) }}
+          <div class="p-8">
+    
+    {{ prototype_ligne_depenses(form) }}
+    </div>
     <div class="modal-footer">
         {# {{ include('_includes/ajax/loader.html.twig') }} #}
         <button type="button" class="btn btn-default btn-sm" data-bs-dismiss="modal">Annuler</button>

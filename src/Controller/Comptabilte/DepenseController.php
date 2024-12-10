@@ -158,7 +158,7 @@ class DepenseController extends BaseController
                     'render' => function ($value, Depense $context) use ($renders) {
                         $options = [
                             'default_class' => 'btn btn-xs btn-clean btn-icon mr-2 ',
-                            'target' => '#exampleModalSizeLg2',
+                            'target' => '#modal-xl2',
 
                             'actions' => [
                                 'edit' => [

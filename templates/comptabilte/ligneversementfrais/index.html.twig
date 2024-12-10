@@ -40,33 +40,33 @@
 
             
         });
-    $(function () {
-        var elements = Array.from(document.querySelectorAll("[data-bs-stacked-modal]"));
+  $(function () {
+	  var elements = Array.from(document.querySelectorAll("[data-bs-stacked-modal]"));
 
-        if (elements && elements.length > 0) {
-            elements.forEach((element) => {
-                if (element.getAttribute("data-kt-initialized") === "1") {
-                    return;
-                }
-
-                const url = element.getAttribute('href');
-                element.setAttribute("data-kt-initialized", "1");
-
-
-                element.addEventListener("click", function (e) {
-                    e.preventDefault();
-
-                    const modalEl = document.querySelector(this.getAttribute("data-bs-stacked-modal"));
-
-                    if (modalEl) {
-                        const modal = new bootstrap.Modal(modalEl);
-                        modal.show(element);
+            if (elements && elements.length > 0) {
+                elements.forEach((element) => {
+                    if (element.getAttribute("data-kt-initialized") === "1" ) {
+                        return;
                     }
-                });
-            });
-        }
 
-    })
+                    const url = element.getAttribute('href');
+                    element.setAttribute("data-kt-initialized", "1");
+
+
+                    element.addEventListener("click", function(e) {
+                        e.preventDefault();
+
+                        const modalEl = document.querySelector(this.getAttribute("data-bs-stacked-modal"));
+
+                        if (modalEl) {
+                            const modal = new bootstrap.Modal(modalEl);
+                            modal.show(element);
+                        }
+                    });
+                });
+            }
+
+})
 
 </script>
 {% endblock %}
