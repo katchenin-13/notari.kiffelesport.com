@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller\Comptabilte;
+namespace App\Controller\Gestionfournisseur\Marche;
 
 use App\Entity\Ligneversementfrais;
 use App\Form\LigneversementfraisType;
@@ -21,8 +21,8 @@ use App\Entity\Compte;
 use App\Form\LigneVersementFaisEditType;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\QueryBuilder;
-#[Route('/ads/comptabilte/ligneversementfrais')]
-class LigneversementfraisController extends BaseController
+#[Route('/ads/Gestionfournisseur/marche')]
+class LigneversementmarcheController extends BaseController
 {
     const INDEX_ROOT_NAME = 'app_comptabilte_ligneversementfrais_index';
 
@@ -135,7 +135,7 @@ public function getdata($idR){
 
     
     #[Route('/{id}/new', name: 'app_comptabilte_ligneversementfrais_new', methods: ['GET', 'POST'])]
-    public function new(Request $request,Compte $compte,   Ligneversementfrais $ligneversementfrai, LigneversementfraisRepository $ligneversementfraisRepository, EntityManagerInterface $entityManager, FormError $formError): Response
+    public function new(Request $request, Compte $compte, LigneversementfraisRepository $ligneversementfraisRepository, EntityManagerInterface $entityManager, FormError $formError): Response
     {
 
         $form = $this->createForm(LigneversementfraisType::class, $compte, [
@@ -250,18 +250,13 @@ public function getdata($idR){
     }
 
     #[Route('/{id}/edit', name: 'app_comptabilte_ligneversementfrais_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request,Compte $compte, Ligneversementfrais $ligneversementfrai, EntityManagerInterface $entityManager, FormError $formError): Response
+    public function edit(Request $request, Compte $compte, LigneversementfraisRepository $ligneversementfraisRepository, Ligneversementfrais $ligneversementfrai, EntityManagerInterface $entityManager, FormError $formError): Response
     {
-        $comptes = $entityManager->getRepository(Compte::class)->find($compte->getId());
 
-        if (!$compte) {
-            throw $this->createNotFoundException('Compte introuvable');
-        }
-       dd($compte);
-        $form = $this->createForm(LigneVersementFaisEditType::class, $ligneversementfrai, [
+        $form = $this->createForm(LigneversementfraisType::class, $compte, [
             'method' => 'POST',
             'action' => $this->generateUrl('app_comptabilte_ligneversementfrais_edit', [
-                'id' => $ligneversementfrai->getId()
+                'id' => $compte->getId()
             ])
         ]);
 
@@ -277,11 +272,60 @@ public function getdata($idR){
             $response = [];
             $redirect = $this->generateUrl('app_comptabilte_ligneversementfrais_index', [ 'id' => $ligneversementfrai->getCompte()->getId() ]);
 
+            $montant = (int) $form->get('montant')->getData();
+            $date = $form->get('datePaiement')->getData();
+            $somme = 0;
+
+
+            $lignes = $ligneversementfraisRepository->findBy(['compte' => $compte->getId()]);
+
+            if ($lignes) {
+
+                foreach ($lignes as $key => $info) {
+                    $somme += (int)$info->getMontantverse();
+                    $resteAPayer = abs((int)$compte->getMontant() - $somme);
+                }
+            } else {
+                $resteAPayer = abs((int)$compte->getMontant());
+            }
+
 
             if ($form->isValid()) {
 
-                $entityManager->persist($ligneversementfrai);
-                $entityManager->flush();
+
+                if ($resteAPayer >= $montant) {
+
+               
+
+                    $compte->setSolde($resteAPayer);
+
+                    $entityManager->persist($compte);
+                    $entityManager->flush();
+
+                    $load_tab = true;
+                    $statut = 1;
+
+                    $message = sprintf('Opération effectuée avec succès');
+                    $this->addFlash('success', $message);
+                } else {
+
+                    $statut = 0;
+
+                    $message = sprintf('Désole échec de paiement car le montant  saisi est superieur au montant  [%s] qui reste à payer pour un montant total de  %s', $montant, $resteAPayer);
+                    $this->addFlash('danger', $message);
+                }
+
+
+                $url = [
+                    'url' => $this->generateUrl('app_config_frais_paiement_index', [
+                        'id' => $compte->getId()
+                    ]),
+                    'tab' => '#module0',
+                    'current' => '#module0'
+                ];
+
+                $tabId = self::TAB_ID;
+                $redirect = $url['url'];
 
                 $data = true;
                 $message = 'Opération effectuée avec succès';
