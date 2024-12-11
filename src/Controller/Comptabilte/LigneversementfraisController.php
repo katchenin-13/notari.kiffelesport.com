@@ -135,13 +135,13 @@ public function getdata($idR){
 
     
     #[Route('/{id}/new', name: 'app_comptabilte_ligneversementfrais_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, Ligneversementfrais $ligneversementfrai, LigneversementfraisRepository $ligneversementfraisRepository, EntityManagerInterface $entityManager, FormError $formError): Response
+    public function new(Request $request,Compte $compte,   Ligneversementfrais $ligneversementfrai, LigneversementfraisRepository $ligneversementfraisRepository, EntityManagerInterface $entityManager, FormError $formError): Response
     {
 
-        $form = $this->createForm(LigneversementfraisType::class, $ligneversementfrai, [
+        $form = $this->createForm(LigneversementfraisType::class, $compte, [
             'method' => 'POST',
             'action' => $this->generateUrl('app_comptabilte_ligneversementfrais_new', [
-                'id' => $ligneversementfrai->getId()
+                'id' => $compte->getId()
             ])
         ]);
 
@@ -252,7 +252,7 @@ public function getdata($idR){
     #[Route('/{id}/edit', name: 'app_comptabilte_ligneversementfrais_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Ligneversementfrais $ligneversementfrai, EntityManagerInterface $entityManager, FormError $formError): Response
     {
-
+       
         $form = $this->createForm(LigneVersementFaisEditType::class, $ligneversementfrai, [
             'method' => 'POST',
             'action' => $this->generateUrl('app_comptabilte_ligneversementfrais_edit', [
