@@ -20,7 +20,7 @@ class Identification
     // #[Assert\NotBlank(message: 'Veuillez sélectionner un vendeur', groups: ['identification'])]
     // private $vendeur;
 
-    #[ORM\ManyToOne(targetEntity: Dossier::class, inversedBy: 'identifications')]
+    #[ORM\ManyToOne(targetEntity: Dossier::class, inversedBy: 'identifications',)]
     #[ORM\JoinColumn(onDelete: "CASCADE")]
     private $dossier;
 

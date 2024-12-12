@@ -11,18 +11,12 @@ use Gedmo\Mapping\Annotation as Gedmo; // gedmo annotations
 
 
 #[ORM\Entity(repositoryClass: CompteRepository::class)]
-class Compte
+class CompteFournisseur
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
-
-    #[ORM\ManyToOne(inversedBy: 'comptes')]
-    private ?Client $client = null;
-
-    #[ORM\ManyToOne(inversedBy: 'comptes')]
-    private ?Dossier $dossier = null;
 
     #[ORM\Column(length: 255)]
     private ?string $montant = null;
@@ -32,26 +26,33 @@ class Compte
     private ?string $solde = null;
 
     #[ORM\Column(type: 'boolean')]
+    #[ORM\JoinColumn(nullable: false)]
     private $active;
 
 
     #[ORM\Column(type: 'boolean', nullable: true)]
+    #[ORM\JoinColumn(nullable: false)]
     private $etat;
 
-    #[ORM\OneToMany(mappedBy: 'compte', targetEntity: Ligneversementfrais::class)]
-    private Collection $ligneversementfrais;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
     #[Gedmo\Timestampable(on: 'create')]
     private ?\DateTimeInterface $datecreation = null;
 
+  
 
+    #[ORM\OneToMany(mappedBy: 'comptefournisseurs', targetEntity: Lignepaiementmarche::class)]
+    private Collection $lignepaiementmarches;
 
- 
-   
+    #[ORM\ManyToOne(inversedBy: 'compteFournisseurs')]
+    private ?Marche $marches = null;
+
+    #[ORM\ManyToOne(inversedBy: 'compteFournisseurs')]
+    private ?Fournisseur $fournisseurs = null;
+
     public function __construct()
     {
-        $this->ligneversementfrais = new ArrayCollection();
+        $this->lignepaiementmarches = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -59,29 +60,8 @@ class Compte
         return $this->id;
     }
 
-    public function getClient(): ?Client
-    {
-        return $this->client;
-    }
 
-    public function setClient(?Client $client): static
-    {
-        $this->client = $client;
-
-        return $this;
-    }
-
-    public function getDossier(): ?Dossier
-    {
-        return $this->dossier;
-    }
-
-    public function setDossier(?Dossier $dossier): static
-    {
-        $this->dossier = $dossier;
-
-        return $this;
-    }
+ 
 
     public function getMontant(): ?string
     {
@@ -133,35 +113,7 @@ class Compte
         return $this;
     }
 
-    /**
-     * @return Collection<int, Ligneversementfrais>
-     */
-    public function getLigneversementfrais(): Collection
-    {
-        return $this->ligneversementfrais;
-    }
-
-    public function addLigneversementfrai(Ligneversementfrais $ligneversementfrai): static
-    {
-        if (!$this->ligneversementfrais->contains($ligneversementfrai)) {
-            $this->ligneversementfrais->add($ligneversementfrai);
-            $ligneversementfrai->setCompte($this);
-        }
-
-        return $this;
-    }
-
-    public function removeLigneversementfrai(Ligneversementfrais $ligneversementfrai): static
-    {
-        if ($this->ligneversementfrais->removeElement($ligneversementfrai)) {
-            // set the owning side to null (unless already changed)
-            if ($ligneversementfrai->getCompte() === $this) {
-                $ligneversementfrai->setCompte(null);
-            }
-        }
-
-        return $this;
-    }
+   
 
     public function getDatecreation(): ?\DateTimeInterface
     {
@@ -174,7 +126,61 @@ class Compte
 
         return $this;
     }
-  
-   
+
+ 
+
+    /**
+     * @return Collection<int, Lignepaiementmarche>
+     */
+    public function getLignepaiementmarches(): Collection
+    {
+        return $this->lignepaiementmarches;
+    }
+
+    public function addLignepaiementmarch(Lignepaiementmarche $lignepaiementmarch): static
+    {
+        if (!$this->lignepaiementmarches->contains($lignepaiementmarch)) {
+            $this->lignepaiementmarches->add($lignepaiementmarch);
+            $lignepaiementmarch->setComptefournisseurs($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLignepaiementmarch(Lignepaiementmarche $lignepaiementmarch): static
+    {
+        if ($this->lignepaiementmarches->removeElement($lignepaiementmarch)) {
+            // set the owning side to null (unless already changed)
+            if ($lignepaiementmarch->getComptefournisseurs() === $this) {
+                $lignepaiementmarch->setComptefournisseurs(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getMarches(): ?Marche
+    {
+        return $this->marches;
+    }
+
+    public function setMarches(?Marche $marches): static
+    {
+        $this->marches = $marches;
+
+        return $this;
+    }
+
+    public function getFournisseurs(): ?Fournisseur
+    {
+        return $this->fournisseurs;
+    }
+
+    public function setFournisseurs(?Fournisseur $fournisseurs): static
+    {
+        $this->fournisseurs = $fournisseurs;
+
+        return $this;
+    }
 
 }

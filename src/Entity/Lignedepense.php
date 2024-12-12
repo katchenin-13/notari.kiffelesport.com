@@ -13,8 +13,7 @@ class Lignedepense
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\ManyToOne(inversedBy: 'lignedepenses')]
-    #[ORM\JoinColumn(nullable: true)]
+    #[ORM\ManyToOne(inversedBy: 'lignedepenses',targetEntity: Typedepense::class)]
     private ?Typedepense $typedepense = null;
 
     
@@ -28,7 +27,7 @@ class Lignedepense
     #[ORM\JoinColumn(nullable: false)]
     private ?FichierAdmin $fichier = null;
 
-    #[ORM\ManyToOne(inversedBy: 'lignedepenses')]
+    #[ORM\ManyToOne(inversedBy: 'lignedepenses',targetEntity: Depense::class)]
     private ?Depense $depenses = null;
     public function getId(): ?int
     {

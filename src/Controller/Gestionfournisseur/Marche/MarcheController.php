@@ -17,6 +17,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Controller\BaseController;
+use App\Entity\CompteFournisseur;
 use App\Form\MarchePaiementType;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\QueryBuilder;
@@ -39,18 +40,18 @@ class MarcheController extends BaseController
             ->add('libelle', TextColumn::class, ['label' => 'Libelle'])
             ->add('montanttotal', TextColumn::class, ['label' => 'Montant Total'])
             ->add('solde', TextColumn::class, ['label' => 'Solde'])
-            ->add('montantpaye', TextColumn::class, [
-                'label' => 'Total payé',
-                "searchable" => false,
-                'render' => function ($value, Marche $context) {
-                    $montantTotal = $context->getMontanttotal() ? floatval(str_replace(',', '.', $context->getMontanttotal())) : 0;
-                    $solde = $context->getSolde() ? floatval(str_replace(',', '.', $context->getSolde())) : 0;
+            // ->add('montantpaye', TextColumn::class, [
+            //     'label' => 'Total payé',
+            //     "searchable" => false,
+            //     'render' => function ($value, Marche $context) {
+            //         $montantTotal = $context->getMontanttotal() ? floatval(str_replace(',', '.', $context->getMontanttotal())) : 0;
+            //         $solde = $context->getSolde() ? floatval(str_replace(',', '.', $context->getSolde())) : 0;
 
-                    $montantPaye = $montantTotal - $solde;
+            //         $montantPaye = $montantTotal - $solde;
 
-                    return number_format($montantPaye, 2, ',', ' ');
-                }
-            ])
+            //         return number_format($montantPaye, 2, ',', ' ');
+            //     }
+            // ])
 
             ->createAdapter(ORMAdapter::class, [
                 'entity' => Marche::class,
@@ -204,6 +205,16 @@ class MarcheController extends BaseController
             if ($form->isValid()) {
                 if ($marche->getMontanttotal() != null) {
                     $marche->setSolde($marche->getMontanttotal());
+                    //enregistrement d'un compte de fournisseur
+                    $compteFournisseur = new CompteFournisseur();
+                    
+                    $compteFournisseur->setFournisseurs($marche->getFournisseur());
+                    $compteFournisseur->setMarches($marche);
+                    $compteFournisseur->setMontant($marche->getMontanttotal());
+                    $compteFournisseur->setSolde($marche->getMontanttotal());
+                    $marche->addCompteFournisseur($compteFournisseur);
+                    // $entityManager->persist($compteFournisseur);
+                    // $entityManager->flush();
                     # code...
                 } else {
                     throw new \Exception("Le montant total est obligatoire");

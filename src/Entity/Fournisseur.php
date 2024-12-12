@@ -2,12 +2,13 @@
 
 namespace App\Entity;
 
-use App\Repository\FournisseurRepository;
+
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: FournisseurRepository::class)]
+#[ORM\Entity]
+#[ORM\Table(name: 'fournisseur')]
 class Fournisseur
 {
     #[ORM\Id]
@@ -24,12 +25,17 @@ class Fournisseur
     #[ORM\Column(length: 255)]
     private ?string $contact = null;
 
-    #[ORM\OneToMany(mappedBy: 'fournisseur', targetEntity: Marche::class)]
+    #[ORM\OneToMany(mappedBy: 'fournisseur', targetEntity: Marche::class, orphanRemoval: true, cascade: ['persist', 'remove'])]
     private Collection $marches;
 
+    #[ORM\OneToMany(mappedBy: 'fournisseurs', targetEntity: CompteFournisseur::class, orphanRemoval: true, cascade: ['persist', 'remove'])]
+    private Collection $compteFournisseurs;
+
+ 
     public function __construct()
     {
         $this->marches = new ArrayCollection();
+        $this->compteFournisseurs = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -102,4 +108,38 @@ class Fournisseur
 
         return $this;
     }
+
+    /**
+     * @return Collection<int, CompteFournisseur>
+     */
+    public function getCompteFournisseurs(): Collection
+    {
+        return $this->compteFournisseurs;
+    }
+
+    public function addCompteFournisseur(CompteFournisseur $compteFournisseur): static
+    {
+        if (!$this->compteFournisseurs->contains($compteFournisseur)) {
+            $this->compteFournisseurs->add($compteFournisseur);
+            $compteFournisseur->setFournisseurs($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCompteFournisseur(CompteFournisseur $compteFournisseur): static
+    {
+        if ($this->compteFournisseurs->removeElement($compteFournisseur)) {
+            // set the owning side to null (unless already changed)
+            if ($compteFournisseur->getFournisseurs() === $this) {
+                $compteFournisseur->setFournisseurs(null);
+            }
+        }
+
+        return $this;
+    }
+
+ 
+   
+   
 }
