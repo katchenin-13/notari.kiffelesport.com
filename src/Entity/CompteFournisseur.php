@@ -41,7 +41,7 @@ class CompteFournisseur
 
   
 
-    #[ORM\OneToMany(mappedBy: 'comptefournisseurs', targetEntity: Lignepaiementmarche::class)]
+    #[ORM\OneToMany(mappedBy: 'comptefournisseurs', targetEntity: Lignepaiementmarche::class, orphanRemoval: true, cascade: ['persist', 'remove'])]
     private Collection $lignepaiementmarches;
 
     #[ORM\ManyToOne(inversedBy: 'compteFournisseurs')]

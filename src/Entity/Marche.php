@@ -29,8 +29,6 @@ class Marche
 
 
 
-    #[ORM\OneToMany(mappedBy: 'marche', targetEntity: Paimentmarche::class, orphanRemoval: true, cascade: ['persist', 'remove'])]
-    private Collection $paimentmarches;
 
     #[ORM\ManyToOne(inversedBy: 'marches')]
     private ?Fournisseur $fournisseur = null;
@@ -48,7 +46,6 @@ class Marche
     private Collection $compteFournisseurs;
     public function __construct()
     {
-        $this->paimentmarches = new ArrayCollection();
         $this->compteFournisseurs = new ArrayCollection();
     }
 
@@ -95,35 +92,6 @@ class Marche
 
    
 
-    /**
-     * @return Collection<int, Paimentmarche>
-     */
-    public function getPaimentmarches(): Collection
-    {
-        return $this->paimentmarches;
-    }
-
-    public function addPaimentmarch(Paimentmarche $paimentmarch): static
-    {
-        if (!$this->paimentmarches->contains($paimentmarch)) {
-            $this->paimentmarches->add($paimentmarch);
-            $paimentmarch->setMarche($this);
-        }
-
-        return $this;
-    }
-
-    public function removePaimentmarch(Paimentmarche $paimentmarch): static
-    {
-        if ($this->paimentmarches->removeElement($paimentmarch)) {
-            // set the owning side to null (unless already changed)
-            if ($paimentmarch->getMarche() === $this) {
-                $paimentmarch->setMarche(null);
-            }
-        }
-
-        return $this;
-    }
 
     public function getFournisseur(): ?Fournisseur
     {

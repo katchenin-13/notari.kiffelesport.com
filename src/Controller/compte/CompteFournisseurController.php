@@ -25,7 +25,7 @@ use App\Form\CompteFournisseurType;
 use App\Form\CompteType;
 use Doctrine\ORM\QueryBuilder;
 
-#[Route('/ads/Compte/fournisseur')]
+#[Route('/ads/compte/fournisseur')]
 class CompteFournisseurController extends BaseController
 {
     const INDEX_ROOT_NAME = 'app_compte_fournisseur_index';

@@ -38,7 +38,7 @@ class Compte
     #[ORM\Column(type: 'boolean', nullable: true)]
     private $etat;
 
-    #[ORM\OneToMany(mappedBy: 'compte', targetEntity: Ligneversementfrais::class)]
+    #[ORM\OneToMany(mappedBy: 'compte', targetEntity: Ligneversementfrais::class, orphanRemoval: true, cascade: ['persist', 'remove'])]
     private Collection $ligneversementfrais;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
