@@ -249,7 +249,7 @@ class LignepaiementmarcheController extends BaseController
 
         return $this->renderForm('comptabilte/lignepaiementmarche/new.html.twig', [
             // 'ligneversementfrai' => $ligneversementfrai,
-            'comptefour' => $comptefour,
+           // 'comptefour' => $comptefour,
             'form' => $form,
         ]);
     }

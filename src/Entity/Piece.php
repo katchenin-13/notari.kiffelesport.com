@@ -23,9 +23,10 @@ class Piece
     private $dossier;
 
 
-    #[ORM\OneToOne(cascade: ["persist"], fetch: "EAGER")]
-    #[ORM\JoinColumn(nullable: true)]
+    #[ORM\ManyToOne(cascade: ["persist"], fetch: "EAGER")]
+    #[ORM\JoinColumn(nullable: false)]
     private ?FichierAdmin $path = null;
+
     
 
     #[ORM\Column(length: 255)]
