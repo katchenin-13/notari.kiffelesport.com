@@ -15,6 +15,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Controller\BaseController;
+use App\Entity\Compte;
+use App\Entity\Comptefour;
 use App\Entity\CompteFournisseur;
 use App\Entity\Lignepaiementmarche;
 use App\Form\LignepaiementmarcheEditType;
@@ -42,15 +44,15 @@ class LignepaiementmarcheController extends BaseController
       
 
         $table = $dataTableFactory->create()
-            ->add('comptefournisseurs', TextColumn::class, ['label' => 'N° Compte', 'field' => 'c.id'])
+            ->add('comptefours', TextColumn::class, ['label' => 'N° Compte', 'field' => 'c.id'])
             ->add('datepaiement', DateTimeColumn::class, ['label' => 'Date de paiement', 'format' => 'd/m/Y'])
             ->add('montantverse', TextColumn::class, ['label' => 'Montant'])
             ->createAdapter(ORMAdapter::class, [
                 'entity' => Lignepaiementmarche::class,
                 'query' => function (QueryBuilder $qb) use ($idM) {
-                    $qb->select('c,l')
+                    $qb->select('l')
                     ->from(Lignepaiementmarche::class, 'l')
-                        ->join('l.comptefournisseurs', 'c')
+                        ->join('l.comptefours', 'c')
                         // ->join('c.fournisseurs', 'f')
                         ->andWhere('c.id = :id')
                         ->setParameter('id', $idM);
@@ -139,13 +141,13 @@ class LignepaiementmarcheController extends BaseController
 
     
     #[Route('/{id}/new', name: 'app_comptabilte_lignepaiementmarche_new', methods: ['GET', 'POST'])]
-    public function new(Request $request,CompteFournisseur $compteFournisseur,Lignepaiementmarche $lignepaiementmarche, LignepaiementmarcheRepository $lignepaiementmarcheRepository, EntityManagerInterface $entityManager, FormError $formError): Response
+    public function new(Request $request,Comptefour $comptefour,LignepaiementmarcheRepository $lignepaiementmarcheRepository, EntityManagerInterface $entityManager, FormError $formError): Response
     {
 
-        $form = $this->createForm(LignepaiementmarcheType::class, $compteFournisseur, [
+        $form = $this->createForm(LignepaiementmarcheEditType::class, $comptefour, [
             'method' => 'POST',
             'action' => $this->generateUrl('app_comptabilte_lignepaiementmarche_new', [
-                'id' => $compteFournisseur->getId()
+                'id' => $comptefour->getId()
             ])
         ]);
 
@@ -169,34 +171,33 @@ class LignepaiementmarcheController extends BaseController
             $somme = 0;
 
 
-            $lignes = $lignepaiementmarcheRepository->findBy(['compte' => $compteFournisseur->getId()]);
+            $lignes = $lignepaiementmarcheRepository->findBy(['compte' => $comptefour->getId()]);
 
             if ($lignes) {
 
                 foreach ($lignes as $key => $info) {
                     $somme += (int)$info->getMontantverse();
-                    $resteAPayer = abs((int)$compteFournisseur->getMontant() - $somme);
+                    $resteAPayer = abs((int)$comptefour->getMontant() - $somme);
                 }
             } else {
-                $resteAPayer = abs((int)$compteFournisseur->getMontant());
+                $resteAPayer = abs((int)$comptefour->getMontant());
             }
 
 
             if ($form->isValid()) {
 
-
                 if ($resteAPayer >= $montant) {
 
                     $ligneversementfrai = new Lignepaiementmarche();
                     $ligneversementfrai->setDatepaiement($date);
-                    $ligneversementfrai->setComptefournisseurs($compteFournisseur);
+                    $ligneversementfrai->setComptefour($comptefour);
                     $ligneversementfrai->setMontantverse($montant);
                     $entityManager->persist($ligneversementfrai);
                     $entityManager->flush();
 
-                    $compteFournisseur->setSolde($resteAPayer);
+                    $comptefour->setSolde($resteAPayer);
 
-                    $entityManager->persist($compteFournisseur);
+                    $entityManager->persist($comptefour);
                     $entityManager->flush();
 
                     $load_tab = true;
@@ -215,7 +216,7 @@ class LignepaiementmarcheController extends BaseController
 
                 $url = [
                     'url' => $this->generateUrl('app_config_frais_paiement_index', [
-                        'id' => $compteFournisseur->getId()
+                        'id' => $comptefour->getId()
                     ]),
                     'tab' => '#module0',
                     'current' => '#module0'
@@ -248,7 +249,7 @@ class LignepaiementmarcheController extends BaseController
 
         return $this->renderForm('comptabilte/lignepaiementmarche/new.html.twig', [
             // 'ligneversementfrai' => $ligneversementfrai,
-            'compteFournisseur' => $compteFournisseur,
+            'comptefour' => $comptefour,
             'form' => $form,
         ]);
     }
@@ -281,16 +282,16 @@ class LignepaiementmarcheController extends BaseController
             $somme = 0;
            
 
-            $lignes = $lignepaiementmarcheRepository->findBy(['compte' => $lignepaiementmarche->getComptefournisseurs()->getId()]);
+            $lignes = $lignepaiementmarcheRepository->findBy(['compte' => $lignepaiementmarche->getComptefour()->getId()]);
 
             if ($lignes) {
 
                 foreach ($lignes as $key => $info) {
                     $somme += (int)$info->getMontantverse();
-                    $resteAPayer = abs((int)$lignepaiementmarche->getComptefournisseurs()->getMontant() - $somme);
+                    $resteAPayer = abs((int)$lignepaiementmarche->getComptefour()->getMontant() - $somme);
                 }
             } else {
-                $resteAPayer = abs((int)$lignepaiementmarche->getComptefournisseurs()->getMontant());    
+                $resteAPayer = abs((int)$lignepaiementmarche->getComptefour()->getMontant());    
             }
 
             if ($form->isValid()) {
@@ -303,7 +304,7 @@ class LignepaiementmarcheController extends BaseController
                     $entityManager->persist($lignepaiementmarche);
                     $entityManager->flush();
 
-                    $compte = $lignepaiementmarche->getComptefournisseurs();
+                    $compte = $lignepaiementmarche->getComptefour();
                     $compte->setSolde($resteAPayer);
 
                     $entityManager->persist($compte);
@@ -318,7 +319,7 @@ class LignepaiementmarcheController extends BaseController
                 $this->addFlash('success', $message);
                  $url = [
                     'url' => $this->generateUrl('app_config_frais_paiement_index', [
-                        'id' => $lignepaiementmarche->getComptefournisseurs()->getId()
+                        'id' => $lignepaiementmarche->getComptefour()->getId()
                     ]),
                     'tab' => '#module0',
                     'current' => '#module0'

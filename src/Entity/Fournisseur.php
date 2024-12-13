@@ -28,14 +28,14 @@ class Fournisseur
     #[ORM\OneToMany(mappedBy: 'fournisseur', targetEntity: Marche::class, orphanRemoval: true, cascade: ['persist', 'remove'])]
     private Collection $marches;
 
-    #[ORM\OneToMany(mappedBy: 'fournisseurs', targetEntity: CompteFournisseur::class, orphanRemoval: true, cascade: ['persist', 'remove'])]
-    private Collection $compteFournisseurs;
+    #[ORM\OneToMany(mappedBy: 'fournisseur', targetEntity: Comptefour::class, orphanRemoval: true, cascade: ['persist', 'remove'])]
+    private Collection $comptefour;
 
  
     public function __construct()
     {
         $this->marches = new ArrayCollection();
-        $this->compteFournisseurs = new ArrayCollection();
+        $this->comptefour = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -78,68 +78,66 @@ class Fournisseur
 
         return $this;
     }
-
+   
     /**
-     * @return Collection<int, Marche>
+     * @return Collection<int, CompteFournisseur>
      */
-    public function getMarches(): Collection
+    public function getCompteFournisseur(): Collection
     {
-        return $this->marches;
+        return $this->comptefour;
     }
 
-    public function addMarch(Marche $march): static
+    public function addCompteFournisseur(CompteFour $comptefour): static
     {
-        if (!$this->marches->contains($march)) {
-            $this->marches->add($march);
-            $march->setFournisseur($this);
+        if (!$this->comptefour->contains($comptefour)) {
+            $this->comptefour->add($comptefour);
+            $comptefour->setFournisseurs($this);
         }
 
         return $this;
     }
 
-    public function removeMarch(Marche $march): static
+    public function removeCompteFournisseur(CompteFour $comptefour): static
     {
-        if ($this->marches->removeElement($march)) {
+        if ($this->comptefour->removeElement($comptefour)) {
             // set the owning side to null (unless already changed)
-            if ($march->getFournisseur() === $this) {
-                $march->setFournisseur(null);
+            if ($comptefour->getFournisseurs() === $this) {
+                $comptefour->setFournisseurs(null);
             }
         }
 
         return $this;
     }
+
 
     /**
      * @return Collection<int, CompteFournisseur>
      */
-    public function getCompteFournisseurs(): Collection
+    public function getMarche(): Collection
     {
-        return $this->compteFournisseurs;
+        return $this->marches;
     }
 
-    public function addCompteFournisseur(CompteFournisseur $compteFournisseur): static
+    public function addMarche(Marche $marche): static
     {
-        if (!$this->compteFournisseurs->contains($compteFournisseur)) {
-            $this->compteFournisseurs->add($compteFournisseur);
-            $compteFournisseur->setFournisseurs($this);
+        if (!$this->marches->contains($marche)) {
+            $this->marches->add($marche);
+            $marche->setFournisseur($this);
         }
 
         return $this;
     }
 
-    public function removeCompteFournisseur(CompteFournisseur $compteFournisseur): static
+    public function removeMarche(Marche $marche): static
     {
-        if ($this->compteFournisseurs->removeElement($compteFournisseur)) {
+        if ($this->marches->removeElement($marche)) {
             // set the owning side to null (unless already changed)
-            if ($compteFournisseur->getFournisseurs() === $this) {
-                $compteFournisseur->setFournisseurs(null);
+            if ($marche->getFournisseur() === $this) {
+                $marche->setFournisseur(null);
             }
         }
 
         return $this;
     }
-
- 
-   
    
 }

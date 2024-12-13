@@ -42,15 +42,11 @@ class Marche
     private ?\DateTimeInterface $datecreation = null;
 
 
-<<<<<<< HEAD
     #[ORM\OneToMany(mappedBy: 'marches', targetEntity: Comptefour::class, orphanRemoval: true, cascade: ['persist', 'remove'])]
-=======
-    #[ORM\OneToMany(mappedBy: 'marches', targetEntity: CompteFournisseur::class, orphanRemoval: true, cascade: ['persist', 'remove'])]
->>>>>>> b6f1842a7fec2506df675de17037826c2c1327b4
-    private Collection $compteFournisseurs;
+    private Collection $comptefour;
     public function __construct()
     {
-        $this->compteFournisseurs = new ArrayCollection();
+        $this->comptefour = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -136,43 +132,29 @@ class Marche
 
    
     /**
-<<<<<<< HEAD
      * @return Collection<int, Comptefour>
      */
     public function getComptefours(): Collection
-=======
-     * @return Collection<int, CompteFournisseur>
-     */
-    public function getCompteFournisseurs(): Collection
->>>>>>> b6f1842a7fec2506df675de17037826c2c1327b4
     {
-        return $this->compteFournisseurs;
+        return $this->comptefour;
     }
 
-<<<<<<< HEAD
-    public function addComptefour(Comptefour $compteFournisseur): static
-=======
-    public function addCompteFournisseur(CompteFournisseur $compteFournisseur): static
->>>>>>> b6f1842a7fec2506df675de17037826c2c1327b4
+    public function addComptefour(Comptefour $comptefour): static
     {
-        if (!$this->compteFournisseurs->contains($compteFournisseur)) {
-            $this->compteFournisseurs->add($compteFournisseur);
-            $compteFournisseur->setMarches($this);
+        if (!$this->comptefour->contains($comptefour)) {
+            $this->comptefour->add($comptefour);
+            $comptefour->setMarches($this);
         }
 
         return $this;
     }
 
-<<<<<<< HEAD
-    public function removeComptefour(Comptefour $compteFournisseur): static
-=======
-    public function removeCompteFournisseur(CompteFournisseur $compteFournisseur): static
->>>>>>> b6f1842a7fec2506df675de17037826c2c1327b4
+    public function removeComptefour(Comptefour $comptefour): static
     {
-        if ($this->compteFournisseurs->removeElement($compteFournisseur)) {
+        if ($this->comptefour->removeElement($comptefour)) {
             // set the owning side to null (unless already changed)
-            if ($compteFournisseur->getMarches() === $this) {
-                $compteFournisseur->setMarches(null);
+            if ($comptefour->getMarches() === $this) {
+                $comptefour->setMarches(null);
             }
         }
 

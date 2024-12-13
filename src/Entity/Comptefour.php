@@ -98,26 +98,7 @@ class Comptefour
         return $this->lignepaiementmarches;
     }
 
-    public function addLignepaiementmarch(Lignepaiementmarche $lignepaiementmarch): self
-    {
-        if (!$this->lignepaiementmarches->contains($lignepaiementmarch)) {
-            $this->lignepaiementmarches->add($lignepaiementmarch);
-            $lignepaiementmarch->setComptefour($this);
-        }
-
-        return $this;
-    }
-
-    public function removeLignepaiementmarch(Lignepaiementmarche $lignepaiementmarch): self
-    {
-        if ($this->lignepaiementmarches->removeElement($lignepaiementmarch)) {
-            if ($lignepaiementmarch->getComptefour() === $this) {
-                $lignepaiementmarch->setComptefour(null);
-            }
-        }
-
-        return $this;
-    }
+   
 
     public function getMarches(): ?Marche
     {

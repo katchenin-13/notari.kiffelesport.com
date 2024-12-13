@@ -135,7 +135,7 @@ class LigneversementfraisController extends BaseController
 
     
     #[Route('/{id}/new', name: 'app_comptabilte_ligneversementfrais_new', methods: ['GET', 'POST'])]
-    public function new(Request $request,Compte $compte,   Ligneversementfrais $ligneversementfrai, LigneversementfraisRepository $ligneversementfraisRepository, EntityManagerInterface $entityManager, FormError $formError): Response
+    public function new(Request $request,Compte $compte,  LigneversementfraisRepository $ligneversementfraisRepository, EntityManagerInterface $entityManager, FormError $formError): Response
     {
 
         $form = $this->createForm(LigneversementfraisType::class, $compte, [

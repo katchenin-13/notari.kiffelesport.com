@@ -2,16 +2,10 @@
 
 namespace App\Form;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
+
 use App\Entity\Comptefour;
 use App\Form\DataTransformer\ThousandNumberTransformer;
->>>>>>> 11b7eb5 (save pour review)
-=======
-use App\Entity\CompteFournisseur;
-use App\Form\DataTransformer\ThousandNumberTransformer;
->>>>>>> b6f1842a7fec2506df675de17037826c2c1327b4
+
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -42,17 +36,10 @@ class LignepaiementmarcheType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-<<<<<<< HEAD
-<<<<<<< HEAD
-            // Configure your form options here
-=======
+
             'data_class' => Comptefour::class,
 
->>>>>>> 11b7eb5 (save pour review)
-=======
-            'data_class' => CompteFournisseur::class,
 
->>>>>>> b6f1842a7fec2506df675de17037826c2c1327b4
         ]);
     }
 }

@@ -29,8 +29,8 @@ class Lignepaiementmarche
     #[ORM\ManyToOne(inversedBy: 'lignepaiementmarches',targetEntity: Marche::class)]
     private ?Marche $marches = null;
 
-    #[ORM\ManyToOne(inversedBy: 'lignepaiementmarches',targetEntity: CompteFournisseur::class)]
-    private ?CompteFournisseur $comptefournisseurs = null;
+    #[ORM\ManyToOne(inversedBy: 'lignepaiementmarches',targetEntity: Comptefour::class)]
+    private ?Comptefour $comptefours = null;
 
  public function __construct()
     {
@@ -91,14 +91,14 @@ class Lignepaiementmarche
         return $this;
     }
 
-    public function getComptefournisseurs(): ?CompteFournisseur
+    public function getComptefour(): ?Comptefour
     {
-        return $this->comptefournisseurs;
+        return $this->comptefours;
     }
 
-    public function setComptefournisseurs(?CompteFournisseur $comptefournisseurs): static
+    public function setComptefour(?Comptefour $comptefours): static
     {
-        $this->comptefournisseurs = $comptefournisseurs;
+        $this->comptefours = $comptefours;
 
         return $this;
     }

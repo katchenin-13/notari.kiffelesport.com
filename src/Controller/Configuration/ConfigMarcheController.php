@@ -4,6 +4,7 @@
 namespace App\Controller\Configuration;
 
 use App\Entity\Compte;
+use App\Entity\Comptefour;
 use App\Entity\CompteFournisseur;
 use App\Service\Breadcrumb;
 
@@ -21,7 +22,7 @@ class ConfigMarcheController extends AbstractController
 
     #[Route(path: '/fournisseur/compte/{id}', name: 'app_config_fournisseur_paiement_index', methods: ['GET', 'POST'])]
     // #[RoleMethod(title: 'Gestion des Paramètres', as: 'index')]
-    public function indexConfigMarcheVersement(Request $request, Breadcrumb $breadcrumb, int $id, CompteFournisseur $compteFournisseur): Response
+    public function indexConfigMarcheVersement(Request $request, Breadcrumb $breadcrumb, int $id): Response
     {
         $module = $request->query->get('module');
 
@@ -63,7 +64,7 @@ class ConfigMarcheController extends AbstractController
         return $this->render('config/paiement/index_fournisseur.html.twig', [
             'modules' => $modules,
             'breadcrumb' => $breadcrumb,
-            'compteFournisseur' => $compteFournisseur
+            'id' => $id
         ]);
     }
 }
