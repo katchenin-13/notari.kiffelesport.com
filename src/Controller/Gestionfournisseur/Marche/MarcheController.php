@@ -20,6 +20,7 @@ use App\Controller\BaseController;
 use App\Entity\Comptefour;
 use App\Entity\CompteFournisseur;
 use App\Form\MarchePaiementType;
+use App\Repository\ComptefourRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\QueryBuilder;
 
@@ -201,8 +202,7 @@ class MarcheController extends BaseController
 
             $response = [];
             $redirect = $this->generateUrl('app_gestionfournisseur_marche_index');
-
-
+            
             if ($form->isValid()) {
                 if ($marche->getMontanttotal() != null) {
                     //enregistrement d'un compte de fournisseur
@@ -217,6 +217,8 @@ class MarcheController extends BaseController
                 } else {
                     throw new \Exception("Le montant total est obligatoire");
                 }
+                //dd($comptefour);
+                $marche->setSolde($marche->getMontanttotal());
                 $entityManager->persist($marche);
                 $entityManager->flush();
 
@@ -258,7 +260,7 @@ class MarcheController extends BaseController
     }
 
     #[Route('/{id}/edit', name: 'app_gestionfournisseur_marche_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Marche $marche, EntityManagerInterface $entityManager, FormError $formError): Response
+    public function edit(Request $request, Marche $marche, EntityManagerInterface $entityManager,ComptefourRepository $comptefourRepository, FormError $formError): Response
     {
 
         $form = $this->createForm(MarcheType::class, $marche, [
@@ -281,7 +283,14 @@ class MarcheController extends BaseController
             $redirect = $this->generateUrl('app_gestionfournisseur_marche_index');
 
 
+            $comptefour = $comptefourRepository->findOneBy(['marches' => $marche]);
+
             if ($form->isValid()) {
+
+                $comptefour->setSolde($marche->getMontanttotal());
+
+                $entityManager->persist($comptefour);
+                $entityManager->flush();
 
                 $entityManager->persist($marche);
                 $entityManager->flush();

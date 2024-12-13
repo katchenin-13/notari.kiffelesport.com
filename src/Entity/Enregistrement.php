@@ -30,9 +30,9 @@ class Enregistrement
     #[ORM\ManyToOne(targetEntity: Dossier::class, inversedBy: 'enregistrements')]
     #[ORM\JoinColumn(onDelete: "CASCADE")]
     private $dossier;
+    
 
-
-    #[ORM\OneToOne(cascade: ["persist"], fetch: "EAGER")]
+    #[ORM\ManyToOne(cascade: ["persist"], fetch: "EAGER")]
     #[ORM\JoinColumn(nullable: true)]
     private ?FichierAdmin $fichier = null;
 

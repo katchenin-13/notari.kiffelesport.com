@@ -27,7 +27,7 @@ class LigneVersementFaisEditType extends AbstractType
                 'html5' => false,
                 'attr'    => ['autocomplete' => 'off', 'class' => 'datepicker no-auto'],
             ])
-            ->add('montantverse', TextType::class, ['label' => 'Montant', 'mapped' => false, 'attr' => ['class' => 'input-money input-mnt']]);
+            ->add('montantverse', TextType::class, ['label' => 'Montant', 'mapped' => true, 'attr' => ['class' => 'input-money input-mnt']]);
         $builder->get('montantverse')->addModelTransformer(new ThousandNumberTransformer());
         ;
             /* ->add('compte') */

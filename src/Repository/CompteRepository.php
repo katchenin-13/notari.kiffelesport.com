@@ -2,9 +2,10 @@
 
 namespace App\Repository;
 
-use App\Entity\Compte;
+
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Proxies\__CG__\App\Entity\Compte;
 
 /**
  * @extends ServiceEntityRepository<Compte>

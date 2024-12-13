@@ -44,7 +44,7 @@ class LignepaiementmarcheController extends BaseController
       
 
         $table = $dataTableFactory->create()
-            ->add('comptefours', TextColumn::class, ['label' => 'N° Compte', 'field' => 'c.id'])
+          /*   ->add('comptefours', TextColumn::class, ['label' => 'N° Compte', 'field' => 'c.id']) */
             ->add('datepaiement', DateTimeColumn::class, ['label' => 'Date de paiement', 'format' => 'd/m/Y'])
             ->add('montantverse', TextColumn::class, ['label' => 'Montant'])
             ->createAdapter(ORMAdapter::class, [
@@ -143,8 +143,8 @@ class LignepaiementmarcheController extends BaseController
     #[Route('/{id}/new', name: 'app_comptabilte_lignepaiementmarche_new', methods: ['GET', 'POST'])]
     public function new(Request $request,Comptefour $comptefour,LignepaiementmarcheRepository $lignepaiementmarcheRepository, EntityManagerInterface $entityManager, FormError $formError): Response
     {
-
-        $form = $this->createForm(LignepaiementmarcheEditType::class, $comptefour, [
+            //dd($comptefour);
+        $form = $this->createForm(LignepaiementmarcheType::class, $comptefour, [
             'method' => 'POST',
             'action' => $this->generateUrl('app_comptabilte_lignepaiementmarche_new', [
                 'id' => $comptefour->getId()
@@ -166,31 +166,27 @@ class LignepaiementmarcheController extends BaseController
             $response = [];
             $redirect = '';
 
-            $montant = (int) $form->get('montant')->getData();
+            $montant = (int)$form->get('montant')->getData();
             $date = $form->get('datePaiement')->getData();
             $somme = 0;
+            
+            // Récupération des lignes de paiement liées au compte fournisseur
+           // $lignes = $lignepaiementmarcheRepository->findBy(['comptefours' => $comptefour->getId()]);
+            
+           $montantSolde = (int)str_replace(' ', '', $comptefour->getSolde());
+           $resteAPayer = $montantSolde - $montant; // Montant saisi
+            
 
-
-            $lignes = $lignepaiementmarcheRepository->findBy(['compte' => $comptefour->getId()]);
-
-            if ($lignes) {
-
-                foreach ($lignes as $key => $info) {
-                    $somme += (int)$info->getMontantverse();
-                    $resteAPayer = abs((int)$comptefour->getMontant() - $somme);
-                }
-            } else {
-                $resteAPayer = abs((int)$comptefour->getMontant());
-            }
-
-
+           //dd($resteAPayer);
+            
             if ($form->isValid()) {
-
-                if ($resteAPayer >= $montant) {
+                
+                if ($montantSolde >= $montant) {
 
                     $ligneversementfrai = new Lignepaiementmarche();
                     $ligneversementfrai->setDatepaiement($date);
                     $ligneversementfrai->setComptefour($comptefour);
+                    $ligneversementfrai->setMarches($comptefour->getMarches());
                     $ligneversementfrai->setMontantverse($montant);
                     $entityManager->persist($ligneversementfrai);
                     $entityManager->flush();
@@ -258,6 +254,7 @@ class LignepaiementmarcheController extends BaseController
     public function edit(Request $request, Lignepaiementmarche $lignepaiementmarche,LignepaiementmarcheRepository $lignepaiementmarcheRepository, EntityManagerInterface $entityManager, FormError $formError): Response
     {
        
+        $montantold = (int)$lignepaiementmarche->getMontantverse();
         $form = $this->createForm(LignepaiementmarcheEditType::class, $lignepaiementmarche, [
             'method' => 'POST',
             'action' => $this->generateUrl('app_comptabilte_lignepaiementmarche_edit', [
@@ -273,45 +270,34 @@ class LignepaiementmarcheController extends BaseController
 
         $form->handleRequest($request);
 
+        //dd($montantold);
         if ($form->isSubmitted()) {
             $response = [];
             $redirect = '';
             // $redirect = $this->generateUrl('app_comptabilte_lignepaiementmarche_index', [ 'id' => $ligneversementfrai->getCompte()->getId() ]);
-            $montant = (int) $form->get('montantverse')->getData();
-            $date = $form->get('dateversementfrais')->getData();
+            $montantnew = (int)$form->get('montantverse')->getData();
+           // $date = $form->get('dateversementfrais')->getData();
             $somme = 0;
            
 
-            $lignes = $lignepaiementmarcheRepository->findBy(['compte' => $lignepaiementmarche->getComptefour()->getId()]);
-
-            if ($lignes) {
-
-                foreach ($lignes as $key => $info) {
-                    $somme += (int)$info->getMontantverse();
-                    $resteAPayer = abs((int)$lignepaiementmarche->getComptefour()->getMontant() - $somme);
-                }
-            } else {
-                $resteAPayer = abs((int)$lignepaiementmarche->getComptefour()->getMontant());    
-            }
+           // dd($montantnew, $montantold);
 
             if ($form->isValid()) {
 
-                if ($resteAPayer >= $montant) {
-
-                    $lignepaiementmarche->setDatepaiement($date);
-                    $lignepaiementmarche->setMontantverse($montant);
-                
-                    $entityManager->persist($lignepaiementmarche);
-                    $entityManager->flush();
-
+                if($montantnew !=  $montantold){
+                   
                     $compte = $lignepaiementmarche->getComptefour();
-                    $compte->setSolde($resteAPayer);
+                    $solde = (int)str_replace(' ', '', $compte->getSolde()) -  abs($montantnew  - $montantold);
+                   // dd($solde);
+                   
+                    $compte->setSolde($solde);
 
                     $entityManager->persist($compte);
                     $entityManager->flush();
                 }
                 $entityManager->persist($lignepaiementmarche);  
                 $entityManager->flush();
+
 
                 $data = true;
                 $message = 'Opération effectuée avec succès';
@@ -342,7 +328,7 @@ class LignepaiementmarcheController extends BaseController
             }
 
             if ($isAjax) {
-                return $this->json(compact('statut', 'message', 'redirect', 'data'), $statutCode);
+                return $this->json(compact('statut', 'message', 'redirect', 'data', 'url', 'tabId'), $statutCode);
             } else {
                 if ($statut == 1) {
                     return $this->redirect($redirect, Response::HTTP_OK);
@@ -368,6 +354,8 @@ class LignepaiementmarcheController extends BaseController
     #[Route('/{id}/delete', name: 'app_comptabilte_lignepaiementmarche_delete', methods: ['DELETE', 'GET'])]
     public function delete(Request $request, Lignepaiementmarche $lignepaiementmarche, EntityManagerInterface $entityManager): Response
     {
+        $montant= (int)$lignepaiementmarche->getMontantverse();
+
         $form = $this->createFormBuilder()
             ->setAction(
                 $this->generateUrl(
@@ -381,6 +369,17 @@ class LignepaiementmarcheController extends BaseController
             ->getForm();
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
+           
+
+            $compte = $lignepaiementmarche->getComptefour();
+                    $solde = (int)str_replace(' ', '', $compte->getSolde()) + $montant;
+                   // dd($solde);
+                   
+                    $compte->setSolde($solde);
+
+                    $entityManager->persist($compte);
+                    $entityManager->flush();
+
             $data = true;
             $entityManager->remove($lignepaiementmarche);
             $entityManager->flush();

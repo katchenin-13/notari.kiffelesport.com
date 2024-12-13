@@ -337,7 +337,7 @@ class LigneversementfraisController extends BaseController
             }
 
             if ($isAjax) {
-                return $this->json(compact('statut', 'message', 'redirect', 'data'), $statutCode);
+                return $this->json(compact('statut', 'message', 'redirect', 'data', 'url', 'tabId'), $statutCode);
             } else {
                 if ($statut == 1) {
                     return $this->redirect($redirect, Response::HTTP_OK);
@@ -346,7 +346,7 @@ class LigneversementfraisController extends BaseController
         }
 
         return $this->renderForm('comptabilte/ligneversementfrais/edit.html.twig', [
-            'compte' => $compte,
+            
             'form' => $form,
         ]);
     }

@@ -44,10 +44,6 @@ class Compte
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
     #[Gedmo\Timestampable(on: 'create')]
     private ?\DateTimeInterface $datecreation = null;
-
-
-
- 
    
     public function __construct()
     {

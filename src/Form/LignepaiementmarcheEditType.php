@@ -3,7 +3,6 @@
 namespace App\Form;
 
 use App\Entity\Lignepaiementmarche;
-use App\Entity\Ligneversementfrais;
 use App\Form\DataTransformer\ThousandNumberTransformer;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
@@ -28,7 +27,7 @@ class LignepaiementmarcheEditType extends AbstractType
                 'html5' => false,
                 'attr'    => ['autocomplete' => 'off', 'class' => 'datepicker no-auto'],
             ])
-            ->add('montantverse', TextType::class, ['label' => 'Montant', 'mapped' => false, 'attr' => ['class' => 'input-money input-mnt']]);
+            ->add('montantverse', TextType::class, ['label' => 'Montant', 'mapped' => true, 'attr' => ['class' => 'input-money input-mnt']]);
         $builder->get('montantverse')->addModelTransformer(new ThousandNumberTransformer());
         ;
             /* ->add('compte') */
