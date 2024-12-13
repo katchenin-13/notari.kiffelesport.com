@@ -26,17 +26,15 @@ class LigneversementfraisController extends BaseController
 {
     const INDEX_ROOT_NAME = 'app_comptabilte_ligneversementfrais_index';
 
- const TAB_ID = 'parametre-tabs';
+    const TAB_ID = 'parametre-tabs';
 
-   
-public function getdata($idR){
-        
-}
+
+    public function getdata($idR) {}
 
  #[Route('/liste/paiement/{idR}', name: 'app_comptabilte_ligneversementfrais_index', methods: ['GET', 'POST'])]
     public function indexgg(Request $request, DataTableFactory $dataTableFactory, int $idR): Response
     {
-      
+
 
         $table = $dataTableFactory->create()
             ->add('compte', TextColumn::class, ['label' => 'N° Compte', 'field' => 'c.id'])
@@ -46,7 +44,7 @@ public function getdata($idR){
                 'entity' => Ligneversementfrais::class,
                 'query' => function (QueryBuilder $qb) use ($idR) {
                     $qb->select('l, c')
-                    ->from(Ligneversementfrais::class, 'l')
+                        ->from(Ligneversementfrais::class, 'l')
                         ->join('l.compte', 'c')
                         ->andWhere('c.id = :id')
                         ->setParameter('id', $idR);
@@ -55,16 +53,16 @@ public function getdata($idR){
             ->setName('dt_app_comptabilte_ligneversementfrais' . $idR);
 
         $renders = [
-                'edit' =>  new ActionRender(function () {
-                    return true;
-                }),
-                'show' => new ActionRender(function () {
-                    return true;
-                }),
-                'delete' => new ActionRender(function () {
-                    return true;
-                }),
-            ];
+            'edit' =>  new ActionRender(function () {
+                return true;
+            }),
+            'show' => new ActionRender(function () {
+                return true;
+            }),
+            'delete' => new ActionRender(function () {
+                return true;
+            }),
+        ];
 
 
         $hasActions = false;
@@ -99,7 +97,7 @@ public function getdata($idR){
                             'show' => [
                                 'url' => $this->generateUrl('app_comptabilte_ligneversementfrais_show', ['id' => $value]),
                                 'ajax' => true,
-                                   'stacked' => true,
+                                'stacked' => true,
                                 'icon' => '%icon% bi bi-eye',
                                 'attrs' => ['class' => 'btn-primary'],
                                 'render' => $renders['show']
@@ -108,7 +106,7 @@ public function getdata($idR){
                                 'target' => '#exampleModalSizeNormal',
                                 'url' => $this->generateUrl('app_comptabilte_ligneversementfrais_delete', ['id' => $value]),
                                 'ajax' => true,
-                                   'stacked' => true,
+                                'stacked' => true,
                                 'icon' => '%icon% bi bi-trash',
                                 'attrs' => ['class' => 'btn-main'],
                                 'render' => $renders['delete']
@@ -133,11 +131,11 @@ public function getdata($idR){
     }
 
 
-    
-    #[Route('/{id}/new', name: 'app_comptabilte_ligneversementfrais_new', methods: ['GET', 'POST'])]
-    public function new(Request $request,Compte $compte,   Ligneversementfrais $ligneversementfrai, LigneversementfraisRepository $ligneversementfraisRepository, EntityManagerInterface $entityManager, FormError $formError): Response
-    {
 
+    #[Route('/{id}/new', name: 'app_comptabilte_ligneversementfrais_new', methods: ['GET', 'POST'])]
+    public function new(Request $request, Compte $compte, LigneversementfraisRepository $ligneversementfraisRepository, EntityManagerInterface $entityManager, FormError $formError): Response
+    {
+      
         $form = $this->createForm(LigneversementfraisType::class, $compte, [
             'method' => 'POST',
             'action' => $this->generateUrl('app_comptabilte_ligneversementfrais_new', [
@@ -364,6 +362,5 @@ public function getdata($idR){
             'ligneversementfrai' => $ligneversementfrai,
             'form' => $form,
         ]);
-    } 
-
+    }
 }

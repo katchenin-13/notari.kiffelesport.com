@@ -27,16 +27,8 @@ class Marche
     #[ORM\JoinColumn(nullable: false)]
     private ?string $solde = null;
 
-    #[ORM\Column(type: 'boolean')]
-    #[ORM\JoinColumn(nullable: false)]
-    private $active;
 
-    #[ORM\Column(  type: Types::JSON)]
-    #[ORM\JoinColumn(nullable: false)]
-    private $etat = [];
 
-    #[ORM\OneToMany(mappedBy: 'marche', targetEntity: Paimentmarche::class)]
-    private Collection $paimentmarches;
 
     #[ORM\ManyToOne(inversedBy: 'marches')]
     private ?Fournisseur $fournisseur = null;
@@ -49,13 +41,12 @@ class Marche
     #[Gedmo\Timestampable(on: 'create')]
     private ?\DateTimeInterface $datecreation = null;
 
-    #[ORM\OneToMany(mappedBy: 'marches', targetEntity: Lignepaiementmarche::class, orphanRemoval: true, cascade: ['persist', 'remove'])]
-    #[ORM\JoinColumn(nullable: false)]
-    private Collection $lignepaiementmarches;
+
+    #[ORM\OneToMany(mappedBy: 'marches', targetEntity: Comptefour::class, orphanRemoval: true, cascade: ['persist', 'remove'])]
+    private Collection $compteFournisseurs;
     public function __construct()
     {
-        $this->paimentmarches = new ArrayCollection();
-        $this->lignepaiementmarches = new ArrayCollection();
+        $this->compteFournisseurs = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -99,49 +90,8 @@ class Marche
         return $this;
     }
 
-    public function getActive(): ?bool
-    {
-        return $this->active;
-    }
-
-    public function setActive(bool $active): self
-    {
-        $this->active = $active;
-
-        return $this;
-    }
-
    
 
-    /**
-     * @return Collection<int, Paimentmarche>
-     */
-    public function getPaimentmarches(): Collection
-    {
-        return $this->paimentmarches;
-    }
-
-    public function addPaimentmarch(Paimentmarche $paimentmarch): static
-    {
-        if (!$this->paimentmarches->contains($paimentmarch)) {
-            $this->paimentmarches->add($paimentmarch);
-            $paimentmarch->setMarche($this);
-        }
-
-        return $this;
-    }
-
-    public function removePaimentmarch(Paimentmarche $paimentmarch): static
-    {
-        if ($this->paimentmarches->removeElement($paimentmarch)) {
-            // set the owning side to null (unless already changed)
-            if ($paimentmarch->getMarche() === $this) {
-                $paimentmarch->setMarche(null);
-            }
-        }
-
-        return $this;
-    }
 
     public function getFournisseur(): ?Fournisseur
     {
@@ -167,18 +117,6 @@ class Marche
         return $this;
     }
 
-    public function getEtat(): ?array
-    {
-        return $this->etat;
-    }
-
-    public function setEtat(array $etat): self
-    {
-        $this->etat = $etat;
-
-        return $this;
-    }
-
 
     public function getSolde(): ?string
     {
@@ -192,30 +130,31 @@ class Marche
         return $this;
     }
 
+   
     /**
-     * @return Collection<int, Lignepaiementmarche>
+     * @return Collection<int, Comptefour>
      */
-    public function getLignepaiementmarches(): Collection
+    public function getComptefours(): Collection
     {
-        return $this->lignepaiementmarches;
+        return $this->compteFournisseurs;
     }
 
-    public function addLignepaiementmarch(Lignepaiementmarche $lignepaiementmarch): static
+    public function addComptefour(Comptefour $compteFournisseur): static
     {
-        if (!$this->lignepaiementmarches->contains($lignepaiementmarch)) {
-            $this->lignepaiementmarches->add($lignepaiementmarch);
-            $lignepaiementmarch->setMarches($this);
+        if (!$this->compteFournisseurs->contains($compteFournisseur)) {
+            $this->compteFournisseurs->add($compteFournisseur);
+            $compteFournisseur->setMarches($this);
         }
 
         return $this;
     }
 
-    public function removeLignepaiementmarch(Lignepaiementmarche $lignepaiementmarch): static
+    public function removeComptefour(Comptefour $compteFournisseur): static
     {
-        if ($this->lignepaiementmarches->removeElement($lignepaiementmarch)) {
+        if ($this->compteFournisseurs->removeElement($compteFournisseur)) {
             // set the owning side to null (unless already changed)
-            if ($lignepaiementmarch->getMarches() === $this) {
-                $lignepaiementmarch->setMarches(null);
+            if ($compteFournisseur->getMarches() === $this) {
+                $compteFournisseur->setMarches(null);
             }
         }
 

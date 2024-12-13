@@ -1,11 +1,16 @@
-
 <div class="modal-body modal-body-certificat p-3">
 
     <div class="row">
 
         <div class="col-sm-12">
+<<<<<<< HEAD:templates/gestionfournisseur/marche/ligneversementfrais/index.html.twig
             <div id="grid_app_comptabilte_ligneversementfrais" class="grid-dt-wrapper"
                 data-bs-reflech="{{ path('app_comptabilte_ligneversementfrais_index', {'idR': id}) }}">Chargement....</div>
+=======
+            <div id="grid_app_comptabilte_lignepaiementmarche" class="grid-dt-wrapper"
+                data-bs-reflech="{{ path('app_comptabilte_lignepaiementmarche_index', {'idR': id}) }}">Chargement....
+            </div>
+>>>>>>> 11b7eb5 (save pour review):templates/comptabilte/lignepaiementmarche/index.html.twig
         </div>
     </div>
 
@@ -26,7 +31,11 @@
     $(function () {
         $('#grid_app_comptabilte_ligneversementfrais').initDataTables({{ datatable_settings(datatable) }}, {
         searching: true,
+<<<<<<< HEAD:templates/gestionfournisseur/marche/ligneversementfrais/index.html.twig
         ajaxUrl: "{{ path('app_comptabilte_ligneversementfrais_index', {'idR': id}) }}",
+=======
+        ajaxUrl: "{{ path('app_comptabilte_lignepaiementmarche_index', {'idR': id}) }}",
+>>>>>>> 11b7eb5 (save pour review):templates/comptabilte/lignepaiementmarche/index.html.twig
         language: {
             url: asset_base_path + "/js/i18n/French.json"
         },
@@ -40,33 +49,33 @@
 
             
         });
-  $(function () {
-	  var elements = Array.from(document.querySelectorAll("[data-bs-stacked-modal]"));
+    $(function () {
+        var elements = Array.from(document.querySelectorAll("[data-bs-stacked-modal]"));
 
-            if (elements && elements.length > 0) {
-                elements.forEach((element) => {
-                    if (element.getAttribute("data-kt-initialized") === "1" ) {
-                        return;
+        if (elements && elements.length > 0) {
+            elements.forEach((element) => {
+                if (element.getAttribute("data-kt-initialized") === "1") {
+                    return;
+                }
+
+                const url = element.getAttribute('href');
+                element.setAttribute("data-kt-initialized", "1");
+
+
+                element.addEventListener("click", function (e) {
+                    e.preventDefault();
+
+                    const modalEl = document.querySelector(this.getAttribute("data-bs-stacked-modal"));
+
+                    if (modalEl) {
+                        const modal = new bootstrap.Modal(modalEl);
+                        modal.show(element);
                     }
-
-                    const url = element.getAttribute('href');
-                    element.setAttribute("data-kt-initialized", "1");
-
-
-                    element.addEventListener("click", function(e) {
-                        e.preventDefault();
-
-                        const modalEl = document.querySelector(this.getAttribute("data-bs-stacked-modal"));
-
-                        if (modalEl) {
-                            const modal = new bootstrap.Modal(modalEl);
-                            modal.show(element);
-                        }
-                    });
                 });
-            }
+            });
+        }
 
-})
+    })
 
 </script>
 {% endblock %}

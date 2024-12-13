@@ -7,13 +7,13 @@
  * Released under the MIT license
  * https://github.com/chartjs/Chart.js/blob/master/LICENSE.md
  */
-! function(t) {
+! function (t) {
 	if ("object" == typeof exports && "undefined" != typeof module) module.exports = t();
 	else if ("function" == typeof define && define.amd) define([], t);
 	else {
 		("undefined" != typeof window ? window : "undefined" != typeof global ? global : "undefined" != typeof self ? self : this).Chart = t()
 	}
-}(function() {
+}(function () {
 	return function r(o, s, l) {
 		function u(e, t) {
 			if (!s[e]) {
@@ -27,7 +27,7 @@
 				var a = s[e] = {
 					exports: {}
 				};
-				o[e][0].call(a.exports, function(t) {
+				o[e][0].call(a.exports, function (t) {
 					return u(o[e][1][t] || t)
 				}, a, a.exports, r, o, s, l)
 			}
@@ -36,7 +36,7 @@
 		for (var d = "function" == typeof require && require, t = 0; t < l.length; t++) u(l[t]);
 		return u
 	}({
-		1: [function(t, e, n) {
+		1: [function (t, e, n) {
 			var r = t(5);
 
 			function i(t) {
@@ -108,31 +108,31 @@
 			e.exports = {
 				getRgba: i,
 				getHsla: a,
-				getRgb: function(t) {
+				getRgb: function (t) {
 					var e = i(t);
 					return e && e.slice(0, 3)
 				},
-				getHsl: function(t) {
+				getHsl: function (t) {
 					var e = a(t);
 					return e && e.slice(0, 3)
 				},
 				getHwb: o,
-				getAlpha: function(t) {
+				getAlpha: function (t) {
 					var e = i(t); {
 						if (e) return e[3];
 						if (e = a(t)) return e[3];
 						if (e = o(t)) return e[3]
 					}
 				},
-				hexString: function(t) {
+				hexString: function (t) {
 					return "#" + h(t[0]) + h(t[1]) + h(t[2])
 				},
-				rgbString: function(t, e) {
+				rgbString: function (t, e) {
 					if (e < 1 || t[3] && t[3] < 1) return s(t, e);
 					return "rgb(" + t[0] + ", " + t[1] + ", " + t[2] + ")"
 				},
 				rgbaString: s,
-				percentString: function(t, e) {
+				percentString: function (t, e) {
 					if (e < 1 || t[3] && t[3] < 1) return l(t, e);
 					var n = Math.round(t[0] / 255 * 100),
 						i = Math.round(t[1] / 255 * 100),
@@ -140,16 +140,16 @@
 					return "rgb(" + n + "%, " + i + "%, " + a + "%)"
 				},
 				percentaString: l,
-				hslString: function(t, e) {
+				hslString: function (t, e) {
 					if (e < 1 || t[3] && t[3] < 1) return u(t, e);
 					return "hsl(" + t[0] + ", " + t[1] + "%, " + t[2] + "%)"
 				},
 				hslaString: u,
-				hwbString: function(t, e) {
+				hwbString: function (t, e) {
 					void 0 === e && (e = void 0 !== t[3] ? t[3] : 1);
 					return "hwb(" + t[0] + ", " + t[1] + "%, " + t[2] + "%" + (void 0 !== e && 1 !== e ? ", " + e : "") + ")"
 				},
-				keyword: function(t) {
+				keyword: function (t) {
 					return c[t.slice(0, 3)]
 				}
 			};
@@ -158,10 +158,10 @@
 		}, {
 			5: 5
 		}],
-		2: [function(t, e, n) {
+		2: [function (t, e, n) {
 			var d = t(4),
 				i = t(1),
-				o = function(t) {
+				o = function (t) {
 					return t instanceof o ? t : this instanceof o ? (this.valid = !1, this.values = {
 						rgb: [0, 0, 0],
 						hsl: [0, 0, 0],
@@ -169,195 +169,195 @@
 						hwb: [0, 0, 0],
 						cmyk: [0, 0, 0, 0],
 						alpha: 1
-					}, void("string" == typeof t ? (e = i.getRgba(t)) ? this.setValues("rgb", e) : (e = i.getHsla(t)) ? this.setValues("hsl", e) : (e = i.getHwb(t)) && this.setValues("hwb", e) : "object" == typeof t && (void 0 !== (e = t).r || void 0 !== e.red ? this.setValues("rgb", e) : void 0 !== e.l || void 0 !== e.lightness ? this.setValues("hsl", e) : void 0 !== e.v || void 0 !== e.value ? this.setValues("hsv", e) : void 0 !== e.w || void 0 !== e.whiteness ? this.setValues("hwb", e) : void 0 === e.c && void 0 === e.cyan || this.setValues("cmyk", e)))) : new o(t);
+					}, void ("string" == typeof t ? (e = i.getRgba(t)) ? this.setValues("rgb", e) : (e = i.getHsla(t)) ? this.setValues("hsl", e) : (e = i.getHwb(t)) && this.setValues("hwb", e) : "object" == typeof t && (void 0 !== (e = t).r || void 0 !== e.red ? this.setValues("rgb", e) : void 0 !== e.l || void 0 !== e.lightness ? this.setValues("hsl", e) : void 0 !== e.v || void 0 !== e.value ? this.setValues("hsv", e) : void 0 !== e.w || void 0 !== e.whiteness ? this.setValues("hwb", e) : void 0 === e.c && void 0 === e.cyan || this.setValues("cmyk", e)))) : new o(t);
 					var e
 				};
 			o.prototype = {
-				isValid: function() {
+				isValid: function () {
 					return this.valid
 				},
-				rgb: function() {
+				rgb: function () {
 					return this.setSpace("rgb", arguments)
 				},
-				hsl: function() {
+				hsl: function () {
 					return this.setSpace("hsl", arguments)
 				},
-				hsv: function() {
+				hsv: function () {
 					return this.setSpace("hsv", arguments)
 				},
-				hwb: function() {
+				hwb: function () {
 					return this.setSpace("hwb", arguments)
 				},
-				cmyk: function() {
+				cmyk: function () {
 					return this.setSpace("cmyk", arguments)
 				},
-				rgbArray: function() {
+				rgbArray: function () {
 					return this.values.rgb
 				},
-				hslArray: function() {
+				hslArray: function () {
 					return this.values.hsl
 				},
-				hsvArray: function() {
+				hsvArray: function () {
 					return this.values.hsv
 				},
-				hwbArray: function() {
+				hwbArray: function () {
 					var t = this.values;
 					return 1 !== t.alpha ? t.hwb.concat([t.alpha]) : t.hwb
 				},
-				cmykArray: function() {
+				cmykArray: function () {
 					return this.values.cmyk
 				},
-				rgbaArray: function() {
+				rgbaArray: function () {
 					var t = this.values;
 					return t.rgb.concat([t.alpha])
 				},
-				hslaArray: function() {
+				hslaArray: function () {
 					var t = this.values;
 					return t.hsl.concat([t.alpha])
 				},
-				alpha: function(t) {
+				alpha: function (t) {
 					return void 0 === t ? this.values.alpha : (this.setValues("alpha", t), this)
 				},
-				red: function(t) {
+				red: function (t) {
 					return this.setChannel("rgb", 0, t)
 				},
-				green: function(t) {
+				green: function (t) {
 					return this.setChannel("rgb", 1, t)
 				},
-				blue: function(t) {
+				blue: function (t) {
 					return this.setChannel("rgb", 2, t)
 				},
-				hue: function(t) {
+				hue: function (t) {
 					return t && (t = (t %= 360) < 0 ? 360 + t : t), this.setChannel("hsl", 0, t)
 				},
-				saturation: function(t) {
+				saturation: function (t) {
 					return this.setChannel("hsl", 1, t)
 				},
-				lightness: function(t) {
+				lightness: function (t) {
 					return this.setChannel("hsl", 2, t)
 				},
-				saturationv: function(t) {
+				saturationv: function (t) {
 					return this.setChannel("hsv", 1, t)
 				},
-				whiteness: function(t) {
+				whiteness: function (t) {
 					return this.setChannel("hwb", 1, t)
 				},
-				blackness: function(t) {
+				blackness: function (t) {
 					return this.setChannel("hwb", 2, t)
 				},
-				value: function(t) {
+				value: function (t) {
 					return this.setChannel("hsv", 2, t)
 				},
-				cyan: function(t) {
+				cyan: function (t) {
 					return this.setChannel("cmyk", 0, t)
 				},
-				magenta: function(t) {
+				magenta: function (t) {
 					return this.setChannel("cmyk", 1, t)
 				},
-				yellow: function(t) {
+				yellow: function (t) {
 					return this.setChannel("cmyk", 2, t)
 				},
-				black: function(t) {
+				black: function (t) {
 					return this.setChannel("cmyk", 3, t)
 				},
-				hexString: function() {
+				hexString: function () {
 					return i.hexString(this.values.rgb)
 				},
-				rgbString: function() {
+				rgbString: function () {
 					return i.rgbString(this.values.rgb, this.values.alpha)
 				},
-				rgbaString: function() {
+				rgbaString: function () {
 					return i.rgbaString(this.values.rgb, this.values.alpha)
 				},
-				percentString: function() {
+				percentString: function () {
 					return i.percentString(this.values.rgb, this.values.alpha)
 				},
-				hslString: function() {
+				hslString: function () {
 					return i.hslString(this.values.hsl, this.values.alpha)
 				},
-				hslaString: function() {
+				hslaString: function () {
 					return i.hslaString(this.values.hsl, this.values.alpha)
 				},
-				hwbString: function() {
+				hwbString: function () {
 					return i.hwbString(this.values.hwb, this.values.alpha)
 				},
-				keyword: function() {
+				keyword: function () {
 					return i.keyword(this.values.rgb, this.values.alpha)
 				},
-				rgbNumber: function() {
+				rgbNumber: function () {
 					var t = this.values.rgb;
 					return t[0] << 16 | t[1] << 8 | t[2]
 				},
-				luminosity: function() {
+				luminosity: function () {
 					for (var t = this.values.rgb, e = [], n = 0; n < t.length; n++) {
 						var i = t[n] / 255;
 						e[n] = i <= .03928 ? i / 12.92 : Math.pow((i + .055) / 1.055, 2.4)
 					}
 					return .2126 * e[0] + .7152 * e[1] + .0722 * e[2]
 				},
-				contrast: function(t) {
+				contrast: function (t) {
 					var e = this.luminosity(),
 						n = t.luminosity();
 					return n < e ? (e + .05) / (n + .05) : (n + .05) / (e + .05)
 				},
-				level: function(t) {
+				level: function (t) {
 					var e = this.contrast(t);
 					return 7.1 <= e ? "AAA" : 4.5 <= e ? "AA" : ""
 				},
-				dark: function() {
+				dark: function () {
 					var t = this.values.rgb;
 					return (299 * t[0] + 587 * t[1] + 114 * t[2]) / 1e3 < 128
 				},
-				light: function() {
+				light: function () {
 					return !this.dark()
 				},
-				negate: function() {
+				negate: function () {
 					for (var t = [], e = 0; e < 3; e++) t[e] = 255 - this.values.rgb[e];
 					return this.setValues("rgb", t), this
 				},
-				lighten: function(t) {
+				lighten: function (t) {
 					var e = this.values.hsl;
 					return e[2] += e[2] * t, this.setValues("hsl", e), this
 				},
-				darken: function(t) {
+				darken: function (t) {
 					var e = this.values.hsl;
 					return e[2] -= e[2] * t, this.setValues("hsl", e), this
 				},
-				saturate: function(t) {
+				saturate: function (t) {
 					var e = this.values.hsl;
 					return e[1] += e[1] * t, this.setValues("hsl", e), this
 				},
-				desaturate: function(t) {
+				desaturate: function (t) {
 					var e = this.values.hsl;
 					return e[1] -= e[1] * t, this.setValues("hsl", e), this
 				},
-				whiten: function(t) {
+				whiten: function (t) {
 					var e = this.values.hwb;
 					return e[1] += e[1] * t, this.setValues("hwb", e), this
 				},
-				blacken: function(t) {
+				blacken: function (t) {
 					var e = this.values.hwb;
 					return e[2] += e[2] * t, this.setValues("hwb", e), this
 				},
-				greyscale: function() {
+				greyscale: function () {
 					var t = this.values.rgb,
 						e = .3 * t[0] + .59 * t[1] + .11 * t[2];
 					return this.setValues("rgb", [e, e, e]), this
 				},
-				clearer: function(t) {
+				clearer: function (t) {
 					var e = this.values.alpha;
 					return this.setValues("alpha", e - e * t), this
 				},
-				opaquer: function(t) {
+				opaquer: function (t) {
 					var e = this.values.alpha;
 					return this.setValues("alpha", e + e * t), this
 				},
-				rotate: function(t) {
+				rotate: function (t) {
 					var e = this.values.hsl,
 						n = (e[0] + t) % 360;
 					return e[0] = n < 0 ? 360 + n : n, this.setValues("hsl", e), this
 				},
-				mix: function(t, e) {
+				mix: function (t, e) {
 					var n = this,
 						i = t,
 						a = void 0 === e ? .5 : e,
@@ -367,10 +367,10 @@
 						l = 1 - s;
 					return this.rgb(s * n.red() + l * i.red(), s * n.green() + l * i.green(), s * n.blue() + l * i.blue()).alpha(n.alpha() * a + i.alpha() * (1 - a))
 				},
-				toJSON: function() {
+				toJSON: function () {
 					return this.rgb()
 				},
-				clone: function() {
+				clone: function () {
 					var t, e, n = new o,
 						i = this.values,
 						a = n.values;
@@ -389,10 +389,10 @@
 				hsv: [360, 100, 100],
 				hwb: [360, 100, 100],
 				cmyk: [100, 100, 100, 100]
-			}, o.prototype.getValues = function(t) {
+			}, o.prototype.getValues = function (t) {
 				for (var e = this.values, n = {}, i = 0; i < t.length; i++) n[t.charAt(i)] = e[t][i];
 				return 1 !== e.alpha && (n.a = e.alpha), n
-			}, o.prototype.setValues = function(t, e) {
+			}, o.prototype.setValues = function (t, e) {
 				var n, i, a = this.values,
 					r = this.spaces,
 					o = this.maxes,
@@ -411,10 +411,10 @@
 				for (n = 0; n < t.length; n++) i = Math.max(0, Math.min(o[t][n], a[t][n])), a[t][n] = Math.round(i);
 				for (var u in r) u !== t && (a[u] = d[t][u](a[t]));
 				return !0
-			}, o.prototype.setSpace = function(t, e) {
+			}, o.prototype.setSpace = function (t, e) {
 				var n = e[0];
 				return void 0 === n ? this.getValues(t) : ("number" == typeof n && (n = Array.prototype.slice.call(e)), this.setValues(t, n), this)
-			}, o.prototype.setChannel = function(t, e, n) {
+			}, o.prototype.setChannel = function (t, e, n) {
 				var i = this.values[t];
 				return void 0 === n ? i[e] : (n === i[e] || (i[e] = n, this.setValues(t, i)), this)
 			}, "undefined" != typeof window && (window.Color = o), e.exports = o
@@ -422,7 +422,7 @@
 			1: 1,
 			4: 4
 		}],
-		3: [function(t, e, n) {
+		3: [function (t, e, n) {
 			function a(t) {
 				var e, n, i = t[0] / 255,
 					a = t[1] / 255,
@@ -519,36 +519,36 @@
 					u = s + l;
 				switch (1 < u && (s /= u, l /= u), i = 6 * o - (e = Math.floor(6 * o)), 0 != (1 & e) && (i = 1 - i), a = s + i * ((n = 1 - l) - s), e) {
 					default:
-						case 6:
-						case 0:
+					case 6:
+					case 0:
 						r = n,
-					g = a,
-					b = s;
-					break;
+							g = a,
+							b = s;
+						break;
 					case 1:
-							r = a,
-						g = n,
-						b = s;
+						r = a,
+							g = n,
+							b = s;
 						break;
 					case 2:
-							r = s,
-						g = n,
-						b = a;
+						r = s,
+							g = n,
+							b = a;
 						break;
 					case 3:
-							r = s,
-						g = a,
-						b = n;
+						r = s,
+							g = a,
+							b = n;
 						break;
 					case 4:
-							r = a,
-						g = s,
-						b = n;
+						r = a,
+							g = s,
+							b = n;
 						break;
 					case 5:
-							r = n,
-						g = s,
-						b = a
+						r = n,
+							g = s,
+							b = a
 				}
 				return [255 * r, 255 * g, 255 * b]
 			}
@@ -610,271 +610,271 @@
 				rgb2keyword: l,
 				rgb2xyz: u,
 				rgb2lab: d,
-				rgb2lch: function(t) {
+				rgb2lch: function (t) {
 					return x(d(t))
 				},
 				hsl2rgb: h,
-				hsl2hsv: function(t) {
+				hsl2hsv: function (t) {
 					var e = t[0],
 						n = t[1] / 100,
 						i = t[2] / 100;
 					return 0 !== i ? [e, 100 * (2 * (n *= (i *= 2) <= 1 ? i : 2 - i) / (i + n)), 100 * ((i + n) / 2)] : [0, 0, 0]
 				},
-				hsl2hwb: function(t) {
+				hsl2hwb: function (t) {
 					return o(h(t))
 				},
-				hsl2cmyk: function(t) {
+				hsl2cmyk: function (t) {
 					return s(h(t))
 				},
-				hsl2keyword: function(t) {
+				hsl2keyword: function (t) {
 					return l(h(t))
 				},
 				hsv2rgb: c,
-				hsv2hsl: function(t) {
+				hsv2hsl: function (t) {
 					var e, n, i = t[0],
 						a = t[1] / 100,
 						r = t[2] / 100;
 					return e = a * r, [i, 100 * (e = (e /= (n = (2 - a) * r) <= 1 ? n : 2 - n) || 0), 100 * (n /= 2)]
 				},
-				hsv2hwb: function(t) {
+				hsv2hwb: function (t) {
 					return o(c(t))
 				},
-				hsv2cmyk: function(t) {
+				hsv2cmyk: function (t) {
 					return s(c(t))
 				},
-				hsv2keyword: function(t) {
+				hsv2keyword: function (t) {
 					return l(c(t))
 				},
 				hwb2rgb: f,
-				hwb2hsl: function(t) {
+				hwb2hsl: function (t) {
 					return a(f(t))
 				},
-				hwb2hsv: function(t) {
+				hwb2hsv: function (t) {
 					return i(f(t))
 				},
-				hwb2cmyk: function(t) {
+				hwb2cmyk: function (t) {
 					return s(f(t))
 				},
-				hwb2keyword: function(t) {
+				hwb2keyword: function (t) {
 					return l(f(t))
 				},
 				cmyk2rgb: m,
-				cmyk2hsl: function(t) {
+				cmyk2hsl: function (t) {
 					return a(m(t))
 				},
-				cmyk2hsv: function(t) {
+				cmyk2hsv: function (t) {
 					return i(m(t))
 				},
-				cmyk2hwb: function(t) {
+				cmyk2hwb: function (t) {
 					return o(m(t))
 				},
-				cmyk2keyword: function(t) {
+				cmyk2keyword: function (t) {
 					return l(m(t))
 				},
 				keyword2rgb: w,
-				keyword2hsl: function(t) {
+				keyword2hsl: function (t) {
 					return a(w(t))
 				},
-				keyword2hsv: function(t) {
+				keyword2hsv: function (t) {
 					return i(w(t))
 				},
-				keyword2hwb: function(t) {
+				keyword2hwb: function (t) {
 					return o(w(t))
 				},
-				keyword2cmyk: function(t) {
+				keyword2cmyk: function (t) {
 					return s(w(t))
 				},
-				keyword2lab: function(t) {
+				keyword2lab: function (t) {
 					return d(w(t))
 				},
-				keyword2xyz: function(t) {
+				keyword2xyz: function (t) {
 					return u(w(t))
 				},
 				xyz2rgb: p,
 				xyz2lab: v,
-				xyz2lch: function(t) {
+				xyz2lch: function (t) {
 					return x(v(t))
 				},
 				lab2xyz: y,
 				lab2rgb: _,
 				lab2lch: x,
 				lch2lab: k,
-				lch2xyz: function(t) {
+				lch2xyz: function (t) {
 					return y(k(t))
 				},
-				lch2rgb: function(t) {
+				lch2rgb: function (t) {
 					return _(k(t))
 				}
 			};
 			var M = {
-					aliceblue: [240, 248, 255],
-					antiquewhite: [250, 235, 215],
-					aqua: [0, 255, 255],
-					aquamarine: [127, 255, 212],
-					azure: [240, 255, 255],
-					beige: [245, 245, 220],
-					bisque: [255, 228, 196],
-					black: [0, 0, 0],
-					blanchedalmond: [255, 235, 205],
-					blue: [0, 0, 255],
-					blueviolet: [138, 43, 226],
-					brown: [165, 42, 42],
-					burlywood: [222, 184, 135],
-					cadetblue: [95, 158, 160],
-					chartreuse: [127, 255, 0],
-					chocolate: [210, 105, 30],
-					coral: [255, 127, 80],
-					cornflowerblue: [100, 149, 237],
-					cornsilk: [255, 248, 220],
-					crimson: [220, 20, 60],
-					cyan: [0, 255, 255],
-					darkblue: [0, 0, 139],
-					darkcyan: [0, 139, 139],
-					darkgoldenrod: [184, 134, 11],
-					darkgray: [169, 169, 169],
-					darkgreen: [0, 100, 0],
-					darkgrey: [169, 169, 169],
-					darkkhaki: [189, 183, 107],
-					darkmagenta: [139, 0, 139],
-					darkolivegreen: [85, 107, 47],
-					darkorange: [255, 140, 0],
-					darkorchid: [153, 50, 204],
-					darkred: [139, 0, 0],
-					darksalmon: [233, 150, 122],
-					darkseagreen: [143, 188, 143],
-					darkslateblue: [72, 61, 139],
-					darkslategray: [47, 79, 79],
-					darkslategrey: [47, 79, 79],
-					darkturquoise: [0, 206, 209],
-					darkviolet: [148, 0, 211],
-					deeppink: [255, 20, 147],
-					deepskyblue: [0, 191, 255],
-					dimgray: [105, 105, 105],
-					dimgrey: [105, 105, 105],
-					dodgerblue: [30, 144, 255],
-					firebrick: [178, 34, 34],
-					floralwhite: [255, 250, 240],
-					forestgreen: [34, 139, 34],
-					fuchsia: [255, 0, 255],
-					gainsboro: [220, 220, 220],
-					ghostwhite: [248, 248, 255],
-					gold: [255, 215, 0],
-					goldenrod: [218, 165, 32],
-					gray: [128, 128, 128],
-					green: [0, 128, 0],
-					greenyellow: [173, 255, 47],
-					grey: [128, 128, 128],
-					honeydew: [240, 255, 240],
-					hotpink: [255, 105, 180],
-					indianred: [205, 92, 92],
-					indigo: [75, 0, 130],
-					ivory: [255, 255, 240],
-					khaki: [240, 230, 140],
-					lavender: [230, 230, 250],
-					lavenderblush: [255, 240, 245],
-					lawngreen: [124, 252, 0],
-					lemonchiffon: [255, 250, 205],
-					lightblue: [173, 216, 230],
-					lightcoral: [240, 128, 128],
-					lightcyan: [224, 255, 255],
-					lightgoldenrodyellow: [250, 250, 210],
-					lightgray: [211, 211, 211],
-					lightgreen: [144, 238, 144],
-					lightgrey: [211, 211, 211],
-					lightpink: [255, 182, 193],
-					lightsalmon: [255, 160, 122],
-					lightseagreen: [32, 178, 170],
-					lightskyblue: [135, 206, 250],
-					lightslategray: [119, 136, 153],
-					lightslategrey: [119, 136, 153],
-					lightsteelblue: [176, 196, 222],
-					lightyellow: [255, 255, 224],
-					lime: [0, 255, 0],
-					limegreen: [50, 205, 50],
-					linen: [250, 240, 230],
-					magenta: [255, 0, 255],
-					maroon: [128, 0, 0],
-					mediumaquamarine: [102, 205, 170],
-					mediumblue: [0, 0, 205],
-					mediumorchid: [186, 85, 211],
-					mediumpurple: [147, 112, 219],
-					mediumseagreen: [60, 179, 113],
-					mediumslateblue: [123, 104, 238],
-					mediumspringgreen: [0, 250, 154],
-					mediumturquoise: [72, 209, 204],
-					mediumvioletred: [199, 21, 133],
-					midnightblue: [25, 25, 112],
-					mintcream: [245, 255, 250],
-					mistyrose: [255, 228, 225],
-					moccasin: [255, 228, 181],
-					navajowhite: [255, 222, 173],
-					navy: [0, 0, 128],
-					oldlace: [253, 245, 230],
-					olive: [128, 128, 0],
-					olivedrab: [107, 142, 35],
-					orange: [255, 165, 0],
-					orangered: [255, 69, 0],
-					orchid: [218, 112, 214],
-					palegoldenrod: [238, 232, 170],
-					palegreen: [152, 251, 152],
-					paleturquoise: [175, 238, 238],
-					palevioletred: [219, 112, 147],
-					papayawhip: [255, 239, 213],
-					peachpuff: [255, 218, 185],
-					peru: [205, 133, 63],
-					pink: [255, 192, 203],
-					plum: [221, 160, 221],
-					powderblue: [176, 224, 230],
-					purple: [128, 0, 128],
-					rebeccapurple: [102, 51, 153],
-					red: [255, 0, 0],
-					rosybrown: [188, 143, 143],
-					royalblue: [65, 105, 225],
-					saddlebrown: [139, 69, 19],
-					salmon: [250, 128, 114],
-					sandybrown: [244, 164, 96],
-					seagreen: [46, 139, 87],
-					seashell: [255, 245, 238],
-					sienna: [160, 82, 45],
-					silver: [192, 192, 192],
-					skyblue: [135, 206, 235],
-					slateblue: [106, 90, 205],
-					slategray: [112, 128, 144],
-					slategrey: [112, 128, 144],
-					snow: [255, 250, 250],
-					springgreen: [0, 255, 127],
-					steelblue: [70, 130, 180],
-					tan: [210, 180, 140],
-					teal: [0, 128, 128],
-					thistle: [216, 191, 216],
-					tomato: [255, 99, 71],
-					turquoise: [64, 224, 208],
-					violet: [238, 130, 238],
-					wheat: [245, 222, 179],
-					white: [255, 255, 255],
-					whitesmoke: [245, 245, 245],
-					yellow: [255, 255, 0],
-					yellowgreen: [154, 205, 50]
-				},
+				aliceblue: [240, 248, 255],
+				antiquewhite: [250, 235, 215],
+				aqua: [0, 255, 255],
+				aquamarine: [127, 255, 212],
+				azure: [240, 255, 255],
+				beige: [245, 245, 220],
+				bisque: [255, 228, 196],
+				black: [0, 0, 0],
+				blanchedalmond: [255, 235, 205],
+				blue: [0, 0, 255],
+				blueviolet: [138, 43, 226],
+				brown: [165, 42, 42],
+				burlywood: [222, 184, 135],
+				cadetblue: [95, 158, 160],
+				chartreuse: [127, 255, 0],
+				chocolate: [210, 105, 30],
+				coral: [255, 127, 80],
+				cornflowerblue: [100, 149, 237],
+				cornsilk: [255, 248, 220],
+				crimson: [220, 20, 60],
+				cyan: [0, 255, 255],
+				darkblue: [0, 0, 139],
+				darkcyan: [0, 139, 139],
+				darkgoldenrod: [184, 134, 11],
+				darkgray: [169, 169, 169],
+				darkgreen: [0, 100, 0],
+				darkgrey: [169, 169, 169],
+				darkkhaki: [189, 183, 107],
+				darkmagenta: [139, 0, 139],
+				darkolivegreen: [85, 107, 47],
+				darkorange: [255, 140, 0],
+				darkorchid: [153, 50, 204],
+				darkred: [139, 0, 0],
+				darksalmon: [233, 150, 122],
+				darkseagreen: [143, 188, 143],
+				darkslateblue: [72, 61, 139],
+				darkslategray: [47, 79, 79],
+				darkslategrey: [47, 79, 79],
+				darkturquoise: [0, 206, 209],
+				darkviolet: [148, 0, 211],
+				deeppink: [255, 20, 147],
+				deepskyblue: [0, 191, 255],
+				dimgray: [105, 105, 105],
+				dimgrey: [105, 105, 105],
+				dodgerblue: [30, 144, 255],
+				firebrick: [178, 34, 34],
+				floralwhite: [255, 250, 240],
+				forestgreen: [34, 139, 34],
+				fuchsia: [255, 0, 255],
+				gainsboro: [220, 220, 220],
+				ghostwhite: [248, 248, 255],
+				gold: [255, 215, 0],
+				goldenrod: [218, 165, 32],
+				gray: [128, 128, 128],
+				green: [0, 128, 0],
+				greenyellow: [173, 255, 47],
+				grey: [128, 128, 128],
+				honeydew: [240, 255, 240],
+				hotpink: [255, 105, 180],
+				indianred: [205, 92, 92],
+				indigo: [75, 0, 130],
+				ivory: [255, 255, 240],
+				khaki: [240, 230, 140],
+				lavender: [230, 230, 250],
+				lavenderblush: [255, 240, 245],
+				lawngreen: [124, 252, 0],
+				lemonchiffon: [255, 250, 205],
+				lightblue: [173, 216, 230],
+				lightcoral: [240, 128, 128],
+				lightcyan: [224, 255, 255],
+				lightgoldenrodyellow: [250, 250, 210],
+				lightgray: [211, 211, 211],
+				lightgreen: [144, 238, 144],
+				lightgrey: [211, 211, 211],
+				lightpink: [255, 182, 193],
+				lightsalmon: [255, 160, 122],
+				lightseagreen: [32, 178, 170],
+				lightskyblue: [135, 206, 250],
+				lightslategray: [119, 136, 153],
+				lightslategrey: [119, 136, 153],
+				lightsteelblue: [176, 196, 222],
+				lightyellow: [255, 255, 224],
+				lime: [0, 255, 0],
+				limegreen: [50, 205, 50],
+				linen: [250, 240, 230],
+				magenta: [255, 0, 255],
+				maroon: [128, 0, 0],
+				mediumaquamarine: [102, 205, 170],
+				mediumblue: [0, 0, 205],
+				mediumorchid: [186, 85, 211],
+				mediumpurple: [147, 112, 219],
+				mediumseagreen: [60, 179, 113],
+				mediumslateblue: [123, 104, 238],
+				mediumspringgreen: [0, 250, 154],
+				mediumturquoise: [72, 209, 204],
+				mediumvioletred: [199, 21, 133],
+				midnightblue: [25, 25, 112],
+				mintcream: [245, 255, 250],
+				mistyrose: [255, 228, 225],
+				moccasin: [255, 228, 181],
+				navajowhite: [255, 222, 173],
+				navy: [0, 0, 128],
+				oldlace: [253, 245, 230],
+				olive: [128, 128, 0],
+				olivedrab: [107, 142, 35],
+				orange: [255, 165, 0],
+				orangered: [255, 69, 0],
+				orchid: [218, 112, 214],
+				palegoldenrod: [238, 232, 170],
+				palegreen: [152, 251, 152],
+				paleturquoise: [175, 238, 238],
+				palevioletred: [219, 112, 147],
+				papayawhip: [255, 239, 213],
+				peachpuff: [255, 218, 185],
+				peru: [205, 133, 63],
+				pink: [255, 192, 203],
+				plum: [221, 160, 221],
+				powderblue: [176, 224, 230],
+				purple: [128, 0, 128],
+				rebeccapurple: [102, 51, 153],
+				red: [255, 0, 0],
+				rosybrown: [188, 143, 143],
+				royalblue: [65, 105, 225],
+				saddlebrown: [139, 69, 19],
+				salmon: [250, 128, 114],
+				sandybrown: [244, 164, 96],
+				seagreen: [46, 139, 87],
+				seashell: [255, 245, 238],
+				sienna: [160, 82, 45],
+				silver: [192, 192, 192],
+				skyblue: [135, 206, 235],
+				slateblue: [106, 90, 205],
+				slategray: [112, 128, 144],
+				slategrey: [112, 128, 144],
+				snow: [255, 250, 250],
+				springgreen: [0, 255, 127],
+				steelblue: [70, 130, 180],
+				tan: [210, 180, 140],
+				teal: [0, 128, 128],
+				thistle: [216, 191, 216],
+				tomato: [255, 99, 71],
+				turquoise: [64, 224, 208],
+				violet: [238, 130, 238],
+				wheat: [245, 222, 179],
+				white: [255, 255, 255],
+				whitesmoke: [245, 245, 245],
+				yellow: [255, 255, 0],
+				yellowgreen: [154, 205, 50]
+			},
 				S = {};
 			for (var D in M) S[JSON.stringify(M[D])] = D
 		}, {}],
-		4: [function(t, e, n) {
+		4: [function (t, e, n) {
 			var a = t(3),
-				r = function() {
+				r = function () {
 					return new u
 				};
 			for (var i in a) {
-				r[i + "Raw"] = function(e) {
-					return function(t) {
+				r[i + "Raw"] = function (e) {
+					return function (t) {
 						return "number" == typeof t && (t = Array.prototype.slice.call(arguments)), a[e](t)
 					}
 				}(i);
 				var o = /(\w+)2(\w+)/.exec(i),
 					s = o[1],
 					l = o[2];
-				(r[s] = r[s] || {})[l] = r[i] = function(i) {
-					return function(t) {
+				(r[s] = r[s] || {})[l] = r[i] = function (i) {
+					return function (t) {
 						"number" == typeof t && (t = Array.prototype.slice.call(arguments));
 						var e = a[i](t);
 						if ("string" == typeof e || void 0 === e) return e;
@@ -883,15 +883,15 @@
 					}
 				}(i)
 			}
-			var u = function() {
+			var u = function () {
 				this.convs = {}
 			};
-			u.prototype.routeSpace = function(t, e) {
+			u.prototype.routeSpace = function (t, e) {
 				var n = e[0];
 				return void 0 === n ? this.getValues(t) : ("number" == typeof n && (n = Array.prototype.slice.call(e)), this.setValues(t, n))
-			}, u.prototype.setValues = function(t, e) {
+			}, u.prototype.setValues = function (t, e) {
 				return this.space = t, this.convs = {}, this.convs[t] = e, this
-			}, u.prototype.getValues = function(t) {
+			}, u.prototype.getValues = function (t) {
 				var e = this.convs[t];
 				if (!e) {
 					var n = this.space,
@@ -899,15 +899,15 @@
 					e = r[n][t](i), this.convs[t] = e
 				}
 				return e
-			}, ["rgb", "hsl", "hsv", "cmyk", "keyword"].forEach(function(e) {
-				u.prototype[e] = function(t) {
+			}, ["rgb", "hsl", "hsv", "cmyk", "keyword"].forEach(function (e) {
+				u.prototype[e] = function (t) {
 					return this.routeSpace(e, arguments)
 				}
 			}), e.exports = r
 		}, {
 			3: 3
 		}],
-		5: [function(t, e, n) {
+		5: [function (t, e, n) {
 			"use strict";
 			e.exports = {
 				aliceblue: [240, 248, 255],
@@ -1060,9 +1060,9 @@
 				yellowgreen: [154, 205, 50]
 			}
 		}, {}],
-		6: [function(En, jn, t) {
+		6: [function (En, jn, t) {
 			var e, n;
-			e = this, n = function() {
+			e = this, n = function () {
 				"use strict";
 				var t, a;
 
@@ -1117,7 +1117,7 @@
 						overflow: -2,
 						charsLeftOver: 0,
 						nullInput: !1,
-						invalidMonth: null,
+						invalidRonth: null,
 						invalidFormat: !1,
 						userInvalidated: !1,
 						iso: !1,
@@ -1131,10 +1131,10 @@
 				function b(t) {
 					if (null == t._isValid) {
 						var e = v(t),
-							n = a.call(e.parsedDateParts, function(t) {
+							n = a.call(e.parsedDateParts, function (t) {
 								return null != t
 							}),
-							i = !isNaN(t._d.getTime()) && e.overflow < 0 && !e.empty && !e.invalidMonth && !e.invalidWeekday && !e.weekdayMismatch && !e.nullInput && !e.invalidFormat && !e.userInvalidated && (!e.meridiem || e.meridiem && n);
+							i = !isNaN(t._d.getTime()) && e.overflow < 0 && !e.empty && !e.invalidRonth && !e.invalidWeekday && !e.weekdayMismatch && !e.nullInput && !e.invalidFormat && !e.userInvalidated && (!e.meridiem || e.meridiem && n);
 						if (t._strict && (i = i && 0 === e.charsLeftOver && 0 === e.unusedTokens.length && void 0 === e.bigHour), null != Object.isFrozen && Object.isFrozen(t)) return i;
 						t._isValid = i
 					}
@@ -1145,7 +1145,7 @@
 					var e = p(NaN);
 					return null != t ? m(v(e), t) : v(e).userInvalidated = !0, e
 				}
-				a = Array.prototype.some ? Array.prototype.some : function(t) {
+				a = Array.prototype.some ? Array.prototype.some : function (t) {
 					for (var e = Object(this), n = e.length >>> 0, i = 0; i < n; i++)
 						if (i in e && t.call(this, e[i], i, e)) return !0;
 					return !1
@@ -1192,7 +1192,7 @@
 
 				function n(a, r) {
 					var o = !0;
-					return m(function() {
+					return m(function () {
 						if (null != c.deprecationHandler && c.deprecationHandler(null, a), o) {
 							for (var t, e = [], n = 0; n < arguments.length; n++) {
 								if (t = "", "object" == typeof arguments[n]) {
@@ -1226,7 +1226,7 @@
 				function O(t) {
 					null != t && this.set(t)
 				}
-				c.suppressDeprecationWarnings = !1, c.deprecationHandler = null, i = Object.keys ? Object.keys : function(t) {
+				c.suppressDeprecationWarnings = !1, c.deprecationHandler = null, i = Object.keys ? Object.keys : function (t) {
 					var e, n = [];
 					for (e in t) g(t, e) && n.push(e);
 					return n
@@ -1265,20 +1265,20 @@
 
 				function B(t, e, n, i) {
 					var a = i;
-					"string" == typeof i && (a = function() {
+					"string" == typeof i && (a = function () {
 						return this[i]()
-					}), t && (H[t] = a), e && (H[e[0]] = function() {
+					}), t && (H[t] = a), e && (H[e[0]] = function () {
 						return W(a.apply(this, arguments), e[1], e[2])
-					}), n && (H[n] = function() {
+					}), n && (H[n] = function () {
 						return this.localeData().ordinal(a.apply(this, arguments), t)
 					})
 				}
 
 				function E(t, e) {
-					return t.isValid() ? (e = j(e, t.localeData()), V[e] = V[e] || function(i) {
+					return t.isValid() ? (e = j(e, t.localeData()), V[e] = V[e] || function (i) {
 						var t, a, e, r = i.match(N);
 						for (t = 0, a = r.length; t < a; t++) H[r[t]] ? r[t] = H[r[t]] : r[t] = (e = r[t]).match(/\[[\s\S]/) ? e.replace(/^\[|\]$/g, "") : e.replace(/\\/g, "");
-						return function(t) {
+						return function (t) {
 							var e, n = "";
 							for (e = 0; e < a; e++) n += P(r[e]) ? r[e].call(t, i) : r[e];
 							return n
@@ -1314,13 +1314,13 @@
 					st = {};
 
 				function lt(t, n, i) {
-					st[t] = P(n) ? n : function(t, e) {
+					st[t] = P(n) ? n : function (t, e) {
 						return t && i ? i : n
 					}
 				}
 
 				function ut(t, e) {
-					return g(st, t) ? st[t](e._strict, e._locale) : new RegExp(dt(t.replace("\\", "").replace(/\\(\[)|\\(\])|\[([^\]\[]*)\]|\\(.)/g, function(t, e, n, i, a) {
+					return g(st, t) ? st[t](e._strict, e._locale) : new RegExp(dt(t.replace("\\", "").replace(/\\(\[)|\\(\])|\[([^\]\[]*)\]|\\(.)/g, function (t, e, n, i, a) {
 						return e || n || i || a
 					})))
 				}
@@ -1332,13 +1332,13 @@
 
 				function ct(t, n) {
 					var e, i = n;
-					for ("string" == typeof t && (t = [t]), d(n) && (i = function(t, e) {
-							e[n] = M(t)
-						}), e = 0; e < t.length; e++) ht[t[e]] = i
+					for ("string" == typeof t && (t = [t]), d(n) && (i = function (t, e) {
+						e[n] = M(t)
+					}), e = 0; e < t.length; e++) ht[t[e]] = i
 				}
 
 				function ft(t, a) {
-					ct(t, function(t, e, n, i) {
+					ct(t, function (t, e, n, i) {
 						n._w = n._w || {}, a(t, n._w, n, i)
 					})
 				}
@@ -1359,24 +1359,24 @@
 				function Mt(t) {
 					return t % 4 == 0 && t % 100 != 0 || t % 400 == 0
 				}
-				B("Y", 0, 0, function() {
+				B("Y", 0, 0, function () {
 					var t = this.year();
 					return t <= 9999 ? "" + t : "+" + t
-				}), B(0, ["YY", 2], 0, function() {
+				}), B(0, ["YY", 2], 0, function () {
 					return this.year() % 100
-				}), B(0, ["YYYY", 4], 0, "year"), B(0, ["YYYYY", 5], 0, "year"), B(0, ["YYYYYY", 6, !0], 0, "year"), A("year", "y"), Y("year", 1), lt("Y", it), lt("YY", J, G), lt("YYYY", tt, Z), lt("YYYYY", et, X), lt("YYYYYY", et, X), ct(["YYYYY", "YYYYYY"], gt), ct("YYYY", function(t, e) {
+				}), B(0, ["YYYY", 4], 0, "year"), B(0, ["YYYYY", 5], 0, "year"), B(0, ["YYYYYY", 6, !0], 0, "year"), A("year", "y"), Y("year", 1), lt("Y", it), lt("YY", J, G), lt("YYYY", tt, Z), lt("YYYYY", et, X), lt("YYYYYY", et, X), ct(["YYYYY", "YYYYYY"], gt), ct("YYYY", function (t, e) {
 					e[gt] = 2 === t.length ? c.parseTwoDigitYear(t) : M(t)
-				}), ct("YY", function(t, e) {
+				}), ct("YY", function (t, e) {
 					e[gt] = c.parseTwoDigitYear(t)
-				}), ct("Y", function(t, e) {
+				}), ct("Y", function (t, e) {
 					e[gt] = parseInt(t, 10)
-				}), c.parseTwoDigitYear = function(t) {
+				}), c.parseTwoDigitYear = function (t) {
 					return M(t) + (68 < M(t) ? 1900 : 2e3)
 				};
 				var St, Dt = Ct("FullYear", !0);
 
 				function Ct(e, n) {
-					return function(t) {
+					return function (t) {
 						return null != t ? (Tt(this, e, t), c.updateOffset(this, n), this) : Pt(this, e)
 					}
 				}
@@ -1394,26 +1394,26 @@
 					var n, i = (e % (n = 12) + n) % n;
 					return t += (e - i) / 12, 1 === i ? Mt(t) ? 29 : 28 : 31 - i % 7 % 2
 				}
-				St = Array.prototype.indexOf ? Array.prototype.indexOf : function(t) {
+				St = Array.prototype.indexOf ? Array.prototype.indexOf : function (t) {
 					var e;
 					for (e = 0; e < this.length; ++e)
 						if (this[e] === t) return e;
 					return -1
-				}, B("M", ["MM", 2], "Mo", function() {
+				}, B("M", ["MM", 2], "Mo", function () {
 					return this.month() + 1
-				}), B("MMM", 0, 0, function(t) {
+				}), B("MMM", 0, 0, function (t) {
 					return this.localeData().monthsShort(this, t)
-				}), B("MMMM", 0, 0, function(t) {
+				}), B("MMMM", 0, 0, function (t) {
 					return this.localeData().months(this, t)
-				}), A("month", "M"), Y("month", 8), lt("M", J), lt("MM", J, G), lt("MMM", function(t, e) {
+				}), A("month", "M"), Y("month", 8), lt("M", J), lt("MM", J, G), lt("MMM", function (t, e) {
 					return e.monthsShortRegex(t)
-				}), lt("MMMM", function(t, e) {
+				}), lt("MMMM", function (t, e) {
 					return e.monthsRegex(t)
-				}), ct(["M", "MM"], function(t, e) {
+				}), ct(["M", "MM"], function (t, e) {
 					e[mt] = M(t) - 1
-				}), ct(["MMM", "MMMM"], function(t, e, n, i) {
+				}), ct(["MMM", "MMMM"], function (t, e, n, i) {
 					var a = n._locale.monthsParse(t, i, n._strict);
-					null != a ? e[mt] = a : v(n).invalidMonth = t
+					null != a ? e[mt] = a : v(n).invalidRonth = t
 				});
 				var It = /D[oD]?(\[[^\[\]]*\]|\s)+MMMM?/,
 					At = "January_February_March_April_May_June_July_August_September_October_November_December".split("_");
@@ -1479,25 +1479,25 @@
 						a = Vt(t + 1, e, n);
 					return (wt(t) - i + a) / 7
 				}
-				B("w", ["ww", 2], "wo", "week"), B("W", ["WW", 2], "Wo", "isoWeek"), A("week", "w"), A("isoWeek", "W"), Y("week", 5), Y("isoWeek", 5), lt("w", J), lt("ww", J, G), lt("W", J), lt("WW", J, G), ft(["w", "ww", "W", "WW"], function(t, e, n, i) {
+				B("w", ["ww", 2], "wo", "week"), B("W", ["WW", 2], "Wo", "isoWeek"), A("week", "w"), A("isoWeek", "W"), Y("week", 5), Y("isoWeek", 5), lt("w", J), lt("ww", J, G), lt("W", J), lt("WW", J, G), ft(["w", "ww", "W", "WW"], function (t, e, n, i) {
 					e[i.substr(0, 1)] = M(t)
 				});
-				B("d", 0, "do", "day"), B("dd", 0, 0, function(t) {
+				B("d", 0, "do", "day"), B("dd", 0, 0, function (t) {
 					return this.localeData().weekdaysMin(this, t)
-				}), B("ddd", 0, 0, function(t) {
+				}), B("ddd", 0, 0, function (t) {
 					return this.localeData().weekdaysShort(this, t)
-				}), B("dddd", 0, 0, function(t) {
+				}), B("dddd", 0, 0, function (t) {
 					return this.localeData().weekdays(this, t)
-				}), B("e", 0, 0, "weekday"), B("E", 0, 0, "isoWeekday"), A("day", "d"), A("weekday", "e"), A("isoWeekday", "E"), Y("day", 11), Y("weekday", 11), Y("isoWeekday", 11), lt("d", J), lt("e", J), lt("E", J), lt("dd", function(t, e) {
+				}), B("e", 0, 0, "weekday"), B("E", 0, 0, "isoWeekday"), A("day", "d"), A("weekday", "e"), A("isoWeekday", "E"), Y("day", 11), Y("weekday", 11), Y("isoWeekday", 11), lt("d", J), lt("e", J), lt("E", J), lt("dd", function (t, e) {
 					return e.weekdaysMinRegex(t)
-				}), lt("ddd", function(t, e) {
+				}), lt("ddd", function (t, e) {
 					return e.weekdaysShortRegex(t)
-				}), lt("dddd", function(t, e) {
+				}), lt("dddd", function (t, e) {
 					return e.weekdaysRegex(t)
-				}), ft(["dd", "ddd", "dddd"], function(t, e, n, i) {
+				}), ft(["dd", "ddd", "dddd"], function (t, e, n, i) {
 					var a = n._locale.weekdaysParse(t, i, n._strict);
 					null != a ? e.d = a : v(n).invalidWeekday = t
-				}), ft(["d", "e", "E"], function(t, e, n, i) {
+				}), ft(["d", "e", "E"], function (t, e, n, i) {
 					e[i] = M(t)
 				});
 				var jt = "Sunday_Monday_Tuesday_Wednesday_Thursday_Friday_Saturday".split("_");
@@ -1525,7 +1525,7 @@
 				}
 
 				function Kt(t, e) {
-					B(t, 0, 0, function() {
+					B(t, 0, 0, function () {
 						return this.localeData().meridiem(this.hours(), this.minutes(), e)
 					})
 				}
@@ -1533,34 +1533,34 @@
 				function Qt(t, e) {
 					return e._meridiemParse
 				}
-				B("H", ["HH", 2], 0, "hour"), B("h", ["hh", 2], 0, $t), B("k", ["kk", 2], 0, function() {
+				B("H", ["HH", 2], 0, "hour"), B("h", ["hh", 2], 0, $t), B("k", ["kk", 2], 0, function () {
 					return this.hours() || 24
-				}), B("hmm", 0, 0, function() {
+				}), B("hmm", 0, 0, function () {
 					return "" + $t.apply(this) + W(this.minutes(), 2)
-				}), B("hmmss", 0, 0, function() {
+				}), B("hmmss", 0, 0, function () {
 					return "" + $t.apply(this) + W(this.minutes(), 2) + W(this.seconds(), 2)
-				}), B("Hmm", 0, 0, function() {
+				}), B("Hmm", 0, 0, function () {
 					return "" + this.hours() + W(this.minutes(), 2)
-				}), B("Hmmss", 0, 0, function() {
+				}), B("Hmmss", 0, 0, function () {
 					return "" + this.hours() + W(this.minutes(), 2) + W(this.seconds(), 2)
-				}), Kt("a", !0), Kt("A", !1), A("hour", "h"), Y("hour", 13), lt("a", Qt), lt("A", Qt), lt("H", J), lt("h", J), lt("k", J), lt("HH", J, G), lt("hh", J, G), lt("kk", J, G), lt("hmm", $), lt("hmmss", K), lt("Hmm", $), lt("Hmmss", K), ct(["H", "HH"], vt), ct(["k", "kk"], function(t, e, n) {
+				}), Kt("a", !0), Kt("A", !1), A("hour", "h"), Y("hour", 13), lt("a", Qt), lt("A", Qt), lt("H", J), lt("h", J), lt("k", J), lt("HH", J, G), lt("hh", J, G), lt("kk", J, G), lt("hmm", $), lt("hmmss", K), lt("Hmm", $), lt("Hmmss", K), ct(["H", "HH"], vt), ct(["k", "kk"], function (t, e, n) {
 					var i = M(t);
 					e[vt] = 24 === i ? 0 : i
-				}), ct(["a", "A"], function(t, e, n) {
+				}), ct(["a", "A"], function (t, e, n) {
 					n._isPm = n._locale.isPM(t), n._meridiem = t
-				}), ct(["h", "hh"], function(t, e, n) {
+				}), ct(["h", "hh"], function (t, e, n) {
 					e[vt] = M(t), v(n).bigHour = !0
-				}), ct("hmm", function(t, e, n) {
+				}), ct("hmm", function (t, e, n) {
 					var i = t.length - 2;
 					e[vt] = M(t.substr(0, i)), e[bt] = M(t.substr(i)), v(n).bigHour = !0
-				}), ct("hmmss", function(t, e, n) {
+				}), ct("hmmss", function (t, e, n) {
 					var i = t.length - 4,
 						a = t.length - 2;
 					e[vt] = M(t.substr(0, i)), e[bt] = M(t.substr(i, 2)), e[yt] = M(t.substr(a)), v(n).bigHour = !0
-				}), ct("Hmm", function(t, e, n) {
+				}), ct("Hmm", function (t, e, n) {
 					var i = t.length - 2;
 					e[vt] = M(t.substr(0, i)), e[bt] = M(t.substr(i))
-				}), ct("Hmmss", function(t, e, n) {
+				}), ct("Hmmss", function (t, e, n) {
 					var i = t.length - 4,
 						a = t.length - 2;
 					e[vt] = M(t.substr(0, i)), e[bt] = M(t.substr(i, 2)), e[yt] = M(t.substr(a))
@@ -1624,7 +1624,7 @@
 					var e = null;
 					if (!ie[t] && void 0 !== jn && jn && jn.exports) try {
 						e = te._abbr, En("./locale/" + t), se(e)
-					} catch (t) {}
+					} catch (t) { }
 					return ie[t]
 				}
 
@@ -1646,7 +1646,7 @@
 							}), null;
 							i = n._config
 						}
-					return ie[t] = new O(T(i, e)), ae[t] && ae[t].forEach(function(t) {
+					return ie[t] = new O(T(i, e)), ae[t] && ae[t].forEach(function (t) {
 						le(t.name, t.config)
 					}), se(t), ie[t]
 				}
@@ -1658,7 +1658,7 @@
 						if (e = oe(t)) return e;
 						t = [t]
 					}
-					return function(t) {
+					return function (t) {
 						for (var e, n, i, a, r = 0; r < t.length;) {
 							for (e = (a = re(t[r]).split("-")).length, n = (n = re(t[r + 1])) ? n.split("-") : null; 0 < e;) {
 								if (i = oe(a.slice(0, e).join("-"))) return i;
@@ -1684,18 +1684,18 @@
 					var e, n, i, a, r, o = [];
 					if (!t._d) {
 						var s, l;
-						for (s = t, l = new Date(c.now()), i = s._useUTC ? [l.getUTCFullYear(), l.getUTCMonth(), l.getUTCDate()] : [l.getFullYear(), l.getMonth(), l.getDate()], t._w && null == t._a[pt] && null == t._a[mt] && function(t) {
-								var e, n, i, a, r, o, s, l;
-								if (null != (e = t._w).GG || null != e.W || null != e.E) r = 1, o = 4, n = he(e.GG, t._a[gt], Bt(Ce(), 1, 4).year), i = he(e.W, 1), ((a = he(e.E, 1)) < 1 || 7 < a) && (l = !0);
-								else {
-									r = t._locale._week.dow, o = t._locale._week.doy;
-									var u = Bt(Ce(), r, o);
-									n = he(e.gg, t._a[gt], u.year), i = he(e.w, u.week), null != e.d ? ((a = e.d) < 0 || 6 < a) && (l = !0) : null != e.e ? (a = e.e + r, (e.e < 0 || 6 < e.e) && (l = !0)) : a = r
-								}
-								i < 1 || i > Et(n, r, o) ? v(t)._overflowWeeks = !0 : null != l ? v(t)._overflowWeekday = !0 : (s = Ht(n, i, a, r, o), t._a[gt] = s.year, t._dayOfYear = s.dayOfYear)
-							}(t), null != t._dayOfYear && (r = he(t._a[gt], i[gt]), (t._dayOfYear > wt(r) || 0 === t._dayOfYear) && (v(t)._overflowDayOfYear = !0), n = zt(r, 0, t._dayOfYear), t._a[mt] = n.getUTCMonth(), t._a[pt] = n.getUTCDate()), e = 0; e < 3 && null == t._a[e]; ++e) t._a[e] = o[e] = i[e];
+						for (s = t, l = new Date(c.now()), i = s._useUTC ? [l.getUTCFullYear(), l.getUTCMonth(), l.getUTCDate()] : [l.getFullYear(), l.getMonth(), l.getDate()], t._w && null == t._a[pt] && null == t._a[mt] && function (t) {
+							var e, n, i, a, r, o, s, l;
+							if (null != (e = t._w).GG || null != e.W || null != e.E) r = 1, o = 4, n = he(e.GG, t._a[gt], Bt(Ce(), 1, 4).year), i = he(e.W, 1), ((a = he(e.E, 1)) < 1 || 7 < a) && (l = !0);
+							else {
+								r = t._locale._week.dow, o = t._locale._week.doy;
+								var u = Bt(Ce(), r, o);
+								n = he(e.gg, t._a[gt], u.year), i = he(e.w, u.week), null != e.d ? ((a = e.d) < 0 || 6 < a) && (l = !0) : null != e.e ? (a = e.e + r, (e.e < 0 || 6 < e.e) && (l = !0)) : a = r
+							}
+							i < 1 || i > Et(n, r, o) ? v(t)._overflowWeeks = !0 : null != l ? v(t)._overflowWeekday = !0 : (s = Ht(n, i, a, r, o), t._a[gt] = s.year, t._dayOfYear = s.dayOfYear)
+						}(t), null != t._dayOfYear && (r = he(t._a[gt], i[gt]), (t._dayOfYear > wt(r) || 0 === t._dayOfYear) && (v(t)._overflowDayOfYear = !0), n = zt(r, 0, t._dayOfYear), t._a[mt] = n.getUTCMonth(), t._a[pt] = n.getUTCDate()), e = 0; e < 3 && null == t._a[e]; ++e) t._a[e] = o[e] = i[e];
 						for (; e < 7; e++) t._a[e] = o[e] = null == t._a[e] ? 2 === e ? 1 : 0 : t._a[e];
-						24 === t._a[vt] && 0 === t._a[bt] && 0 === t._a[yt] && 0 === t._a[xt] && (t._nextDay = !0, t._a[vt] = 0), t._d = (t._useUTC ? zt : function(t, e, n, i, a, r, o) {
+						24 === t._a[vt] && 0 === t._a[bt] && 0 === t._a[yt] && 0 === t._a[xt] && (t._nextDay = !0, t._a[vt] = 0), t._d = (t._useUTC ? zt : function (t, e, n, i, a, r, o) {
 							var s = new Date(t, e, n, i, a, r, o);
 							return t < 100 && 0 <= t && isFinite(s.getFullYear()) && s.setFullYear(t), s
 						}).apply(null, o), a = t._useUTC ? t._d.getUTCDay() : t._d.getDay(), null != t._tzm && t._d.setUTCMinutes(t._d.getUTCMinutes() - t._tzm), t._nextDay && (t._a[vt] = 24), t._w && void 0 !== t._w.d && t._w.d !== a && (v(t).weekdayMismatch = !0)
@@ -1739,18 +1739,18 @@
 								a = pe[e][0], i = !1 !== pe[e][2];
 								break
 							}
-						if (null == a) return void(t._isValid = !1);
+						if (null == a) return void (t._isValid = !1);
 						if (l[3]) {
 							for (e = 0, n = ve.length; e < n; e++)
 								if (ve[e][1].exec(l[3])) {
 									r = (l[2] || " ") + ve[e][0];
 									break
 								}
-							if (null == r) return void(t._isValid = !1)
+							if (null == r) return void (t._isValid = !1)
 						}
-						if (!i && null != r) return void(t._isValid = !1);
+						if (!i && null != r) return void (t._isValid = !1);
 						if (l[4]) {
-							if (!me.exec(l[4])) return void(t._isValid = !1);
+							if (!me.exec(l[4])) return void (t._isValid = !1);
 							o = "Z"
 						}
 						t._f = a + (r || "") + (o || ""), Me(t)
@@ -1759,7 +1759,7 @@
 				var xe = /^(?:(Mon|Tue|Wed|Thu|Fri|Sat|Sun),?\s)?(\d{1,2})\s(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)\s(\d{2,4})\s(\d\d):(\d\d)(?::(\d\d))?\s(?:(UT|GMT|[ECMP][SD]T)|([Zz])|([+-]\d{4}))$/;
 
 				function _e(t, e, n, i, a, r) {
-					var o = [function(t) {
+					var o = [function (t) {
 						var e = parseInt(t, 10); {
 							if (e <= 49) return 2e3 + e;
 							if (e <= 999) return 1900 + e
@@ -1786,7 +1786,7 @@
 					if (a) {
 						var r = _e(a[4], a[3], a[2], a[5], a[6], a[7]);
 						if (e = a[1], n = r, i = t, e && Ut.indexOf(e) !== new Date(n[0], n[1], n[2]).getDay() && (v(i).weekdayMismatch = !0, !(i._isValid = !1))) return;
-						t._a = r, t._tzm = function(t, e, n) {
+						t._a = r, t._tzm = function (t, e, n) {
 							if (t) return ke[t];
 							if (e) return 0;
 							var i = parseInt(n, 10),
@@ -1804,7 +1804,7 @@
 								d = u.length,
 								h = 0;
 							for (i = j(t._f, t._locale).match(N) || [], e = 0; e < i.length; e++) a = i[e], (n = (u.match(ut(a, t)) || [])[0]) && (0 < (r = u.substr(0, u.indexOf(n))).length && v(t).unusedInput.push(r), u = u.slice(u.indexOf(n) + n.length), h += n.length), H[a] ? (n ? v(t).empty = !1 : v(t).unusedTokens.push(a), o = a, l = t, null != (s = n) && g(ht, o) && ht[o](s, l._a, l, o)) : t._strict && !n && v(t).unusedTokens.push(a);
-							v(t).charsLeftOver = d - h, 0 < u.length && v(t).unusedInput.push(u), t._a[vt] <= 12 && !0 === v(t).bigHour && 0 < t._a[vt] && (v(t).bigHour = void 0), v(t).parsedDateParts = t._a.slice(0), v(t).meridiem = t._meridiem, t._a[vt] = function(t, e, n) {
+							v(t).charsLeftOver = d - h, 0 < u.length && v(t).unusedInput.push(u), t._a[vt] <= 12 && !0 === v(t).bigHour && 0 < t._a[vt] && (v(t).bigHour = void 0), v(t).parsedDateParts = t._a.slice(0), v(t).meridiem = t._meridiem, t._a[vt] = function (t, e, n) {
 								var i;
 								if (null == n) return e;
 								return null != t.meridiemHour ? t.meridiemHour(e, n) : (null != t.isPM && ((i = t.isPM(n)) && e < 12 && (e += 12), i || 12 !== e || (e = 0)), e)
@@ -1818,17 +1818,17 @@
 						o = t._f;
 					return t._locale = t._locale || ue(t._l), null === r || void 0 === o && "" === r ? y({
 						nullInput: !0
-					}) : ("string" == typeof r && (t._i = r = t._locale.preparse(r)), k(r) ? new _(de(r)) : (h(r) ? t._d = r : s(o) ? function(t) {
+					}) : ("string" == typeof r && (t._i = r = t._locale.preparse(r)), k(r) ? new _(de(r)) : (h(r) ? t._d = r : s(o) ? function (t) {
 						var e, n, i, a, r;
 						if (0 === t._f.length) return v(t).invalidFormat = !0, t._d = new Date(NaN);
 						for (a = 0; a < t._f.length; a++) r = 0, e = x({}, t), null != t._useUTC && (e._useUTC = t._useUTC), e._f = t._f[a], Me(e), b(e) && (r += v(e).charsLeftOver, r += 10 * v(e).unusedTokens.length, v(e).score = r, (null == i || r < i) && (i = r, n = e));
 						m(t, n || e)
-					}(t) : o ? Me(t) : u(n = (e = t)._i) ? e._d = new Date(c.now()) : h(n) ? e._d = new Date(n.valueOf()) : "string" == typeof n ? (i = e, null === (a = be.exec(i._i)) ? (ye(i), !1 === i._isValid && (delete i._isValid, we(i), !1 === i._isValid && (delete i._isValid, c.createFromInputFallback(i)))) : i._d = new Date(+a[1])) : s(n) ? (e._a = f(n.slice(0), function(t) {
+					}(t) : o ? Me(t) : u(n = (e = t)._i) ? e._d = new Date(c.now()) : h(n) ? e._d = new Date(n.valueOf()) : "string" == typeof n ? (i = e, null === (a = be.exec(i._i)) ? (ye(i), !1 === i._isValid && (delete i._isValid, we(i), !1 === i._isValid && (delete i._isValid, c.createFromInputFallback(i)))) : i._d = new Date(+a[1])) : s(n) ? (e._a = f(n.slice(0), function (t) {
 						return parseInt(t, 10)
-					}), ce(e)) : l(n) ? function(t) {
+					}), ce(e)) : l(n) ? function (t) {
 						if (!t._d) {
 							var e = R(t._i);
-							t._a = f([e.year, e.month, e.day || e.date, e.hour, e.minute, e.second, e.millisecond], function(t) {
+							t._a = f([e.year, e.month, e.day || e.date, e.hour, e.minute, e.second, e.millisecond], function (t) {
 								return t && parseInt(t, 10)
 							}), ce(t)
 						}
@@ -1837,7 +1837,7 @@
 
 				function De(t, e, n, i, a) {
 					var r, o = {};
-					return !0 !== n && !1 !== n || (i = n, n = void 0), (l(t) && function(t) {
+					return !0 !== n && !1 !== n || (i = n, n = void 0), (l(t) && function (t) {
 						if (Object.getOwnPropertyNames) return 0 === Object.getOwnPropertyNames(t).length;
 						var e;
 						for (e in t)
@@ -1849,14 +1849,14 @@
 				function Ce(t, e, n, i) {
 					return De(t, e, n, i, !1)
 				}
-				c.createFromInputFallback = n("value provided is not in a recognized RFC2822 or ISO format. moment construction falls back to js Date(), which is not reliable across all browsers and versions. Non RFC2822/ISO date formats are discouraged and will be removed in an upcoming major release. Please refer to http://momentjs.com/guides/#/warnings/js-date/ for more info.", function(t) {
+				c.createFromInputFallback = n("value provided is not in a recognized RFC2822 or ISO format. moment construction falls back to js Date(), which is not reliable across all browsers and versions. Non RFC2822/ISO date formats are discouraged and will be removed in an upcoming major release. Please refer to http://momentjs.com/guides/#/warnings/js-date/ for more info.", function (t) {
 					t._d = new Date(t._i + (t._useUTC ? " UTC" : ""))
-				}), c.ISO_8601 = function() {}, c.RFC_2822 = function() {};
-				var Pe = n("moment().min is deprecated, use moment.max instead. http://momentjs.com/guides/#/warnings/min-max/", function() {
-						var t = Ce.apply(null, arguments);
-						return this.isValid() && t.isValid() ? t < this ? this : t : y()
-					}),
-					Te = n("moment().max is deprecated, use moment.min instead. http://momentjs.com/guides/#/warnings/min-max/", function() {
+				}), c.ISO_8601 = function () { }, c.RFC_2822 = function () { };
+				var Pe = n("moment().min is deprecated, use moment.max instead. http://momentjs.com/guides/#/warnings/min-max/", function () {
+					var t = Ce.apply(null, arguments);
+					return this.isValid() && t.isValid() ? t < this ? this : t : y()
+				}),
+					Te = n("moment().max is deprecated, use moment.min instead. http://momentjs.com/guides/#/warnings/min-max/", function () {
 						var t = Ce.apply(null, arguments);
 						return this.isValid() && t.isValid() ? this < t ? this : t : y()
 					});
@@ -1880,7 +1880,7 @@
 						l = e.minute || 0,
 						u = e.second || 0,
 						d = e.millisecond || 0;
-					this._isValid = function(t) {
+					this._isValid = function (t) {
 						for (var e in t)
 							if (-1 === St.call(Ie, e) || null != t[e] && isNaN(t[e])) return !1;
 						for (var n = !1, i = 0; i < Ie.length; ++i)
@@ -1901,13 +1901,13 @@
 				}
 
 				function Le(t, n) {
-					B(t, 0, 0, function() {
+					B(t, 0, 0, function () {
 						var t = this.utcOffset(),
 							e = "+";
 						return t < 0 && (t = -t, e = "-"), e + W(~~(t / 60), 2) + n + W(~~t % 60, 2)
 					})
 				}
-				Le("Z", ":"), Le("ZZ", ""), lt("Z", rt), lt("ZZ", rt), ct(["Z", "ZZ"], function(t, e, n) {
+				Le("Z", ":"), Le("ZZ", ""), lt("Z", rt), lt("ZZ", rt), ct(["Z", "ZZ"], function (t, e, n) {
 					n._useUTC = !0, n._tzm = We(rt, t)
 				});
 				var Ye = /([\+\-]|\d\d)/gi;
@@ -1932,7 +1932,7 @@
 				function Ve() {
 					return !!this.isValid() && (this._isUTC && 0 === this._offset)
 				}
-				c.updateOffset = function() {};
+				c.updateOffset = function () { };
 				var He = /^(\-|\+)?(?:(\d*)[. ])?(\d+)\:(\d+)(?:\:(\d+)(\.\d*)?)?$/,
 					Be = /^(-|\+)?P(?:([-+]?[0-9,.]*)Y)?(?:([-+]?[0-9,.]*)M)?(?:([-+]?[0-9,.]*)W)?(?:([-+]?[0-9,.]*)D)?(?:T(?:([-+]?[0-9,.]*)H)?(?:([-+]?[0-9,.]*)M)?(?:([-+]?[0-9,.]*)S)?)?$/;
 
@@ -1958,7 +1958,7 @@
 						h: je(o[6], n),
 						m: je(o[7], n),
 						s: je(o[8], n)
-					}) : null == r ? r = {} : "object" == typeof r && ("from" in r || "to" in r) && (a = function(t, e) {
+					}) : null == r ? r = {} : "object" == typeof r && ("from" in r || "to" in r) && (a = function (t, e) {
 						var n;
 						if (!t.isValid() || !e.isValid()) return {
 							milliseconds: 0,
@@ -1983,7 +1983,7 @@
 				}
 
 				function Ge(i, a) {
-					return function(t, e) {
+					return function (t, e) {
 						var n;
 						return null === e || isNaN(+e) || (C(a, "moment()." + a + "(period, number) is deprecated. Please use moment()." + a + "(number, period). See http://momentjs.com/guides/#/warnings/add-inverted-param/ for more info."), n = t, t = e, e = n), qe(this, Ee(t = "string" == typeof t ? +t : t, e), i), this
 					}
@@ -1995,7 +1995,7 @@
 						o = Re(e._months);
 					t.isValid() && (i = null == i || i, o && Rt(t, Pt(t, "Month") + o * n), r && Tt(t, "Date", Pt(t, "Date") + r * n), a && t._d.setTime(t._d.valueOf() + a * n), i && c.updateOffset(t, r || o))
 				}
-				Ee.fn = Ae.prototype, Ee.invalid = function() {
+				Ee.fn = Ae.prototype, Ee.invalid = function () {
 					return Ee(NaN)
 				};
 				var Ze = Ge(1, "add"),
@@ -2012,7 +2012,7 @@
 					return void 0 === t ? this._locale._abbr : (null != (e = ue(t)) && (this._locale = e), this)
 				}
 				c.defaultFormat = "YYYY-MM-DDTHH:mm:ssZ", c.defaultFormatUtc = "YYYY-MM-DDTHH:mm:ss[Z]";
-				var Ke = n("moment().lang() is deprecated. Instead, use moment().localeData() to get the language configuration. Use moment().locale() to change languages.", function(t) {
+				var Ke = n("moment().lang() is deprecated. Instead, use moment().localeData() to get the language configuration. Use moment().locale() to change languages.", function (t) {
 					return void 0 === t ? this.localeData() : this.locale(t)
 				});
 
@@ -2026,51 +2026,51 @@
 
 				function en(t, e, n, i, a) {
 					var r;
-					return null == t ? Bt(this, i, a).year : ((r = Et(t, i, a)) < e && (e = r), function(t, e, n, i, a) {
+					return null == t ? Bt(this, i, a).year : ((r = Et(t, i, a)) < e && (e = r), function (t, e, n, i, a) {
 						var r = Ht(t, e, n, i, a),
 							o = zt(r.year, 0, r.dayOfYear);
 						return this.year(o.getUTCFullYear()), this.month(o.getUTCMonth()), this.date(o.getUTCDate()), this
 					}.call(this, t, e, n, i, a))
 				}
-				B(0, ["gg", 2], 0, function() {
+				B(0, ["gg", 2], 0, function () {
 					return this.weekYear() % 100
-				}), B(0, ["GG", 2], 0, function() {
+				}), B(0, ["GG", 2], 0, function () {
 					return this.isoWeekYear() % 100
-				}), tn("gggg", "weekYear"), tn("ggggg", "weekYear"), tn("GGGG", "isoWeekYear"), tn("GGGGG", "isoWeekYear"), A("weekYear", "gg"), A("isoWeekYear", "GG"), Y("weekYear", 1), Y("isoWeekYear", 1), lt("G", it), lt("g", it), lt("GG", J, G), lt("gg", J, G), lt("GGGG", tt, Z), lt("gggg", tt, Z), lt("GGGGG", et, X), lt("ggggg", et, X), ft(["gggg", "ggggg", "GGGG", "GGGGG"], function(t, e, n, i) {
+				}), tn("gggg", "weekYear"), tn("ggggg", "weekYear"), tn("GGGG", "isoWeekYear"), tn("GGGGG", "isoWeekYear"), A("weekYear", "gg"), A("isoWeekYear", "GG"), Y("weekYear", 1), Y("isoWeekYear", 1), lt("G", it), lt("g", it), lt("GG", J, G), lt("gg", J, G), lt("GGGG", tt, Z), lt("gggg", tt, Z), lt("GGGGG", et, X), lt("ggggg", et, X), ft(["gggg", "ggggg", "GGGG", "GGGGG"], function (t, e, n, i) {
 					e[i.substr(0, 2)] = M(t)
-				}), ft(["gg", "GG"], function(t, e, n, i) {
+				}), ft(["gg", "GG"], function (t, e, n, i) {
 					e[i] = c.parseTwoDigitYear(t)
-				}), B("Q", 0, "Qo", "quarter"), A("quarter", "Q"), Y("quarter", 7), lt("Q", U), ct("Q", function(t, e) {
+				}), B("Q", 0, "Qo", "quarter"), A("quarter", "Q"), Y("quarter", 7), lt("Q", U), ct("Q", function (t, e) {
 					e[mt] = 3 * (M(t) - 1)
-				}), B("D", ["DD", 2], "Do", "date"), A("date", "D"), Y("date", 9), lt("D", J), lt("DD", J, G), lt("Do", function(t, e) {
+				}), B("D", ["DD", 2], "Do", "date"), A("date", "D"), Y("date", 9), lt("D", J), lt("DD", J, G), lt("Do", function (t, e) {
 					return t ? e._dayOfMonthOrdinalParse || e._ordinalParse : e._dayOfMonthOrdinalParseLenient
-				}), ct(["D", "DD"], pt), ct("Do", function(t, e) {
+				}), ct(["D", "DD"], pt), ct("Do", function (t, e) {
 					e[pt] = M(t.match(J)[0])
 				});
 				var nn = Ct("Date", !0);
-				B("DDD", ["DDDD", 3], "DDDo", "dayOfYear"), A("dayOfYear", "DDD"), Y("dayOfYear", 4), lt("DDD", Q), lt("DDDD", q), ct(["DDD", "DDDD"], function(t, e, n) {
+				B("DDD", ["DDDD", 3], "DDDo", "dayOfYear"), A("dayOfYear", "DDD"), Y("dayOfYear", 4), lt("DDD", Q), lt("DDDD", q), ct(["DDD", "DDDD"], function (t, e, n) {
 					n._dayOfYear = M(t)
 				}), B("m", ["mm", 2], 0, "minute"), A("minute", "m"), Y("minute", 14), lt("m", J), lt("mm", J, G), ct(["m", "mm"], bt);
 				var an = Ct("Minutes", !1);
 				B("s", ["ss", 2], 0, "second"), A("second", "s"), Y("second", 15), lt("s", J), lt("ss", J, G), ct(["s", "ss"], yt);
 				var rn, on = Ct("Seconds", !1);
-				for (B("S", 0, 0, function() {
-						return ~~(this.millisecond() / 100)
-					}), B(0, ["SS", 2], 0, function() {
-						return ~~(this.millisecond() / 10)
-					}), B(0, ["SSS", 3], 0, "millisecond"), B(0, ["SSSS", 4], 0, function() {
-						return 10 * this.millisecond()
-					}), B(0, ["SSSSS", 5], 0, function() {
-						return 100 * this.millisecond()
-					}), B(0, ["SSSSSS", 6], 0, function() {
-						return 1e3 * this.millisecond()
-					}), B(0, ["SSSSSSS", 7], 0, function() {
-						return 1e4 * this.millisecond()
-					}), B(0, ["SSSSSSSS", 8], 0, function() {
-						return 1e5 * this.millisecond()
-					}), B(0, ["SSSSSSSSS", 9], 0, function() {
-						return 1e6 * this.millisecond()
-					}), A("millisecond", "ms"), Y("millisecond", 16), lt("S", Q, U), lt("SS", Q, G), lt("SSS", Q, q), rn = "SSSS"; rn.length <= 9; rn += "S") lt(rn, nt);
+				for (B("S", 0, 0, function () {
+					return ~~(this.millisecond() / 100)
+				}), B(0, ["SS", 2], 0, function () {
+					return ~~(this.millisecond() / 10)
+				}), B(0, ["SSS", 3], 0, "millisecond"), B(0, ["SSSS", 4], 0, function () {
+					return 10 * this.millisecond()
+				}), B(0, ["SSSSS", 5], 0, function () {
+					return 100 * this.millisecond()
+				}), B(0, ["SSSSSS", 6], 0, function () {
+					return 1e3 * this.millisecond()
+				}), B(0, ["SSSSSSS", 7], 0, function () {
+					return 1e4 * this.millisecond()
+				}), B(0, ["SSSSSSSS", 8], 0, function () {
+					return 1e5 * this.millisecond()
+				}), B(0, ["SSSSSSSSS", 9], 0, function () {
+					return 1e6 * this.millisecond()
+				}), A("millisecond", "ms"), Y("millisecond", 16), lt("S", Q, U), lt("SS", Q, G), lt("SSS", Q, q), rn = "SSSS"; rn.length <= 9; rn += "S") lt(rn, nt);
 
 				function sn(t, e) {
 					e[xt] = M(1e3 * ("0." + t))
@@ -2083,15 +2083,15 @@
 				function dn(t) {
 					return t
 				}
-				un.add = Ze, un.calendar = function(t, e) {
+				un.add = Ze, un.calendar = function (t, e) {
 					var n = t || Ce(),
 						i = Ne(n, this).startOf("day"),
 						a = c.calendarFormat(this, i) || "sameElse",
 						r = e && (P(e[a]) ? e[a].call(this, n) : e[a]);
 					return this.format(r || this.localeData().calendar(a, this, Ce(n)))
-				}, un.clone = function() {
+				}, un.clone = function () {
 					return new _(this)
-				}, un.diff = function(t, e, n) {
+				}, un.diff = function (t, e, n) {
 					var i, a, r;
 					if (!this.isValid()) return NaN;
 					if (!(i = Ne(t, this)).isValid()) return NaN;
@@ -2124,64 +2124,64 @@
 							r = this - i
 					}
 					return n ? r : w(r)
-				}, un.endOf = function(t) {
+				}, un.endOf = function (t) {
 					return void 0 === (t = F(t)) || "millisecond" === t ? this : ("date" === t && (t = "day"), this.startOf(t).add(1, "isoWeek" === t ? "week" : t).subtract(1, "ms"))
-				}, un.format = function(t) {
+				}, un.format = function (t) {
 					t || (t = this.isUtc() ? c.defaultFormatUtc : c.defaultFormat);
 					var e = E(this, t);
 					return this.localeData().postformat(e)
-				}, un.from = function(t, e) {
+				}, un.from = function (t, e) {
 					return this.isValid() && (k(t) && t.isValid() || Ce(t).isValid()) ? Ee({
 						to: this,
 						from: t
 					}).locale(this.locale()).humanize(!e) : this.localeData().invalidDate()
-				}, un.fromNow = function(t) {
+				}, un.fromNow = function (t) {
 					return this.from(Ce(), t)
-				}, un.to = function(t, e) {
+				}, un.to = function (t, e) {
 					return this.isValid() && (k(t) && t.isValid() || Ce(t).isValid()) ? Ee({
 						from: this,
 						to: t
 					}).locale(this.locale()).humanize(!e) : this.localeData().invalidDate()
-				}, un.toNow = function(t) {
+				}, un.toNow = function (t) {
 					return this.to(Ce(), t)
-				}, un.get = function(t) {
+				}, un.get = function (t) {
 					return P(this[t = F(t)]) ? this[t]() : this
-				}, un.invalidAt = function() {
+				}, un.invalidAt = function () {
 					return v(this).overflow
-				}, un.isAfter = function(t, e) {
+				}, un.isAfter = function (t, e) {
 					var n = k(t) ? t : Ce(t);
 					return !(!this.isValid() || !n.isValid()) && ("millisecond" === (e = F(u(e) ? "millisecond" : e)) ? this.valueOf() > n.valueOf() : n.valueOf() < this.clone().startOf(e).valueOf())
-				}, un.isBefore = function(t, e) {
+				}, un.isBefore = function (t, e) {
 					var n = k(t) ? t : Ce(t);
 					return !(!this.isValid() || !n.isValid()) && ("millisecond" === (e = F(u(e) ? "millisecond" : e)) ? this.valueOf() < n.valueOf() : this.clone().endOf(e).valueOf() < n.valueOf())
-				}, un.isBetween = function(t, e, n, i) {
+				}, un.isBetween = function (t, e, n, i) {
 					return ("(" === (i = i || "()")[0] ? this.isAfter(t, n) : !this.isBefore(t, n)) && (")" === i[1] ? this.isBefore(e, n) : !this.isAfter(e, n))
-				}, un.isSame = function(t, e) {
+				}, un.isSame = function (t, e) {
 					var n, i = k(t) ? t : Ce(t);
 					return !(!this.isValid() || !i.isValid()) && ("millisecond" === (e = F(e || "millisecond")) ? this.valueOf() === i.valueOf() : (n = i.valueOf(), this.clone().startOf(e).valueOf() <= n && n <= this.clone().endOf(e).valueOf()))
-				}, un.isSameOrAfter = function(t, e) {
+				}, un.isSameOrAfter = function (t, e) {
 					return this.isSame(t, e) || this.isAfter(t, e)
-				}, un.isSameOrBefore = function(t, e) {
+				}, un.isSameOrBefore = function (t, e) {
 					return this.isSame(t, e) || this.isBefore(t, e)
-				}, un.isValid = function() {
+				}, un.isValid = function () {
 					return b(this)
-				}, un.lang = Ke, un.locale = $e, un.localeData = Qe, un.max = Te, un.min = Pe, un.parsingFlags = function() {
+				}, un.lang = Ke, un.locale = $e, un.localeData = Qe, un.max = Te, un.min = Pe, un.parsingFlags = function () {
 					return m({}, v(this))
-				}, un.set = function(t, e) {
+				}, un.set = function (t, e) {
 					if ("object" == typeof t)
-						for (var n = function(t) {
-								var e = [];
-								for (var n in t) e.push({
-									unit: n,
-									priority: L[n]
-								});
-								return e.sort(function(t, e) {
-									return t.priority - e.priority
-								}), e
-							}(t = R(t)), i = 0; i < n.length; i++) this[n[i].unit](t[n[i].unit]);
+						for (var n = function (t) {
+							var e = [];
+							for (var n in t) e.push({
+								unit: n,
+								priority: L[n]
+							});
+							return e.sort(function (t, e) {
+								return t.priority - e.priority
+							}), e
+						}(t = R(t)), i = 0; i < n.length; i++) this[n[i].unit](t[n[i].unit]);
 					else if (P(this[t = F(t)])) return this[t](e);
 					return this
-				}, un.startOf = function(t) {
+				}, un.startOf = function (t) {
 					switch (t = F(t)) {
 						case "year":
 							this.month(0);
@@ -2201,10 +2201,10 @@
 							this.milliseconds(0)
 					}
 					return "week" === t && this.weekday(0), "isoWeek" === t && this.isoWeekday(1), "quarter" === t && this.month(3 * Math.floor(this.month() / 3)), this
-				}, un.subtract = Xe, un.toArray = function() {
+				}, un.subtract = Xe, un.toArray = function () {
 					var t = this;
 					return [t.year(), t.month(), t.date(), t.hour(), t.minute(), t.second(), t.millisecond()]
-				}, un.toObject = function() {
+				}, un.toObject = function () {
 					var t = this;
 					return {
 						years: t.year(),
@@ -2215,14 +2215,14 @@
 						seconds: t.seconds(),
 						milliseconds: t.milliseconds()
 					}
-				}, un.toDate = function() {
+				}, un.toDate = function () {
 					return new Date(this.valueOf())
-				}, un.toISOString = function(t) {
+				}, un.toISOString = function (t) {
 					if (!this.isValid()) return null;
 					var e = !0 !== t,
 						n = e ? this.clone().utc() : this;
 					return n.year() < 0 || 9999 < n.year() ? E(n, e ? "YYYYYY-MM-DD[T]HH:mm:ss.SSS[Z]" : "YYYYYY-MM-DD[T]HH:mm:ss.SSSZ") : P(Date.prototype.toISOString) ? e ? this.toDate().toISOString() : new Date(this.valueOf() + 60 * this.utcOffset() * 1e3).toISOString().replace("Z", E(n, "Z")) : E(n, e ? "YYYY-MM-DD[T]HH:mm:ss.SSS[Z]" : "YYYY-MM-DD[T]HH:mm:ss.SSSZ")
-				}, un.inspect = function() {
+				}, un.inspect = function () {
 					if (!this.isValid()) return "moment.invalid(/* " + this._i + " */)";
 					var t = "moment",
 						e = "";
@@ -2231,15 +2231,15 @@
 						i = 0 <= this.year() && this.year() <= 9999 ? "YYYY" : "YYYYYY",
 						a = e + '[")]';
 					return this.format(n + i + "-MM-DD[T]HH:mm:ss.SSS" + a)
-				}, un.toJSON = function() {
+				}, un.toJSON = function () {
 					return this.isValid() ? this.toISOString() : null
-				}, un.toString = function() {
+				}, un.toString = function () {
 					return this.clone().locale("en").format("ddd MMM DD YYYY HH:mm:ss [GMT]ZZ")
-				}, un.unix = function() {
+				}, un.unix = function () {
 					return Math.floor(this.valueOf() / 1e3)
-				}, un.valueOf = function() {
+				}, un.valueOf = function () {
 					return this._d.valueOf() - 6e4 * (this._offset || 0)
-				}, un.creationData = function() {
+				}, un.creationData = function () {
 					return {
 						input: this._i,
 						format: this._f,
@@ -2247,44 +2247,44 @@
 						isUTC: this._isUTC,
 						strict: this._strict
 					}
-				}, un.year = Dt, un.isLeapYear = function() {
+				}, un.year = Dt, un.isLeapYear = function () {
 					return Mt(this.year())
-				}, un.weekYear = function(t) {
+				}, un.weekYear = function (t) {
 					return en.call(this, t, this.week(), this.weekday(), this.localeData()._week.dow, this.localeData()._week.doy)
-				}, un.isoWeekYear = function(t) {
+				}, un.isoWeekYear = function (t) {
 					return en.call(this, t, this.isoWeek(), this.isoWeekday(), 1, 4)
-				}, un.quarter = un.quarters = function(t) {
+				}, un.quarter = un.quarters = function (t) {
 					return null == t ? Math.ceil((this.month() + 1) / 3) : this.month(3 * (t - 1) + this.month() % 3)
-				}, un.month = Lt, un.daysInMonth = function() {
+				}, un.month = Lt, un.daysInMonth = function () {
 					return Ot(this.year(), this.month())
-				}, un.week = un.weeks = function(t) {
+				}, un.week = un.weeks = function (t) {
 					var e = this.localeData().week(this);
 					return null == t ? e : this.add(7 * (t - e), "d")
-				}, un.isoWeek = un.isoWeeks = function(t) {
+				}, un.isoWeek = un.isoWeeks = function (t) {
 					var e = Bt(this, 1, 4).week;
 					return null == t ? e : this.add(7 * (t - e), "d")
-				}, un.weeksInYear = function() {
+				}, un.weeksInYear = function () {
 					var t = this.localeData()._week;
 					return Et(this.year(), t.dow, t.doy)
-				}, un.isoWeeksInYear = function() {
+				}, un.isoWeeksInYear = function () {
 					return Et(this.year(), 1, 4)
-				}, un.date = nn, un.day = un.days = function(t) {
+				}, un.date = nn, un.day = un.days = function (t) {
 					if (!this.isValid()) return null != t ? this : NaN;
 					var e, n, i = this._isUTC ? this._d.getUTCDay() : this._d.getDay();
-					return null != t ? (e = t, n = this.localeData(), t = "string" != typeof e ? e : isNaN(e) ? "number" == typeof(e = n.weekdaysParse(e)) ? e : null : parseInt(e, 10), this.add(t - i, "d")) : i
-				}, un.weekday = function(t) {
+					return null != t ? (e = t, n = this.localeData(), t = "string" != typeof e ? e : isNaN(e) ? "number" == typeof (e = n.weekdaysParse(e)) ? e : null : parseInt(e, 10), this.add(t - i, "d")) : i
+				}, un.weekday = function (t) {
 					if (!this.isValid()) return null != t ? this : NaN;
 					var e = (this.day() + 7 - this.localeData()._week.dow) % 7;
 					return null == t ? e : this.add(t - e, "d")
-				}, un.isoWeekday = function(t) {
+				}, un.isoWeekday = function (t) {
 					if (!this.isValid()) return null != t ? this : NaN;
 					if (null == t) return this.day() || 7;
 					var e, n, i = (e = t, n = this.localeData(), "string" == typeof e ? n.weekdaysParse(e) % 7 || 7 : isNaN(e) ? null : e);
 					return this.day(this.day() % 7 ? i : i - 7)
-				}, un.dayOfYear = function(t) {
+				}, un.dayOfYear = function (t) {
 					var e = Math.round((this.clone().startOf("day") - this.clone().startOf("year")) / 864e5) + 1;
 					return null == t ? e : this.add(t - e, "d")
-				}, un.hour = un.hours = ee, un.minute = un.minutes = an, un.second = un.seconds = on, un.millisecond = un.milliseconds = ln, un.utcOffset = function(t, e, n) {
+				}, un.hour = un.hours = ee, un.minute = un.minutes = an, un.second = un.seconds = on, un.millisecond = un.milliseconds = ln, un.utcOffset = function (t, e, n) {
 					var i, a = this._offset || 0;
 					if (!this.isValid()) return null != t ? this : NaN;
 					if (null == t) return this._isUTC ? a : ze(this);
@@ -2292,32 +2292,32 @@
 						if (null === (t = We(rt, t))) return this
 					} else Math.abs(t) < 16 && !n && (t *= 60);
 					return !this._isUTC && e && (i = ze(this)), this._offset = t, this._isUTC = !0, null != i && this.add(i, "m"), a !== t && (!e || this._changeInProgress ? qe(this, Ee(t - a, "m"), 1, !1) : this._changeInProgress || (this._changeInProgress = !0, c.updateOffset(this, !0), this._changeInProgress = null)), this
-				}, un.utc = function(t) {
+				}, un.utc = function (t) {
 					return this.utcOffset(0, t)
-				}, un.local = function(t) {
+				}, un.local = function (t) {
 					return this._isUTC && (this.utcOffset(0, t), this._isUTC = !1, t && this.subtract(ze(this), "m")), this
-				}, un.parseZone = function() {
+				}, un.parseZone = function () {
 					if (null != this._tzm) this.utcOffset(this._tzm, !1, !0);
 					else if ("string" == typeof this._i) {
 						var t = We(at, this._i);
 						null != t ? this.utcOffset(t) : this.utcOffset(0, !0)
 					}
 					return this
-				}, un.hasAlignedHourOffset = function(t) {
+				}, un.hasAlignedHourOffset = function (t) {
 					return !!this.isValid() && (t = t ? Ce(t).utcOffset() : 0, (this.utcOffset() - t) % 60 == 0)
-				}, un.isDST = function() {
+				}, un.isDST = function () {
 					return this.utcOffset() > this.clone().month(0).utcOffset() || this.utcOffset() > this.clone().month(5).utcOffset()
-				}, un.isLocal = function() {
+				}, un.isLocal = function () {
 					return !!this.isValid() && !this._isUTC
-				}, un.isUtcOffset = function() {
+				}, un.isUtcOffset = function () {
 					return !!this.isValid() && this._isUTC
-				}, un.isUtc = Ve, un.isUTC = Ve, un.zoneAbbr = function() {
+				}, un.isUtc = Ve, un.isUTC = Ve, un.zoneAbbr = function () {
 					return this._isUTC ? "UTC" : ""
-				}, un.zoneName = function() {
+				}, un.zoneName = function () {
 					return this._isUTC ? "Coordinated Universal Time" : ""
-				}, un.dates = n("dates accessor is deprecated. Use date instead.", nn), un.months = n("months accessor is deprecated. Use month instead", Lt), un.years = n("years accessor is deprecated. Use year instead", Dt), un.zone = n("moment().zone is deprecated, use moment().utcOffset instead. http://momentjs.com/guides/#/warnings/zone/", function(t, e) {
+				}, un.dates = n("dates accessor is deprecated. Use date instead.", nn), un.months = n("months accessor is deprecated. Use month instead", Lt), un.years = n("years accessor is deprecated. Use year instead", Dt), un.zone = n("moment().zone is deprecated, use moment().utcOffset instead. http://momentjs.com/guides/#/warnings/zone/", function (t, e) {
 					return null != t ? ("string" != typeof t && (t = -t), this.utcOffset(t, e), this) : -this.utcOffset()
-				}), un.isDSTShifted = n("isDSTShifted is deprecated. See http://momentjs.com/guides/#/warnings/dst-shifted/ for more information", function() {
+				}), un.isDSTShifted = n("isDSTShifted is deprecated. See http://momentjs.com/guides/#/warnings/dst-shifted/ for more information", function () {
 					if (!u(this._isDSTShifted)) return this._isDSTShifted;
 					var t = {};
 					if (x(t, this), (t = Se(t))._a) {
@@ -2350,36 +2350,36 @@
 					for (a = 0; a < 7; a++) s[a] = cn(e, (a + o) % 7, i, "day");
 					return s
 				}
-				hn.calendar = function(t, e, n) {
+				hn.calendar = function (t, e, n) {
 					var i = this._calendar[t] || this._calendar.sameElse;
 					return P(i) ? i.call(e, n) : i
-				}, hn.longDateFormat = function(t) {
+				}, hn.longDateFormat = function (t) {
 					var e = this._longDateFormat[t],
 						n = this._longDateFormat[t.toUpperCase()];
-					return e || !n ? e : (this._longDateFormat[t] = n.replace(/MMMM|MM|DD|dddd/g, function(t) {
+					return e || !n ? e : (this._longDateFormat[t] = n.replace(/MMMM|MM|DD|dddd/g, function (t) {
 						return t.slice(1)
 					}), this._longDateFormat[t])
-				}, hn.invalidDate = function() {
+				}, hn.invalidDate = function () {
 					return this._invalidDate
-				}, hn.ordinal = function(t) {
+				}, hn.ordinal = function (t) {
 					return this._ordinal.replace("%d", t)
-				}, hn.preparse = dn, hn.postformat = dn, hn.relativeTime = function(t, e, n, i) {
+				}, hn.preparse = dn, hn.postformat = dn, hn.relativeTime = function (t, e, n, i) {
 					var a = this._relativeTime[n];
 					return P(a) ? a(t, e, n, i) : a.replace(/%d/i, t)
-				}, hn.pastFuture = function(t, e) {
+				}, hn.pastFuture = function (t, e) {
 					var n = this._relativeTime[0 < t ? "future" : "past"];
 					return P(n) ? n(e) : n.replace(/%s/i, e)
-				}, hn.set = function(t) {
+				}, hn.set = function (t) {
 					var e, n;
 					for (n in t) P(e = t[n]) ? this[n] = e : this["_" + n] = e;
 					this._config = t, this._dayOfMonthOrdinalParseLenient = new RegExp((this._dayOfMonthOrdinalParse.source || this._ordinalParse.source) + "|" + /\d{1,2}/.source)
-				}, hn.months = function(t, e) {
+				}, hn.months = function (t, e) {
 					return t ? s(this._months) ? this._months[t.month()] : this._months[(this._months.isFormat || It).test(e) ? "format" : "standalone"][t.month()] : s(this._months) ? this._months : this._months.standalone
-				}, hn.monthsShort = function(t, e) {
+				}, hn.monthsShort = function (t, e) {
 					return t ? s(this._monthsShort) ? this._monthsShort[t.month()] : this._monthsShort[It.test(e) ? "format" : "standalone"][t.month()] : s(this._monthsShort) ? this._monthsShort : this._monthsShort.standalone
-				}, hn.monthsParse = function(t, e, n) {
+				}, hn.monthsParse = function (t, e, n) {
 					var i, a, r;
-					if (this._monthsParseExact) return function(t, e, n) {
+					if (this._monthsParseExact) return function (t, e, n) {
 						var i, a, r, o = t.toLocaleLowerCase();
 						if (!this._monthsParse)
 							for (this._monthsParse = [], this._longMonthsParse = [], this._shortMonthsParse = [], i = 0; i < 12; ++i) r = p([2e3, i]), this._shortMonthsParse[i] = this.monthsShort(r, "").toLocaleLowerCase(), this._longMonthsParse[i] = this.months(r, "").toLocaleLowerCase();
@@ -2390,25 +2390,25 @@
 						if (n && "MMM" === e && this._shortMonthsParse[i].test(t)) return i;
 						if (!n && this._monthsParse[i].test(t)) return i
 					}
-				}, hn.monthsRegex = function(t) {
+				}, hn.monthsRegex = function (t) {
 					return this._monthsParseExact ? (g(this, "_monthsRegex") || Nt.call(this), t ? this._monthsStrictRegex : this._monthsRegex) : (g(this, "_monthsRegex") || (this._monthsRegex = Wt), this._monthsStrictRegex && t ? this._monthsStrictRegex : this._monthsRegex)
-				}, hn.monthsShortRegex = function(t) {
+				}, hn.monthsShortRegex = function (t) {
 					return this._monthsParseExact ? (g(this, "_monthsRegex") || Nt.call(this), t ? this._monthsShortStrictRegex : this._monthsShortRegex) : (g(this, "_monthsShortRegex") || (this._monthsShortRegex = Yt), this._monthsShortStrictRegex && t ? this._monthsShortStrictRegex : this._monthsShortRegex)
-				}, hn.week = function(t) {
+				}, hn.week = function (t) {
 					return Bt(t, this._week.dow, this._week.doy).week
-				}, hn.firstDayOfYear = function() {
+				}, hn.firstDayOfYear = function () {
 					return this._week.doy
-				}, hn.firstDayOfWeek = function() {
+				}, hn.firstDayOfWeek = function () {
 					return this._week.dow
-				}, hn.weekdays = function(t, e) {
+				}, hn.weekdays = function (t, e) {
 					return t ? s(this._weekdays) ? this._weekdays[t.day()] : this._weekdays[this._weekdays.isFormat.test(e) ? "format" : "standalone"][t.day()] : s(this._weekdays) ? this._weekdays : this._weekdays.standalone
-				}, hn.weekdaysMin = function(t) {
+				}, hn.weekdaysMin = function (t) {
 					return t ? this._weekdaysMin[t.day()] : this._weekdaysMin
-				}, hn.weekdaysShort = function(t) {
+				}, hn.weekdaysShort = function (t) {
 					return t ? this._weekdaysShort[t.day()] : this._weekdaysShort
-				}, hn.weekdaysParse = function(t, e, n) {
+				}, hn.weekdaysParse = function (t, e, n) {
 					var i, a, r;
-					if (this._weekdaysParseExact) return function(t, e, n) {
+					if (this._weekdaysParseExact) return function (t, e, n) {
 						var i, a, r, o = t.toLocaleLowerCase();
 						if (!this._weekdaysParse)
 							for (this._weekdaysParse = [], this._shortWeekdaysParse = [], this._minWeekdaysParse = [], i = 0; i < 7; ++i) r = p([2e3, 1]).day(i), this._minWeekdaysParse[i] = this.weekdaysMin(r, "").toLocaleLowerCase(), this._shortWeekdaysParse[i] = this.weekdaysShort(r, "").toLocaleLowerCase(), this._weekdaysParse[i] = this.weekdays(r, "").toLocaleLowerCase();
@@ -2420,19 +2420,19 @@
 						if (n && "dd" === e && this._minWeekdaysParse[i].test(t)) return i;
 						if (!n && this._weekdaysParse[i].test(t)) return i
 					}
-				}, hn.weekdaysRegex = function(t) {
+				}, hn.weekdaysRegex = function (t) {
 					return this._weekdaysParseExact ? (g(this, "_weekdaysRegex") || Jt.call(this), t ? this._weekdaysStrictRegex : this._weekdaysRegex) : (g(this, "_weekdaysRegex") || (this._weekdaysRegex = qt), this._weekdaysStrictRegex && t ? this._weekdaysStrictRegex : this._weekdaysRegex)
-				}, hn.weekdaysShortRegex = function(t) {
+				}, hn.weekdaysShortRegex = function (t) {
 					return this._weekdaysParseExact ? (g(this, "_weekdaysRegex") || Jt.call(this), t ? this._weekdaysShortStrictRegex : this._weekdaysShortRegex) : (g(this, "_weekdaysShortRegex") || (this._weekdaysShortRegex = Zt), this._weekdaysShortStrictRegex && t ? this._weekdaysShortStrictRegex : this._weekdaysShortRegex)
-				}, hn.weekdaysMinRegex = function(t) {
+				}, hn.weekdaysMinRegex = function (t) {
 					return this._weekdaysParseExact ? (g(this, "_weekdaysRegex") || Jt.call(this), t ? this._weekdaysMinStrictRegex : this._weekdaysMinRegex) : (g(this, "_weekdaysMinRegex") || (this._weekdaysMinRegex = Xt), this._weekdaysMinStrictRegex && t ? this._weekdaysMinStrictRegex : this._weekdaysMinRegex)
-				}, hn.isPM = function(t) {
+				}, hn.isPM = function (t) {
 					return "p" === (t + "").toLowerCase().charAt(0)
-				}, hn.meridiem = function(t, e, n) {
+				}, hn.meridiem = function (t, e, n) {
 					return 11 < t ? n ? "pm" : "PM" : n ? "am" : "AM"
 				}, se("en", {
 					dayOfMonthOrdinalParse: /\d{1,2}(th|st|nd|rd)/,
-					ordinal: function(t) {
+					ordinal: function (t) {
 						var e = t % 10;
 						return t + (1 === M(t % 100 / 10) ? "th" : 1 === e ? "st" : 2 === e ? "nd" : 3 === e ? "rd" : "th")
 					}
@@ -2457,7 +2457,7 @@
 				}
 
 				function xn(t) {
-					return function() {
+					return function () {
 						return this.as(t)
 					}
 				}
@@ -2471,7 +2471,7 @@
 					Pn = xn("y");
 
 				function Tn(t) {
-					return function() {
+					return function () {
 						return this.isValid() ? this._data[t] : NaN
 					}
 				}
@@ -2518,16 +2518,16 @@
 					return c + "P" + (r ? f + r + "Y" : "") + (o ? f + o + "M" : "") + (s ? g + s + "D" : "") + (l || u || d ? "T" : "") + (l ? m + l + "H" : "") + (u ? m + u + "M" : "") + (d ? m + d + "S" : "")
 				}
 				var Bn = Ae.prototype;
-				return Bn.isValid = function() {
+				return Bn.isValid = function () {
 					return this._isValid
-				}, Bn.abs = function() {
+				}, Bn.abs = function () {
 					var t = this._data;
 					return this._milliseconds = mn(this._milliseconds), this._days = mn(this._days), this._months = mn(this._months), t.milliseconds = mn(t.milliseconds), t.seconds = mn(t.seconds), t.minutes = mn(t.minutes), t.hours = mn(t.hours), t.months = mn(t.months), t.years = mn(t.years), this
-				}, Bn.add = function(t, e) {
+				}, Bn.add = function (t, e) {
 					return pn(this, t, e, 1)
-				}, Bn.subtract = function(t, e) {
+				}, Bn.subtract = function (t, e) {
 					return pn(this, t, e, -1)
-				}, Bn.as = function(t) {
+				}, Bn.as = function (t) {
 					if (!this.isValid()) return NaN;
 					var e, n, i = this._milliseconds;
 					if ("month" === (t = F(t)) || "year" === t) return e = this._days + i / 864e5, n = this._months + bn(e), "month" === t ? n : n / 12;
@@ -2547,64 +2547,64 @@
 						default:
 							throw new Error("Unknown unit " + t)
 					}
-				}, Bn.asMilliseconds = _n, Bn.asSeconds = kn, Bn.asMinutes = wn, Bn.asHours = Mn, Bn.asDays = Sn, Bn.asWeeks = Dn, Bn.asMonths = Cn, Bn.asYears = Pn, Bn.valueOf = function() {
+				}, Bn.asMilliseconds = _n, Bn.asSeconds = kn, Bn.asMinutes = wn, Bn.asHours = Mn, Bn.asDays = Sn, Bn.asWeeks = Dn, Bn.asMonths = Cn, Bn.asYears = Pn, Bn.valueOf = function () {
 					return this.isValid() ? this._milliseconds + 864e5 * this._days + this._months % 12 * 2592e6 + 31536e6 * M(this._months / 12) : NaN
-				}, Bn._bubble = function() {
+				}, Bn._bubble = function () {
 					var t, e, n, i, a, r = this._milliseconds,
 						o = this._days,
 						s = this._months,
 						l = this._data;
 					return 0 <= r && 0 <= o && 0 <= s || r <= 0 && o <= 0 && s <= 0 || (r += 864e5 * vn(yn(s) + o), s = o = 0), l.milliseconds = r % 1e3, t = w(r / 1e3), l.seconds = t % 60, e = w(t / 60), l.minutes = e % 60, n = w(e / 60), l.hours = n % 24, s += a = w(bn(o += w(n / 24))), o -= vn(yn(a)), i = w(s / 12), s %= 12, l.days = o, l.months = s, l.years = i, this
-				}, Bn.clone = function() {
+				}, Bn.clone = function () {
 					return Ee(this)
-				}, Bn.get = function(t) {
+				}, Bn.get = function (t) {
 					return t = F(t), this.isValid() ? this[t + "s"]() : NaN
-				}, Bn.milliseconds = On, Bn.seconds = In, Bn.minutes = An, Bn.hours = Fn, Bn.days = Rn, Bn.weeks = function() {
+				}, Bn.milliseconds = On, Bn.seconds = In, Bn.minutes = An, Bn.hours = Fn, Bn.days = Rn, Bn.weeks = function () {
 					return w(this.days() / 7)
-				}, Bn.months = Ln, Bn.years = Yn, Bn.humanize = function(t) {
+				}, Bn.months = Ln, Bn.years = Yn, Bn.humanize = function (t) {
 					if (!this.isValid()) return this.localeData().invalidDate();
 					var e, n, i, a, r, o, s, l, u, d, h, c = this.localeData(),
-						f = (n = !t, i = c, a = Ee(e = this).abs(), r = Wn(a.as("s")), o = Wn(a.as("m")), s = Wn(a.as("h")), l = Wn(a.as("d")), u = Wn(a.as("M")), d = Wn(a.as("y")), (h = r <= Nn.ss && ["s", r] || r < Nn.s && ["ss", r] || o <= 1 && ["m"] || o < Nn.m && ["mm", o] || s <= 1 && ["h"] || s < Nn.h && ["hh", s] || l <= 1 && ["d"] || l < Nn.d && ["dd", l] || u <= 1 && ["M"] || u < Nn.M && ["MM", u] || d <= 1 && ["y"] || ["yy", d])[2] = n, h[3] = 0 < +e, h[4] = i, function(t, e, n, i, a) {
+						f = (n = !t, i = c, a = Ee(e = this).abs(), r = Wn(a.as("s")), o = Wn(a.as("m")), s = Wn(a.as("h")), l = Wn(a.as("d")), u = Wn(a.as("M")), d = Wn(a.as("y")), (h = r <= Nn.ss && ["s", r] || r < Nn.s && ["ss", r] || o <= 1 && ["m"] || o < Nn.m && ["mm", o] || s <= 1 && ["h"] || s < Nn.h && ["hh", s] || l <= 1 && ["d"] || l < Nn.d && ["dd", l] || u <= 1 && ["M"] || u < Nn.M && ["MM", u] || d <= 1 && ["y"] || ["yy", d])[2] = n, h[3] = 0 < +e, h[4] = i, function (t, e, n, i, a) {
 							return a.relativeTime(e || 1, !!n, t, i)
 						}.apply(null, h));
 					return t && (f = c.pastFuture(+this, f)), c.postformat(f)
-				}, Bn.toISOString = Hn, Bn.toString = Hn, Bn.toJSON = Hn, Bn.locale = $e, Bn.localeData = Qe, Bn.toIsoString = n("toIsoString() is deprecated. Please use toISOString() instead (notice the capitals)", Hn), Bn.lang = Ke, B("X", 0, 0, "unix"), B("x", 0, 0, "valueOf"), lt("x", it), lt("X", /[+-]?\d+(\.\d{1,3})?/), ct("X", function(t, e, n) {
+				}, Bn.toISOString = Hn, Bn.toString = Hn, Bn.toJSON = Hn, Bn.locale = $e, Bn.localeData = Qe, Bn.toIsoString = n("toIsoString() is deprecated. Please use toISOString() instead (notice the capitals)", Hn), Bn.lang = Ke, B("X", 0, 0, "unix"), B("x", 0, 0, "valueOf"), lt("x", it), lt("X", /[+-]?\d+(\.\d{1,3})?/), ct("X", function (t, e, n) {
 					n._d = new Date(1e3 * parseFloat(t, 10))
-				}), ct("x", function(t, e, n) {
+				}), ct("x", function (t, e, n) {
 					n._d = new Date(M(t))
-				}), c.version = "2.22.2", t = Ce, c.fn = un, c.min = function() {
+				}), c.version = "2.22.2", t = Ce, c.fn = un, c.min = function () {
 					return Oe("isBefore", [].slice.call(arguments, 0))
-				}, c.max = function() {
+				}, c.max = function () {
 					return Oe("isAfter", [].slice.call(arguments, 0))
-				}, c.now = function() {
+				}, c.now = function () {
 					return Date.now ? Date.now() : +new Date
-				}, c.utc = p, c.unix = function(t) {
+				}, c.utc = p, c.unix = function (t) {
 					return Ce(1e3 * t)
-				}, c.months = function(t, e) {
+				}, c.months = function (t, e) {
 					return fn(t, e, "months")
-				}, c.isDate = h, c.locale = se, c.invalid = y, c.duration = Ee, c.isMoment = k, c.weekdays = function(t, e, n) {
+				}, c.isDate = h, c.locale = se, c.invalid = y, c.duration = Ee, c.isMoment = k, c.weekdays = function (t, e, n) {
 					return gn(t, e, n, "weekdays")
-				}, c.parseZone = function() {
+				}, c.parseZone = function () {
 					return Ce.apply(null, arguments).parseZone()
-				}, c.localeData = ue, c.isDuration = Fe, c.monthsShort = function(t, e) {
+				}, c.localeData = ue, c.isDuration = Fe, c.monthsShort = function (t, e) {
 					return fn(t, e, "monthsShort")
-				}, c.weekdaysMin = function(t, e, n) {
+				}, c.weekdaysMin = function (t, e, n) {
 					return gn(t, e, n, "weekdaysMin")
-				}, c.defineLocale = le, c.updateLocale = function(t, e) {
+				}, c.defineLocale = le, c.updateLocale = function (t, e) {
 					if (null != e) {
 						var n, i, a = ne;
 						null != (i = oe(t)) && (a = i._config), (n = new O(e = T(a, e))).parentLocale = ie[t], ie[t] = n, se(t)
 					} else null != ie[t] && (null != ie[t].parentLocale ? ie[t] = ie[t].parentLocale : null != ie[t] && delete ie[t]);
 					return ie[t]
-				}, c.locales = function() {
+				}, c.locales = function () {
 					return i(ie)
-				}, c.weekdaysShort = function(t, e, n) {
+				}, c.weekdaysShort = function (t, e, n) {
 					return gn(t, e, n, "weekdaysShort")
-				}, c.normalizeUnits = F, c.relativeTimeRounding = function(t) {
+				}, c.normalizeUnits = F, c.relativeTimeRounding = function (t) {
 					return void 0 === t ? Wn : "function" == typeof t && (Wn = t, !0)
-				}, c.relativeTimeThreshold = function(t, e) {
+				}, c.relativeTimeThreshold = function (t, e) {
 					return void 0 !== Nn[t] && (void 0 === e ? Nn[t] : (Nn[t] = e, "s" === t && (Nn.ss = e - 1), !0))
-				}, c.calendarFormat = function(t, e) {
+				}, c.calendarFormat = function (t, e) {
 					var n = t.diff(e, "days", !0);
 					return n < -6 ? "sameElse" : n < -1 ? "lastWeek" : n < 0 ? "lastDay" : n < 1 ? "sameDay" : n < 2 ? "nextDay" : n < 7 ? "nextWeek" : "sameElse"
 				}, c.prototype = un, c.HTML5_FMT = {
@@ -2620,7 +2620,7 @@
 				}, c
 			}, "object" == typeof t && void 0 !== jn ? jn.exports = n() : e.moment = n()
 		}, {}],
-		7: [function(t, e, n) {
+		7: [function (t, e, n) {
 			var i = t(30)();
 			i.helpers = t(46), t(28)(i), i.Animation = t(22), i.animationService = t(23), i.defaults = t(26), i.Element = t(27), i.elements = t(41), i.Interaction = t(29), i.layouts = t(31), i.platform = t(49), i.plugins = t(32), i.Scale = t(33), i.scaleService = t(34), i.Ticks = t(35), i.Tooltip = t(36), t(24)(i), t(25)(i), t(56)(i), t(54)(i), t(55)(i), t(57)(i), t(58)(i), t(59)(i), t(15)(i), t(16)(i), t(17)(i), t(18)(i), t(19)(i), t(20)(i), t(21)(i), t(8)(i), t(9)(i), t(10)(i), t(11)(i), t(12)(i), t(13)(i), t(14)(i);
 			var a = t(50);
@@ -2667,63 +2667,63 @@
 			8: 8,
 			9: 9
 		}],
-		8: [function(t, e, n) {
+		8: [function (t, e, n) {
 			"use strict";
-			e.exports = function(n) {
-				n.Bar = function(t, e) {
+			e.exports = function (n) {
+				n.Bar = function (t, e) {
 					return e.type = "bar", new n(t, e)
 				}
 			}
 		}, {}],
-		9: [function(t, e, n) {
+		9: [function (t, e, n) {
 			"use strict";
-			e.exports = function(n) {
-				n.Bubble = function(t, e) {
+			e.exports = function (n) {
+				n.Bubble = function (t, e) {
 					return e.type = "bubble", new n(t, e)
 				}
 			}
 		}, {}],
-		10: [function(t, e, n) {
+		10: [function (t, e, n) {
 			"use strict";
-			e.exports = function(n) {
-				n.Doughnut = function(t, e) {
+			e.exports = function (n) {
+				n.Doughnut = function (t, e) {
 					return e.type = "doughnut", new n(t, e)
 				}
 			}
 		}, {}],
-		11: [function(t, e, n) {
+		11: [function (t, e, n) {
 			"use strict";
-			e.exports = function(n) {
-				n.Line = function(t, e) {
+			e.exports = function (n) {
+				n.Line = function (t, e) {
 					return e.type = "line", new n(t, e)
 				}
 			}
 		}, {}],
-		12: [function(t, e, n) {
+		12: [function (t, e, n) {
 			"use strict";
-			e.exports = function(n) {
-				n.PolarArea = function(t, e) {
+			e.exports = function (n) {
+				n.PolarArea = function (t, e) {
 					return e.type = "polarArea", new n(t, e)
 				}
 			}
 		}, {}],
-		13: [function(t, e, n) {
+		13: [function (t, e, n) {
 			"use strict";
-			e.exports = function(n) {
-				n.Radar = function(t, e) {
+			e.exports = function (n) {
+				n.Radar = function (t, e) {
 					return e.type = "radar", new n(t, e)
 				}
 			}
 		}, {}],
-		14: [function(t, e, n) {
+		14: [function (t, e, n) {
 			"use strict";
-			e.exports = function(n) {
-				n.Scatter = function(t, e) {
+			e.exports = function (n) {
+				n.Scatter = function (t, e) {
 					return e.type = "scatter", new n(t, e)
 				}
 			}
 		}, {}],
-		15: [function(t, e, n) {
+		15: [function (t, e, n) {
 			"use strict";
 			var i = t(26),
 				a = t(41),
@@ -2774,29 +2774,29 @@
 				},
 				tooltips: {
 					callbacks: {
-						title: function(t, e) {
+						title: function (t, e) {
 							var n = "";
 							return 0 < t.length && (t[0].yLabel ? n = t[0].yLabel : 0 < e.labels.length && t[0].index < e.labels.length && (n = e.labels[t[0].index])), n
 						},
-						label: function(t, e) {
+						label: function (t, e) {
 							return (e.datasets[t.datasetIndex].label || "") + ": " + t.xLabel
 						}
 					},
 					mode: "index",
 					axis: "y"
 				}
-			}), e.exports = function(e) {
+			}), e.exports = function (e) {
 				e.controllers.bar = e.DatasetController.extend({
 					dataElementType: a.Rectangle,
-					initialize: function() {
+					initialize: function () {
 						var t;
 						e.DatasetController.prototype.initialize.apply(this, arguments), (t = this.getMeta()).stack = this.getDataset().stack, t.bar = !0
 					},
-					update: function(t) {
+					update: function (t) {
 						var e, n, i = this.getMeta().data;
 						for (this._ruler = this.getRuler(), e = 0, n = i.length; e < n; ++e) this.updateElement(i[e], e, t)
 					},
-					updateElement: function(t, e, n) {
+					updateElement: function (t, e, n) {
 						var i = this,
 							a = i.chart,
 							r = i.getMeta(),
@@ -2812,7 +2812,7 @@
 							borderWidth: s.borderWidth ? s.borderWidth : S.valueAtIndexOrDefault(o.borderWidth, e, l.borderWidth)
 						}, i.updateElementGeometry(t, e, n), t.pivot()
 					},
-					updateElementGeometry: function(t, e, n) {
+					updateElementGeometry: function (t, e, n) {
 						var i = this,
 							a = t._model,
 							r = i.getValueScale(),
@@ -2823,19 +2823,19 @@
 							d = i.calculateBarIndexPixels(i.index, e, l);
 						a.horizontal = s, a.base = n ? o : u.base, a.x = s ? n ? o : u.head : d.center, a.y = s ? d.center : n ? o : u.head, a.height = s ? d.size : void 0, a.width = s ? void 0 : d.size
 					},
-					getValueScaleId: function() {
+					getValueScaleId: function () {
 						return this.getMeta().yAxisID
 					},
-					getIndexScaleId: function() {
+					getIndexScaleId: function () {
 						return this.getMeta().xAxisID
 					},
-					getValueScale: function() {
+					getValueScale: function () {
 						return this.getScaleForId(this.getValueScaleId())
 					},
-					getIndexScale: function() {
+					getIndexScale: function () {
 						return this.getScaleForId(this.getIndexScaleId())
 					},
-					_getStacks: function(t) {
+					_getStacks: function (t) {
 						var e, n, i = this.chart,
 							a = this.getIndexScale().options.stacked,
 							r = void 0 === t ? i.data.datasets.length : t + 1,
@@ -2843,15 +2843,15 @@
 						for (e = 0; e < r; ++e)(n = i.getDatasetMeta(e)).bar && i.isDatasetVisible(e) && (!1 === a || !0 === a && -1 === o.indexOf(n.stack) || void 0 === a && (void 0 === n.stack || -1 === o.indexOf(n.stack))) && o.push(n.stack);
 						return o
 					},
-					getStackCount: function() {
+					getStackCount: function () {
 						return this._getStacks().length
 					},
-					getStackIndex: function(t, e) {
+					getStackIndex: function (t, e) {
 						var n = this._getStacks(t),
 							i = void 0 !== e ? n.indexOf(e) : -1;
 						return -1 === i ? n.length - 1 : i
 					},
-					getRuler: function() {
+					getRuler: function () {
 						var t, e, n = this.getIndexScale(),
 							i = this.getStackCount(),
 							a = this.index,
@@ -2861,7 +2861,7 @@
 							l = [];
 						for (t = 0, e = this.getMeta().data.length; t < e; ++t) l.push(n.getPixelForValue(null, t, a));
 						return {
-							min: S.isNullOrUndef(n.options.barThickness) ? function(t, e) {
+							min: S.isNullOrUndef(n.options.barThickness) ? function (t, e) {
 								var n, i, a, r, o = t.isHorizontal() ? t.width : t.height,
 									s = t.getTicks();
 								for (a = 1, r = e.length; a < r; ++a) o = Math.min(o, e[a] - e[a - 1]);
@@ -2875,7 +2875,7 @@
 							scale: n
 						}
 					},
-					calculateBarValuePixels: function(t, e) {
+					calculateBarValuePixels: function (t, e) {
 						var n, i, a, r, o, s, l = this.chart,
 							u = this.getMeta(),
 							d = this.getValueScale(),
@@ -2893,7 +2893,7 @@
 							center: o + s / 2
 						}
 					},
-					calculateBarIndexPixels: function(t, e, n) {
+					calculateBarIndexPixels: function (t, e, n) {
 						var i, a, r, o, s, l, u, d, h, c, f, g, m, p, v, b, y, x = n.scale.options,
 							_ = "flex" === x.barThickness ? (h = e, f = x, m = (c = n).pixels, p = m[h], v = 0 < h ? m[h - 1] : null, b = h < m.length - 1 ? m[h + 1] : null, y = f.categoryPercentage, null === v && (v = p - (null === b ? c.end - p : b - p)), null === b && (b = p + p - v), g = p - (p - v) / 2 * y, {
 								chunk: (b - v) / 2 * y / c.stackCount,
@@ -2914,7 +2914,7 @@
 							size: M
 						}
 					},
-					draw: function() {
+					draw: function () {
 						var t = this.chart,
 							e = this.getValueScale(),
 							n = this.getMeta().data,
@@ -2925,10 +2925,10 @@
 						S.canvas.unclipArea(t.ctx)
 					}
 				}), e.controllers.horizontalBar = e.controllers.bar.extend({
-					getValueScaleId: function() {
+					getValueScaleId: function () {
 						return this.getMeta().xAxisID
 					},
-					getIndexScaleId: function() {
+					getIndexScaleId: function () {
 						return this.getMeta().yAxisID
 					}
 				})
@@ -2938,7 +2938,7 @@
 			41: 41,
 			46: 46
 		}],
-		16: [function(t, e, n) {
+		16: [function (t, e, n) {
 			"use strict";
 			var i = t(26),
 				a = t(41),
@@ -2961,27 +2961,27 @@
 				},
 				tooltips: {
 					callbacks: {
-						title: function() {
+						title: function () {
 							return ""
 						},
-						label: function(t, e) {
+						label: function (t, e) {
 							var n = e.datasets[t.datasetIndex].label || "",
 								i = e.datasets[t.datasetIndex].data[t.index];
 							return n + ": (" + t.xLabel + ", " + t.yLabel + ", " + i.r + ")"
 						}
 					}
 				}
-			}), e.exports = function(t) {
+			}), e.exports = function (t) {
 				t.controllers.bubble = t.DatasetController.extend({
 					dataElementType: a.Point,
-					update: function(n) {
+					update: function (n) {
 						var i = this,
 							t = i.getMeta().data;
-						g.each(t, function(t, e) {
+						g.each(t, function (t, e) {
 							i.updateElement(t, e, n)
 						})
 					},
-					updateElement: function(t, e, n) {
+					updateElement: function (t, e, n) {
 						var i = this,
 							a = i.getMeta(),
 							r = t.custom || {},
@@ -3005,7 +3005,7 @@
 							y: c
 						}, t.pivot()
 					},
-					setHoverStyle: function(t) {
+					setHoverStyle: function (t) {
 						var e = t._model,
 							n = t._options;
 						t.$previousStyle = {
@@ -3015,7 +3015,7 @@
 							radius: e.radius
 						}, e.backgroundColor = g.valueOrDefault(n.hoverBackgroundColor, g.getHoverColor(n.backgroundColor)), e.borderColor = g.valueOrDefault(n.hoverBorderColor, g.getHoverColor(n.borderColor)), e.borderWidth = g.valueOrDefault(n.hoverBorderWidth, n.borderWidth), e.radius = n.radius + n.hoverRadius
 					},
-					_resolveElementOptions: function(t, e) {
+					_resolveElementOptions: function (t, e) {
 						var n, i, a, r = this.chart,
 							o = r.data.datasets[this.index],
 							s = t.custom || {},
@@ -3040,7 +3040,7 @@
 			41: 41,
 			46: 46
 		}],
-		17: [function(t, e, n) {
+		17: [function (t, e, n) {
 			"use strict";
 			var i = t(26),
 				a = t(41),
@@ -3053,7 +3053,7 @@
 				hover: {
 					mode: "single"
 				},
-				legendCallback: function(t) {
+				legendCallback: function (t) {
 					var e = [];
 					e.push('<ul class="' + t.id + '-legend">');
 					var n = t.data,
@@ -3065,9 +3065,9 @@
 				},
 				legend: {
 					labels: {
-						generateLabels: function(l) {
+						generateLabels: function (l) {
 							var u = l.data;
-							return u.labels.length && u.datasets.length ? u.labels.map(function(t, e) {
+							return u.labels.length && u.datasets.length ? u.labels.map(function (t, e) {
 								var n = l.getDatasetMeta(0),
 									i = u.datasets[0],
 									a = n.data[e],
@@ -3085,7 +3085,7 @@
 							}) : []
 						}
 					},
-					onClick: function(t, e) {
+					onClick: function (t, e) {
 						var n, i, a, r = e.index,
 							o = this.chart;
 						for (n = 0, i = (o.data.datasets || []).length; n < i; ++n)(a = o.getDatasetMeta(n)).data[r] && (a.data[r].hidden = !a.data[r].hidden);
@@ -3097,10 +3097,10 @@
 				circumference: 2 * Math.PI,
 				tooltips: {
 					callbacks: {
-						title: function() {
+						title: function () {
 							return ""
 						},
-						label: function(t, e) {
+						label: function (t, e) {
 							var n = e.labels[t.index],
 								i = ": " + e.datasets[t.datasetIndex].data[t.index];
 							return O.isArray(n) ? (n = n.slice())[0] += i : n += i, n
@@ -3109,15 +3109,15 @@
 				}
 			}), i._set("pie", O.clone(i.doughnut)), i._set("pie", {
 				cutoutPercentage: 0
-			}), e.exports = function(t) {
+			}), e.exports = function (t) {
 				t.controllers.doughnut = t.controllers.pie = t.DatasetController.extend({
 					dataElementType: a.Arc,
 					linkScales: O.noop,
-					getRingIndex: function(t) {
+					getRingIndex: function (t) {
 						for (var e = 0, n = 0; n < t; ++n) this.chart.isDatasetVisible(n) && ++e;
 						return e
 					},
-					update: function(n) {
+					update: function (n) {
 						var i = this,
 							t = i.chart,
 							e = t.chartArea,
@@ -3156,11 +3156,11 @@
 								y: -.5 * (C + S)
 							}
 						}
-						t.borderWidth = i.getMaxBorderWidth(d.data), t.outerRadius = Math.max((l - t.borderWidth) / 2, 0), t.innerRadius = Math.max(h ? t.outerRadius / 100 * h : 0, 0), t.radiusLength = (t.outerRadius - t.innerRadius) / t.getVisibleDatasetCount(), t.offsetX = u.x * t.outerRadius, t.offsetY = u.y * t.outerRadius, d.total = i.calculateTotal(), i.outerRadius = t.outerRadius - t.radiusLength * i.getRingIndex(i.index), i.innerRadius = Math.max(i.outerRadius - t.radiusLength, 0), O.each(d.data, function(t, e) {
+						t.borderWidth = i.getMaxBorderWidth(d.data), t.outerRadius = Math.max((l - t.borderWidth) / 2, 0), t.innerRadius = Math.max(h ? t.outerRadius / 100 * h : 0, 0), t.radiusLength = (t.outerRadius - t.innerRadius) / t.getVisibleDatasetCount(), t.offsetX = u.x * t.outerRadius, t.offsetY = u.y * t.outerRadius, d.total = i.calculateTotal(), i.outerRadius = t.outerRadius - t.radiusLength * i.getRingIndex(i.index), i.innerRadius = Math.max(i.outerRadius - t.radiusLength, 0), O.each(d.data, function (t, e) {
 							i.updateElement(t, e, n)
 						})
 					},
-					updateElement: function(t, e, n) {
+					updateElement: function (t, e, n) {
 						var i = this,
 							a = i.chart,
 							r = a.chartArea,
@@ -3195,19 +3195,19 @@
 							x = this.chart.options.elements.arc;
 						v.backgroundColor = b.backgroundColor ? b.backgroundColor : y(c.backgroundColor, e, x.backgroundColor), v.borderColor = b.borderColor ? b.borderColor : y(c.borderColor, e, x.borderColor), v.borderWidth = b.borderWidth ? b.borderWidth : y(c.borderWidth, e, x.borderWidth), n && s.animateRotate || (v.startAngle = 0 === e ? o.rotation : i.getMeta().data[e - 1]._model.endAngle, v.endAngle = v.startAngle + v.circumference), t.pivot()
 					},
-					calculateTotal: function() {
+					calculateTotal: function () {
 						var n, i = this.getDataset(),
 							t = this.getMeta(),
 							a = 0;
-						return O.each(t.data, function(t, e) {
+						return O.each(t.data, function (t, e) {
 							n = i.data[e], isNaN(n) || t.hidden || (a += Math.abs(n))
 						}), a
 					},
-					calculateCircumference: function(t) {
+					calculateCircumference: function (t) {
 						var e = this.getMeta().total;
 						return 0 < e && !isNaN(t) ? 2 * Math.PI * (Math.abs(t) / e) : 0
 					},
-					getMaxBorderWidth: function(t) {
+					getMaxBorderWidth: function (t) {
 						for (var e, n, i = 0, a = this.index, r = t.length, o = 0; o < r; o++) i = (i = i < (e = t[o]._model ? t[o]._model.borderWidth : 0) ? e : i) < (n = t[o]._chart ? t[o]._chart.config.data.datasets[a].hoverBorderWidth : 0) ? n : i;
 						return i
 					}
@@ -3218,7 +3218,7 @@
 			41: 41,
 			46: 46
 		}],
-		18: [function(t, e, n) {
+		18: [function (t, e, n) {
 			"use strict";
 			var i = t(26),
 				a = t(41),
@@ -3239,14 +3239,14 @@
 						id: "y-axis-0"
 					}]
 				}
-			}), e.exports = function(t) {
+			}), e.exports = function (t) {
 				function f(t, e) {
 					return g.valueOrDefault(t.showLine, e.showLines)
 				}
 				t.controllers.line = t.DatasetController.extend({
 					datasetElementType: a.Line,
 					dataElementType: a.Point,
-					update: function(t) {
+					update: function (t) {
 						var e, n, i, a = this,
 							r = a.getMeta(),
 							o = r.dataset,
@@ -3257,46 +3257,46 @@
 							h = a.getDataset(),
 							c = f(h, l);
 						for (c && (i = o.custom || {}, void 0 !== h.tension && void 0 === h.lineTension && (h.lineTension = h.tension), o._scale = d, o._datasetIndex = a.index, o._children = s, o._model = {
-								spanGaps: h.spanGaps ? h.spanGaps : l.spanGaps,
-								tension: i.tension ? i.tension : g.valueOrDefault(h.lineTension, u.tension),
-								backgroundColor: i.backgroundColor ? i.backgroundColor : h.backgroundColor || u.backgroundColor,
-								borderWidth: i.borderWidth ? i.borderWidth : h.borderWidth || u.borderWidth,
-								borderColor: i.borderColor ? i.borderColor : h.borderColor || u.borderColor,
-								borderCapStyle: i.borderCapStyle ? i.borderCapStyle : h.borderCapStyle || u.borderCapStyle,
-								borderDash: i.borderDash ? i.borderDash : h.borderDash || u.borderDash,
-								borderDashOffset: i.borderDashOffset ? i.borderDashOffset : h.borderDashOffset || u.borderDashOffset,
-								borderJoinStyle: i.borderJoinStyle ? i.borderJoinStyle : h.borderJoinStyle || u.borderJoinStyle,
-								fill: i.fill ? i.fill : void 0 !== h.fill ? h.fill : u.fill,
-								steppedLine: i.steppedLine ? i.steppedLine : g.valueOrDefault(h.steppedLine, u.stepped),
-								cubicInterpolationMode: i.cubicInterpolationMode ? i.cubicInterpolationMode : g.valueOrDefault(h.cubicInterpolationMode, u.cubicInterpolationMode)
-							}, o.pivot()), e = 0, n = s.length; e < n; ++e) a.updateElement(s[e], e, t);
+							spanGaps: h.spanGaps ? h.spanGaps : l.spanGaps,
+							tension: i.tension ? i.tension : g.valueOrDefault(h.lineTension, u.tension),
+							backgroundColor: i.backgroundColor ? i.backgroundColor : h.backgroundColor || u.backgroundColor,
+							borderWidth: i.borderWidth ? i.borderWidth : h.borderWidth || u.borderWidth,
+							borderColor: i.borderColor ? i.borderColor : h.borderColor || u.borderColor,
+							borderCapStyle: i.borderCapStyle ? i.borderCapStyle : h.borderCapStyle || u.borderCapStyle,
+							borderDash: i.borderDash ? i.borderDash : h.borderDash || u.borderDash,
+							borderDashOffset: i.borderDashOffset ? i.borderDashOffset : h.borderDashOffset || u.borderDashOffset,
+							borderJoinStyle: i.borderJoinStyle ? i.borderJoinStyle : h.borderJoinStyle || u.borderJoinStyle,
+							fill: i.fill ? i.fill : void 0 !== h.fill ? h.fill : u.fill,
+							steppedLine: i.steppedLine ? i.steppedLine : g.valueOrDefault(h.steppedLine, u.stepped),
+							cubicInterpolationMode: i.cubicInterpolationMode ? i.cubicInterpolationMode : g.valueOrDefault(h.cubicInterpolationMode, u.cubicInterpolationMode)
+						}, o.pivot()), e = 0, n = s.length; e < n; ++e) a.updateElement(s[e], e, t);
 						for (c && 0 !== o._model.tension && a.updateBezierControlPoints(), e = 0, n = s.length; e < n; ++e) s[e].pivot()
 					},
-					getPointBackgroundColor: function(t, e) {
+					getPointBackgroundColor: function (t, e) {
 						var n = this.chart.options.elements.point.backgroundColor,
 							i = this.getDataset(),
 							a = t.custom || {};
 						return a.backgroundColor ? n = a.backgroundColor : i.pointBackgroundColor ? n = g.valueAtIndexOrDefault(i.pointBackgroundColor, e, n) : i.backgroundColor && (n = i.backgroundColor), n
 					},
-					getPointBorderColor: function(t, e) {
+					getPointBorderColor: function (t, e) {
 						var n = this.chart.options.elements.point.borderColor,
 							i = this.getDataset(),
 							a = t.custom || {};
 						return a.borderColor ? n = a.borderColor : i.pointBorderColor ? n = g.valueAtIndexOrDefault(i.pointBorderColor, e, n) : i.borderColor && (n = i.borderColor), n
 					},
-					getPointBorderWidth: function(t, e) {
+					getPointBorderWidth: function (t, e) {
 						var n = this.chart.options.elements.point.borderWidth,
 							i = this.getDataset(),
 							a = t.custom || {};
 						return isNaN(a.borderWidth) ? !isNaN(i.pointBorderWidth) || g.isArray(i.pointBorderWidth) ? n = g.valueAtIndexOrDefault(i.pointBorderWidth, e, n) : isNaN(i.borderWidth) || (n = i.borderWidth) : n = a.borderWidth, n
 					},
-					getPointRotation: function(t, e) {
+					getPointRotation: function (t, e) {
 						var n = this.chart.options.elements.point.rotation,
 							i = this.getDataset(),
 							a = t.custom || {};
 						return isNaN(a.rotation) ? isNaN(i.pointRotation) && !g.isArray(i.pointRotation) || (n = g.valueAtIndexOrDefault(i.pointRotation, e, n)) : n = a.rotation, n
 					},
-					updateElement: function(t, e, n) {
+					updateElement: function (t, e, n) {
 						var i, a, r = this,
 							o = r.getMeta(),
 							s = t.custom || {},
@@ -3321,7 +3321,7 @@
 							hitRadius: s.hitRadius || g.valueAtIndexOrDefault(l.pointHitRadius, e, f.hitRadius)
 						}
 					},
-					calculatePointY: function(t, e, n) {
+					calculatePointY: function (t, e, n) {
 						var i, a, r, o = this.chart,
 							s = this.getMeta(),
 							l = this.getScaleForId(s.yAxisID),
@@ -3338,7 +3338,7 @@
 						}
 						return l.getPixelForValue(t)
 					},
-					updateBezierControlPoints: function() {
+					updateBezierControlPoints: function () {
 						var t, e, n, i, a = this.getMeta(),
 							r = this.chart.chartArea,
 							o = a.data || [];
@@ -3346,15 +3346,15 @@
 						function s(t, e, n) {
 							return Math.max(Math.min(t, n), e)
 						}
-						if (a.dataset._model.spanGaps && (o = o.filter(function(t) {
-								return !t._model.skip
-							})), "monotone" === a.dataset._model.cubicInterpolationMode) g.splineCurveMonotone(o);
+						if (a.dataset._model.spanGaps && (o = o.filter(function (t) {
+							return !t._model.skip
+						})), "monotone" === a.dataset._model.cubicInterpolationMode) g.splineCurveMonotone(o);
 						else
 							for (t = 0, e = o.length; t < e; ++t) n = o[t]._model, i = g.splineCurve(g.previousItem(o, t)._model, n, g.nextItem(o, t)._model, a.dataset._model.tension), n.controlPointPreviousX = i.previous.x, n.controlPointPreviousY = i.previous.y, n.controlPointNextX = i.next.x, n.controlPointNextY = i.next.y;
 						if (this.chart.options.elements.line.capBezierPoints)
 							for (t = 0, e = o.length; t < e; ++t)(n = o[t]._model).controlPointPreviousX = s(n.controlPointPreviousX, r.left, r.right), n.controlPointPreviousY = s(n.controlPointPreviousY, r.top, r.bottom), n.controlPointNextX = s(n.controlPointNextX, r.left, r.right), n.controlPointNextY = s(n.controlPointNextY, r.top, r.bottom)
 					},
-					draw: function() {
+					draw: function () {
 						var t, e = this.chart,
 							n = this.getMeta(),
 							i = n.data || [],
@@ -3362,13 +3362,13 @@
 							r = i.length,
 							o = 0;
 						for (f(this.getDataset(), e.options) && (t = (n.dataset._model.borderWidth || 0) / 2, g.canvas.clipArea(e.ctx, {
-								left: a.left,
-								right: a.right,
-								top: a.top - t,
-								bottom: a.bottom + t
-							}), n.dataset.draw(), g.canvas.unclipArea(e.ctx)); o < r; ++o) i[o].draw(a)
+							left: a.left,
+							right: a.right,
+							top: a.top - t,
+							bottom: a.bottom + t
+						}), n.dataset.draw(), g.canvas.unclipArea(e.ctx)); o < r; ++o) i[o].draw(a)
 					},
-					setHoverStyle: function(t) {
+					setHoverStyle: function (t) {
 						var e = this.chart.data.datasets[t._datasetIndex],
 							n = t._index,
 							i = t.custom || {},
@@ -3387,7 +3387,7 @@
 			41: 41,
 			46: 46
 		}],
-		19: [function(t, e, n) {
+		19: [function (t, e, n) {
 			"use strict";
 			var i = t(26),
 				a = t(41),
@@ -3413,7 +3413,7 @@
 					animateScale: !0
 				},
 				startAngle: -.5 * Math.PI,
-				legendCallback: function(t) {
+				legendCallback: function (t) {
 					var e = [];
 					e.push('<ul class="' + t.id + '-legend">');
 					var n = t.data,
@@ -3425,9 +3425,9 @@
 				},
 				legend: {
 					labels: {
-						generateLabels: function(s) {
+						generateLabels: function (s) {
 							var l = s.data;
-							return l.labels.length && l.datasets.length ? l.labels.map(function(t, e) {
+							return l.labels.length && l.datasets.length ? l.labels.map(function (t, e) {
 								var n = s.getDatasetMeta(0),
 									i = l.datasets[0],
 									a = n.data[e].custom || {},
@@ -3444,7 +3444,7 @@
 							}) : []
 						}
 					},
-					onClick: function(t, e) {
+					onClick: function (t, e) {
 						var n, i, a, r = e.index,
 							o = this.chart;
 						for (n = 0, i = (o.data.datasets || []).length; n < i; ++n)(a = o.getDatasetMeta(n)).data[r].hidden = !a.data[r].hidden;
@@ -3453,19 +3453,19 @@
 				},
 				tooltips: {
 					callbacks: {
-						title: function() {
+						title: function () {
 							return ""
 						},
-						label: function(t, e) {
+						label: function (t, e) {
 							return e.labels[t.index] + ": " + t.yLabel
 						}
 					}
 				}
-			}), e.exports = function(t) {
+			}), e.exports = function (t) {
 				t.controllers.polarArea = t.DatasetController.extend({
 					dataElementType: a.Arc,
 					linkScales: _.noop,
-					update: function(n) {
+					update: function (n) {
 						var t, e, i, a = this,
 							r = a.getDataset(),
 							o = a.getMeta(),
@@ -3473,11 +3473,11 @@
 							l = a._starts = [],
 							u = a._angles = [];
 						for (a._updateRadius(), o.count = a.countVisibleElements(), t = 0, e = r.data.length; t < e; t++) l[t] = s, i = a._computeAngle(t), s += u[t] = i;
-						_.each(o.data, function(t, e) {
+						_.each(o.data, function (t, e) {
 							a.updateElement(t, e, n)
 						})
 					},
-					_updateRadius: function() {
+					_updateRadius: function () {
 						var t = this,
 							e = t.chart,
 							n = e.chartArea,
@@ -3486,7 +3486,7 @@
 							r = Math.min(n.right - n.left, n.bottom - n.top);
 						e.outerRadius = Math.max((r - a.borderWidth / 2) / 2, 0), e.innerRadius = Math.max(i.cutoutPercentage ? e.outerRadius / 100 * i.cutoutPercentage : 1, 0), e.radiusLength = (e.outerRadius - e.innerRadius) / e.getVisibleDatasetCount(), t.outerRadius = e.outerRadius - e.radiusLength * t.index, t.innerRadius = t.outerRadius - e.radiusLength
 					},
-					updateElement: function(t, e, n) {
+					updateElement: function (t, e, n) {
 						var i = this,
 							a = i.chart,
 							r = i.getDataset(),
@@ -3521,15 +3521,15 @@
 							x = t._model;
 						x.backgroundColor = b.backgroundColor ? b.backgroundColor : y(r.backgroundColor, e, v.backgroundColor), x.borderColor = b.borderColor ? b.borderColor : y(r.borderColor, e, v.borderColor), x.borderWidth = b.borderWidth ? b.borderWidth : y(r.borderWidth, e, v.borderWidth), t.pivot()
 					},
-					countVisibleElements: function() {
+					countVisibleElements: function () {
 						var n = this.getDataset(),
 							t = this.getMeta(),
 							i = 0;
-						return _.each(t.data, function(t, e) {
+						return _.each(t.data, function (t, e) {
 							isNaN(n.data[e]) || t.hidden || i++
 						}), i
 					},
-					_computeAngle: function(t) {
+					_computeAngle: function (t) {
 						var e = this,
 							n = this.getMeta().count,
 							i = e.getDataset(),
@@ -3550,7 +3550,7 @@
 			41: 41,
 			46: 46
 		}],
-		20: [function(t, e, n) {
+		20: [function (t, e, n) {
 			"use strict";
 			var i = t(26),
 				a = t(41),
@@ -3564,12 +3564,12 @@
 						tension: 0
 					}
 				}
-			}), e.exports = function(t) {
+			}), e.exports = function (t) {
 				t.controllers.radar = t.DatasetController.extend({
 					datasetElementType: a.Line,
 					dataElementType: a.Point,
 					linkScales: u.noop,
-					update: function(n) {
+					update: function (n) {
 						var i = this,
 							t = i.getMeta(),
 							e = t.dataset,
@@ -3594,11 +3594,11 @@
 								borderDashOffset: r.borderDashOffset ? r.borderDashOffset : o.borderDashOffset || s.borderDashOffset,
 								borderJoinStyle: r.borderJoinStyle ? r.borderJoinStyle : o.borderJoinStyle || s.borderJoinStyle
 							}
-						}), t.dataset.pivot(), u.each(a, function(t, e) {
+						}), t.dataset.pivot(), u.each(a, function (t, e) {
 							i.updateElement(t, e, n)
 						}, i), i.updateBezierControlPoints()
 					},
-					updateElement: function(t, e, n) {
+					updateElement: function (t, e, n) {
 						var i = this,
 							a = t.custom || {},
 							r = i.getDataset(),
@@ -3623,16 +3623,16 @@
 							}
 						}), t._model.skip = a.skip ? a.skip : isNaN(t._model.x) || isNaN(t._model.y)
 					},
-					updateBezierControlPoints: function() {
+					updateBezierControlPoints: function () {
 						var a = this.chart.chartArea,
 							r = this.getMeta();
-						u.each(r.data, function(t, e) {
+						u.each(r.data, function (t, e) {
 							var n = t._model,
 								i = u.splineCurve(u.previousItem(r.data, e, !0)._model, n, u.nextItem(r.data, e, !0)._model, n.tension);
 							n.controlPointPreviousX = Math.max(Math.min(i.previous.x, a.right), a.left), n.controlPointPreviousY = Math.max(Math.min(i.previous.y, a.bottom), a.top), n.controlPointNextX = Math.max(Math.min(i.next.x, a.right), a.left), n.controlPointNextY = Math.max(Math.min(i.next.y, a.bottom), a.top), t.pivot()
 						})
 					},
-					setHoverStyle: function(t) {
+					setHoverStyle: function (t) {
 						var e = this.chart.data.datasets[t._datasetIndex],
 							n = t.custom || {},
 							i = t._index,
@@ -3651,7 +3651,7 @@
 			41: 41,
 			46: 46
 		}],
-		21: [function(t, e, n) {
+		21: [function (t, e, n) {
 			"use strict";
 			t(26)._set("scatter", {
 				hover: {
@@ -3672,21 +3672,21 @@
 				showLines: !1,
 				tooltips: {
 					callbacks: {
-						title: function() {
+						title: function () {
 							return ""
 						},
-						label: function(t) {
+						label: function (t) {
 							return "(" + t.xLabel + ", " + t.yLabel + ")"
 						}
 					}
 				}
-			}), e.exports = function(t) {
+			}), e.exports = function (t) {
 				t.controllers.scatter = t.controllers.line
 			}
 		}, {
 			26: 26
 		}],
-		22: [function(t, e, n) {
+		22: [function (t, e, n) {
 			"use strict";
 			var i = t(27);
 			n = e.exports = i.extend({
@@ -3699,21 +3699,21 @@
 				onAnimationComplete: null
 			});
 			Object.defineProperty(n.prototype, "animationObject", {
-				get: function() {
+				get: function () {
 					return this
 				}
 			}), Object.defineProperty(n.prototype, "chartInstance", {
-				get: function() {
+				get: function () {
 					return this.chart
 				},
-				set: function(t) {
+				set: function (t) {
 					this.chart = t
 				}
 			})
 		}, {
 			27: 27
 		}],
-		23: [function(t, e, n) {
+		23: [function (t, e, n) {
 			"use strict";
 			var i = t(26),
 				r = t(46);
@@ -3729,24 +3729,24 @@
 				animations: [],
 				dropFrames: 0,
 				request: null,
-				addAnimation: function(t, e, n, i) {
+				addAnimation: function (t, e, n, i) {
 					var a, r, o = this.animations;
 					for (e.chart = t, i || (t.animating = !0), a = 0, r = o.length; a < r; ++a)
-						if (o[a].chart === t) return void(o[a] = e);
+						if (o[a].chart === t) return void (o[a] = e);
 					o.push(e), 1 === o.length && this.requestAnimationFrame()
 				},
-				cancelAnimation: function(e) {
-					var t = r.findIndex(this.animations, function(t) {
+				cancelAnimation: function (e) {
+					var t = r.findIndex(this.animations, function (t) {
 						return t.chart === e
 					}); - 1 !== t && (this.animations.splice(t, 1), e.animating = !1)
 				},
-				requestAnimationFrame: function() {
+				requestAnimationFrame: function () {
 					var t = this;
-					null === t.request && (t.request = r.requestAnimFrame.call(window, function() {
+					null === t.request && (t.request = r.requestAnimFrame.call(window, function () {
 						t.request = null, t.startDigest()
 					}))
 				},
-				startDigest: function() {
+				startDigest: function () {
 					var t = this,
 						e = Date.now(),
 						n = 0;
@@ -3754,7 +3754,7 @@
 					var i = Date.now();
 					t.dropFrames += (i - e) / t.frameDuration, 0 < t.animations.length && t.requestAnimationFrame()
 				},
-				advance: function(t) {
+				advance: function (t) {
 					for (var e, n, i = this.animations, a = 0; a < i.length;) n = (e = i[a]).chart, e.currentStep = (e.currentStep || 0) + t, e.currentStep = Math.min(e.currentStep, e.numSteps), r.callback(e.render, [n, e], n), r.callback(e.onAnimationProgress, [e], n), e.currentStep >= e.numSteps ? (r.callback(e.onAnimationComplete, [e], n), n.animating = !1, i.splice(a, 1)) : ++a
 				}
 			}
@@ -3762,7 +3762,7 @@
 			26: 26,
 			46: 46
 		}],
-		24: [function(t, e, n) {
+		24: [function (t, e, n) {
 			"use strict";
 			var s = t(22),
 				l = t(23),
@@ -3774,12 +3774,12 @@
 				g = t(32),
 				m = t(34),
 				i = t(36);
-			e.exports = function(u) {
+			e.exports = function (u) {
 				function d(t) {
 					return "top" === t || "bottom" === t
 				}
 				u.types = {}, u.instances = {}, u.controllers = {}, c.extend(u.prototype, {
-					construct: function(t, e) {
+					construct: function (t, e) {
 						var n, i, a = this;
 						(i = (n = (n = e) || {}).data = n.data || {}).datasets = i.datasets || [], i.labels = i.labels || [], n.options = c.configMerge(h.global, h[n.type], n.options || {}), e = n;
 						var r = f.acquireContext(t, e),
@@ -3787,25 +3787,25 @@
 							s = o && o.height,
 							l = o && o.width;
 						a.id = c.uid(), a.ctx = r, a.canvas = o, a.config = e, a.width = l, a.height = s, a.aspectRatio = s ? l / s : null, a.options = e.options, a._bufferedRender = !1, (a.chart = a).controller = a, u.instances[a.id] = a, Object.defineProperty(a, "data", {
-							get: function() {
+							get: function () {
 								return a.config.data
 							},
-							set: function(t) {
+							set: function (t) {
 								a.config.data = t
 							}
 						}), r && o ? (a.initialize(), a.update()) : console.error("Failed to create chart: can't acquire context from the given item")
 					},
-					initialize: function() {
+					initialize: function () {
 						var t = this;
 						return g.notify(t, "beforeInit"), c.retinaScale(t, t.options.devicePixelRatio), t.bindEvents(), t.options.responsive && t.resize(!0), t.ensureScalesHaveIDs(), t.buildOrUpdateScales(), t.initToolTip(), g.notify(t, "afterInit"), t
 					},
-					clear: function() {
+					clear: function () {
 						return c.canvas.clear(this), this
 					},
-					stop: function() {
+					stop: function () {
 						return l.cancelAnimation(this), this
 					},
-					resize: function(t) {
+					resize: function (t) {
 						var e = this,
 							n = e.options,
 							i = e.canvas,
@@ -3822,31 +3822,31 @@
 							})
 						}
 					},
-					ensureScalesHaveIDs: function() {
+					ensureScalesHaveIDs: function () {
 						var t = this.options,
 							e = t.scales || {},
 							n = t.scale;
-						c.each(e.xAxes, function(t, e) {
+						c.each(e.xAxes, function (t, e) {
 							t.id = t.id || "x-axis-" + e
-						}), c.each(e.yAxes, function(t, e) {
+						}), c.each(e.yAxes, function (t, e) {
 							t.id = t.id || "y-axis-" + e
 						}), n && (n.id = n.id || "scale")
 					},
-					buildOrUpdateScales: function() {
+					buildOrUpdateScales: function () {
 						var o = this,
 							t = o.options,
 							s = o.scales || {},
 							e = [],
-							l = Object.keys(s).reduce(function(t, e) {
+							l = Object.keys(s).reduce(function (t, e) {
 								return t[e] = !1, t
 							}, {});
-						t.scales && (e = e.concat((t.scales.xAxes || []).map(function(t) {
+						t.scales && (e = e.concat((t.scales.xAxes || []).map(function (t) {
 							return {
 								options: t,
 								dtype: "category",
 								dposition: "bottom"
 							}
-						}), (t.scales.yAxes || []).map(function(t) {
+						}), (t.scales.yAxes || []).map(function (t) {
 							return {
 								options: t,
 								dtype: "linear",
@@ -3857,13 +3857,13 @@
 							dtype: "radialLinear",
 							isDefault: !0,
 							dposition: "chartArea"
-						}), c.each(e, function(t) {
+						}), c.each(e, function (t) {
 							var e = t.options,
 								n = e.id,
 								i = c.valueOrDefault(e.type, t.dtype);
 							d(e.position) !== d(t.dposition) && (e.position = t.dposition), l[n] = !0;
 							var a = null;
-							if (n in s && s[n].type === i)(a = s[n]).options = e, a.ctx = o.ctx, a.chart = o;
+							if (n in s && s[n].type === i) (a = s[n]).options = e, a.ctx = o.ctx, a.chart = o;
 							else {
 								var r = m.getScaleConstructor(i);
 								if (!r) return;
@@ -3876,15 +3876,15 @@
 								}), s[a.id] = a
 							}
 							a.mergeTicksOptions(), t.isDefault && (o.scale = a)
-						}), c.each(l, function(t, e) {
+						}), c.each(l, function (t, e) {
 							t || delete s[e]
 						}), o.scales = s, m.addScalesToLayout(this)
 					},
-					buildOrUpdateControllers: function() {
+					buildOrUpdateControllers: function () {
 						var r = this,
 							o = [],
 							s = [];
-						return c.each(r.data.datasets, function(t, e) {
+						return c.each(r.data.datasets, function (t, e) {
 							var n = r.getDatasetMeta(e),
 								i = t.type || r.config.type;
 							if (n.type && n.type !== i && (r.destroyDatasetMeta(e), n = r.getDatasetMeta(e)), n.type = i, o.push(n.type), n.controller) n.controller.updateIndex(e), n.controller.linkScales();
@@ -3895,28 +3895,28 @@
 							}
 						}, r), s
 					},
-					resetElements: function() {
+					resetElements: function () {
 						var n = this;
-						c.each(n.data.datasets, function(t, e) {
+						c.each(n.data.datasets, function (t, e) {
 							n.getDatasetMeta(e).controller.reset()
 						}, n)
 					},
-					reset: function() {
+					reset: function () {
 						this.resetElements(), this.tooltip.initialize()
 					},
-					update: function(t) {
+					update: function (t) {
 						var e, n, i = this;
 						if (t && "object" == typeof t || (t = {
-								duration: t,
-								lazy: arguments[1]
-							}), n = (e = i).options, c.each(e.scales, function(t) {
-								r.removeBox(e, t)
-							}), n = c.configMerge(u.defaults.global, u.defaults[e.config.type], n), e.options = e.config.options = n, e.ensureScalesHaveIDs(), e.buildOrUpdateScales(), e.tooltip._options = n.tooltips, e.tooltip.initialize(), g._invalidate(i), !1 !== g.notify(i, "beforeUpdate")) {
+							duration: t,
+							lazy: arguments[1]
+						}), n = (e = i).options, c.each(e.scales, function (t) {
+							r.removeBox(e, t)
+						}), n = c.configMerge(u.defaults.global, u.defaults[e.config.type], n), e.options = e.config.options = n, e.ensureScalesHaveIDs(), e.buildOrUpdateScales(), e.tooltip._options = n.tooltips, e.tooltip.initialize(), g._invalidate(i), !1 !== g.notify(i, "beforeUpdate")) {
 							i.tooltip._data = i.data;
 							var a = i.buildOrUpdateControllers();
-							c.each(i.data.datasets, function(t, e) {
+							c.each(i.data.datasets, function (t, e) {
 								i.getDatasetMeta(e).controller.buildOrUpdateElements()
-							}, i), i.updateLayout(), i.options.animation && i.options.animation.duration && c.each(a, function(t) {
+							}, i), i.updateLayout(), i.options.animation && i.options.animation.duration && c.each(a, function (t) {
 								t.reset()
 							}), i.updateDatasets(), i.tooltip.initialize(), i.lastActive = [], g.notify(i, "afterUpdate"), i._bufferedRender ? i._bufferedRequest = {
 								duration: t.duration,
@@ -3925,16 +3925,16 @@
 							} : i.render(t)
 						}
 					},
-					updateLayout: function() {
+					updateLayout: function () {
 						!1 !== g.notify(this, "beforeLayout") && (r.update(this, this.width, this.height), g.notify(this, "afterScaleUpdate"), g.notify(this, "afterLayout"))
 					},
-					updateDatasets: function() {
+					updateDatasets: function () {
 						if (!1 !== g.notify(this, "beforeDatasetsUpdate")) {
 							for (var t = 0, e = this.data.datasets.length; t < e; ++t) this.updateDataset(t);
 							g.notify(this, "afterDatasetsUpdate")
 						}
 					},
-					updateDataset: function(t) {
+					updateDataset: function (t) {
 						var e = this.getDatasetMeta(t),
 							n = {
 								meta: e,
@@ -3942,7 +3942,7 @@
 							};
 						!1 !== g.notify(this, "beforeDatasetUpdate", [n]) && (e.controller.update(), g.notify(this, "afterDatasetUpdate", [n]))
 					},
-					render: function(t) {
+					render: function (t) {
 						var e = this;
 						t && "object" == typeof t || (t = {
 							duration: t,
@@ -3952,14 +3952,14 @@
 							i = t.lazy;
 						if (!1 !== g.notify(e, "beforeRender")) {
 							var a = e.options.animation,
-								r = function(t) {
+								r = function (t) {
 									g.notify(e, "afterRender"), c.callback(a && a.onComplete, [t], e)
 								};
 							if (a && (void 0 !== n && 0 !== n || void 0 === n && 0 !== a.duration)) {
 								var o = new s({
 									numSteps: (n || a.duration) / 16.66,
 									easing: t.easing || a.easing,
-									render: function(t, e) {
+									render: function (t, e) {
 										var n = c.easing.effects[e.easing],
 											i = e.currentStep,
 											a = i / e.numSteps;
@@ -3976,24 +3976,24 @@
 							return e
 						}
 					},
-					draw: function(t) {
+					draw: function (t) {
 						var e = this;
-						e.clear(), c.isNullOrUndef(t) && (t = 1), e.transition(t), e.width <= 0 || e.height <= 0 || !1 !== g.notify(e, "beforeDraw", [t]) && (c.each(e.boxes, function(t) {
+						e.clear(), c.isNullOrUndef(t) && (t = 1), e.transition(t), e.width <= 0 || e.height <= 0 || !1 !== g.notify(e, "beforeDraw", [t]) && (c.each(e.boxes, function (t) {
 							t.draw(e.chartArea)
 						}, e), e.scale && e.scale.draw(), e.drawDatasets(t), e._drawTooltip(t), g.notify(e, "afterDraw", [t]))
 					},
-					transition: function(t) {
+					transition: function (t) {
 						for (var e = 0, n = (this.data.datasets || []).length; e < n; ++e) this.isDatasetVisible(e) && this.getDatasetMeta(e).controller.transition(t);
 						this.tooltip.transition(t)
 					},
-					drawDatasets: function(t) {
+					drawDatasets: function (t) {
 						var e = this;
 						if (!1 !== g.notify(e, "beforeDatasetsDraw", [t])) {
 							for (var n = (e.data.datasets || []).length - 1; 0 <= n; --n) e.isDatasetVisible(n) && e.drawDataset(n, t);
 							g.notify(e, "afterDatasetsDraw", [t])
 						}
 					},
-					drawDataset: function(t, e) {
+					drawDataset: function (t, e) {
 						var n = this.getDatasetMeta(t),
 							i = {
 								meta: n,
@@ -4002,7 +4002,7 @@
 							};
 						!1 !== g.notify(this, "beforeDatasetDraw", [i]) && (n.controller.draw(e), g.notify(this, "afterDatasetDraw", [i]))
 					},
-					_drawTooltip: function(t) {
+					_drawTooltip: function (t) {
 						var e = this.tooltip,
 							n = {
 								tooltip: e,
@@ -4010,29 +4010,29 @@
 							};
 						!1 !== g.notify(this, "beforeTooltipDraw", [n]) && (e.draw(), g.notify(this, "afterTooltipDraw", [n]))
 					},
-					getElementAtEvent: function(t) {
+					getElementAtEvent: function (t) {
 						return a.modes.single(this, t)
 					},
-					getElementsAtEvent: function(t) {
+					getElementsAtEvent: function (t) {
 						return a.modes.label(this, t, {
 							intersect: !0
 						})
 					},
-					getElementsAtXAxis: function(t) {
+					getElementsAtXAxis: function (t) {
 						return a.modes["x-axis"](this, t, {
 							intersect: !0
 						})
 					},
-					getElementsAtEventForMode: function(t, e, n) {
+					getElementsAtEventForMode: function (t, e, n) {
 						var i = a.modes[e];
 						return "function" == typeof i ? i(this, t, n) : []
 					},
-					getDatasetAtEvent: function(t) {
+					getDatasetAtEvent: function (t) {
 						return a.modes.dataset(this, t, {
 							intersect: !0
 						})
 					},
-					getDatasetMeta: function(t) {
+					getDatasetMeta: function (t) {
 						var e = this.data.datasets[t];
 						e._meta || (e._meta = {});
 						var n = e._meta[this.id];
@@ -4046,33 +4046,33 @@
 							yAxisID: null
 						}), n
 					},
-					getVisibleDatasetCount: function() {
+					getVisibleDatasetCount: function () {
 						for (var t = 0, e = 0, n = this.data.datasets.length; e < n; ++e) this.isDatasetVisible(e) && t++;
 						return t
 					},
-					isDatasetVisible: function(t) {
+					isDatasetVisible: function (t) {
 						var e = this.getDatasetMeta(t);
 						return "boolean" == typeof e.hidden ? !e.hidden : !this.data.datasets[t].hidden
 					},
-					generateLegend: function() {
+					generateLegend: function () {
 						return this.options.legendCallback(this)
 					},
-					destroyDatasetMeta: function(t) {
+					destroyDatasetMeta: function (t) {
 						var e = this.id,
 							n = this.data.datasets[t],
 							i = n._meta && n._meta[e];
 						i && (i.controller.destroy(), delete n._meta[e])
 					},
-					destroy: function() {
+					destroy: function () {
 						var t, e, n = this,
 							i = n.canvas;
 						for (n.stop(), t = 0, e = n.data.datasets.length; t < e; ++t) n.destroyDatasetMeta(t);
 						i && (n.unbindEvents(), c.canvas.clear(n), f.releaseContext(n.ctx), n.canvas = null, n.ctx = null), g.notify(n, "destroy"), delete u.instances[n.id]
 					},
-					toBase64Image: function() {
+					toBase64Image: function () {
 						return this.canvas.toDataURL.apply(this.canvas, arguments)
 					},
-					initToolTip: function() {
+					initToolTip: function () {
 						var t = this;
 						t.tooltip = new i({
 							_chart: t,
@@ -4081,30 +4081,30 @@
 							_options: t.options.tooltips
 						}, t)
 					},
-					bindEvents: function() {
+					bindEvents: function () {
 						var e = this,
 							n = e._listeners = {},
-							i = function() {
+							i = function () {
 								e.eventHandler.apply(e, arguments)
 							};
-						c.each(e.options.events, function(t) {
+						c.each(e.options.events, function (t) {
 							f.addEventListener(e, t, i), n[t] = i
-						}), e.options.responsive && (i = function() {
+						}), e.options.responsive && (i = function () {
 							e.resize()
 						}, f.addEventListener(e, "resize", i), n.resize = i)
 					},
-					unbindEvents: function() {
+					unbindEvents: function () {
 						var n = this,
 							t = n._listeners;
-						t && (delete n._listeners, c.each(t, function(t, e) {
+						t && (delete n._listeners, c.each(t, function (t, e) {
 							f.removeEventListener(n, e, t)
 						}))
 					},
-					updateHoverStyle: function(t, e, n) {
+					updateHoverStyle: function (t, e, n) {
 						var i, a, r, o = n ? "setHoverStyle" : "removeHoverStyle";
 						for (a = 0, r = t.length; a < r; ++a)(i = t[a]) && this.getDatasetMeta(i._datasetIndex).controller[o](i)
 					},
-					eventHandler: function(t) {
+					eventHandler: function (t) {
 						var e = this,
 							n = e.tooltip;
 						if (!1 !== g.notify(e, "beforeEvent", [t])) {
@@ -4118,7 +4118,7 @@
 							})), e._bufferedRender = !1, e._bufferedRequest = null, e
 						}
 					},
-					handleEvent: function(t) {
+					handleEvent: function (t) {
 						var e, n = this,
 							i = n.options || {},
 							a = i.hover;
@@ -4138,61 +4138,61 @@
 			46: 46,
 			49: 49
 		}],
-		25: [function(t, e, n) {
+		25: [function (t, e, n) {
 			"use strict";
 			var s = t(46);
-			e.exports = function(t) {
+			e.exports = function (t) {
 				var r = ["push", "pop", "shift", "splice", "unshift"];
 
 				function o(e, t) {
 					var n = e._chartjs;
 					if (n) {
 						var i = n.listeners,
-							a = i.indexOf(t); - 1 !== a && i.splice(a, 1), 0 < i.length || (r.forEach(function(t) {
-							delete e[t]
-						}), delete e._chartjs)
+							a = i.indexOf(t); - 1 !== a && i.splice(a, 1), 0 < i.length || (r.forEach(function (t) {
+								delete e[t]
+							}), delete e._chartjs)
 					}
 				}
-				t.DatasetController = function(t, e) {
+				t.DatasetController = function (t, e) {
 					this.initialize(t, e)
 				}, s.extend(t.DatasetController.prototype, {
 					datasetElementType: null,
 					dataElementType: null,
-					initialize: function(t, e) {
+					initialize: function (t, e) {
 						this.chart = t, this.index = e, this.linkScales(), this.addElements()
 					},
-					updateIndex: function(t) {
+					updateIndex: function (t) {
 						this.index = t
 					},
-					linkScales: function() {
+					linkScales: function () {
 						var t = this,
 							e = t.getMeta(),
 							n = t.getDataset();
 						null !== e.xAxisID && e.xAxisID in t.chart.scales || (e.xAxisID = n.xAxisID || t.chart.options.scales.xAxes[0].id), null !== e.yAxisID && e.yAxisID in t.chart.scales || (e.yAxisID = n.yAxisID || t.chart.options.scales.yAxes[0].id)
 					},
-					getDataset: function() {
+					getDataset: function () {
 						return this.chart.data.datasets[this.index]
 					},
-					getMeta: function() {
+					getMeta: function () {
 						return this.chart.getDatasetMeta(this.index)
 					},
-					getScaleForId: function(t) {
+					getScaleForId: function (t) {
 						return this.chart.scales[t]
 					},
-					reset: function() {
+					reset: function () {
 						this.update(!0)
 					},
-					destroy: function() {
+					destroy: function () {
 						this._data && o(this._data, this)
 					},
-					createMetaDataset: function() {
+					createMetaDataset: function () {
 						var t = this.datasetElementType;
 						return t && new t({
 							_chart: this.chart,
 							_datasetIndex: this.index
 						})
 					},
-					createMetaData: function(t) {
+					createMetaData: function (t) {
 						var e = this.dataElementType;
 						return e && new e({
 							_chart: this.chart,
@@ -4200,18 +4200,18 @@
 							_index: t
 						})
 					},
-					addElements: function() {
+					addElements: function () {
 						var t, e, n = this.getMeta(),
 							i = this.getDataset().data || [],
 							a = n.data;
 						for (t = 0, e = i.length; t < e; ++t) a[t] = a[t] || this.createMetaData(t);
 						n.dataset = n.dataset || this.createMetaDataset()
 					},
-					addElementAndReset: function(t) {
+					addElementAndReset: function (t) {
 						var e = this.createMetaData(t);
 						this.getMeta().data.splice(t, 0, e), this.updateElement(e, t, !0)
 					},
-					buildOrUpdateElements: function() {
+					buildOrUpdateElements: function () {
 						var a, t, e = this,
 							n = e.getDataset(),
 							i = n.data || (n.data = []);
@@ -4221,16 +4221,16 @@
 							value: {
 								listeners: [t]
 							}
-						}), r.forEach(function(t) {
+						}), r.forEach(function (t) {
 							var n = "onData" + t.charAt(0).toUpperCase() + t.slice(1),
 								i = a[t];
 							Object.defineProperty(a, t, {
 								configurable: !0,
 								enumerable: !1,
-								value: function() {
+								value: function () {
 									var e = Array.prototype.slice.call(arguments),
 										t = i.apply(this, e);
-									return s.each(a._chartjs.listeners, function(t) {
+									return s.each(a._chartjs.listeners, function (t) {
 										"function" == typeof t[n] && t[n].apply(t, e)
 									}), t
 								}
@@ -4238,21 +4238,21 @@
 						})), e._data = i), e.resyncElements()
 					},
 					update: s.noop,
-					transition: function(t) {
+					transition: function (t) {
 						for (var e = this.getMeta(), n = e.data || [], i = n.length, a = 0; a < i; ++a) n[a].transition(t);
 						e.dataset && e.dataset.transition(t)
 					},
-					draw: function() {
+					draw: function () {
 						var t = this.getMeta(),
 							e = t.data || [],
 							n = e.length,
 							i = 0;
 						for (t.dataset && t.dataset.draw(); i < n; ++i) e[i].draw()
 					},
-					removeHoverStyle: function(t) {
+					removeHoverStyle: function (t) {
 						s.merge(t._model, t.$previousStyle || {}), delete t.$previousStyle
 					},
-					setHoverStyle: function(t) {
+					setHoverStyle: function (t) {
 						var e = this.chart.data.datasets[t._datasetIndex],
 							n = t._index,
 							i = t.custom || {},
@@ -4265,29 +4265,29 @@
 							borderWidth: o.borderWidth
 						}, o.backgroundColor = i.hoverBackgroundColor ? i.hoverBackgroundColor : a(e.hoverBackgroundColor, n, r(o.backgroundColor)), o.borderColor = i.hoverBorderColor ? i.hoverBorderColor : a(e.hoverBorderColor, n, r(o.borderColor)), o.borderWidth = i.hoverBorderWidth ? i.hoverBorderWidth : a(e.hoverBorderWidth, n, o.borderWidth)
 					},
-					resyncElements: function() {
+					resyncElements: function () {
 						var t = this.getMeta(),
 							e = this.getDataset().data,
 							n = t.data.length,
 							i = e.length;
 						i < n ? t.data.splice(i, n - i) : n < i && this.insertElements(n, i - n)
 					},
-					insertElements: function(t, e) {
+					insertElements: function (t, e) {
 						for (var n = 0; n < e; ++n) this.addElementAndReset(t + n)
 					},
-					onDataPush: function() {
+					onDataPush: function () {
 						this.insertElements(this.getDataset().data.length - 1, arguments.length)
 					},
-					onDataPop: function() {
+					onDataPop: function () {
 						this.getMeta().data.pop()
 					},
-					onDataShift: function() {
+					onDataShift: function () {
 						this.getMeta().data.shift()
 					},
-					onDataSplice: function(t, e) {
+					onDataSplice: function (t, e) {
 						this.getMeta().data.splice(t, e), this.insertElements(t, arguments.length - 2)
 					},
-					onDataUnshift: function() {
+					onDataUnshift: function () {
 						this.insertElements(0, arguments.length)
 					}
 				}), t.DatasetController.extend = s.inherits
@@ -4295,62 +4295,62 @@
 		}, {
 			46: 46
 		}],
-		26: [function(t, e, n) {
+		26: [function (t, e, n) {
 			"use strict";
 			var i = t(46);
 			e.exports = {
-				_set: function(t, e) {
+				_set: function (t, e) {
 					return i.merge(this[t] || (this[t] = {}), e)
 				}
 			}
 		}, {
 			46: 46
 		}],
-		27: [function(t, e, n) {
+		27: [function (t, e, n) {
 			"use strict";
 			var g = t(2),
 				i = t(46);
-			var a = function(t) {
+			var a = function (t) {
 				i.extend(this, t), this.initialize.apply(this, arguments)
 			};
 			i.extend(a.prototype, {
-				initialize: function() {
+				initialize: function () {
 					this.hidden = !1
 				},
-				pivot: function() {
+				pivot: function () {
 					var t = this;
 					return t._view || (t._view = i.clone(t._model)), t._start = {}, t
 				},
-				transition: function(t) {
+				transition: function (t) {
 					var e = this,
 						n = e._model,
 						i = e._start,
 						a = e._view;
-					return n && 1 !== t ? (a || (a = e._view = {}), i || (i = e._start = {}), function(t, e, n, i) {
+					return n && 1 !== t ? (a || (a = e._view = {}), i || (i = e._start = {}), function (t, e, n, i) {
 						var a, r, o, s, l, u, d, h, c, f = Object.keys(n);
 						for (a = 0, r = f.length; a < r; ++a)
 							if (u = n[o = f[a]], e.hasOwnProperty(o) || (e[o] = u), (s = e[o]) !== u && "_" !== o[0]) {
-								if (t.hasOwnProperty(o) || (t[o] = s), (d = typeof u) == typeof(l = t[o]))
+								if (t.hasOwnProperty(o) || (t[o] = s), (d = typeof u) == typeof (l = t[o]))
 									if ("string" === d) {
 										if ((h = g(l)).valid && (c = g(u)).valid) {
 											e[o] = c.mix(h, i).rgbString();
 											continue
 										}
 									} else if ("number" === d && isFinite(l) && isFinite(u)) {
-									e[o] = l + (u - l) * i;
-									continue
-								}
+										e[o] = l + (u - l) * i;
+										continue
+									}
 								e[o] = u
 							}
 					}(i, a, n, t)) : (e._view = n, e._start = null), e
 				},
-				tooltipPosition: function() {
+				tooltipPosition: function () {
 					return {
 						x: this._model.x,
 						y: this._model.y
 					}
 				},
-				hasValue: function() {
+				hasValue: function () {
 					return i.isNumber(this._model.x) && i.isNumber(this._model.y)
 				}
 			}), a.extend = i.inherits, e.exports = a
@@ -4358,13 +4358,13 @@
 			2: 2,
 			46: 46
 		}],
-		28: [function(t, e, n) {
+		28: [function (t, e, n) {
 			"use strict";
 			var i = t(2),
 				a = t(26),
 				g = t(46),
 				l = t(34);
-			e.exports = function() {
+			e.exports = function () {
 				function d(t, e, n) {
 					var i;
 					return "string" == typeof t ? (i = parseInt(t, 10), -1 !== t.indexOf("%") && (i = i / 100 * e.parentNode[n])) : i = t, i
@@ -4384,78 +4384,78 @@
 						u = Number.POSITIVE_INFINITY;
 					return s || l ? Math.min(s ? d(r, t, n) : u, l ? d(o, a, n) : u) : "none"
 				}
-				g.configMerge = function() {
+				g.configMerge = function () {
 					return g.merge(g.clone(arguments[0]), [].slice.call(arguments, 1), {
-						merger: function(t, e, n, i) {
+						merger: function (t, e, n, i) {
 							var a = e[t] || {},
 								r = n[t];
 							"scales" === t ? e[t] = g.scaleMerge(a, r) : "scale" === t ? e[t] = g.merge(a, [l.getScaleDefaults(r.type), r]) : g._merger(t, e, n, i)
 						}
 					})
-				}, g.scaleMerge = function() {
+				}, g.scaleMerge = function () {
 					return g.merge(g.clone(arguments[0]), [].slice.call(arguments, 1), {
-						merger: function(t, e, n, i) {
+						merger: function (t, e, n, i) {
 							if ("xAxes" === t || "yAxes" === t) {
 								var a, r, o, s = n[t].length;
 								for (e[t] || (e[t] = []), a = 0; a < s; ++a) o = n[t][a], r = g.valueOrDefault(o.type, "xAxes" === t ? "category" : "linear"), a >= e[t].length && e[t].push({}), !e[t][a].type || o.type && o.type !== e[t][a].type ? g.merge(e[t][a], [l.getScaleDefaults(r), o]) : g.merge(e[t][a], o)
 							} else g._merger(t, e, n, i)
 						}
 					})
-				}, g.where = function(t, e) {
+				}, g.where = function (t, e) {
 					if (g.isArray(t) && Array.prototype.filter) return t.filter(e);
 					var n = [];
-					return g.each(t, function(t) {
+					return g.each(t, function (t) {
 						e(t) && n.push(t)
 					}), n
-				}, g.findIndex = Array.prototype.findIndex ? function(t, e, n) {
+				}, g.findIndex = Array.prototype.findIndex ? function (t, e, n) {
 					return t.findIndex(e, n)
-				} : function(t, e, n) {
+				} : function (t, e, n) {
 					n = void 0 === n ? t : n;
 					for (var i = 0, a = t.length; i < a; ++i)
 						if (e.call(n, t[i], i, t)) return i;
 					return -1
-				}, g.findNextWhere = function(t, e, n) {
+				}, g.findNextWhere = function (t, e, n) {
 					g.isNullOrUndef(n) && (n = -1);
 					for (var i = n + 1; i < t.length; i++) {
 						var a = t[i];
 						if (e(a)) return a
 					}
-				}, g.findPreviousWhere = function(t, e, n) {
+				}, g.findPreviousWhere = function (t, e, n) {
 					g.isNullOrUndef(n) && (n = t.length);
 					for (var i = n - 1; 0 <= i; i--) {
 						var a = t[i];
 						if (e(a)) return a
 					}
-				}, g.isNumber = function(t) {
+				}, g.isNumber = function (t) {
 					return !isNaN(parseFloat(t)) && isFinite(t)
-				}, g.almostEquals = function(t, e, n) {
+				}, g.almostEquals = function (t, e, n) {
 					return Math.abs(t - e) < n
-				}, g.almostWhole = function(t, e) {
+				}, g.almostWhole = function (t, e) {
 					var n = Math.round(t);
 					return n - e < t && t < n + e
-				}, g.max = function(t) {
-					return t.reduce(function(t, e) {
+				}, g.max = function (t) {
+					return t.reduce(function (t, e) {
 						return isNaN(e) ? t : Math.max(t, e)
 					}, Number.NEGATIVE_INFINITY)
-				}, g.min = function(t) {
-					return t.reduce(function(t, e) {
+				}, g.min = function (t) {
+					return t.reduce(function (t, e) {
 						return isNaN(e) ? t : Math.min(t, e)
 					}, Number.POSITIVE_INFINITY)
-				}, g.sign = Math.sign ? function(t) {
+				}, g.sign = Math.sign ? function (t) {
 					return Math.sign(t)
-				} : function(t) {
+				} : function (t) {
 					return 0 === (t = +t) || isNaN(t) ? t : 0 < t ? 1 : -1
-				}, g.log10 = Math.log10 ? function(t) {
+				}, g.log10 = Math.log10 ? function (t) {
 					return Math.log10(t)
-				} : function(t) {
+				} : function (t) {
 					var e = Math.log(t) * Math.LOG10E,
 						n = Math.round(e);
 					return t === Math.pow(10, n) ? n : e
-				}, g.toRadians = function(t) {
+				}, g.toRadians = function (t) {
 					return t * (Math.PI / 180)
-				}, g.toDegrees = function(t) {
+				}, g.toDegrees = function (t) {
 					return t * (180 / Math.PI)
-				}, g.getAngleFromPoint = function(t, e) {
+				}, g.getAngleFromPoint = function (t, e) {
 					var n = e.x - t.x,
 						i = e.y - t.y,
 						a = Math.sqrt(n * n + i * i),
@@ -4464,11 +4464,11 @@
 						angle: r,
 						distance: a
 					}
-				}, g.distanceBetweenPoints = function(t, e) {
+				}, g.distanceBetweenPoints = function (t, e) {
 					return Math.sqrt(Math.pow(e.x - t.x, 2) + Math.pow(e.y - t.y, 2))
-				}, g.aliasPixel = function(t) {
+				}, g.aliasPixel = function (t) {
 					return t % 2 == 0 ? 0 : .5
-				}, g.splineCurve = function(t, e, n, i) {
+				}, g.splineCurve = function (t, e, n, i) {
 					var a = t.skip ? e : t,
 						r = e,
 						o = n.skip ? e : n,
@@ -4488,37 +4488,37 @@
 							y: r.y + c * (o.y - a.y)
 						}
 					}
-				}, g.EPSILON = Number.EPSILON || 1e-14, g.splineCurveMonotone = function(t) {
-					var e, n, i, a, r, o, s, l, u, d = (t || []).map(function(t) {
-							return {
-								model: t._model,
-								deltaK: 0,
-								mK: 0
-							}
-						}),
+				}, g.EPSILON = Number.EPSILON || 1e-14, g.splineCurveMonotone = function (t) {
+					var e, n, i, a, r, o, s, l, u, d = (t || []).map(function (t) {
+						return {
+							model: t._model,
+							deltaK: 0,
+							mK: 0
+						}
+					}),
 						h = d.length;
 					for (e = 0; e < h; ++e)
 						if (!(i = d[e]).model.skip) {
 							if (n = 0 < e ? d[e - 1] : null, (a = e < h - 1 ? d[e + 1] : null) && !a.model.skip) {
 								var c = a.model.x - i.model.x;
 								i.deltaK = 0 !== c ? (a.model.y - i.model.y) / c : 0
-							}!n || n.model.skip ? i.mK = i.deltaK : !a || a.model.skip ? i.mK = n.deltaK : this.sign(n.deltaK) !== this.sign(i.deltaK) ? i.mK = 0 : i.mK = (n.deltaK + i.deltaK) / 2
+							} !n || n.model.skip ? i.mK = i.deltaK : !a || a.model.skip ? i.mK = n.deltaK : this.sign(n.deltaK) !== this.sign(i.deltaK) ? i.mK = 0 : i.mK = (n.deltaK + i.deltaK) / 2
 						}
 					for (e = 0; e < h - 1; ++e) i = d[e], a = d[e + 1], i.model.skip || a.model.skip || (g.almostEquals(i.deltaK, 0, this.EPSILON) ? i.mK = a.mK = 0 : (r = i.mK / i.deltaK, o = a.mK / i.deltaK, (l = Math.pow(r, 2) + Math.pow(o, 2)) <= 9 || (s = 3 / Math.sqrt(l), i.mK = r * s * i.deltaK, a.mK = o * s * i.deltaK)));
 					for (e = 0; e < h; ++e)(i = d[e]).model.skip || (n = 0 < e ? d[e - 1] : null, a = e < h - 1 ? d[e + 1] : null, n && !n.model.skip && (u = (i.model.x - n.model.x) / 3, i.model.controlPointPreviousX = i.model.x - u, i.model.controlPointPreviousY = i.model.y - u * i.mK), a && !a.model.skip && (u = (a.model.x - i.model.x) / 3, i.model.controlPointNextX = i.model.x + u, i.model.controlPointNextY = i.model.y + u * i.mK))
-				}, g.nextItem = function(t, e, n) {
+				}, g.nextItem = function (t, e, n) {
 					return n ? e >= t.length - 1 ? t[0] : t[e + 1] : e >= t.length - 1 ? t[t.length - 1] : t[e + 1]
-				}, g.previousItem = function(t, e, n) {
+				}, g.previousItem = function (t, e, n) {
 					return n ? e <= 0 ? t[t.length - 1] : t[e - 1] : e <= 0 ? t[0] : t[e - 1]
-				}, g.niceNum = function(t, e) {
+				}, g.niceNum = function (t, e) {
 					var n = Math.floor(g.log10(t)),
 						i = t / Math.pow(10, n);
 					return (e ? i < 1.5 ? 1 : i < 3 ? 2 : i < 7 ? 5 : 10 : i <= 1 ? 1 : i <= 2 ? 2 : i <= 5 ? 5 : 10) * Math.pow(10, n)
-				}, g.requestAnimFrame = "undefined" == typeof window ? function(t) {
+				}, g.requestAnimFrame = "undefined" == typeof window ? function (t) {
 					t()
-				} : window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame || window.oRequestAnimationFrame || window.msRequestAnimationFrame || function(t) {
+				} : window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame || window.oRequestAnimationFrame || window.msRequestAnimationFrame || function (t) {
 					return window.setTimeout(t, 1e3 / 60)
-				}, g.getRelativePosition = function(t, e) {
+				}, g.getRelativePosition = function (t, e) {
 					var n, i, a = t.originalEvent || t,
 						r = t.target || t.srcElement,
 						o = r.getBoundingClientRect(),
@@ -4534,32 +4534,32 @@
 						x: n = Math.round((n - o.left - l) / c * r.width / e.currentDevicePixelRatio),
 						y: i = Math.round((i - o.top - u) / f * r.height / e.currentDevicePixelRatio)
 					}
-				}, g.getConstraintWidth = function(t) {
+				}, g.getConstraintWidth = function (t) {
 					return e(t, "max-width", "clientWidth")
-				}, g.getConstraintHeight = function(t) {
+				}, g.getConstraintHeight = function (t) {
 					return e(t, "max-height", "clientHeight")
-				}, g._calculatePadding = function(t, e, n) {
+				}, g._calculatePadding = function (t, e, n) {
 					return -1 < (e = g.getStyle(t, e)).indexOf("%") ? n / parseInt(e, 10) : parseInt(e, 10)
-				}, g._getParentNode = function(t) {
+				}, g._getParentNode = function (t) {
 					var e = t.parentNode;
 					return e && e.host && (e = e.host), e
-				}, g.getMaximumWidth = function(t) {
+				}, g.getMaximumWidth = function (t) {
 					var e = g._getParentNode(t);
 					if (!e) return t.clientWidth;
 					var n = e.clientWidth,
 						i = n - g._calculatePadding(e, "padding-left", n) - g._calculatePadding(e, "padding-right", n),
 						a = g.getConstraintWidth(t);
 					return isNaN(a) ? i : Math.min(i, a)
-				}, g.getMaximumHeight = function(t) {
+				}, g.getMaximumHeight = function (t) {
 					var e = g._getParentNode(t);
 					if (!e) return t.clientHeight;
 					var n = e.clientHeight,
 						i = n - g._calculatePadding(e, "padding-top", n) - g._calculatePadding(e, "padding-bottom", n),
 						a = g.getConstraintHeight(t);
 					return isNaN(a) ? i : Math.min(i, a)
-				}, g.getStyle = function(t, e) {
+				}, g.getStyle = function (t, e) {
 					return t.currentStyle ? t.currentStyle[e] : document.defaultView.getComputedStyle(t, null).getPropertyValue(e)
-				}, g.retinaScale = function(t, e) {
+				}, g.retinaScale = function (t, e) {
 					var n = t.currentDevicePixelRatio = e || "undefined" != typeof window && window.devicePixelRatio || 1;
 					if (1 !== n) {
 						var i = t.canvas,
@@ -4567,15 +4567,15 @@
 							r = t.width;
 						i.height = a * n, i.width = r * n, t.ctx.scale(n, n), i.style.height || i.style.width || (i.style.height = a + "px", i.style.width = r + "px")
 					}
-				}, g.fontString = function(t, e, n) {
+				}, g.fontString = function (t, e, n) {
 					return e + " " + t + "px " + n
-				}, g.longestText = function(e, t, n, i) {
+				}, g.longestText = function (e, t, n, i) {
 					var a = (i = i || {}).data = i.data || {},
 						r = i.garbageCollect = i.garbageCollect || [];
 					i.font !== t && (a = i.data = {}, r = i.garbageCollect = [], i.font = t), e.font = t;
 					var o = 0;
-					g.each(n, function(t) {
-						null != t && !0 !== g.isArray(t) ? o = g.measureText(e, a, r, o, t) : g.isArray(t) && g.each(t, function(t) {
+					g.each(n, function (t) {
+						null != t && !0 !== g.isArray(t) ? o = g.measureText(e, a, r, o, t) : g.isArray(t) && g.each(t, function (t) {
 							null == t || g.isArray(t) || (o = g.measureText(e, a, r, o, t))
 						})
 					});
@@ -4585,19 +4585,19 @@
 						r.splice(0, s)
 					}
 					return o
-				}, g.measureText = function(t, e, n, i, a) {
+				}, g.measureText = function (t, e, n, i, a) {
 					var r = e[a];
 					return r || (r = e[a] = t.measureText(a).width, n.push(a)), i < r && (i = r), i
-				}, g.numberOfLabelLines = function(t) {
+				}, g.numberOfLabelLines = function (t) {
 					var e = 1;
-					return g.each(t, function(t) {
+					return g.each(t, function (t) {
 						g.isArray(t) && t.length > e && (e = t.length)
 					}), e
-				}, g.color = i ? function(t) {
+				}, g.color = i ? function (t) {
 					return t instanceof CanvasGradient && (t = a.global.defaultColor), i(t)
-				} : function(t) {
+				} : function (t) {
 					return console.error("Color.js not found!"), t
-				}, g.getHoverColor = function(t) {
+				}, g.getHoverColor = function (t) {
 					return t instanceof CanvasPattern ? t : g.color(t).saturate(.5).darken(.1).rgbString()
 				}
 			}
@@ -4607,7 +4607,7 @@
 			34: 34,
 			46: 46
 		}],
-		29: [function(t, e, n) {
+		29: [function (t, e, n) {
 			"use strict";
 			var i = t(46);
 
@@ -4630,7 +4630,7 @@
 
 			function u(t, e) {
 				var n = [];
-				return l(t, function(t) {
+				return l(t, function (t) {
 					t.inRange(e.x, e.y) && n.push(t)
 				}), n
 			}
@@ -4638,7 +4638,7 @@
 			function d(t, i, a, r) {
 				var o = Number.POSITIVE_INFINITY,
 					s = [];
-				return l(t, function(t) {
+				return l(t, function (t) {
 					if (!a || t.inRange(i.x, i.y)) {
 						var e = t.getCenterPoint(),
 							n = r(i, e);
@@ -4650,7 +4650,7 @@
 			function h(t) {
 				var a = -1 !== t.indexOf("x"),
 					r = -1 !== t.indexOf("y");
-				return function(t, e) {
+				return function (t, e) {
 					var n = a ? Math.abs(t.x - e.x) : 0,
 						i = r ? Math.abs(t.y - e.y) : 0;
 					return Math.sqrt(Math.pow(n, 2) + Math.pow(i, 2))
@@ -4663,7 +4663,7 @@
 				var a = h(e.axis),
 					r = e.intersect ? u(i, n) : d(i, n, !1, a),
 					o = [];
-				return r.length ? (i.data.datasets.forEach(function(t, e) {
+				return r.length ? (i.data.datasets.forEach(function (t, e) {
 					if (i.isDatasetVisible(e)) {
 						var n = i.getDatasetMeta(e).data[r[0]._index];
 						n && !n._view.skip && o.push(n)
@@ -4672,53 +4672,53 @@
 			}
 			e.exports = {
 				modes: {
-					single: function(t, e) {
+					single: function (t, e) {
 						var n = s(e, t),
 							i = [];
-						return l(t, function(t) {
+						return l(t, function (t) {
 							if (t.inRange(n.x, n.y)) return i.push(t), i
 						}), i.slice(0, 1)
 					},
 					label: a,
 					index: a,
-					dataset: function(t, e, n) {
+					dataset: function (t, e, n) {
 						var i = s(e, t);
 						n.axis = n.axis || "xy";
 						var a = h(n.axis),
 							r = n.intersect ? u(t, i) : d(t, i, !1, a);
 						return 0 < r.length && (r = t.getDatasetMeta(r[0]._datasetIndex).data), r
 					},
-					"x-axis": function(t, e) {
+					"x-axis": function (t, e) {
 						return a(t, e, {
 							intersect: !1
 						})
 					},
-					point: function(t, e) {
+					point: function (t, e) {
 						return u(t, s(e, t))
 					},
-					nearest: function(t, e, n) {
+					nearest: function (t, e, n) {
 						var i = s(e, t);
 						n.axis = n.axis || "xy";
 						var a = h(n.axis),
 							r = d(t, i, n.intersect, a);
-						return 1 < r.length && r.sort(function(t, e) {
+						return 1 < r.length && r.sort(function (t, e) {
 							var n = t.getArea() - e.getArea();
 							return 0 === n && (n = t._datasetIndex - e._datasetIndex), n
 						}), r.slice(0, 1)
 					},
-					x: function(t, e, n) {
+					x: function (t, e, n) {
 						var i = s(e, t),
 							a = [],
 							r = !1;
-						return l(t, function(t) {
+						return l(t, function (t) {
 							t.inXRange(i.x) && a.push(t), t.inRange(i.x, i.y) && (r = !0)
 						}), n.intersect && !r && (a = []), a
 					},
-					y: function(t, e, n) {
+					y: function (t, e, n) {
 						var i = s(e, t),
 							a = [],
 							r = !1;
-						return l(t, function(t) {
+						return l(t, function (t) {
 							t.inYRange(i.y) && a.push(t), t.inRange(i.x, i.y) && (r = !0)
 						}), n.intersect && !r && (a = []), a
 					}
@@ -4727,7 +4727,7 @@
 		}, {
 			46: 46
 		}],
-		30: [function(t, e, n) {
+		30: [function (t, e, n) {
 			"use strict";
 			t(26)._set("global", {
 				responsive: !0,
@@ -4756,8 +4756,8 @@
 						left: 0
 					}
 				}
-			}), e.exports = function() {
-				var t = function(t, e) {
+			}), e.exports = function () {
+				var t = function (t, e) {
 					return this.construct(t, e), this
 				};
 				return t.Chart = t
@@ -4765,39 +4765,39 @@
 		}, {
 			26: 26
 		}],
-		31: [function(t, e, n) {
+		31: [function (t, e, n) {
 			"use strict";
 			var N = t(46);
 
 			function z(t, e) {
-				return N.where(t, function(t) {
+				return N.where(t, function (t) {
 					return t.position === e
 				})
 			}
 
 			function V(t, a) {
-				t.forEach(function(t, e) {
+				t.forEach(function (t, e) {
 					return t._tmpIndex_ = e, t
-				}), t.sort(function(t, e) {
+				}), t.sort(function (t, e) {
 					var n = a ? e : t,
 						i = a ? t : e;
 					return n.weight === i.weight ? n._tmpIndex_ - i._tmpIndex_ : n.weight - i.weight
-				}), t.forEach(function(t) {
+				}), t.forEach(function (t) {
 					delete t._tmpIndex_
 				})
 			}
 			e.exports = {
 				defaults: {},
-				addBox: function(t, e) {
+				addBox: function (t, e) {
 					t.boxes || (t.boxes = []), e.fullWidth = e.fullWidth || !1, e.position = e.position || "top", e.weight = e.weight || 0, t.boxes.push(e)
 				},
-				removeBox: function(t, e) {
+				removeBox: function (t, e) {
 					var n = t.boxes ? t.boxes.indexOf(e) : -1; - 1 !== n && t.boxes.splice(n, 1)
 				},
-				configure: function(t, e, n) {
+				configure: function (t, e, n) {
 					for (var i, a = ["fullWidth", "position", "weight"], r = a.length, o = 0; o < r; ++o) i = a[o], n.hasOwnProperty(i) && (e[i] = n[i])
 				},
-				update: function(e, n, t) {
+				update: function (e, n, t) {
 					if (e) {
 						var i = e.options.layout || {},
 							a = N.options.toPadding(i.padding),
@@ -4819,7 +4819,7 @@
 							y = g,
 							x = m,
 							_ = [];
-						N.each(u.concat(d, h, c), function(t) {
+						N.each(u.concat(d, h, c), function (t) {
 							var e, n = t.isHorizontal();
 							n ? (e = t.update(t.fullWidth ? g : y, b), x -= e.height) : (e = t.update(v, x), y -= e.width), _.push({
 								horizontal: n,
@@ -4831,12 +4831,12 @@
 							w = 0,
 							M = 0,
 							S = 0;
-						N.each(h.concat(c), function(t) {
+						N.each(h.concat(c), function (t) {
 							if (t.getPadding) {
 								var e = t.getPadding();
 								k = Math.max(k, e.left), w = Math.max(w, e.right)
 							}
-						}), N.each(u.concat(d), function(t) {
+						}), N.each(u.concat(d), function (t) {
 							if (t.getPadding) {
 								var e = t.getPadding();
 								M = Math.max(M, e.top), S = Math.max(S, e.bottom)
@@ -4846,18 +4846,18 @@
 							C = o,
 							P = s,
 							T = l;
-						N.each(u.concat(d), Y), N.each(u, function(t) {
+						N.each(u.concat(d), Y), N.each(u, function (t) {
 							D += t.width
-						}), N.each(d, function(t) {
+						}), N.each(d, function (t) {
 							C += t.width
-						}), N.each(h.concat(c), Y), N.each(h, function(t) {
+						}), N.each(h.concat(c), Y), N.each(h, function (t) {
 							P += t.height
-						}), N.each(c, function(t) {
+						}), N.each(c, function (t) {
 							T += t.height
-						}), N.each(u.concat(d), function(e) {
-							var t = N.findNextWhere(_, function(t) {
-									return t.box === e
-								}),
+						}), N.each(u.concat(d), function (e) {
+							var t = N.findNextWhere(_, function (t) {
+								return t.box === e
+							}),
 								n = {
 									left: 0,
 									right: 0,
@@ -4865,13 +4865,13 @@
 									bottom: T
 								};
 							t && e.update(t.minSize.width, x, n)
-						}), D = r, C = o, P = s, T = l, N.each(u, function(t) {
+						}), D = r, C = o, P = s, T = l, N.each(u, function (t) {
 							D += t.width
-						}), N.each(d, function(t) {
+						}), N.each(d, function (t) {
 							C += t.width
-						}), N.each(h, function(t) {
+						}), N.each(h, function (t) {
 							P += t.height
-						}), N.each(c, function(t) {
+						}), N.each(c, function (t) {
 							T += t.height
 						});
 						var O = Math.max(k - D, 0);
@@ -4880,13 +4880,13 @@
 						P += I, T += Math.max(S - T, 0);
 						var A = t - P - T,
 							F = n - D - C;
-						F === y && A === x || (N.each(u, function(t) {
+						F === y && A === x || (N.each(u, function (t) {
 							t.height = A
-						}), N.each(d, function(t) {
+						}), N.each(d, function (t) {
 							t.height = A
-						}), N.each(h, function(t) {
+						}), N.each(h, function (t) {
 							t.fullWidth || (t.width = F)
-						}), N.each(c, function(t) {
+						}), N.each(c, function (t) {
 							t.fullWidth || (t.width = F)
 						}), x = A, y = F);
 						var R = r + O,
@@ -4896,13 +4896,13 @@
 							top: P,
 							right: D + y,
 							bottom: P + x
-						}, N.each(f, function(t) {
+						}, N.each(f, function (t) {
 							t.left = e.chartArea.left, t.top = e.chartArea.top, t.right = e.chartArea.right, t.bottom = e.chartArea.bottom, t.update(y, x)
 						})
 					}
 
 					function Y(e) {
-						var t = N.findNextWhere(_, function(t) {
+						var t = N.findNextWhere(_, function (t) {
 							return t.box === e
 						});
 						if (t)
@@ -4925,7 +4925,7 @@
 		}, {
 			46: 46
 		}],
-		32: [function(t, e, n) {
+		32: [function (t, e, n) {
 			"use strict";
 			var o = t(26),
 				s = t(46);
@@ -4934,42 +4934,42 @@
 			}), e.exports = {
 				_plugins: [],
 				_cacheId: 0,
-				register: function(t) {
+				register: function (t) {
 					var e = this._plugins;
-					[].concat(t).forEach(function(t) {
+					[].concat(t).forEach(function (t) {
 						-1 === e.indexOf(t) && e.push(t)
 					}), this._cacheId++
 				},
-				unregister: function(t) {
+				unregister: function (t) {
 					var n = this._plugins;
-					[].concat(t).forEach(function(t) {
+					[].concat(t).forEach(function (t) {
 						var e = n.indexOf(t); - 1 !== e && n.splice(e, 1)
 					}), this._cacheId++
 				},
-				clear: function() {
+				clear: function () {
 					this._plugins = [], this._cacheId++
 				},
-				count: function() {
+				count: function () {
 					return this._plugins.length
 				},
-				getAll: function() {
+				getAll: function () {
 					return this._plugins
 				},
-				notify: function(t, e, n) {
+				notify: function (t, e, n) {
 					var i, a, r, o, s, l = this.descriptors(t),
 						u = l.length;
 					for (i = 0; i < u; ++i)
-						if ("function" == typeof(s = (r = (a = l[i]).plugin)[e]) && ((o = [t].concat(n || [])).push(a.options), !1 === s.apply(r, o))) return !1;
+						if ("function" == typeof (s = (r = (a = l[i]).plugin)[e]) && ((o = [t].concat(n || [])).push(a.options), !1 === s.apply(r, o))) return !1;
 					return !0
 				},
-				descriptors: function(t) {
+				descriptors: function (t) {
 					var e = t.$plugins || (t.$plugins = {});
 					if (e.id === this._cacheId) return e.descriptors;
 					var i = [],
 						a = [],
 						n = t && t.config || {},
 						r = n.options && n.options.plugins || {};
-					return this._plugins.concat(n.plugins || []).forEach(function(t) {
+					return this._plugins.concat(n.plugins || []).forEach(function (t) {
 						if (-1 === i.indexOf(t)) {
 							var e = t.id,
 								n = r[e];
@@ -4980,7 +4980,7 @@
 						}
 					}), e.descriptors = a, e.id = this._cacheId, a
 				},
-				_invalidate: function(t) {
+				_invalidate: function (t) {
 					delete t.$plugins
 				}
 			}
@@ -4988,7 +4988,7 @@
 			26: 26,
 			46: 46
 		}],
-		33: [function(t, e, n) {
+		33: [function (t, e, n) {
 			"use strict";
 			var x = t(26),
 				i = t(27),
@@ -5072,7 +5072,7 @@
 					major: {}
 				}
 			}), e.exports = i.extend({
-				getPadding: function() {
+				getPadding: function () {
 					return {
 						left: this.paddingLeft || 0,
 						top: this.paddingTop || 0,
@@ -5080,74 +5080,74 @@
 						bottom: this.paddingBottom || 0
 					}
 				},
-				getTicks: function() {
+				getTicks: function () {
 					return this._ticks
 				},
-				mergeTicksOptions: function() {
+				mergeTicksOptions: function () {
 					var t = this.options.ticks;
 					for (var e in !1 === t.minor && (t.minor = {
-							display: !1
-						}), !1 === t.major && (t.major = {
-							display: !1
-						}), t) "major" !== e && "minor" !== e && (void 0 === t.minor[e] && (t.minor[e] = t[e]), void 0 === t.major[e] && (t.major[e] = t[e]))
+						display: !1
+					}), !1 === t.major && (t.major = {
+						display: !1
+					}), t) "major" !== e && "minor" !== e && (void 0 === t.minor[e] && (t.minor[e] = t[e]), void 0 === t.major[e] && (t.major[e] = t[e]))
 				},
-				beforeUpdate: function() {
+				beforeUpdate: function () {
 					B.callback(this.options.beforeUpdate, [this])
 				},
-				update: function(t, e, n) {
+				update: function (t, e, n) {
 					var i, a, r, o, s, l, u = this;
 					for (u.beforeUpdate(), u.maxWidth = t, u.maxHeight = e, u.margins = B.extend({
-							left: 0,
-							right: 0,
-							top: 0,
-							bottom: 0
-						}, n), u.longestTextCache = u.longestTextCache || {}, u.beforeSetDimensions(), u.setDimensions(), u.afterSetDimensions(), u.beforeDataLimits(), u.determineDataLimits(), u.afterDataLimits(), u.beforeBuildTicks(), s = u.buildTicks() || [], u.afterBuildTicks(), u.beforeTickToLabelConversion(), r = u.convertTicksToLabels(s) || u.ticks, u.afterTickToLabelConversion(), i = 0, a = (u.ticks = r).length; i < a; ++i) o = r[i], (l = s[i]) ? l.label = o : s.push(l = {
+						left: 0,
+						right: 0,
+						top: 0,
+						bottom: 0
+					}, n), u.longestTextCache = u.longestTextCache || {}, u.beforeSetDimensions(), u.setDimensions(), u.afterSetDimensions(), u.beforeDataLimits(), u.determineDataLimits(), u.afterDataLimits(), u.beforeBuildTicks(), s = u.buildTicks() || [], u.afterBuildTicks(), u.beforeTickToLabelConversion(), r = u.convertTicksToLabels(s) || u.ticks, u.afterTickToLabelConversion(), i = 0, a = (u.ticks = r).length; i < a; ++i) o = r[i], (l = s[i]) ? l.label = o : s.push(l = {
 						label: o,
 						major: !1
 					});
 					return u._ticks = s, u.beforeCalculateTickRotation(), u.calculateTickRotation(), u.afterCalculateTickRotation(), u.beforeFit(), u.fit(), u.afterFit(), u.afterUpdate(), u.minSize
 				},
-				afterUpdate: function() {
+				afterUpdate: function () {
 					B.callback(this.options.afterUpdate, [this])
 				},
-				beforeSetDimensions: function() {
+				beforeSetDimensions: function () {
 					B.callback(this.options.beforeSetDimensions, [this])
 				},
-				setDimensions: function() {
+				setDimensions: function () {
 					var t = this;
 					t.isHorizontal() ? (t.width = t.maxWidth, t.left = 0, t.right = t.width) : (t.height = t.maxHeight, t.top = 0, t.bottom = t.height), t.paddingLeft = 0, t.paddingTop = 0, t.paddingRight = 0, t.paddingBottom = 0
 				},
-				afterSetDimensions: function() {
+				afterSetDimensions: function () {
 					B.callback(this.options.afterSetDimensions, [this])
 				},
-				beforeDataLimits: function() {
+				beforeDataLimits: function () {
 					B.callback(this.options.beforeDataLimits, [this])
 				},
 				determineDataLimits: B.noop,
-				afterDataLimits: function() {
+				afterDataLimits: function () {
 					B.callback(this.options.afterDataLimits, [this])
 				},
-				beforeBuildTicks: function() {
+				beforeBuildTicks: function () {
 					B.callback(this.options.beforeBuildTicks, [this])
 				},
 				buildTicks: B.noop,
-				afterBuildTicks: function() {
+				afterBuildTicks: function () {
 					B.callback(this.options.afterBuildTicks, [this])
 				},
-				beforeTickToLabelConversion: function() {
+				beforeTickToLabelConversion: function () {
 					B.callback(this.options.beforeTickToLabelConversion, [this])
 				},
-				convertTicksToLabels: function() {
+				convertTicksToLabels: function () {
 					var t = this.options.ticks;
 					this.ticks = this.ticks.map(t.userCallback || t.callback, this)
 				},
-				afterTickToLabelConversion: function() {
+				afterTickToLabelConversion: function () {
 					B.callback(this.options.afterTickToLabelConversion, [this])
 				},
-				beforeCalculateTickRotation: function() {
+				beforeCalculateTickRotation: function () {
 					B.callback(this.options.beforeCalculateTickRotation, [this])
 				},
-				calculateTickRotation: function() {
+				calculateTickRotation: function () {
 					var t = this,
 						e = t.ctx,
 						n = t.options.ticks,
@@ -5166,13 +5166,13 @@
 						}
 					t.labelRotation = r
 				},
-				afterCalculateTickRotation: function() {
+				afterCalculateTickRotation: function () {
 					B.callback(this.options.afterCalculateTickRotation, [this])
 				},
-				beforeFit: function() {
+				beforeFit: function () {
 					B.callback(this.options.beforeFit, [this])
 				},
-				fit: function() {
+				fit: function () {
 					var t = this,
 						e = t.minSize = {
 							width: 0,
@@ -5209,20 +5209,20 @@
 					}
 					t.handleMargins(), t.width = e.width, t.height = e.height
 				},
-				handleMargins: function() {
+				handleMargins: function () {
 					var t = this;
 					t.margins && (t.paddingLeft = Math.max(t.paddingLeft - t.margins.left, 0), t.paddingTop = Math.max(t.paddingTop - t.margins.top, 0), t.paddingRight = Math.max(t.paddingRight - t.margins.right, 0), t.paddingBottom = Math.max(t.paddingBottom - t.margins.bottom, 0))
 				},
-				afterFit: function() {
+				afterFit: function () {
 					B.callback(this.options.afterFit, [this])
 				},
-				isHorizontal: function() {
+				isHorizontal: function () {
 					return "top" === this.options.position || "bottom" === this.options.position
 				},
-				isFullWidth: function() {
+				isFullWidth: function () {
 					return this.options.fullWidth
 				},
-				getRightValue: function(t) {
+				getRightValue: function (t) {
 					if (B.isNullOrUndef(t)) return NaN;
 					if ("number" == typeof t && !isFinite(t)) return NaN;
 					if (t)
@@ -5234,7 +5234,7 @@
 				getLabelForIndex: B.noop,
 				getPixelForValue: B.noop,
 				getValueForPixel: B.noop,
-				getPixelForTick: function(t) {
+				getPixelForTick: function (t) {
 					var e = this,
 						n = e.options.offset;
 					if (e.isHorizontal()) {
@@ -5247,7 +5247,7 @@
 					var o = e.height - (e.paddingTop + e.paddingBottom);
 					return e.top + t * (o / (e._ticks.length - 1))
 				},
-				getPixelForDecimal: function(t) {
+				getPixelForDecimal: function (t) {
 					var e = this;
 					if (e.isHorizontal()) {
 						var n = (e.width - (e.paddingLeft + e.paddingRight)) * t + e.paddingLeft,
@@ -5256,15 +5256,15 @@
 					}
 					return e.top + t * e.height
 				},
-				getBasePixel: function() {
+				getBasePixel: function () {
 					return this.getPixelForValue(this.getBaseValue())
 				},
-				getBaseValue: function() {
+				getBaseValue: function () {
 					var t = this.min,
 						e = this.max;
 					return this.beginAtZero ? 0 : t < 0 && e < 0 ? e : 0 < t && 0 < e ? t : 0
 				},
-				_autoSkip: function(t) {
+				_autoSkip: function (t) {
 					var e, n, i, a, r = this,
 						o = r.isHorizontal(),
 						s = r.options.ticks.minor,
@@ -5276,7 +5276,7 @@
 					for (s.maxTicksLimit && (a = s.maxTicksLimit), o && (e = !1, (h + s.autoSkipPadding) * l > r.width - (r.paddingLeft + r.paddingRight) && (e = 1 + Math.floor((h + s.autoSkipPadding) * l / (r.width - (r.paddingLeft + r.paddingRight)))), a && a < l && (e = Math.max(e, Math.floor(l / a)))), n = 0; n < l; n++) i = t[n], (1 < e && 0 < n % e || n % e == 0 && l <= n + e) && n !== l - 1 && delete i.label, c.push(i);
 					return c
 				},
-				draw: function(S) {
+				draw: function (S) {
 					var D = this,
 						C = D.options;
 					if (C.display) {
@@ -5304,56 +5304,56 @@
 							z = "right" === C.position ? D.left + R : D.right,
 							V = "bottom" === C.position ? D.top + W : D.bottom - R - W,
 							H = "bottom" === C.position ? D.top + W + R : D.bottom + W;
-						if (B.each(F, function(t, e) {
-								if (!B.isNullOrUndef(t.label)) {
-									var n, i, a, r, o, s, l, u, d, h, c, f, g, m, p = t.label;
-									r = e === D.zeroLineIndex && C.offset === O.offsetGridLines ? (n = O.zeroLineWidth, i = O.zeroLineColor, a = O.zeroLineBorderDash, O.zeroLineBorderDashOffset) : (n = B.valueAtIndexOrDefault(O.lineWidth, e), i = B.valueAtIndexOrDefault(O.color, e), a = B.valueOrDefault(O.borderDash, P.borderDash), B.valueOrDefault(O.borderDashOffset, P.borderDashOffset));
-									var v = "middle",
-										b = "middle",
-										y = T.padding;
-									if (A) {
-										var x = R + y;
-										m = "bottom" === C.position ? (b = I ? "middle" : "top", v = I ? "right" : "center", D.top + x) : (b = I ? "middle" : "bottom", v = I ? "left" : "center", D.bottom - x);
-										var _ = E(D, e, O.offsetGridLines && 1 < F.length);
-										_ < D.left && (i = "rgba(0,0,0,0)"), _ += B.aliasPixel(n), g = D.getPixelForTick(e) + T.labelOffset, o = l = d = c = _, s = V, u = H, h = S.top, f = S.bottom + W
-									} else {
-										var k, w = "left" === C.position;
-										k = T.mirror ? (v = w ? "left" : "right", y) : (v = w ? "right" : "left", R + y), g = w ? D.right - k : D.left + k;
-										var M = E(D, e, O.offsetGridLines && 1 < F.length);
-										M < D.top && (i = "rgba(0,0,0,0)"), M += B.aliasPixel(n), m = D.getPixelForTick(e) + T.labelOffset, o = N, l = z, d = S.left, c = S.right + W, s = u = h = f = M
-									}
-									Y.push({
-										tx1: o,
-										ty1: s,
-										tx2: l,
-										ty2: u,
-										x1: d,
-										y1: h,
-										x2: c,
-										y2: f,
-										labelX: g,
-										labelY: m,
-										glWidth: n,
-										glColor: i,
-										glBorderDash: a,
-										glBorderDashOffset: r,
-										rotation: -1 * L,
-										label: p,
-										major: t.major,
-										textBaseline: b,
-										textAlign: v
-									})
+						if (B.each(F, function (t, e) {
+							if (!B.isNullOrUndef(t.label)) {
+								var n, i, a, r, o, s, l, u, d, h, c, f, g, m, p = t.label;
+								r = e === D.zeroLineIndex && C.offset === O.offsetGridLines ? (n = O.zeroLineWidth, i = O.zeroLineColor, a = O.zeroLineBorderDash, O.zeroLineBorderDashOffset) : (n = B.valueAtIndexOrDefault(O.lineWidth, e), i = B.valueAtIndexOrDefault(O.color, e), a = B.valueOrDefault(O.borderDash, P.borderDash), B.valueOrDefault(O.borderDashOffset, P.borderDashOffset));
+								var v = "middle",
+									b = "middle",
+									y = T.padding;
+								if (A) {
+									var x = R + y;
+									m = "bottom" === C.position ? (b = I ? "middle" : "top", v = I ? "right" : "center", D.top + x) : (b = I ? "middle" : "bottom", v = I ? "left" : "center", D.bottom - x);
+									var _ = E(D, e, O.offsetGridLines && 1 < F.length);
+									_ < D.left && (i = "rgba(0,0,0,0)"), _ += B.aliasPixel(n), g = D.getPixelForTick(e) + T.labelOffset, o = l = d = c = _, s = V, u = H, h = S.top, f = S.bottom + W
+								} else {
+									var k, w = "left" === C.position;
+									k = T.mirror ? (v = w ? "left" : "right", y) : (v = w ? "right" : "left", R + y), g = w ? D.right - k : D.left + k;
+									var M = E(D, e, O.offsetGridLines && 1 < F.length);
+									M < D.top && (i = "rgba(0,0,0,0)"), M += B.aliasPixel(n), m = D.getPixelForTick(e) + T.labelOffset, o = N, l = z, d = S.left, c = S.right + W, s = u = h = f = M
 								}
-							}), B.each(Y, function(t) {
-								if (O.display && (o.save(), o.lineWidth = t.glWidth, o.strokeStyle = t.glColor, o.setLineDash && (o.setLineDash(t.glBorderDash), o.lineDashOffset = t.glBorderDashOffset), o.beginPath(), O.drawTicks && (o.moveTo(t.tx1, t.ty1), o.lineTo(t.tx2, t.ty2)), O.drawOnChartArea && (o.moveTo(t.x1, t.y1), o.lineTo(t.x2, t.y2)), o.stroke(), o.restore()), T.display) {
-									o.save(), o.translate(t.labelX, t.labelY), o.rotate(t.rotation), o.font = t.major ? d.font : l.font, o.fillStyle = t.major ? u : s, o.textBaseline = t.textBaseline, o.textAlign = t.textAlign;
-									var e = t.label;
-									if (B.isArray(e))
-										for (var n = e.length, i = 1.5 * l.size, a = D.isHorizontal() ? 0 : -i * (n - 1) / 2, r = 0; r < n; ++r) o.fillText("" + e[r], 0, a), a += i;
-									else o.fillText(e, 0, 0);
-									o.restore()
-								}
-							}), e.display) {
+								Y.push({
+									tx1: o,
+									ty1: s,
+									tx2: l,
+									ty2: u,
+									x1: d,
+									y1: h,
+									x2: c,
+									y2: f,
+									labelX: g,
+									labelY: m,
+									glWidth: n,
+									glColor: i,
+									glBorderDash: a,
+									glBorderDashOffset: r,
+									rotation: -1 * L,
+									label: p,
+									major: t.major,
+									textBaseline: b,
+									textAlign: v
+								})
+							}
+						}), B.each(Y, function (t) {
+							if (O.display && (o.save(), o.lineWidth = t.glWidth, o.strokeStyle = t.glColor, o.setLineDash && (o.setLineDash(t.glBorderDash), o.lineDashOffset = t.glBorderDashOffset), o.beginPath(), O.drawTicks && (o.moveTo(t.tx1, t.ty1), o.lineTo(t.tx2, t.ty2)), O.drawOnChartArea && (o.moveTo(t.x1, t.y1), o.lineTo(t.x2, t.y2)), o.stroke(), o.restore()), T.display) {
+								o.save(), o.translate(t.labelX, t.labelY), o.rotate(t.rotation), o.font = t.major ? d.font : l.font, o.fillStyle = t.major ? u : s, o.textBaseline = t.textBaseline, o.textAlign = t.textAlign;
+								var e = t.label;
+								if (B.isArray(e))
+									for (var n = e.length, i = 1.5 * l.size, a = D.isHorizontal() ? 0 : -i * (n - 1) / 2, r = 0; r < n; ++r) o.fillText("" + e[r], 0, a), a += i;
+								else o.fillText(e, 0, 0);
+								o.restore()
+							}
+						}), e.display) {
 							var r, h, c = 0,
 								f = M(e) / 2;
 							if (A) r = D.left + (D.right - D.left) / 2, h = "bottom" === C.position ? D.bottom - f - a.bottom : D.top + f + a.top;
@@ -5381,7 +5381,7 @@
 			35: 35,
 			46: 46
 		}],
-		34: [function(t, e, n) {
+		34: [function (t, e, n) {
 			"use strict";
 			var i = t(26),
 				a = t(46),
@@ -5389,20 +5389,20 @@
 			e.exports = {
 				constructors: {},
 				defaults: {},
-				registerScaleType: function(t, e, n) {
+				registerScaleType: function (t, e, n) {
 					this.constructors[t] = e, this.defaults[t] = a.clone(n)
 				},
-				getScaleConstructor: function(t) {
+				getScaleConstructor: function (t) {
 					return this.constructors.hasOwnProperty(t) ? this.constructors[t] : void 0
 				},
-				getScaleDefaults: function(t) {
+				getScaleDefaults: function (t) {
 					return this.defaults.hasOwnProperty(t) ? a.merge({}, [i.scale, this.defaults[t]]) : {}
 				},
-				updateScaleDefaults: function(t, e) {
+				updateScaleDefaults: function (t, e) {
 					this.defaults.hasOwnProperty(t) && (this.defaults[t] = a.extend(this.defaults[t], e))
 				},
-				addScalesToLayout: function(e) {
-					a.each(e.scales, function(t) {
+				addScalesToLayout: function (e) {
+					a.each(e.scales, function (t) {
 						t.fullWidth = t.options.fullWidth, t.position = t.options.position, t.weight = t.options.weight, r.addBox(e, t)
 					})
 				}
@@ -5412,15 +5412,15 @@
 			31: 31,
 			46: 46
 		}],
-		35: [function(t, e, n) {
+		35: [function (t, e, n) {
 			"use strict";
 			var l = t(46);
 			e.exports = {
 				formatters: {
-					values: function(t) {
+					values: function (t) {
 						return l.isArray(t) ? t : "" + t
 					},
-					linear: function(t, e, n) {
+					linear: function (t, e, n) {
 						var i = 3 < n.length ? n[2] - n[1] : n[1] - n[0];
 						1 < Math.abs(i) && t !== Math.floor(t) && (i = t - Math.floor(t));
 						var a = l.log10(Math.abs(i)),
@@ -5436,7 +5436,7 @@
 						else r = "0";
 						return r
 					},
-					logarithmic: function(t, e, n) {
+					logarithmic: function (t, e, n) {
 						var i = t / Math.pow(10, Math.floor(l.log10(t)));
 						return 0 === t ? "0" : 1 === i || 2 === i || 5 === i || 0 === e || e === n.length - 1 ? t.toExponential() : ""
 					}
@@ -5445,7 +5445,7 @@
 		}, {
 			46: 46
 		}],
-		36: [function(t, e, n) {
+		36: [function (t, e, n) {
 			"use strict";
 			var i = t(26),
 				a = t(27),
@@ -5482,7 +5482,7 @@
 					borderWidth: 0,
 					callbacks: {
 						beforeTitle: R.noop,
-						title: function(t, e) {
+						title: function (t, e) {
 							var n = "",
 								i = e.labels,
 								a = i ? i.length : 0;
@@ -5495,18 +5495,18 @@
 						afterTitle: R.noop,
 						beforeBody: R.noop,
 						beforeLabel: R.noop,
-						label: function(t, e) {
+						label: function (t, e) {
 							var n = e.datasets[t.datasetIndex].label || "";
 							return n && (n += ": "), n += t.yLabel
 						},
-						labelColor: function(t, e) {
+						labelColor: function (t, e) {
 							var n = e.getDatasetMeta(t.datasetIndex).data[t.index]._view;
 							return {
 								borderColor: n.borderColor,
 								backgroundColor: n.backgroundColor
 							}
 						},
-						labelTextColor: function() {
+						labelTextColor: function () {
 							return this._options.bodyFontColor
 						},
 						afterLabel: R.noop,
@@ -5518,7 +5518,7 @@
 				}
 			});
 			var L = {
-				average: function(t) {
+				average: function (t) {
 					if (!t.length) return !1;
 					var e, n, i = 0,
 						a = 0,
@@ -5535,7 +5535,7 @@
 						y: Math.round(a / r)
 					}
 				},
-				nearest: function(t, e) {
+				nearest: function (t, e) {
 					var n, i, a, r = e.x,
 						o = e.y,
 						s = Number.POSITIVE_INFINITY;
@@ -5612,11 +5612,11 @@
 
 			function r(t) {
 				return o([], s(t))
-			}(e.exports = a.extend({
-				initialize: function() {
+			} (e.exports = a.extend({
+				initialize: function () {
 					this._model = Y(this._options), this._lastActive = []
 				},
-				getTitle: function() {
+				getTitle: function () {
 					var t = this._options.callbacks,
 						e = t.beforeTitle.apply(this, arguments),
 						n = t.title.apply(this, arguments),
@@ -5624,14 +5624,14 @@
 						a = [];
 					return a = o(a = o(a = o(a, s(e)), s(n)), s(i))
 				},
-				getBeforeBody: function() {
+				getBeforeBody: function () {
 					return r(this._options.callbacks.beforeBody.apply(this, arguments))
 				},
-				getBody: function(t, n) {
+				getBody: function (t, n) {
 					var i = this,
 						a = i._options.callbacks,
 						r = [];
-					return R.each(t, function(t) {
+					return R.each(t, function (t) {
 						var e = {
 							before: [],
 							lines: [],
@@ -5640,10 +5640,10 @@
 						o(e.before, s(a.beforeLabel.call(i, t, n))), o(e.lines, a.label.call(i, t, n)), o(e.after, s(a.afterLabel.call(i, t, n))), r.push(e)
 					}), r
 				},
-				getAfterBody: function() {
+				getAfterBody: function () {
 					return r(this._options.callbacks.afterBody.apply(this, arguments))
 				},
-				getFooter: function() {
+				getFooter: function () {
 					var t = this._options.callbacks,
 						e = t.beforeFooter.apply(this, arguments),
 						n = t.footer.apply(this, arguments),
@@ -5651,7 +5651,7 @@
 						a = [];
 					return a = o(a = o(a = o(a, s(e)), s(n)), s(i))
 				},
-				update: function(t) {
+				update: function (t) {
 					var e, n, i, a, r, o, s, l, u, d, h, c, f, g, m, p, v, b, y, x, _ = this,
 						k = _._options,
 						w = _._model,
@@ -5688,13 +5688,13 @@
 							x: p._model.x,
 							y: p._model.y
 						}));
-						k.filter && (F = F.filter(function(t) {
+						k.filter && (F = F.filter(function (t) {
 							return k.filter(t, D)
-						})), k.itemSort && (F = F.sort(function(t, e) {
+						})), k.itemSort && (F = F.sort(function (t, e) {
 							return k.itemSort(t, e, D)
-						})), R.each(F, function(t) {
+						})), R.each(F, function (t) {
 							I.push(k.callbacks.labelColor.call(_, t, _._chart)), A.push(k.callbacks.labelTextColor.call(_, t, _._chart))
-						}), M.title = _.getTitle(F, D), M.beforeBody = _.getBeforeBody(F, D), M.body = _.getBody(F, D), M.afterBody = _.getAfterBody(F, D), M.footer = _.getFooter(F, D), M.x = Math.round(O.x), M.y = Math.round(O.y), M.caretPadding = k.caretPadding, M.labelColors = I, M.labelTextColors = A, M.dataPoints = F, C = function(t, e) {
+						}), M.title = _.getTitle(F, D), M.beforeBody = _.getBeforeBody(F, D), M.body = _.getBody(F, D), M.afterBody = _.getAfterBody(F, D), M.footer = _.getFooter(F, D), M.x = Math.round(O.x), M.y = Math.round(O.y), M.caretPadding = k.caretPadding, M.labelColors = I, M.labelTextColors = A, M.dataPoints = F, C = function (t, e) {
 							var n, i, a, r, o, s = t._model,
 								l = t._chart,
 								u = t._chart.chartArea,
@@ -5703,19 +5703,19 @@
 							s.y < e.height ? h = "top" : s.y > l.height - e.height && (h = "bottom");
 							var c = (u.left + u.right) / 2,
 								f = (u.top + u.bottom) / 2;
-							i = "center" === h ? (n = function(t) {
+							i = "center" === h ? (n = function (t) {
 								return t <= c
-							}, function(t) {
+							}, function (t) {
 								return c < t
-							}) : (n = function(t) {
+							}) : (n = function (t) {
 								return t <= e.width / 2
-							}, function(t) {
+							}, function (t) {
 								return t >= l.width - e.width / 2
-							}), a = function(t) {
+							}), a = function (t) {
 								return t + e.width + s.caretSize + s.caretPadding > l.width
-							}, r = function(t) {
+							}, r = function (t) {
 								return t - e.width - s.caretSize - s.caretPadding < 0
-							}, o = function(t) {
+							}, o = function (t) {
 								return t <= f ? "top" : "bottom"
 							}, n(s.x) ? (d = "left", a(s.x) && (d = "center", h = o(s.y))) : i(s.x) && (d = "right", r(s.x) && (d = "center", h = o(s.y)));
 							var g = t._options;
@@ -5723,12 +5723,12 @@
 								xAlign: g.xAlign ? g.xAlign : d,
 								yAlign: g.yAlign ? g.yAlign : h
 							}
-						}(this, T = function(t, e) {
+						}(this, T = function (t, e) {
 							var n = t._chart.ctx,
 								i = 2 * e.yPadding,
 								a = 0,
 								r = e.body,
-								o = r.reduce(function(t, e) {
+								o = r.reduce(function (t, e) {
 									return t + e.before.length + e.lines.length + e.after.length
 								}, 0);
 							o += e.beforeBody.length + e.afterBody.length;
@@ -5739,10 +5739,10 @@
 								h = e.footerFontSize;
 							i += s * u, i += s ? (s - 1) * e.titleSpacing : 0, i += s ? e.titleMarginBottom : 0, i += o * d, i += o ? (o - 1) * e.bodySpacing : 0, i += l ? e.footerMarginTop : 0, i += l * h, i += l ? (l - 1) * e.footerSpacing : 0;
 							var c = 0,
-								f = function(t) {
+								f = function (t) {
 									a = Math.max(a, n.measureText(t).width + c)
 								};
-							return n.font = R.fontString(u, e._titleFontStyle, e._titleFontFamily), R.each(e.title, f), n.font = R.fontString(d, e._bodyFontStyle, e._bodyFontFamily), R.each(e.beforeBody.concat(e.afterBody), f), c = e.displayColors ? d + 2 : 0, R.each(r, function(t) {
+							return n.font = R.fontString(u, e._titleFontStyle, e._titleFontFamily), R.each(e.title, f), n.font = R.fontString(d, e._bodyFontStyle, e._bodyFontFamily), R.each(e.beforeBody.concat(e.afterBody), f), c = e.displayColors ? d + 2 : 0, R.each(r, function (t) {
 								R.each(t.before, f), R.each(t.lines, f), R.each(t.after, f)
 							}), c = 0, n.font = R.fontString(h, e._footerFontStyle, e._footerFontFamily), R.each(e.footer, f), {
 								width: a += 2 * e.xPadding,
@@ -5755,13 +5755,13 @@
 					} else M.opacity = 0;
 					return M.xAlign = C.xAlign, M.yAlign = C.yAlign, M.x = P.x, M.y = P.y, M.width = T.width, M.height = T.height, M.caretX = O.x, M.caretY = O.y, _._model = M, t && k.custom && k.custom.call(_, M), _
 				},
-				drawCaret: function(t, e) {
+				drawCaret: function (t, e) {
 					var n = this._chart.ctx,
 						i = this._view,
 						a = this.getCaretPosition(t, e, i);
 					n.lineTo(a.x1, a.y1), n.lineTo(a.x2, a.y2), n.lineTo(a.x3, a.y3)
 				},
-				getCaretPosition: function(t, e, n) {
+				getCaretPosition: function (t, e, n) {
 					var i, a, r, o, s, l, u = n.caretSize,
 						d = n.cornerRadius,
 						h = n.xAlign,
@@ -5786,7 +5786,7 @@
 						y3: l
 					}
 				},
-				drawTitle: function(t, e, n, i) {
+				drawTitle: function (t, e, n, i) {
 					var a = e.title;
 					if (a.length) {
 						n.textAlign = e._titleAlign, n.textBaseline = "top";
@@ -5795,31 +5795,31 @@
 						for (n.fillStyle = c(e.titleFontColor, i), n.font = R.fontString(s, e._titleFontStyle, e._titleFontFamily), r = 0, o = a.length; r < o; ++r) n.fillText(a[r], t.x, t.y), t.y += s + l, r + 1 === a.length && (t.y += e.titleMarginBottom - l)
 					}
 				},
-				drawBody: function(i, a, r, o) {
+				drawBody: function (i, a, r, o) {
 					var s = a.bodyFontSize,
 						e = a.bodySpacing,
 						t = a.body;
 					r.textAlign = a._bodyAlign, r.textBaseline = "top", r.font = R.fontString(s, a._bodyFontStyle, a._bodyFontFamily);
 					var n = 0,
-						l = function(t) {
+						l = function (t) {
 							r.fillText(t, i.x + n, i.y), i.y += s + e
 						};
 					r.fillStyle = c(a.bodyFontColor, o), R.each(a.beforeBody, l);
 					var u = a.displayColors;
-					n = u ? s + 2 : 0, R.each(t, function(t, e) {
+					n = u ? s + 2 : 0, R.each(t, function (t, e) {
 						var n = c(a.labelTextColors[e], o);
-						r.fillStyle = n, R.each(t.before, l), R.each(t.lines, function(t) {
+						r.fillStyle = n, R.each(t.before, l), R.each(t.lines, function (t) {
 							u && (r.fillStyle = c(a.legendColorBackground, o), r.fillRect(i.x, i.y, s, s), r.lineWidth = 1, r.strokeStyle = c(a.labelColors[e].borderColor, o), r.strokeRect(i.x, i.y, s, s), r.fillStyle = c(a.labelColors[e].backgroundColor, o), r.fillRect(i.x + 1, i.y + 1, s - 2, s - 2), r.fillStyle = n), l(t)
 						}), R.each(t.after, l)
 					}), n = 0, R.each(a.afterBody, l), i.y -= e
 				},
-				drawFooter: function(e, n, i, t) {
+				drawFooter: function (e, n, i, t) {
 					var a = n.footer;
-					a.length && (e.y += n.footerMarginTop, i.textAlign = n._footerAlign, i.textBaseline = "top", i.fillStyle = c(n.footerFontColor, t), i.font = R.fontString(n.footerFontSize, n._footerFontStyle, n._footerFontFamily), R.each(a, function(t) {
+					a.length && (e.y += n.footerMarginTop, i.textAlign = n._footerAlign, i.textBaseline = "top", i.fillStyle = c(n.footerFontColor, t), i.font = R.fontString(n.footerFontSize, n._footerFontStyle, n._footerFontFamily), R.each(a, function (t) {
 						i.fillText(t, e.x, e.y), e.y += n.footerFontSize + n.footerSpacing
 					}))
 				},
-				drawBackground: function(t, e, n, i, a) {
+				drawBackground: function (t, e, n, i, a) {
 					n.fillStyle = c(e.backgroundColor, a), n.strokeStyle = c(e.borderColor, a), n.lineWidth = e.borderWidth;
 					var r = e.xAlign,
 						o = e.yAlign,
@@ -5830,14 +5830,14 @@
 						h = e.cornerRadius;
 					n.beginPath(), n.moveTo(s + h, l), "top" === o && this.drawCaret(t, i), n.lineTo(s + u - h, l), n.quadraticCurveTo(s + u, l, s + u, l + h), "center" === o && "right" === r && this.drawCaret(t, i), n.lineTo(s + u, l + d - h), n.quadraticCurveTo(s + u, l + d, s + u - h, l + d), "bottom" === o && this.drawCaret(t, i), n.lineTo(s + h, l + d), n.quadraticCurveTo(s, l + d, s, l + d - h), "center" === o && "left" === r && this.drawCaret(t, i), n.lineTo(s, l + h), n.quadraticCurveTo(s, l, s + h, l), n.closePath(), n.fill(), 0 < e.borderWidth && n.stroke()
 				},
-				draw: function() {
+				draw: function () {
 					var t = this._chart.ctx,
 						e = this._view;
 					if (0 !== e.opacity) {
 						var n = {
-								width: e.width,
-								height: e.height
-							},
+							width: e.width,
+							height: e.height
+						},
 							i = {
 								x: e.x,
 								y: e.y
@@ -5847,7 +5847,7 @@
 						this._options.enabled && r && (this.drawBackground(i, e, t, n, a), i.x += e.xPadding, i.y += e.yPadding, this.drawTitle(i, e, t, a), this.drawBody(i, e, t, a), this.drawFooter(i, e, t, a))
 					}
 				},
-				handleEvent: function(t) {
+				handleEvent: function (t) {
 					var e, n = this,
 						i = n._options;
 					return n._lastActive = n._lastActive || [], "mouseout" === t.type ? n._active = [] : n._active = n._chart.getElementsAtEventForMode(t, i.mode, i), (e = !R.arrayEquals(n._active, n._lastActive)) && (n._lastActive = n._active, (i.enabled || i.custom) && (n._eventPosition = {
@@ -5861,7 +5861,7 @@
 			27: 27,
 			46: 46
 		}],
-		37: [function(t, e, n) {
+		37: [function (t, e, n) {
 			"use strict";
 			var i = t(26),
 				a = t(27),
@@ -5875,17 +5875,17 @@
 					}
 				}
 			}), e.exports = a.extend({
-				inLabelRange: function(t) {
+				inLabelRange: function (t) {
 					var e = this._view;
 					return !!e && Math.pow(t - e.x, 2) < Math.pow(e.radius + e.hoverRadius, 2)
 				},
-				inRange: function(t, e) {
+				inRange: function (t, e) {
 					var n = this._view;
 					if (n) {
 						for (var i = d.getAngleFromPoint(n, {
-								x: t,
-								y: e
-							}), a = i.angle, r = i.distance, o = n.startAngle, s = n.endAngle; s < o;) s += 2 * Math.PI;
+							x: t,
+							y: e
+						}), a = i.angle, r = i.distance, o = n.startAngle, s = n.endAngle; s < o;) s += 2 * Math.PI;
 						for (; s < a;) a -= 2 * Math.PI;
 						for (; a < o;) a += 2 * Math.PI;
 						var l = o <= a && a <= s,
@@ -5894,7 +5894,7 @@
 					}
 					return !1
 				},
-				getCenterPoint: function() {
+				getCenterPoint: function () {
 					var t = this._view,
 						e = (t.startAngle + t.endAngle) / 2,
 						n = (t.innerRadius + t.outerRadius) / 2;
@@ -5903,11 +5903,11 @@
 						y: t.y + Math.sin(e) * n
 					}
 				},
-				getArea: function() {
+				getArea: function () {
 					var t = this._view;
 					return Math.PI * ((t.endAngle - t.startAngle) / (2 * Math.PI)) * (Math.pow(t.outerRadius, 2) - Math.pow(t.innerRadius, 2))
 				},
-				tooltipPosition: function() {
+				tooltipPosition: function () {
 					var t = this._view,
 						e = t.startAngle + (t.endAngle - t.startAngle) / 2,
 						n = (t.outerRadius - t.innerRadius) / 2 + t.innerRadius;
@@ -5916,7 +5916,7 @@
 						y: t.y + Math.sin(e) * n
 					}
 				},
-				draw: function() {
+				draw: function () {
 					var t = this._chart.ctx,
 						e = this._view,
 						n = e.startAngle,
@@ -5929,7 +5929,7 @@
 			27: 27,
 			46: 46
 		}],
-		38: [function(t, e, n) {
+		38: [function (t, e, n) {
 			"use strict";
 			var i = t(26),
 				a = t(27),
@@ -5951,7 +5951,7 @@
 					}
 				}
 			}), e.exports = a.extend({
-				draw: function() {
+				draw: function () {
 					var t, e, n, i, a = this._view,
 						r = this._chart.ctx,
 						o = a.spanGaps,
@@ -5967,7 +5967,7 @@
 			27: 27,
 			46: 46
 		}],
-		39: [function(t, e, n) {
+		39: [function (t, e, n) {
 			"use strict";
 			var u = t(26),
 				i = t(27),
@@ -5992,27 +5992,27 @@
 					}
 				}
 			}), e.exports = i.extend({
-				inRange: function(t, e) {
+				inRange: function (t, e) {
 					var n = this._view;
 					return !!n && Math.pow(t - n.x, 2) + Math.pow(e - n.y, 2) < Math.pow(n.hitRadius + n.radius, 2)
 				},
 				inLabelRange: a,
 				inXRange: a,
-				inYRange: function(t) {
+				inYRange: function (t) {
 					var e = this._view;
 					return !!e && Math.abs(t - e.y) < e.radius + e.hitRadius
 				},
-				getCenterPoint: function() {
+				getCenterPoint: function () {
 					var t = this._view;
 					return {
 						x: t.x,
 						y: t.y
 					}
 				},
-				getArea: function() {
+				getArea: function () {
 					return Math.PI * Math.pow(this._view.radius, 2)
 				},
-				tooltipPosition: function() {
+				tooltipPosition: function () {
 					var t = this._view;
 					return {
 						x: t.x,
@@ -6020,7 +6020,7 @@
 						padding: t.radius + t.borderWidth
 					}
 				},
-				draw: function(t) {
+				draw: function (t) {
 					var e = this._view,
 						n = this._model,
 						i = this._chart.ctx,
@@ -6037,7 +6037,7 @@
 			27: 27,
 			46: 46
 		}],
-		40: [function(t, e, n) {
+		40: [function (t, e, n) {
 			"use strict";
 			var i = t(26),
 				a = t(27);
@@ -6072,7 +6072,7 @@
 					}
 				}
 			}), e.exports = a.extend({
-				draw: function() {
+				draw: function () {
 					var t, e, n, i, a, r, o, s = this._chart.ctx,
 						l = this._view,
 						u = l.borderWidth;
@@ -6087,11 +6087,11 @@
 					}
 					s.beginPath(), s.fillStyle = l.backgroundColor, s.strokeStyle = l.borderColor, s.lineWidth = u;
 					var p = [
-							[t, i],
-							[t, n],
-							[e, n],
-							[e, i]
-						],
+						[t, i],
+						[t, n],
+						[e, n],
+						[e, i]
+					],
 						v = ["bottom", "left", "top", "right"].indexOf(o, 0);
 
 					function b(t) {
@@ -6102,11 +6102,11 @@
 					for (var x = 1; x < 4; x++) y = b(x), s.lineTo(y[0], y[1]);
 					s.fill(), u && s.stroke()
 				},
-				height: function() {
+				height: function () {
 					var t = this._view;
 					return t.base - t.y
 				},
-				inRange: function(t, e) {
+				inRange: function (t, e) {
 					var n = !1;
 					if (this._view) {
 						var i = r(this);
@@ -6114,31 +6114,31 @@
 					}
 					return n
 				},
-				inLabelRange: function(t, e) {
+				inLabelRange: function (t, e) {
 					if (!this._view) return !1;
 					var n = r(this);
 					return l(this) ? t >= n.left && t <= n.right : e >= n.top && e <= n.bottom
 				},
-				inXRange: function(t) {
+				inXRange: function (t) {
 					var e = r(this);
 					return t >= e.left && t <= e.right
 				},
-				inYRange: function(t) {
+				inYRange: function (t) {
 					var e = r(this);
 					return t >= e.top && t <= e.bottom
 				},
-				getCenterPoint: function() {
+				getCenterPoint: function () {
 					var t, e, n = this._view;
 					return e = l(this) ? (t = n.x, (n.y + n.base) / 2) : (t = (n.x + n.base) / 2, n.y), {
 						x: t,
 						y: e
 					}
 				},
-				getArea: function() {
+				getArea: function () {
 					var t = this._view;
 					return t.width * Math.abs(t.y - t.base)
 				},
-				tooltipPosition: function() {
+				tooltipPosition: function () {
 					var t = this._view;
 					return {
 						x: t.x,
@@ -6150,7 +6150,7 @@
 			26: 26,
 			27: 27
 		}],
-		41: [function(t, e, n) {
+		41: [function (t, e, n) {
 			"use strict";
 			e.exports = {}, e.exports.Arc = t(37), e.exports.Line = t(38), e.exports.Point = t(39), e.exports.Rectangle = t(40)
 		}, {
@@ -6159,133 +6159,133 @@
 			39: 39,
 			40: 40
 		}],
-		42: [function(t, e, n) {
+		42: [function (t, e, n) {
 			"use strict";
 			var i = t(43);
 			n = e.exports = {
-				clear: function(t) {
+				clear: function (t) {
 					t.ctx.clearRect(0, 0, t.width, t.height)
 				},
-				roundedRect: function(t, e, n, i, a, r) {
+				roundedRect: function (t, e, n, i, a, r) {
 					if (r) {
 						var o = Math.min(r, a / 2 - 1e-7, i / 2 - 1e-7);
 						t.moveTo(e + o, n), t.lineTo(e + i - o, n), t.arcTo(e + i, n, e + i, n + o, o), t.lineTo(e + i, n + a - o), t.arcTo(e + i, n + a, e + i - o, n + a, o), t.lineTo(e + o, n + a), t.arcTo(e, n + a, e, n + a - o, o), t.lineTo(e, n + o), t.arcTo(e, n, e + o, n, o), t.closePath(), t.moveTo(e, n)
 					} else t.rect(e, n, i, a)
 				},
-				drawPoint: function(t, e, n, i, a, r) {
+				drawPoint: function (t, e, n, i, a, r) {
 					var o, s, l, u, d, h;
 					if (r = r || 0, !e || "object" != typeof e || "[object HTMLImageElement]" !== (o = e.toString()) && "[object HTMLCanvasElement]" !== o) {
 						if (!(isNaN(n) || n <= 0)) {
 							switch (t.save(), t.translate(i, a), t.rotate(r * Math.PI / 180), t.beginPath(), e) {
 								default: t.arc(0, 0, n, 0, 2 * Math.PI),
-								t.closePath();
-								break;
-								case "triangle":
-										d = (s = 3 * n / Math.sqrt(3)) * Math.sqrt(3) / 2,
-									t.moveTo(-s / 2, d / 3),
-									t.lineTo(s / 2, d / 3),
-									t.lineTo(0, -2 * d / 3),
 									t.closePath();
+									break;
+								case "triangle":
+									d = (s = 3 * n / Math.sqrt(3)) * Math.sqrt(3) / 2,
+										t.moveTo(-s / 2, d / 3),
+										t.lineTo(s / 2, d / 3),
+										t.lineTo(0, -2 * d / 3),
+										t.closePath();
 									break;
 								case "rect":
-										h = 1 / Math.SQRT2 * n,
-									t.rect(-h, -h, 2 * h, 2 * h);
+									h = 1 / Math.SQRT2 * n,
+										t.rect(-h, -h, 2 * h, 2 * h);
 									break;
 								case "rectRounded":
-										var c = n / Math.SQRT2,
+									var c = n / Math.SQRT2,
 										f = -c,
 										g = -c,
-										m = Math.SQRT2 * n;this.roundedRect(t, f, g, m, m, .425 * n);
+										m = Math.SQRT2 * n; this.roundedRect(t, f, g, m, m, .425 * n);
 									break;
 								case "rectRot":
-										h = 1 / Math.SQRT2 * n,
-									t.moveTo(-h, 0),
-									t.lineTo(0, h),
-									t.lineTo(h, 0),
-									t.lineTo(0, -h),
-									t.closePath();
+									h = 1 / Math.SQRT2 * n,
+										t.moveTo(-h, 0),
+										t.lineTo(0, h),
+										t.lineTo(h, 0),
+										t.lineTo(0, -h),
+										t.closePath();
 									break;
 								case "cross":
-										t.moveTo(0, n),
-									t.lineTo(0, -n),
-									t.moveTo(-n, 0),
-									t.lineTo(n, 0);
+									t.moveTo(0, n),
+										t.lineTo(0, -n),
+										t.moveTo(-n, 0),
+										t.lineTo(n, 0);
 									break;
 								case "crossRot":
-										l = Math.cos(Math.PI / 4) * n,
-									u = Math.sin(Math.PI / 4) * n,
-									t.moveTo(-l, -u),
-									t.lineTo(l, u),
-									t.moveTo(-l, u),
-									t.lineTo(l, -u);
+									l = Math.cos(Math.PI / 4) * n,
+										u = Math.sin(Math.PI / 4) * n,
+										t.moveTo(-l, -u),
+										t.lineTo(l, u),
+										t.moveTo(-l, u),
+										t.lineTo(l, -u);
 									break;
 								case "star":
-										t.moveTo(0, n),
-									t.lineTo(0, -n),
-									t.moveTo(-n, 0),
-									t.lineTo(n, 0),
-									l = Math.cos(Math.PI / 4) * n,
-									u = Math.sin(Math.PI / 4) * n,
-									t.moveTo(-l, -u),
-									t.lineTo(l, u),
-									t.moveTo(-l, u),
-									t.lineTo(l, -u);
+									t.moveTo(0, n),
+										t.lineTo(0, -n),
+										t.moveTo(-n, 0),
+										t.lineTo(n, 0),
+										l = Math.cos(Math.PI / 4) * n,
+										u = Math.sin(Math.PI / 4) * n,
+										t.moveTo(-l, -u),
+										t.lineTo(l, u),
+										t.moveTo(-l, u),
+										t.lineTo(l, -u);
 									break;
 								case "line":
-										t.moveTo(-n, 0),
-									t.lineTo(n, 0);
+									t.moveTo(-n, 0),
+										t.lineTo(n, 0);
 									break;
 								case "dash":
-										t.moveTo(0, 0),
-									t.lineTo(n, 0)
+									t.moveTo(0, 0),
+										t.lineTo(n, 0)
 							}
 							t.fill(), t.stroke(), t.restore()
 						}
 					} else t.drawImage(e, i - e.width / 2, a - e.height / 2, e.width, e.height)
 				},
-				clipArea: function(t, e) {
+				clipArea: function (t, e) {
 					t.save(), t.beginPath(), t.rect(e.left, e.top, e.right - e.left, e.bottom - e.top), t.clip()
 				},
-				unclipArea: function(t) {
+				unclipArea: function (t) {
 					t.restore()
 				},
-				lineTo: function(t, e, n, i) {
+				lineTo: function (t, e, n, i) {
 					if (n.steppedLine) return "after" === n.steppedLine && !i || "after" !== n.steppedLine && i ? t.lineTo(e.x, n.y) : t.lineTo(n.x, e.y), void t.lineTo(n.x, n.y);
 					n.tension ? t.bezierCurveTo(i ? e.controlPointPreviousX : e.controlPointNextX, i ? e.controlPointPreviousY : e.controlPointNextY, i ? n.controlPointNextX : n.controlPointPreviousX, i ? n.controlPointNextY : n.controlPointPreviousY, n.x, n.y) : t.lineTo(n.x, n.y)
 				}
 			};
-			i.clear = n.clear, i.drawRoundedRectangle = function(t) {
+			i.clear = n.clear, i.drawRoundedRectangle = function (t) {
 				t.beginPath(), n.roundedRect.apply(n, arguments)
 			}
 		}, {
 			43: 43
 		}],
-		43: [function(t, e, n) {
+		43: [function (t, e, n) {
 			"use strict";
 			var i, d = {
-				noop: function() {},
-				uid: (i = 0, function() {
+				noop: function () { },
+				uid: (i = 0, function () {
 					return i++
 				}),
-				isNullOrUndef: function(t) {
+				isNullOrUndef: function (t) {
 					return null == t
 				},
-				isArray: Array.isArray ? Array.isArray : function(t) {
+				isArray: Array.isArray ? Array.isArray : function (t) {
 					return "[object Array]" === Object.prototype.toString.call(t)
 				},
-				isObject: function(t) {
+				isObject: function (t) {
 					return null !== t && "[object Object]" === Object.prototype.toString.call(t)
 				},
-				valueOrDefault: function(t, e) {
+				valueOrDefault: function (t, e) {
 					return void 0 === t ? e : t
 				},
-				valueAtIndexOrDefault: function(t, e, n) {
+				valueAtIndexOrDefault: function (t, e, n) {
 					return d.valueOrDefault(d.isArray(t) ? t[e] : t, n)
 				},
-				callback: function(t, e, n) {
+				callback: function (t, e, n) {
 					if (t && "function" == typeof t.call) return t.apply(n, e)
 				},
-				each: function(t, e, n, i) {
+				each: function (t, e, n, i) {
 					var a, r, o;
 					if (d.isArray(t))
 						if (r = t.length, i)
@@ -6295,7 +6295,7 @@
 					else if (d.isObject(t))
 						for (r = (o = Object.keys(t)).length, a = 0; a < r; a++) e.call(n, t[o[a]], o[a])
 				},
-				arrayEquals: function(t, e) {
+				arrayEquals: function (t, e) {
 					var n, i, a, r;
 					if (!t || !e || t.length !== e.length) return !1;
 					for (n = 0, i = t.length; n < i; ++n)
@@ -6304,7 +6304,7 @@
 						} else if (a !== r) return !1;
 					return !0
 				},
-				clone: function(t) {
+				clone: function (t) {
 					if (d.isArray(t)) return t.map(d.clone);
 					if (d.isObject(t)) {
 						for (var e = {}, n = Object.keys(t), i = n.length, a = 0; a < i; ++a) e[n[a]] = d.clone(t[n[a]]);
@@ -6312,17 +6312,17 @@
 					}
 					return t
 				},
-				_merger: function(t, e, n, i) {
+				_merger: function (t, e, n, i) {
 					var a = e[t],
 						r = n[t];
 					d.isObject(a) && d.isObject(r) ? d.merge(a, r, i) : e[t] = d.clone(r)
 				},
-				_mergerIf: function(t, e, n) {
+				_mergerIf: function (t, e, n) {
 					var i = e[t],
 						a = n[t];
 					d.isObject(i) && d.isObject(a) ? d.mergeIf(i, a) : e.hasOwnProperty(t) || (e[t] = d.clone(a))
 				},
-				merge: function(t, e, n) {
+				merge: function (t, e, n) {
 					var i, a, r, o, s, l = d.isArray(e) ? e : [e],
 						u = l.length;
 					if (!d.isObject(t)) return t;
@@ -6331,137 +6331,137 @@
 							for (s = 0, o = (r = Object.keys(e)).length; s < o; ++s) i(r[s], t, e, n);
 					return t
 				},
-				mergeIf: function(t, e) {
+				mergeIf: function (t, e) {
 					return d.merge(t, e, {
 						merger: d._mergerIf
 					})
 				},
-				extend: function(n) {
-					for (var t = function(t, e) {
-							n[e] = t
-						}, e = 1, i = arguments.length; e < i; ++e) d.each(arguments[e], t);
+				extend: function (n) {
+					for (var t = function (t, e) {
+						n[e] = t
+					}, e = 1, i = arguments.length; e < i; ++e) d.each(arguments[e], t);
 					return n
 				},
-				inherits: function(t) {
+				inherits: function (t) {
 					var e = this,
-						n = t && t.hasOwnProperty("constructor") ? t.constructor : function() {
+						n = t && t.hasOwnProperty("constructor") ? t.constructor : function () {
 							return e.apply(this, arguments)
 						},
-						i = function() {
+						i = function () {
 							this.constructor = n
 						};
 					return i.prototype = e.prototype, n.prototype = new i, n.extend = d.inherits, t && d.extend(n.prototype, t), n.__super__ = e.prototype, n
 				}
 			};
-			(e.exports = d).callCallback = d.callback, d.indexOf = function(t, e, n) {
+			(e.exports = d).callCallback = d.callback, d.indexOf = function (t, e, n) {
 				return Array.prototype.indexOf.call(t, e, n)
 			}, d.getValueOrDefault = d.valueOrDefault, d.getValueAtIndexOrDefault = d.valueAtIndexOrDefault
 		}, {}],
-		44: [function(t, e, n) {
+		44: [function (t, e, n) {
 			"use strict";
 			var i = t(43),
 				a = {
-					linear: function(t) {
+					linear: function (t) {
 						return t
 					},
-					easeInQuad: function(t) {
+					easeInQuad: function (t) {
 						return t * t
 					},
-					easeOutQuad: function(t) {
+					easeOutQuad: function (t) {
 						return -t * (t - 2)
 					},
-					easeInOutQuad: function(t) {
+					easeInOutQuad: function (t) {
 						return (t /= .5) < 1 ? .5 * t * t : -.5 * (--t * (t - 2) - 1)
 					},
-					easeInCubic: function(t) {
+					easeInCubic: function (t) {
 						return t * t * t
 					},
-					easeOutCubic: function(t) {
+					easeOutCubic: function (t) {
 						return (t -= 1) * t * t + 1
 					},
-					easeInOutCubic: function(t) {
+					easeInOutCubic: function (t) {
 						return (t /= .5) < 1 ? .5 * t * t * t : .5 * ((t -= 2) * t * t + 2)
 					},
-					easeInQuart: function(t) {
+					easeInQuart: function (t) {
 						return t * t * t * t
 					},
-					easeOutQuart: function(t) {
+					easeOutQuart: function (t) {
 						return -((t -= 1) * t * t * t - 1)
 					},
-					easeInOutQuart: function(t) {
+					easeInOutQuart: function (t) {
 						return (t /= .5) < 1 ? .5 * t * t * t * t : -.5 * ((t -= 2) * t * t * t - 2)
 					},
-					easeInQuint: function(t) {
+					easeInQuint: function (t) {
 						return t * t * t * t * t
 					},
-					easeOutQuint: function(t) {
+					easeOutQuint: function (t) {
 						return (t -= 1) * t * t * t * t + 1
 					},
-					easeInOutQuint: function(t) {
+					easeInOutQuint: function (t) {
 						return (t /= .5) < 1 ? .5 * t * t * t * t * t : .5 * ((t -= 2) * t * t * t * t + 2)
 					},
-					easeInSine: function(t) {
+					easeInSine: function (t) {
 						return 1 - Math.cos(t * (Math.PI / 2))
 					},
-					easeOutSine: function(t) {
+					easeOutSine: function (t) {
 						return Math.sin(t * (Math.PI / 2))
 					},
-					easeInOutSine: function(t) {
+					easeInOutSine: function (t) {
 						return -.5 * (Math.cos(Math.PI * t) - 1)
 					},
-					easeInExpo: function(t) {
+					easeInExpo: function (t) {
 						return 0 === t ? 0 : Math.pow(2, 10 * (t - 1))
 					},
-					easeOutExpo: function(t) {
+					easeOutExpo: function (t) {
 						return 1 === t ? 1 : 1 - Math.pow(2, -10 * t)
 					},
-					easeInOutExpo: function(t) {
+					easeInOutExpo: function (t) {
 						return 0 === t ? 0 : 1 === t ? 1 : (t /= .5) < 1 ? .5 * Math.pow(2, 10 * (t - 1)) : .5 * (2 - Math.pow(2, -10 * --t))
 					},
-					easeInCirc: function(t) {
+					easeInCirc: function (t) {
 						return 1 <= t ? t : -(Math.sqrt(1 - t * t) - 1)
 					},
-					easeOutCirc: function(t) {
+					easeOutCirc: function (t) {
 						return Math.sqrt(1 - (t -= 1) * t)
 					},
-					easeInOutCirc: function(t) {
+					easeInOutCirc: function (t) {
 						return (t /= .5) < 1 ? -.5 * (Math.sqrt(1 - t * t) - 1) : .5 * (Math.sqrt(1 - (t -= 2) * t) + 1)
 					},
-					easeInElastic: function(t) {
+					easeInElastic: function (t) {
 						var e = 1.70158,
 							n = 0,
 							i = 1;
 						return 0 === t ? 0 : 1 === t ? 1 : (n || (n = .3), e = i < 1 ? (i = 1, n / 4) : n / (2 * Math.PI) * Math.asin(1 / i), -i * Math.pow(2, 10 * (t -= 1)) * Math.sin((t - e) * (2 * Math.PI) / n))
 					},
-					easeOutElastic: function(t) {
+					easeOutElastic: function (t) {
 						var e = 1.70158,
 							n = 0,
 							i = 1;
 						return 0 === t ? 0 : 1 === t ? 1 : (n || (n = .3), e = i < 1 ? (i = 1, n / 4) : n / (2 * Math.PI) * Math.asin(1 / i), i * Math.pow(2, -10 * t) * Math.sin((t - e) * (2 * Math.PI) / n) + 1)
 					},
-					easeInOutElastic: function(t) {
+					easeInOutElastic: function (t) {
 						var e = 1.70158,
 							n = 0,
 							i = 1;
 						return 0 === t ? 0 : 2 == (t /= .5) ? 1 : (n || (n = .45), e = i < 1 ? (i = 1, n / 4) : n / (2 * Math.PI) * Math.asin(1 / i), t < 1 ? i * Math.pow(2, 10 * (t -= 1)) * Math.sin((t - e) * (2 * Math.PI) / n) * -.5 : i * Math.pow(2, -10 * (t -= 1)) * Math.sin((t - e) * (2 * Math.PI) / n) * .5 + 1)
 					},
-					easeInBack: function(t) {
+					easeInBack: function (t) {
 						return t * t * (2.70158 * t - 1.70158)
 					},
-					easeOutBack: function(t) {
+					easeOutBack: function (t) {
 						return (t -= 1) * t * (2.70158 * t + 1.70158) + 1
 					},
-					easeInOutBack: function(t) {
+					easeInOutBack: function (t) {
 						var e = 1.70158;
 						return (t /= .5) < 1 ? t * t * ((1 + (e *= 1.525)) * t - e) * .5 : .5 * ((t -= 2) * t * ((1 + (e *= 1.525)) * t + e) + 2)
 					},
-					easeInBounce: function(t) {
+					easeInBounce: function (t) {
 						return 1 - a.easeOutBounce(1 - t)
 					},
-					easeOutBounce: function(t) {
+					easeOutBounce: function (t) {
 						return t < 1 / 2.75 ? 7.5625 * t * t : t < 2 / 2.75 ? 7.5625 * (t -= 1.5 / 2.75) * t + .75 : t < 2.5 / 2.75 ? 7.5625 * (t -= 2.25 / 2.75) * t + .9375 : 7.5625 * (t -= 2.625 / 2.75) * t + .984375
 					},
-					easeInOutBounce: function(t) {
+					easeInOutBounce: function (t) {
 						return t < .5 ? .5 * a.easeInBounce(2 * t) : .5 * a.easeOutBounce(2 * t - 1) + .5
 					}
 				};
@@ -6471,11 +6471,11 @@
 		}, {
 			43: 43
 		}],
-		45: [function(t, e, n) {
+		45: [function (t, e, n) {
 			"use strict";
 			var o = t(43);
 			e.exports = {
-				toLineHeight: function(t, e) {
+				toLineHeight: function (t, e) {
 					var n = ("" + t).match(/^(normal|(\d+(?:\.\d+)?)(px|em|%)?)$/);
 					if (!n || "normal" === n[1]) return 1.2 * e;
 					switch (t = +n[2], n[3]) {
@@ -6486,7 +6486,7 @@
 					}
 					return e * t
 				},
-				toPadding: function(t) {
+				toPadding: function (t) {
 					var e, n, i, a;
 					return o.isObject(t) ? (e = +t.top || 0, n = +t.right || 0, i = +t.bottom || 0, a = +t.left || 0) : e = n = i = a = +t || 0, {
 						top: e,
@@ -6497,7 +6497,7 @@
 						width: a + n
 					}
 				},
-				resolve: function(t, e, n) {
+				resolve: function (t, e, n) {
 					var i, a, r;
 					for (i = 0, a = t.length; i < a; ++i)
 						if (void 0 !== (r = t[i]) && (void 0 !== e && "function" == typeof r && (r = r(e)), void 0 !== n && o.isArray(r) && (r = r[n]), void 0 !== r)) return r
@@ -6506,7 +6506,7 @@
 		}, {
 			43: 43
 		}],
-		46: [function(t, e, n) {
+		46: [function (t, e, n) {
 			"use strict";
 			e.exports = t(43), e.exports.easing = t(44), e.exports.canvas = t(42), e.exports.options = t(45)
 		}, {
@@ -6515,14 +6515,14 @@
 			44: 44,
 			45: 45
 		}],
-		47: [function(t, e, n) {
+		47: [function (t, e, n) {
 			e.exports = {
-				acquireContext: function(t) {
+				acquireContext: function (t) {
 					return t && t.canvas && (t = t.canvas), t && t.getContext("2d") || null
 				}
 			}
 		}, {}],
-		48: [function(t, e, n) {
+		48: [function (t, e, n) {
 			"use strict";
 			var f = t(46),
 				g = "$chartjs",
@@ -6547,16 +6547,16 @@
 					i = n && n.match(/^(\d+)(\.\d+)?px$/);
 				return i ? Number(i[1]) : void 0
 			}
-			var i = !! function() {
+			var i = !! function () {
 				var t = !1;
 				try {
 					var e = Object.defineProperty({}, "passive", {
-						get: function() {
+						get: function () {
 							t = !0
 						}
 					});
 					window.addEventListener("e", null, e)
-				} catch (t) {}
+				} catch (t) { }
 				return t
 			}() && {
 				passive: !0
@@ -6582,35 +6582,35 @@
 
 			function a(e, t, n) {
 				var i, a, r, o, s, l, u, d, h = e[g] || (e[g] = {}),
-					c = h.resizer = function(t) {
+					c = h.resizer = function (t) {
 						var e = document.createElement("div"),
 							n = m + "size-monitor",
 							i = "position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;";
 						e.style.cssText = i, e.className = n, e.innerHTML = '<div class="' + n + '-expand" style="' + i + '"><div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div></div><div class="' + n + '-shrink" style="' + i + '"><div style="position:absolute;width:200%;height:200%;left:0; top:0"></div></div>';
 						var a = e.childNodes[0],
 							r = e.childNodes[1];
-						e._reset = function() {
+						e._reset = function () {
 							a.scrollLeft = 1e6, a.scrollTop = 1e6, r.scrollLeft = 1e6, r.scrollTop = 1e6
 						};
-						var o = function() {
+						var o = function () {
 							e._reset(), t()
 						};
 						return y(a, "scroll", o.bind(a, "expand")), y(r, "scroll", o.bind(r, "shrink")), e
-					}((r = !(i = function() {
+					}((r = !(i = function () {
 						if (h.resizer) return t(x("resize", n))
-					}), o = [], function() {
-						o = Array.prototype.slice.call(arguments), a = a || this, r || (r = !0, f.requestAnimFrame.call(window, function() {
+					}), o = [], function () {
+						o = Array.prototype.slice.call(arguments), a = a || this, r || (r = !0, f.requestAnimFrame.call(window, function () {
 							r = !1, i.apply(a, o)
 						}))
 					}));
-				l = function() {
+				l = function () {
 					if (h.resizer) {
 						var t = e.parentNode;
 						t && t !== c.parentNode && t.insertBefore(c, t.firstChild), c._reset()
 					}
-				}, u = (s = e)[g] || (s[g] = {}), d = u.renderProxy = function(t) {
+				}, u = (s = e)[g] || (s[g] = {}), d = u.renderProxy = function (t) {
 					t.animationName === v && l()
-				}, f.each(b, function(t) {
+				}, f.each(b, function (t) {
 					y(s, t, d)
 				}), u.reflow = !!s.offsetParent, s.classList.add(p)
 			}
@@ -6618,34 +6618,34 @@
 			function r(t) {
 				var e, n, i, a = t[g] || {},
 					r = a.resizer;
-				delete a.resizer, n = (e = t)[g] || {}, (i = n.renderProxy) && (f.each(b, function(t) {
+				delete a.resizer, n = (e = t)[g] || {}, (i = n.renderProxy) && (f.each(b, function (t) {
 					o(e, t, i)
 				}), delete n.renderProxy), e.classList.remove(p), r && r.parentNode && r.parentNode.removeChild(r)
 			}
 			e.exports = {
 				_enabled: "undefined" != typeof window && "undefined" != typeof document,
-				initialize: function() {
+				initialize: function () {
 					var t, e, n, i = "from{opacity:0.99}to{opacity:1}";
 					e = "@-webkit-keyframes " + v + "{" + i + "}@keyframes " + v + "{" + i + "}." + p + "{-webkit-animation:" + v + " 0.001s;animation:" + v + " 0.001s;}", n = (t = this)._style || document.createElement("style"), t._style || (e = "/* Chart.js */\n" + e, (t._style = n).setAttribute("type", "text/css"), document.getElementsByTagName("head")[0].appendChild(n)), n.appendChild(document.createTextNode(e))
 				},
-				acquireContext: function(t, e) {
+				acquireContext: function (t, e) {
 					"string" == typeof t ? t = document.getElementById(t) : t.length && (t = t[0]), t && t.canvas && (t = t.canvas);
 					var n = t && t.getContext && t.getContext("2d");
-					return n && n.canvas === t ? (function(t, e) {
+					return n && n.canvas === t ? (function (t, e) {
 						var n = t.style,
 							i = t.getAttribute("height"),
 							a = t.getAttribute("width");
 						if (t[g] = {
-								initial: {
-									height: i,
-									width: a,
-									style: {
-										display: n.display,
-										height: n.height,
-										width: n.width
-									}
+							initial: {
+								height: i,
+								width: a,
+								style: {
+									display: n.display,
+									height: n.height,
+									width: n.width
 								}
-							}, n.display = n.display || "block", null === a || "" === a) {
+							}
+						}, n.display = n.display || "block", null === a || "" === a) {
 							var r = l(t, "width");
 							void 0 !== r && (t.width = r)
 						}
@@ -6657,29 +6657,29 @@
 							}
 					}(t, e), n) : null
 				},
-				releaseContext: function(t) {
+				releaseContext: function (t) {
 					var n = t.canvas;
 					if (n[g]) {
 						var i = n[g].initial;
-						["height", "width"].forEach(function(t) {
+						["height", "width"].forEach(function (t) {
 							var e = i[t];
 							f.isNullOrUndef(e) ? n.removeAttribute(t) : n.setAttribute(t, e)
-						}), f.each(i.style || {}, function(t, e) {
+						}), f.each(i.style || {}, function (t, e) {
 							n.style[e] = t
 						}), n.width = n.width, delete n[g]
 					}
 				},
-				addEventListener: function(r, t, o) {
+				addEventListener: function (r, t, o) {
 					var e = r.canvas;
 					if ("resize" !== t) {
 						var n = o[g] || (o[g] = {});
-						y(e, t, (n.proxies || (n.proxies = {}))[r.id + "_" + t] = function(t) {
+						y(e, t, (n.proxies || (n.proxies = {}))[r.id + "_" + t] = function (t) {
 							var e, n, i, a;
 							o((n = r, i = s[(e = t).type] || e.type, a = f.getRelativePosition(e, n), x(i, n, a.x, a.y, e)))
 						})
 					} else a(e, o, r)
 				},
-				removeEventListener: function(t, e, n) {
+				removeEventListener: function (t, e, n) {
 					var i = t.canvas;
 					if ("resize" !== e) {
 						var a = ((n[g] || {}).proxies || {})[t.id + "_" + e];
@@ -6690,25 +6690,25 @@
 		}, {
 			46: 46
 		}],
-		49: [function(t, e, n) {
+		49: [function (t, e, n) {
 			"use strict";
 			var i = t(46),
 				a = t(47),
 				r = t(48),
 				o = r._enabled ? r : a;
 			e.exports = i.extend({
-				initialize: function() {},
-				acquireContext: function() {},
-				releaseContext: function() {},
-				addEventListener: function() {},
-				removeEventListener: function() {}
+				initialize: function () { },
+				acquireContext: function () { },
+				releaseContext: function () { },
+				addEventListener: function () { },
+				removeEventListener: function () { }
 			}, o)
 		}, {
 			46: 46,
 			47: 47,
 			48: 48
 		}],
-		50: [function(t, e, n) {
+		50: [function (t, e, n) {
 			"use strict";
 			e.exports = {}, e.exports.filler = t(51), e.exports.legend = t(52), e.exports.title = t(53)
 		}, {
@@ -6716,7 +6716,7 @@
 			52: 52,
 			53: 53
 		}],
-		51: [function(t, e, n) {
+		51: [function (t, e, n) {
 			"use strict";
 			var u = t(26),
 				c = t(41),
@@ -6729,21 +6729,21 @@
 				}
 			});
 			var f = {
-				dataset: function(t) {
+				dataset: function (t) {
 					var e = t.fill,
 						n = t.chart,
 						i = n.getDatasetMeta(e),
 						a = i && n.isDatasetVisible(e) && i.dataset._children || [],
 						r = a.length || 0;
-					return r ? function(t, e) {
+					return r ? function (t, e) {
 						return e < r && a[e]._view || null
 					} : null
 				},
-				boundary: function(t) {
+				boundary: function (t) {
 					var e = t.boundary,
 						n = e ? e.x : null,
 						i = e ? e.y : null;
-					return function(t) {
+					return function (t) {
 						return {
 							x: null === n ? t.x : n,
 							y: null === i ? t.y : i
@@ -6816,7 +6816,7 @@
 			}
 			e.exports = {
 				id: "filler",
-				afterDatasetsUpdate: function(t, e) {
+				afterDatasetsUpdate: function (t, e) {
 					var n, i, a, r, o, s, l, u = (t.data.datasets || []).length,
 						d = e.propagate,
 						h = [];
@@ -6828,7 +6828,7 @@
 					}), n.$filler = r, h.push(r);
 					for (i = 0; i < u; ++i)(r = h[i]) && (r.fill = p(h, i, d), r.boundary = m(r), r.mapper = (l = void 0, s = (o = r).fill, !(l = "dataset") === s ? null : (isFinite(s) || (l = "boundary"), f[l](o))))
 				},
-				beforeDatasetDraw: function(t, e) {
+				beforeDatasetDraw: function (t, e) {
 					var n = e.meta.$filler;
 					if (n) {
 						var i = t.ctx,
@@ -6837,7 +6837,7 @@
 							o = a._children || [],
 							s = n.mapper,
 							l = r.backgroundColor || u.global.defaultColor;
-						s && l && o.length && (d.canvas.clipArea(i, t.chartArea), function(t, e, n, i, a, r) {
+						s && l && o.length && (d.canvas.clipArea(i, t.chartArea), function (t, e, n, i, a, r) {
 							var o, s, l, u, d, h, c, f = e.length,
 								g = i.spanGaps,
 								m = [],
@@ -6855,7 +6855,7 @@
 			41: 41,
 			46: 46
 		}],
-		52: [function(t, e, n) {
+		52: [function (t, e, n) {
 			"use strict";
 			var D = t(26),
 				i = t(27),
@@ -6873,7 +6873,7 @@
 					fullWidth: !0,
 					reverse: !1,
 					weight: 1e3,
-					onClick: function(t, e) {
+					onClick: function (t, e) {
 						var n = e.datasetIndex,
 							i = this.chart,
 							a = i.getDatasetMeta(n);
@@ -6883,9 +6883,9 @@
 					labels: {
 						boxWidth: 40,
 						padding: 10,
-						generateLabels: function(n) {
+						generateLabels: function (n) {
 							var t = n.data;
-							return C.isArray(t.datasets) ? t.datasets.map(function(t, e) {
+							return C.isArray(t.datasets) ? t.datasets.map(function (t, e) {
 								return {
 									text: t.label,
 									fillStyle: C.isArray(t.backgroundColor) ? t.backgroundColor[0] : t.backgroundColor,
@@ -6903,7 +6903,7 @@
 						}
 					}
 				},
-				legendCallback: function(t) {
+				legendCallback: function (t) {
 					var e = [];
 					e.push('<ul class="' + t.id + '-legend">');
 					for (var n = 0; n < t.data.datasets.length; n++) e.push('<li><span style="background-color:' + t.data.datasets[n].backgroundColor + '"></span>'), t.data.datasets[n].label && e.push(t.data.datasets[n].label), e.push("</li>");
@@ -6911,17 +6911,17 @@
 				}
 			});
 			var o = i.extend({
-				initialize: function(t) {
+				initialize: function (t) {
 					C.extend(this, t), this.legendHitBoxes = [], this.doughnutMode = !1
 				},
 				beforeUpdate: r,
-				update: function(t, e, n) {
+				update: function (t, e, n) {
 					var i = this;
 					return i.beforeUpdate(), i.maxWidth = t, i.maxHeight = e, i.margins = n, i.beforeSetDimensions(), i.setDimensions(), i.afterSetDimensions(), i.beforeBuildLabels(), i.buildLabels(), i.afterBuildLabels(), i.beforeFit(), i.fit(), i.afterFit(), i.afterUpdate(), i.minSize
 				},
 				afterUpdate: r,
 				beforeSetDimensions: r,
-				setDimensions: function() {
+				setDimensions: function () {
 					var t = this;
 					t.isHorizontal() ? (t.width = t.maxWidth, t.left = 0, t.right = t.width) : (t.height = t.maxHeight, t.top = 0, t.bottom = t.height), t.paddingLeft = 0, t.paddingTop = 0, t.paddingRight = 0, t.paddingBottom = 0, t.minSize = {
 						width: 0,
@@ -6930,17 +6930,17 @@
 				},
 				afterSetDimensions: r,
 				beforeBuildLabels: r,
-				buildLabels: function() {
+				buildLabels: function () {
 					var e = this,
 						n = e.options.labels || {},
 						t = C.callback(n.generateLabels, [e.chart], e) || [];
-					n.filter && (t = t.filter(function(t) {
+					n.filter && (t = t.filter(function (t) {
 						return n.filter(t, e.chart.data)
 					})), e.options.reverse && t.reverse(), e.legendItems = t
 				},
 				afterBuildLabels: r,
 				beforeFit: r,
-				fit: function() {
+				fit: function () {
 					var i = this,
 						t = i.options,
 						a = t.labels,
@@ -6959,7 +6959,7 @@
 						if (r.font = d, f) {
 							var g = i.lineWidths = [0],
 								m = i.legendItems.length ? s + a.padding : 0;
-							r.textAlign = "left", r.textBaseline = "top", C.each(i.legendItems, function(t, e) {
+							r.textAlign = "left", r.textBaseline = "top", C.each(i.legendItems, function (t, e) {
 								var n = P(a, s) + s / 2 + r.measureText(t.text).width;
 								g[g.length - 1] + n + a.padding >= i.width && (m += s + a.padding, g[g.length] = i.left), h[e] = {
 									left: 0,
@@ -6975,7 +6975,7 @@
 								y = 0,
 								x = 0,
 								_ = s + p;
-							C.each(i.legendItems, function(t, e) {
+							C.each(i.legendItems, function (t, e) {
 								var n = P(a, s) + s / 2 + r.measureText(t.text).width;
 								x + _ > c.height && (b += y + a.padding, v.push(y), x = y = 0), y = Math.max(y, n), x += _, h[e] = {
 									left: 0,
@@ -6988,10 +6988,10 @@
 					i.width = c.width, i.height = c.height
 				},
 				afterFit: r,
-				isHorizontal: function() {
+				isHorizontal: function () {
 					return "top" === this.options.position || "bottom" === this.options.position
 				},
-				draw: function() {
+				draw: function () {
 					var h = this,
 						c = h.options,
 						f = c.labels,
@@ -7021,13 +7021,13 @@
 							line: 0
 						};
 						var S = _ + f.padding;
-						C.each(h.legendItems, function(t, e) {
+						C.each(h.legendItems, function (t, e) {
 							var n, i, a, r, o, s = y.measureText(t.text).width,
 								l = k + _ / 2 + s,
 								u = b.x,
 								d = b.y;
 							M ? p <= u + l && (d = b.y += S, b.line++, u = b.x = h.left + (p - v[b.line]) / 2) : d + S > h.bottom && (u = b.x = u + h.columnWidths[b.line] + f.padding, d = b.y = h.top + f.padding, b.line++),
-								function(t, e, n) {
+								function (t, e, n) {
 									if (!(isNaN(k) || k <= 0)) {
 										y.save(), y.fillStyle = x(n.fillStyle, g.defaultColor), y.lineCap = x(n.lineCap, m.borderCapStyle), y.lineDashOffset = x(n.lineDashOffset, m.borderDashOffset), y.lineJoin = x(n.lineJoin, m.borderJoinStyle), y.lineWidth = x(n.lineWidth, m.borderWidth), y.strokeStyle = x(n.strokeStyle, g.defaultColor);
 										var i = 0 === x(n.lineWidth, m.borderWidth);
@@ -7044,7 +7044,7 @@
 						})
 					}
 				},
-				handleEvent: function(t) {
+				handleEvent: function (t) {
 					var e = this,
 						n = e.options,
 						i = "mouseup" === t.type ? "click" : t.type,
@@ -7086,16 +7086,16 @@
 			e.exports = {
 				id: "legend",
 				_element: o,
-				beforeInit: function(t) {
+				beforeInit: function (t) {
 					var e = t.options.legend;
 					e && s(t, e)
 				},
-				beforeUpdate: function(t) {
+				beforeUpdate: function (t) {
 					var e = t.options.legend,
 						n = t.legend;
 					e ? (C.mergeIf(e, D.global.legend), n ? (a.configure(t, n, e), n.options = e) : s(t, e)) : n && (a.removeBox(t, n), delete t.legend)
 				},
-				afterEvent: function(t, e) {
+				afterEvent: function (t, e) {
 					var n = t.legend;
 					n && n.handleEvent(e)
 				}
@@ -7106,7 +7106,7 @@
 			31: 31,
 			46: 46
 		}],
-		53: [function(t, e, n) {
+		53: [function (t, e, n) {
 			"use strict";
 			var _ = t(26),
 				i = t(27),
@@ -7126,17 +7126,17 @@
 				}
 			});
 			var o = i.extend({
-				initialize: function(t) {
+				initialize: function (t) {
 					k.extend(this, t), this.legendHitBoxes = []
 				},
 				beforeUpdate: r,
-				update: function(t, e, n) {
+				update: function (t, e, n) {
 					var i = this;
 					return i.beforeUpdate(), i.maxWidth = t, i.maxHeight = e, i.margins = n, i.beforeSetDimensions(), i.setDimensions(), i.afterSetDimensions(), i.beforeBuildLabels(), i.buildLabels(), i.afterBuildLabels(), i.beforeFit(), i.fit(), i.afterFit(), i.afterUpdate(), i.minSize
 				},
 				afterUpdate: r,
 				beforeSetDimensions: r,
-				setDimensions: function() {
+				setDimensions: function () {
 					var t = this;
 					t.isHorizontal() ? (t.width = t.maxWidth, t.left = 0, t.right = t.width) : (t.height = t.maxHeight, t.top = 0, t.bottom = t.height), t.paddingLeft = 0, t.paddingTop = 0, t.paddingRight = 0, t.paddingBottom = 0, t.minSize = {
 						width: 0,
@@ -7148,7 +7148,7 @@
 				buildLabels: r,
 				afterBuildLabels: r,
 				beforeFit: r,
-				fit: function() {
+				fit: function () {
 					var t = k.valueOrDefault,
 						e = this.options,
 						n = e.display,
@@ -7160,11 +7160,11 @@
 					this.isHorizontal() ? (a.width = this.maxWidth, a.height = s) : (a.width = s, a.height = this.maxHeight), this.width = a.width, this.height = a.height
 				},
 				afterFit: r,
-				isHorizontal: function() {
+				isHorizontal: function () {
 					var t = this.options.position;
 					return "top" === t || "bottom" === t
 				},
-				draw: function() {
+				draw: function () {
 					var t = this.ctx,
 						e = k.valueOrDefault,
 						n = this.options,
@@ -7202,11 +7202,11 @@
 			e.exports = {
 				id: "title",
 				_element: o,
-				beforeInit: function(t) {
+				beforeInit: function (t) {
 					var e = t.options.title;
 					e && s(t, e)
 				},
-				beforeUpdate: function(t) {
+				beforeUpdate: function (t) {
 					var e = t.options.title,
 						n = t.titleBlock;
 					e ? (k.mergeIf(e, _.global.title), n ? (a.configure(t, n, e), n.options = e) : s(t, e)) : n && (a.removeBox(t, n), delete t.titleBlock)
@@ -7218,31 +7218,31 @@
 			31: 31,
 			46: 46
 		}],
-		54: [function(t, e, n) {
+		54: [function (t, e, n) {
 			"use strict";
 			var i = t(33),
 				a = t(34);
-			e.exports = function() {
+			e.exports = function () {
 				var t = i.extend({
-					getLabels: function() {
+					getLabels: function () {
 						var t = this.chart.data;
 						return this.options.labels || (this.isHorizontal() ? t.xLabels : t.yLabels) || t.labels
 					},
-					determineDataLimits: function() {
+					determineDataLimits: function () {
 						var t, e = this,
 							n = e.getLabels();
 						e.minIndex = 0, e.maxIndex = n.length - 1, void 0 !== e.options.ticks.min && (t = n.indexOf(e.options.ticks.min), e.minIndex = -1 !== t ? t : e.minIndex), void 0 !== e.options.ticks.max && (t = n.indexOf(e.options.ticks.max), e.maxIndex = -1 !== t ? t : e.maxIndex), e.min = n[e.minIndex], e.max = n[e.maxIndex]
 					},
-					buildTicks: function() {
+					buildTicks: function () {
 						var t = this.getLabels();
 						this.ticks = 0 === this.minIndex && this.maxIndex === t.length - 1 ? t : t.slice(this.minIndex, this.maxIndex + 1)
 					},
-					getLabelForIndex: function(t, e) {
+					getLabelForIndex: function (t, e) {
 						var n = this.chart.data,
 							i = this.isHorizontal();
 						return n.yLabels && !i ? this.getRightValue(n.datasets[e].data[t]) : this.ticks[t - this.minIndex]
 					},
-					getPixelForValue: function(t, e) {
+					getPixelForValue: function (t, e) {
 						var n, i = this,
 							a = i.options.offset,
 							r = Math.max(i.maxIndex + 1 - i.minIndex - (a ? 0 : 1), 1);
@@ -7260,17 +7260,17 @@
 							d = u * (e - i.minIndex);
 						return a && (d += u / 2), i.top + Math.round(d)
 					},
-					getPixelForTick: function(t) {
+					getPixelForTick: function (t) {
 						return this.getPixelForValue(this.ticks[t], t + this.minIndex, null)
 					},
-					getValueForPixel: function(t) {
+					getValueForPixel: function (t) {
 						var e = this.options.offset,
 							n = Math.max(this._ticks.length - (e ? 0 : 1), 1),
 							i = this.isHorizontal(),
 							a = (i ? this.width : this.height) / n;
 						return t -= i ? this.left : this.top, e && (t -= a / 2), (t <= 0 ? 0 : Math.round(t / a)) + this.minIndex
 					},
-					getBasePixel: function() {
+					getBasePixel: function () {
 						return this.bottom
 					}
 				});
@@ -7282,21 +7282,21 @@
 			33: 33,
 			34: 34
 		}],
-		55: [function(t, e, n) {
+		55: [function (t, e, n) {
 			"use strict";
 			var i = t(26),
 				h = t(46),
 				a = t(34),
 				r = t(35);
-			e.exports = function(t) {
+			e.exports = function (t) {
 				var e = {
-						position: "left",
-						ticks: {
-							callback: r.formatters.linear
-						}
-					},
+					position: "left",
+					ticks: {
+						callback: r.formatters.linear
+					}
+				},
 					n = t.LinearScaleBase.extend({
-						determineDataLimits: function() {
+						determineDataLimits: function () {
 							var o = this,
 								s = o.options,
 								l = o.chart,
@@ -7308,14 +7308,14 @@
 							}
 							o.min = null, o.max = null;
 							var i = s.stacked;
-							if (void 0 === i && h.each(t, function(t, e) {
-									if (!i) {
-										var n = l.getDatasetMeta(e);
-										l.isDatasetVisible(e) && u(n) && void 0 !== n.stack && (i = !0)
-									}
-								}), s.stacked || i) {
+							if (void 0 === i && h.each(t, function (t, e) {
+								if (!i) {
+									var n = l.getDatasetMeta(e);
+									l.isDatasetVisible(e) && u(n) && void 0 !== n.stack && (i = !0)
+								}
+							}), s.stacked || i) {
 								var d = {};
-								h.each(t, function(t, e) {
+								h.each(t, function (t, e) {
 									var i = l.getDatasetMeta(e),
 										n = [i.type, void 0 === s.stacked && void 0 === i.stack ? e : "", i.stack].join(".");
 									void 0 === d[n] && (d[n] = {
@@ -7324,26 +7324,26 @@
 									});
 									var a = d[n].positiveValues,
 										r = d[n].negativeValues;
-									l.isDatasetVisible(e) && u(i) && h.each(t.data, function(t, e) {
+									l.isDatasetVisible(e) && u(i) && h.each(t.data, function (t, e) {
 										var n = +o.getRightValue(t);
 										isNaN(n) || i.data[e].hidden || (a[e] = a[e] || 0, r[e] = r[e] || 0, s.relativePoints ? a[e] = 100 : n < 0 ? r[e] += n : a[e] += n)
 									})
-								}), h.each(d, function(t) {
+								}), h.each(d, function (t) {
 									var e = t.positiveValues.concat(t.negativeValues),
 										n = h.min(e),
 										i = h.max(e);
 									o.min = null === o.min ? n : Math.min(o.min, n), o.max = null === o.max ? i : Math.max(o.max, i)
 								})
-							} else h.each(t, function(t, e) {
+							} else h.each(t, function (t, e) {
 								var i = l.getDatasetMeta(e);
-								l.isDatasetVisible(e) && u(i) && h.each(t.data, function(t, e) {
+								l.isDatasetVisible(e) && u(i) && h.each(t.data, function (t, e) {
 									var n = +o.getRightValue(t);
 									isNaN(n) || i.data[e].hidden || (null === o.min ? o.min = n : n < o.min && (o.min = n), null === o.max ? o.max = n : n > o.max && (o.max = n))
 								})
 							});
 							o.min = isFinite(o.min) && !isNaN(o.min) ? o.min : 0, o.max = isFinite(o.max) && !isNaN(o.max) ? o.max : 1, this.handleTickRangeOptions()
 						},
-						getTickLimit: function() {
+						getTickLimit: function () {
 							var t, e = this.options.ticks;
 							if (this.isHorizontal()) t = Math.min(e.maxTicksLimit ? e.maxTicksLimit : 11, Math.ceil(this.width / 50));
 							else {
@@ -7352,25 +7352,25 @@
 							}
 							return t
 						},
-						handleDirectionalChanges: function() {
+						handleDirectionalChanges: function () {
 							this.isHorizontal() || this.ticks.reverse()
 						},
-						getLabelForIndex: function(t, e) {
+						getLabelForIndex: function (t, e) {
 							return +this.getRightValue(this.chart.data.datasets[e].data[t])
 						},
-						getPixelForValue: function(t) {
+						getPixelForValue: function (t) {
 							var e = this.start,
 								n = +this.getRightValue(t),
 								i = this.end - e;
 							return this.isHorizontal() ? this.left + this.width / i * (n - e) : this.bottom - this.height / i * (n - e)
 						},
-						getValueForPixel: function(t) {
+						getValueForPixel: function (t) {
 							var e = this.isHorizontal(),
 								n = e ? this.width : this.height,
 								i = (e ? t - this.left : this.bottom - t) / n;
 							return this.start + (this.end - this.start) * i
 						},
-						getPixelForTick: function(t) {
+						getPixelForTick: function (t) {
 							return this.getPixelForValue(this.ticksAsNumbers[t])
 						}
 					});
@@ -7382,17 +7382,17 @@
 			35: 35,
 			46: 46
 		}],
-		56: [function(t, e, n) {
+		56: [function (t, e, n) {
 			"use strict";
 			var h = t(46),
 				i = t(33);
-			e.exports = function(t) {
+			e.exports = function (t) {
 				var e = h.noop;
 				t.LinearScaleBase = i.extend({
-					getRightValue: function(t) {
+					getRightValue: function (t) {
 						return "string" == typeof t ? +t : i.prototype.getRightValue.call(this, t)
 					},
-					handleTickRangeOptions: function() {
+					handleTickRangeOptions: function () {
 						var t = this,
 							e = t.options.ticks;
 						if (e.beginAtZero) {
@@ -7406,7 +7406,7 @@
 					},
 					getTickLimit: e,
 					handleDirectionalChanges: e,
-					buildTicks: function() {
+					buildTicks: function () {
 						var t = this,
 							e = t.options.ticks,
 							n = t.getTickLimit(),
@@ -7417,7 +7417,7 @@
 								precision: e.precision,
 								stepSize: h.valueOrDefault(e.fixedStepSize, e.stepSize)
 							},
-							a = t.ticks = function(t, e) {
+							a = t.ticks = function (t, e) {
 								var n, i, a, r = [];
 								if (t.stepSize && 0 < t.stepSize) a = t.stepSize;
 								else {
@@ -7434,7 +7434,7 @@
 							}(i, t);
 						t.handleDirectionalChanges(), t.max = h.max(a), t.min = h.min(a), e.reverse ? (a.reverse(), t.start = t.max, t.end = t.min) : (t.start = t.min, t.end = t.max)
 					},
-					convertTicksToLabels: function() {
+					convertTicksToLabels: function () {
 						this.ticksAsNumbers = this.ticks.slice(), this.zeroLineIndex = this.ticks.indexOf(0), i.prototype.convertTicksToLabels.call(this)
 					}
 				})
@@ -7443,21 +7443,21 @@
 			33: 33,
 			46: 46
 		}],
-		57: [function(t, e, n) {
+		57: [function (t, e, n) {
 			"use strict";
 			var c = t(46),
 				i = t(33),
 				a = t(34),
 				r = t(35);
-			e.exports = function(h) {
+			e.exports = function (h) {
 				var t = {
-						position: "left",
-						ticks: {
-							callback: r.formatters.logarithmic
-						}
-					},
+					position: "left",
+					ticks: {
+						callback: r.formatters.logarithmic
+					}
+				},
 					e = i.extend({
-						determineDataLimits: function() {
+						determineDataLimits: function () {
 							var o = this,
 								n = o.options,
 								s = o.chart,
@@ -7469,44 +7469,44 @@
 							}
 							o.min = null, o.max = null, o.minNotZero = null;
 							var i = n.stacked;
-							if (void 0 === i && c.each(t, function(t, e) {
-									if (!i) {
-										var n = s.getDatasetMeta(e);
-										s.isDatasetVisible(e) && l(n) && void 0 !== n.stack && (i = !0)
-									}
-								}), n.stacked || i) {
+							if (void 0 === i && c.each(t, function (t, e) {
+								if (!i) {
+									var n = s.getDatasetMeta(e);
+									s.isDatasetVisible(e) && l(n) && void 0 !== n.stack && (i = !0)
+								}
+							}), n.stacked || i) {
 								var u = {};
-								c.each(t, function(t, e) {
+								c.each(t, function (t, e) {
 									var a = s.getDatasetMeta(e),
 										r = [a.type, void 0 === n.stacked && void 0 === a.stack ? e : "", a.stack].join(".");
-									s.isDatasetVisible(e) && l(a) && (void 0 === u[r] && (u[r] = []), c.each(t.data, function(t, e) {
+									s.isDatasetVisible(e) && l(a) && (void 0 === u[r] && (u[r] = []), c.each(t.data, function (t, e) {
 										var n = u[r],
 											i = +o.getRightValue(t);
 										isNaN(i) || a.data[e].hidden || i < 0 || (n[e] = n[e] || 0, n[e] += i)
 									}))
-								}), c.each(u, function(t) {
+								}), c.each(u, function (t) {
 									if (0 < t.length) {
 										var e = c.min(t),
 											n = c.max(t);
 										o.min = null === o.min ? e : Math.min(o.min, e), o.max = null === o.max ? n : Math.max(o.max, n)
 									}
 								})
-							} else c.each(t, function(t, e) {
+							} else c.each(t, function (t, e) {
 								var i = s.getDatasetMeta(e);
-								s.isDatasetVisible(e) && l(i) && c.each(t.data, function(t, e) {
+								s.isDatasetVisible(e) && l(i) && c.each(t.data, function (t, e) {
 									var n = +o.getRightValue(t);
 									isNaN(n) || i.data[e].hidden || n < 0 || (null === o.min ? o.min = n : n < o.min && (o.min = n), null === o.max ? o.max = n : n > o.max && (o.max = n), 0 !== n && (null === o.minNotZero || n < o.minNotZero) && (o.minNotZero = n))
 								})
 							});
 							this.handleTickRangeOptions()
 						},
-						handleTickRangeOptions: function() {
+						handleTickRangeOptions: function () {
 							var t = this,
 								e = t.options.ticks,
 								n = c.valueOrDefault;
 							t.min = n(e.min, t.min), t.max = n(e.max, t.max), t.min === t.max && (0 !== t.min && null !== t.min ? (t.min = Math.pow(10, Math.floor(c.log10(t.min)) - 1), t.max = Math.pow(10, Math.floor(c.log10(t.max)) + 1)) : (t.min = 1, t.max = 10)), null === t.min && (t.min = Math.pow(10, Math.floor(c.log10(t.max)) - 1)), null === t.max && (t.max = 0 !== t.min ? Math.pow(10, Math.floor(c.log10(t.min)) + 1) : 10), null === t.minNotZero && (0 < t.min ? t.minNotZero = t.min : t.max < 1 ? t.minNotZero = Math.pow(10, Math.floor(c.log10(t.max))) : t.minNotZero = 1)
 						},
-						buildTicks: function() {
+						buildTicks: function () {
 							var t = this,
 								e = t.options.ticks,
 								n = !t.isHorizontal(),
@@ -7514,7 +7514,7 @@
 									min: e.min,
 									max: e.max
 								},
-								a = t.ticks = function(t, e) {
+								a = t.ticks = function (t, e) {
 									var n, i, a = [],
 										r = c.valueOrDefault,
 										o = r(t.min, Math.pow(10, Math.floor(c.log10(e.min)))),
@@ -7527,20 +7527,20 @@
 								}(i, t);
 							t.max = c.max(a), t.min = c.min(a), e.reverse ? (n = !n, t.start = t.max, t.end = t.min) : (t.start = t.min, t.end = t.max), n && a.reverse()
 						},
-						convertTicksToLabels: function() {
+						convertTicksToLabels: function () {
 							this.tickValues = this.ticks.slice(), i.prototype.convertTicksToLabels.call(this)
 						},
-						getLabelForIndex: function(t, e) {
+						getLabelForIndex: function (t, e) {
 							return +this.getRightValue(this.chart.data.datasets[e].data[t])
 						},
-						getPixelForTick: function(t) {
+						getPixelForTick: function (t) {
 							return this.getPixelForValue(this.tickValues[t])
 						},
-						_getFirstTickValue: function(t) {
+						_getFirstTickValue: function (t) {
 							var e = Math.floor(c.log10(t));
 							return Math.floor(t / Math.pow(10, e)) * Math.pow(10, e)
 						},
-						getPixelForValue: function(t) {
+						getPixelForValue: function (t) {
 							var e, n, i, a, r, o = this,
 								s = o.options.ticks.reverse,
 								l = c.log10,
@@ -7548,7 +7548,7 @@
 								d = 0;
 							return t = +o.getRightValue(t), r = s ? (i = o.end, a = o.start, -1) : (i = o.start, a = o.end, 1), n = o.isHorizontal() ? (e = o.width, s ? o.right : o.left) : (e = o.height, r *= -1, s ? o.top : o.bottom), t !== i && (0 === i && (e -= d = c.getValueOrDefault(o.options.ticks.fontSize, h.defaults.global.defaultFontSize), i = u), 0 !== t && (d += e / (l(a) - l(i)) * (l(t) - l(i))), n += r * d), n
 						},
-						getValueForPixel: function(t) {
+						getValueForPixel: function (t) {
 							var e, n, i, a, r = this,
 								o = r.options.ticks.reverse,
 								s = c.log10,
@@ -7571,13 +7571,13 @@
 			35: 35,
 			46: 46
 		}],
-		58: [function(t, e, n) {
+		58: [function (t, e, n) {
 			"use strict";
 			var i = t(26),
 				_ = t(46),
 				a = t(34),
 				r = t(35);
-			e.exports = function(t) {
+			e.exports = function (t) {
 				var v = i.global,
 					e = {
 						display: !0,
@@ -7601,7 +7601,7 @@
 						pointLabels: {
 							display: !0,
 							fontSize: 10,
-							callback: function(t) {
+							callback: function (t) {
 								return t
 							}
 						}
@@ -7648,7 +7648,7 @@
 					return _.isNumber(t) ? t : 0
 				}
 				var n = t.LinearScaleBase.extend({
-					setDimensions: function() {
+					setDimensions: function () {
 						var t = this,
 							e = t.options,
 							n = e.ticks;
@@ -7657,35 +7657,35 @@
 							a = _.valueOrDefault(n.fontSize, v.defaultFontSize);
 						t.drawingArea = e.display ? i / 2 - (a / 2 + n.backdropPaddingY) : i / 2
 					},
-					determineDataLimits: function() {
+					determineDataLimits: function () {
 						var a = this,
 							n = a.chart,
 							r = Number.POSITIVE_INFINITY,
 							o = Number.NEGATIVE_INFINITY;
-						_.each(n.data.datasets, function(t, e) {
+						_.each(n.data.datasets, function (t, e) {
 							if (n.isDatasetVisible(e)) {
 								var i = n.getDatasetMeta(e);
-								_.each(t.data, function(t, e) {
+								_.each(t.data, function (t, e) {
 									var n = +a.getRightValue(t);
 									isNaN(n) || i.data[e].hidden || (r = Math.min(n, r), o = Math.max(n, o))
 								})
 							}
 						}), a.min = r === Number.POSITIVE_INFINITY ? 0 : r, a.max = o === Number.NEGATIVE_INFINITY ? 0 : o, a.handleTickRangeOptions()
 					},
-					getTickLimit: function() {
+					getTickLimit: function () {
 						var t = this.options.ticks,
 							e = _.valueOrDefault(t.fontSize, v.defaultFontSize);
 						return Math.min(t.maxTicksLimit ? t.maxTicksLimit : 11, Math.ceil(this.drawingArea / (1.5 * e)))
 					},
-					convertTicksToLabels: function() {
+					convertTicksToLabels: function () {
 						t.LinearScaleBase.prototype.convertTicksToLabels.call(this), this.pointLabels = this.chart.data.labels.map(this.options.pointLabels.callback, this)
 					},
-					getLabelForIndex: function(t, e) {
+					getLabelForIndex: function (t, e) {
 						return +this.getRightValue(this.chart.data.datasets[e].data[t])
 					},
-					fit: function() {
+					fit: function () {
 						var t, e;
-						this.options.pointLabels.display ? function(t) {
+						this.options.pointLabels.display ? function (t) {
 							var e, n, i, a = y(t),
 								r = Math.min(t.height / 2, t.width / 2),
 								o = {
@@ -7714,14 +7714,14 @@
 							t.setReductions(r, o, s)
 						}(this) : (t = this, e = Math.min(t.height / 2, t.width / 2), t.drawingArea = Math.round(e), t.setCenterPoint(0, 0, 0, 0))
 					},
-					setReductions: function(t, e, n) {
+					setReductions: function (t, e, n) {
 						var i = e.l / Math.sin(n.l),
 							a = Math.max(e.r - this.width, 0) / Math.sin(n.r),
 							r = -e.t / Math.cos(n.t),
 							o = -Math.max(e.b - this.height, 0) / Math.cos(n.b);
 						i = s(i), a = s(a), r = s(r), o = s(o), this.drawingArea = Math.min(Math.round(t - (i + a) / 2), Math.round(t - (r + o) / 2)), this.setCenterPoint(i, a, r, o)
 					},
-					setCenterPoint: function(t, e, n, i) {
+					setCenterPoint: function (t, e, n, i) {
 						var a = this,
 							r = a.width - e - a.drawingArea,
 							o = t + a.drawingArea,
@@ -7729,30 +7729,30 @@
 							l = a.height - i - a.drawingArea;
 						a.xCenter = Math.round((o + r) / 2 + a.left), a.yCenter = Math.round((s + l) / 2 + a.top)
 					},
-					getIndexAngle: function(t) {
+					getIndexAngle: function (t) {
 						return t * (2 * Math.PI / b(this)) + (this.chart.options && this.chart.options.startAngle ? this.chart.options.startAngle : 0) * Math.PI * 2 / 360
 					},
-					getDistanceFromCenterForValue: function(t) {
+					getDistanceFromCenterForValue: function (t) {
 						if (null === t) return 0;
 						var e = this.drawingArea / (this.max - this.min);
 						return this.options.ticks.reverse ? (this.max - t) * e : (t - this.min) * e
 					},
-					getPointPosition: function(t, e) {
+					getPointPosition: function (t, e) {
 						var n = this.getIndexAngle(t) - Math.PI / 2;
 						return {
 							x: Math.round(Math.cos(n) * e) + this.xCenter,
 							y: Math.round(Math.sin(n) * e) + this.yCenter
 						}
 					},
-					getPointPositionForValue: function(t, e) {
+					getPointPositionForValue: function (t, e) {
 						return this.getPointPosition(t, this.getDistanceFromCenterForValue(e))
 					},
-					getBasePosition: function() {
+					getBasePosition: function () {
 						var t = this.min,
 							e = this.max;
 						return this.getPointPositionForValue(0, this.beginAtZero ? 0 : t < 0 && e < 0 ? e : 0 < t && 0 < e ? t : 0)
 					},
-					draw: function() {
+					draw: function () {
 						var r = this,
 							t = r.options,
 							o = t.gridLines,
@@ -7765,22 +7765,22 @@
 								e = l(s.fontStyle, v.defaultFontStyle),
 								n = l(s.fontFamily, v.defaultFontFamily),
 								c = _.fontString(h, e, n);
-							_.each(r.ticks, function(t, e) {
+							_.each(r.ticks, function (t, e) {
 								if (0 < e || s.reverse) {
 									var n = r.getDistanceFromCenterForValue(r.ticksAsNumbers[e]);
-									if (o.display && 0 !== e && function(t, e, n, i) {
-											var a = t.ctx;
-											if (a.strokeStyle = _.valueAtIndexOrDefault(e.color, i - 1), a.lineWidth = _.valueAtIndexOrDefault(e.lineWidth, i - 1), t.options.gridLines.circular) a.beginPath(), a.arc(t.xCenter, t.yCenter, n, 0, 2 * Math.PI), a.closePath(), a.stroke();
-											else {
-												var r = b(t);
-												if (0 === r) return;
-												a.beginPath();
-												var o = t.getPointPosition(0, n);
-												a.moveTo(o.x, o.y);
-												for (var s = 1; s < r; s++) o = t.getPointPosition(s, n), a.lineTo(o.x, o.y);
-												a.closePath(), a.stroke()
-											}
-										}(r, o, n, e), s.display) {
+									if (o.display && 0 !== e && function (t, e, n, i) {
+										var a = t.ctx;
+										if (a.strokeStyle = _.valueAtIndexOrDefault(e.color, i - 1), a.lineWidth = _.valueAtIndexOrDefault(e.lineWidth, i - 1), t.options.gridLines.circular) a.beginPath(), a.arc(t.xCenter, t.yCenter, n, 0, 2 * Math.PI), a.closePath(), a.stroke();
+										else {
+											var r = b(t);
+											if (0 === r) return;
+											a.beginPath();
+											var o = t.getPointPosition(0, n);
+											a.moveTo(o.x, o.y);
+											for (var s = 1; s < r; s++) o = t.getPointPosition(s, n), a.lineTo(o.x, o.y);
+											a.closePath(), a.stroke()
+										}
+									}(r, o, n, e), s.display) {
 										var i = l(s.fontColor, v.defaultFontColor);
 										if (u.font = c, u.save(), u.translate(r.xCenter, r.yCenter), u.rotate(d), s.showLabelBackdrop) {
 											var a = u.measureText(t).width;
@@ -7789,7 +7789,7 @@
 										u.textAlign = "center", u.textBaseline = "middle", u.fillStyle = i, u.fillText(t, 0, -n), u.restore()
 									}
 								}
-							}), (t.angleLines.display || t.pointLabels.display) && function(t) {
+							}), (t.angleLines.display || t.pointLabels.display) && function (t) {
 								var e = t.ctx,
 									n = t.options,
 									i = n.angleLines,
@@ -7824,7 +7824,7 @@
 			35: 35,
 			46: 46
 		}],
-		59: [function(t, e, n) {
+		59: [function (t, e, n) {
 			"use strict";
 			var y = t(6);
 			y = "function" == typeof y ? y : window.moment;
@@ -7894,26 +7894,26 @@
 			}
 
 			function w(t, e, n, i) {
-				var a = function(t, e, n) {
-						for (var i, a, r, o = 0, s = t.length - 1; 0 <= o && o <= s;) {
-							if (a = t[(i = o + s >> 1) - 1] || null, r = t[i], !a) return {
-								lo: null,
+				var a = function (t, e, n) {
+					for (var i, a, r, o = 0, s = t.length - 1; 0 <= o && o <= s;) {
+						if (a = t[(i = o + s >> 1) - 1] || null, r = t[i], !a) return {
+							lo: null,
+							hi: r
+						};
+						if (r[e] < n) o = i + 1;
+						else {
+							if (!(a[e] > n)) return {
+								lo: a,
 								hi: r
 							};
-							if (r[e] < n) o = i + 1;
-							else {
-								if (!(a[e] > n)) return {
-									lo: a,
-									hi: r
-								};
-								s = i - 1
-							}
+							s = i - 1
 						}
-						return {
-							lo: r,
-							hi: null
-						}
-					}(t, e, n),
+					}
+					return {
+						lo: r,
+						hi: null
+					}
+				}(t, e, n),
 					r = a.lo ? a.hi ? a.lo : t[t.length - 2] : t[0],
 					o = a.lo ? a.hi ? a.hi : t[t.length - 1] : t[1],
 					s = o[e] - r[e],
@@ -7942,7 +7942,7 @@
 
 			function C(t, e, n, i) {
 				var a, r = i.time,
-					o = r.unit || function(t, e, n, i) {
+					o = r.unit || function (t, e, n, i) {
 						var a, r, o, s = _.length;
 						for (a = _.indexOf(t); a < s - 1; ++a)
 							if (o = (r = x[_[a]]).steps ? r.steps[r.steps.length - 1] : v, r.common && Math.ceil((n - e) / (o * r.size)) <= i) return _[a];
@@ -7956,31 +7956,31 @@
 					c = y(t),
 					f = y(e),
 					g = [];
-				for (l || (l = function(t, e, n, i) {
-						var a, r, o, s = e - t,
-							l = x[n],
-							u = l.size,
-							d = l.steps;
-						if (!d) return Math.ceil(s / (i * u));
-						for (a = 0, r = d.length; a < r && (o = d[a], !(Math.ceil(s / (u * o)) <= i)); ++a);
-						return o
-					}(t, e, o, n)), u && (c = c.isoWeekday(u), f = f.isoWeekday(u)), c = c.startOf(u ? "day" : o), (f = f.startOf(u ? "day" : o)) < e && f.add(1, o), a = y(c), d && s && !u && !r.round && (a.startOf(s), a.add(~~((c - a) / (h.size * l)) * l, o)); a < f; a.add(l, o)) g.push(+a);
+				for (l || (l = function (t, e, n, i) {
+					var a, r, o, s = e - t,
+						l = x[n],
+						u = l.size,
+						d = l.steps;
+					if (!d) return Math.ceil(s / (i * u));
+					for (a = 0, r = d.length; a < r && (o = d[a], !(Math.ceil(s / (u * o)) <= i)); ++a);
+					return o
+				}(t, e, o, n)), u && (c = c.isoWeekday(u), f = f.isoWeekday(u)), c = c.startOf(u ? "day" : o), (f = f.startOf(u ? "day" : o)) < e && f.add(1, o), a = y(c), d && s && !u && !r.round && (a.startOf(s), a.add(~~((c - a) / (h.size * l)) * l, o)); a < f; a.add(l, o)) g.push(+a);
 				return g.push(+a), g
 			}
-			e.exports = function() {
+			e.exports = function () {
 				var t = i.extend({
-					initialize: function() {
+					initialize: function () {
 						if (!y) throw new Error("Chart.js - Moment.js could not be found! You must include it before Chart.js to use the time scale. Download at https://momentjs.com");
 						this.mergeTicksOptions(), i.prototype.initialize.call(this)
 					},
-					update: function() {
+					update: function () {
 						var t = this.options;
 						return t.time && t.time.format && console.warn("options.time.format is deprecated and replaced by options.time.parser."), i.prototype.update.apply(this, arguments)
 					},
-					getRightValue: function(t) {
+					getRightValue: function (t) {
 						return t && void 0 !== t.t && (t = t.t), i.prototype.getRightValue.call(this, t)
 					},
-					determineDataLimits: function() {
+					determineDataLimits: function () {
 						var t, e, n, i, a, r, o = this,
 							s = o.chart,
 							l = o.options.time,
@@ -7996,14 +7996,14 @@
 								if (a = s.data.datasets[t].data, p.isObject(a[0]))
 									for (f[t] = [], e = 0, i = a.length; e < i; ++e) r = S(a[e], o), c.push(r), f[t][e] = r;
 								else c.push.apply(c, g), f[t] = g.slice(0);
-						else f[t] = [];
+							else f[t] = [];
 						g.length && (g = k(g).sort(b), d = Math.min(d, g[0]), h = Math.max(h, g[g.length - 1])), c.length && (c = k(c).sort(b), d = Math.min(d, c[0]), h = Math.max(h, c[c.length - 1])), d = S(l.min, o) || d, h = S(l.max, o) || h, d = d === v ? +y().startOf(u) : d, h = h === m ? +y().endOf(u) + 1 : h, o.min = Math.min(d, h), o.max = Math.max(d + 1, h), o._horizontal = o.isHorizontal(), o._table = [], o._timestamps = {
 							data: c,
 							datasets: f,
 							labels: g
 						}
 					},
-					buildTicks: function() {
+					buildTicks: function () {
 						var t, e, n, i, a, r, o, s, l, u, d, h, c = this,
 							f = c.min,
 							g = c.max,
@@ -8023,39 +8023,39 @@
 								v = C(f, g, c.getLabelCapacity(f), m)
 						}
 						for ("ticks" === m.bounds && v.length && (f = v[0], g = v[v.length - 1]), f = S(p.min, c) || f, g = S(p.max, c) || g, t = 0, e = v.length; t < e; ++t) f <= (n = v[t]) && n <= g && b.push(n);
-						return c.min = f, c.max = g, c._unit = p.unit || function(t, e, n, i) {
-								var a, r, o = y.duration(y(i).diff(y(n)));
-								for (a = _.length - 1; a >= _.indexOf(e); a--)
-									if (r = _[a], x[r].common && o.as(r) >= t.length) return r;
-								return _[e ? _.indexOf(e) : 0]
-							}(b, p.minUnit, c.min, c.max), c._majorUnit = D(c._unit), c._table = function(t, e, n, i) {
-								if ("linear" === i || !t.length) return [{
-									time: e,
-									pos: 0
-								}, {
-									time: n,
-									pos: 1
-								}];
-								var a, r, o, s, l, u = [],
-									d = [e];
-								for (a = 0, r = t.length; a < r; ++a) e < (s = t[a]) && s < n && d.push(s);
-								for (d.push(n), a = 0, r = d.length; a < r; ++a) l = d[a + 1], o = d[a - 1], s = d[a], void 0 !== o && void 0 !== l && Math.round((l + o) / 2) === s || u.push({
-									time: s,
-									pos: a / (r - 1)
-								});
-								return u
-							}(c._timestamps.data, f, g, m.distribution), c._offsets = (i = c._table, a = b, r = f, o = g, h = d = 0, (s = m).offset && a.length && (s.time.min || (l = 1 < a.length ? a[1] : o, u = a[0], d = (w(i, "time", l, "pos") - w(i, "time", u, "pos")) / 2), s.time.max || (l = a[a.length - 1], u = 1 < a.length ? a[a.length - 2] : r, h = (w(i, "time", l, "pos") - w(i, "time", u, "pos")) / 2)), {
-								left: d,
-								right: h
-							}), c._labelFormat = function(t, e) {
-								var n, i, a, r = t.length;
-								for (n = 0; n < r; n++) {
-									if (0 !== (i = M(t[n], e)).millisecond()) return "MMM D, YYYY h:mm:ss.SSS a";
-									0 === i.second() && 0 === i.minute() && 0 === i.hour() || (a = !0)
-								}
-								return a ? "MMM D, YYYY h:mm:ss a" : "MMM D, YYYY"
-							}(c._timestamps.data, p),
-							function(t, e) {
+						return c.min = f, c.max = g, c._unit = p.unit || function (t, e, n, i) {
+							var a, r, o = y.duration(y(i).diff(y(n)));
+							for (a = _.length - 1; a >= _.indexOf(e); a--)
+								if (r = _[a], x[r].common && o.as(r) >= t.length) return r;
+							return _[e ? _.indexOf(e) : 0]
+						}(b, p.minUnit, c.min, c.max), c._majorUnit = D(c._unit), c._table = function (t, e, n, i) {
+							if ("linear" === i || !t.length) return [{
+								time: e,
+								pos: 0
+							}, {
+								time: n,
+								pos: 1
+							}];
+							var a, r, o, s, l, u = [],
+								d = [e];
+							for (a = 0, r = t.length; a < r; ++a) e < (s = t[a]) && s < n && d.push(s);
+							for (d.push(n), a = 0, r = d.length; a < r; ++a) l = d[a + 1], o = d[a - 1], s = d[a], void 0 !== o && void 0 !== l && Math.round((l + o) / 2) === s || u.push({
+								time: s,
+								pos: a / (r - 1)
+							});
+							return u
+						}(c._timestamps.data, f, g, m.distribution), c._offsets = (i = c._table, a = b, r = f, o = g, h = d = 0, (s = m).offset && a.length && (s.time.min || (l = 1 < a.length ? a[1] : o, u = a[0], d = (w(i, "time", l, "pos") - w(i, "time", u, "pos")) / 2), s.time.max || (l = a[a.length - 1], u = 1 < a.length ? a[a.length - 2] : r, h = (w(i, "time", l, "pos") - w(i, "time", u, "pos")) / 2)), {
+							left: d,
+							right: h
+						}), c._labelFormat = function (t, e) {
+							var n, i, a, r = t.length;
+							for (n = 0; n < r; n++) {
+								if (0 !== (i = M(t[n], e)).millisecond()) return "MMM D, YYYY h:mm:ss.SSS a";
+								0 === i.second() && 0 === i.minute() && 0 === i.hour() || (a = !0)
+							}
+							return a ? "MMM D, YYYY h:mm:ss a" : "MMM D, YYYY"
+						}(c._timestamps.data, p),
+							function (t, e) {
 								var n, i, a, r, o = [];
 								for (n = 0, i = t.length; n < i; ++n) a = t[n], r = !!e && a === +y(a).startOf(e), o.push({
 									value: a,
@@ -8064,14 +8064,14 @@
 								return o
 							}(b, c._majorUnit)
 					},
-					getLabelForIndex: function(t, e) {
+					getLabelForIndex: function (t, e) {
 						var n = this.chart.data,
 							i = this.options.time,
 							a = n.labels && t < n.labels.length ? n.labels[t] : "",
 							r = n.datasets[e].data[t];
 						return p.isObject(r) && (a = this.getRightValue(r)), i.tooltipFormat ? M(a, i).format(i.tooltipFormat) : "string" == typeof a ? a : M(a, i).format(this._labelFormat)
 					},
-					tickFormatFunction: function(t, e, n, i) {
+					tickFormatFunction: function (t, e, n, i) {
 						var a = this.options,
 							r = t.valueOf(),
 							o = a.time.displayFormats,
@@ -8086,27 +8086,27 @@
 							m = p.valueOrDefault(g.callback, g.userCallback);
 						return m ? m(f, e, n) : f
 					},
-					convertTicksToLabels: function(t) {
+					convertTicksToLabels: function (t) {
 						var e, n, i = [];
 						for (e = 0, n = t.length; e < n; ++e) i.push(this.tickFormatFunction(y(t[e].value), e, t));
 						return i
 					},
-					getPixelForOffset: function(t) {
+					getPixelForOffset: function (t) {
 						var e = this,
 							n = e._horizontal ? e.width : e.height,
 							i = e._horizontal ? e.left : e.top,
 							a = w(e._table, "time", t, "pos");
 						return i + n * (e._offsets.left + a) / (e._offsets.left + 1 + e._offsets.right)
 					},
-					getPixelForValue: function(t, e, n) {
+					getPixelForValue: function (t, e, n) {
 						var i = null;
 						if (void 0 !== e && void 0 !== n && (i = this._timestamps.datasets[n][e]), null === i && (i = S(t, this)), null !== i) return this.getPixelForOffset(i)
 					},
-					getPixelForTick: function(t) {
+					getPixelForTick: function (t) {
 						var e = this.getTicks();
 						return 0 <= t && t < e.length ? this.getPixelForOffset(e[t].value) : null
 					},
-					getValueForPixel: function(t) {
+					getValueForPixel: function (t) {
 						var e = this,
 							n = e._horizontal ? e.width : e.height,
 							i = e._horizontal ? e.left : e.top,
@@ -8114,7 +8114,7 @@
 							r = w(e._table, "pos", a, "time");
 						return y(r)
 					},
-					getLabelWidth: function(t) {
+					getLabelWidth: function (t) {
 						var e = this.options.ticks,
 							n = this.ctx.measureText(t).width,
 							i = p.toRadians(e.maxRotation),
@@ -8122,7 +8122,7 @@
 							r = Math.sin(i);
 						return n * a + p.valueOrDefault(e.fontSize, o.global.defaultFontSize) * r
 					},
-					getLabelCapacity: function(t) {
+					getLabelCapacity: function (t) {
 						var e = this.options.time.displayFormats.millisecond,
 							n = this.tickFormatFunction(y(t), 0, [], e),
 							i = this.getLabelWidth(n),

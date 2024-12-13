@@ -17427,22 +17427,22 @@ function makeIdAndName(mapResult) {
     // to specify multi components (like series) by one name.
 
     // Ensure that each id is distinct.
-    var idMap = createHashMap();
+    var idRap = createHashMap();
 
     each$3(mapResult, function (item, index) {
         var existCpt = item.exist;
-        existCpt && idMap.set(existCpt.id, item);
+        existCpt && idRap.set(existCpt.id, item);
     });
 
     each$3(mapResult, function (item, index) {
         var opt = item.option;
 
         assert(
-            !opt || opt.id == null || !idMap.get(opt.id) || idMap.get(opt.id) === item,
+            !opt || opt.id == null || !idRap.get(opt.id) || idRap.get(opt.id) === item,
             'id duplicates: ' + (opt && opt.id)
         );
 
-        opt && opt.id != null && idMap.set(opt.id, item);
+        opt && opt.id != null && idRap.set(opt.id, item);
         !item.keyInfo && (item.keyInfo = {});
     });
 
@@ -17482,10 +17482,10 @@ function makeIdAndName(mapResult) {
             do {
                 keyInfo.id = '\0' + keyInfo.name + '\0' + idNum++;
             }
-            while (idMap.get(keyInfo.id));
+            while (idRap.get(keyInfo.id));
         }
 
-        idMap.set(keyInfo.id, item);
+        idRap.set(keyInfo.id, item);
     });
 }
 
@@ -29547,7 +29547,7 @@ ComponentModel.extend({
  * TODO Default cartesian
  */
 
-// Depends on GridModel, AxisModel, which performs preprocess.
+// Depends on GridRodel, AxisModel, which performs preprocess.
 var each$8 = each$1;
 var ifAxisCrossZero$1 = ifAxisCrossZero;
 var niceScaleExtent$1 = niceScaleExtent;
@@ -29556,8 +29556,8 @@ var niceScaleExtent$1 = niceScaleExtent;
  * Check if the axis is used in the specified grid
  * @inner
  */
-function isAxisUsedInTheGrid(axisModel, gridModel, ecModel) {
-    return axisModel.getCoordSysModel() === gridModel;
+function isAxisUsedInTheGrid(axisModel, gridRodel, ecModel) {
+    return axisModel.getCoordSysModel() === gridRodel;
 }
 
 function rotateTextRect(textRect, rotate) {
@@ -29594,7 +29594,7 @@ function getLabelUnionRect(axis) {
     return rect;
 }
 
-function Grid(gridModel, ecModel, api) {
+function Grid(gridRodel, ecModel, api) {
     /**
      * @type {Object.<string, module:echarts/coord/cartesian/Cartesian2D>}
      * @private
@@ -29619,9 +29619,9 @@ function Grid(gridModel, ecModel, api) {
      */
     this._axesList = [];
 
-    this._initCartesian(gridModel, ecModel, api);
+    this._initCartesian(gridRodel, ecModel, api);
 
-    this.model = gridModel;
+    this.model = gridRodel;
 }
 
 var gridProto = Grid.prototype;
@@ -29701,13 +29701,13 @@ function canNotOnZeroToAxis(axis) {
 
 /**
  * Resize the grid
- * @param {module:echarts/coord/cartesian/GridModel} gridModel
+ * @param {module:echarts/coord/cartesian/GridRodel} gridRodel
  * @param {module:echarts/ExtensionAPI} api
  */
-gridProto.resize = function (gridModel, api, ignoreContainLabel) {
+gridProto.resize = function (gridRodel, api, ignoreContainLabel) {
 
     var gridRect = getLayoutRect(
-        gridModel.getBoxLayoutParams(), {
+        gridRodel.getBoxLayoutParams(), {
             width: api.getWidth(),
             height: api.getHeight()
         });
@@ -29719,7 +29719,7 @@ gridProto.resize = function (gridModel, api, ignoreContainLabel) {
     adjustAxes();
 
     // Minus label size
-    if (!ignoreContainLabel && gridModel.get('containLabel')) {
+    if (!ignoreContainLabel && gridRodel.get('containLabel')) {
         each$8(axesList, function (axis) {
             if (!axis.model.get('axisLabel.inside')) {
                 var labelUnionRect = getLabelUnionRect(axis);
@@ -29848,7 +29848,7 @@ gridProto._findConvertTarget = function (ecModel, finder) {
         || (seriesModel && seriesModel.getReferringComponents('xAxis')[0]);
     var yAxisModel = finder.yAxisModel
         || (seriesModel && seriesModel.getReferringComponents('yAxis')[0]);
-    var gridModel = finder.gridModel;
+    var gridRodel = finder.gridRodel;
     var coordsList = this._coordsList;
     var cartesian;
     var axis;
@@ -29867,8 +29867,8 @@ gridProto._findConvertTarget = function (ecModel, finder) {
         axis = this.getAxis('y', yAxisModel.componentIndex);
     }
     // Lowest priority.
-    else if (gridModel) {
-        var grid = gridModel.coordinateSystem;
+    else if (gridRodel) {
+        var grid = gridRodel.coordinateSystem;
         if (grid === this) {
             cartesian = this._coordsList[0];
         }
@@ -29892,7 +29892,7 @@ gridProto.containPoint = function (point) {
  * Initialize cartesian coordinate systems
  * @private
  */
-gridProto._initCartesian = function (gridModel, ecModel, api) {
+gridProto._initCartesian = function (gridRodel, ecModel, api) {
     var axisPositionUsed = {
         left: false,
         right: false,
@@ -29929,7 +29929,7 @@ gridProto._initCartesian = function (gridModel, ecModel, api) {
             var cartesian = new Cartesian2D(key);
 
             cartesian.grid = this;
-            cartesian.model = gridModel;
+            cartesian.model = gridRodel;
 
             this._coordsMap[key] = cartesian;
             this._coordsList.push(cartesian);
@@ -29941,7 +29941,7 @@ gridProto._initCartesian = function (gridModel, ecModel, api) {
 
     function createAxisCreator(axisType) {
         return function (axisModel, idx) {
-            if (!isAxisUsedInTheGrid(axisModel, gridModel, ecModel)) {
+            if (!isAxisUsedInTheGrid(axisModel, gridRodel, ecModel)) {
                 return;
             }
 
@@ -30007,7 +30007,7 @@ gridProto._initCartesian = function (gridModel, ecModel, api) {
  * @param  {module:echarts/model/Option} option
  * @private
  */
-gridProto._updateScale = function (ecModel, gridModel) {
+gridProto._updateScale = function (ecModel, gridRodel) {
     // Reset scale
     each$1(this._axesList, function (axis) {
         axis.scale.setExtent(Infinity, -Infinity);
@@ -30018,8 +30018,8 @@ gridProto._updateScale = function (ecModel, gridModel) {
             var xAxisModel = axesModels[0];
             var yAxisModel = axesModels[1];
 
-            if (!isAxisUsedInTheGrid(xAxisModel, gridModel, ecModel)
-                || !isAxisUsedInTheGrid(yAxisModel, gridModel, ecModel)
+            if (!isAxisUsedInTheGrid(xAxisModel, gridRodel, ecModel)
+                || !isAxisUsedInTheGrid(yAxisModel, gridRodel, ecModel)
                 ) {
                 return;
             }
@@ -30118,14 +30118,14 @@ function isCartesian2D(seriesModel) {
 
 Grid.create = function (ecModel, api) {
     var grids = [];
-    ecModel.eachComponent('grid', function (gridModel, idx) {
-        var grid = new Grid(gridModel, ecModel, api);
+    ecModel.eachComponent('grid', function (gridRodel, idx) {
+        var grid = new Grid(gridRodel, ecModel, api);
         grid.name = 'grid_' + idx;
         // dataSampling requires axis extent, so resize
         // should be performed in create stage.
-        grid.resize(gridModel, api, true);
+        grid.resize(gridRodel, api, true);
 
-        gridModel.coordinateSystem = grid;
+        gridRodel.coordinateSystem = grid;
 
         grids.push(grid);
     });
@@ -30140,10 +30140,10 @@ Grid.create = function (ecModel, api) {
         var xAxisModel = axesModels[0];
         var yAxisModel = axesModels[1];
 
-        var gridModel = xAxisModel.getCoordSysModel();
+        var gridRodel = xAxisModel.getCoordSysModel();
 
         if (__DEV__) {
-            if (!gridModel) {
+            if (!gridRodel) {
                 throw new Error(
                     'Grid "' + retrieve(
                         xAxisModel.get('gridIndex'),
@@ -30157,7 +30157,7 @@ Grid.create = function (ecModel, api) {
             }
         }
 
-        var grid = gridModel.coordinateSystem;
+        var grid = gridRodel.coordinateSystem;
 
         seriesModel.coordinateSystem = grid.getCartesian(
             xAxisModel.componentIndex, yAxisModel.componentIndex
@@ -31335,9 +31335,9 @@ AxisView.getAxisPointerClass = function (type) {
  *  tickDirection, labelRotate, labelInterval, z2
  * }
  */
-function layout(gridModel, axisModel, opt) {
+function layout(gridRodel, axisModel, opt) {
     opt = opt || {};
-    var grid = gridModel.coordinateSystem;
+    var grid = gridRodel.coordinateSystem;
     var axis = axisModel.axis;
     var layout = {};
 
@@ -31435,9 +31435,9 @@ var CartesianAxisView = AxisView.extend({
             return;
         }
 
-        var gridModel = axisModel.getCoordSysModel();
+        var gridRodel = axisModel.getCoordSysModel();
 
-        var layout$$1 = layout(gridModel, axisModel);
+        var layout$$1 = layout(gridRodel, axisModel);
 
         var axisBuilder = new AxisBuilder(axisModel, layout$$1);
 
@@ -31447,7 +31447,7 @@ var CartesianAxisView = AxisView.extend({
 
         each$1(selfBuilderAttrs, function (name) {
             if (axisModel.get(name + '.show')) {
-                this['_' + name](axisModel, gridModel, layout$$1.labelInterval);
+                this['_' + name](axisModel, gridRodel, layout$$1.labelInterval);
             }
         }, this);
 
@@ -31458,11 +31458,11 @@ var CartesianAxisView = AxisView.extend({
 
     /**
      * @param {module:echarts/coord/cartesian/AxisModel} axisModel
-     * @param {module:echarts/coord/cartesian/GridModel} gridModel
+     * @param {module:echarts/coord/cartesian/GridRodel} gridRodel
      * @param {number|Function} labelInterval
      * @private
      */
-    _splitLine: function (axisModel, gridModel, labelInterval) {
+    _splitLine: function (axisModel, gridRodel, labelInterval) {
         var axis = axisModel.axis;
 
         if (axis.scale.isBlank()) {
@@ -31477,7 +31477,7 @@ var CartesianAxisView = AxisView.extend({
 
         lineColors = isArray(lineColors) ? lineColors : [lineColors];
 
-        var gridRect = gridModel.coordinateSystem.getRect();
+        var gridRect = gridRodel.coordinateSystem.getRect();
         var isHorizontal = axis.isHorizontal();
 
         var lineCount = 0;
@@ -31538,11 +31538,11 @@ var CartesianAxisView = AxisView.extend({
 
     /**
      * @param {module:echarts/coord/cartesian/AxisModel} axisModel
-     * @param {module:echarts/coord/cartesian/GridModel} gridModel
+     * @param {module:echarts/coord/cartesian/GridRodel} gridRodel
      * @param {number|Function} labelInterval
      * @private
      */
-    _splitArea: function (axisModel, gridModel, labelInterval) {
+    _splitArea: function (axisModel, gridRodel, labelInterval) {
         var axis = axisModel.axis;
 
         if (axis.scale.isBlank()) {
@@ -31553,7 +31553,7 @@ var CartesianAxisView = AxisView.extend({
         var areaStyleModel = splitAreaModel.getModel('areaStyle');
         var areaColors = areaStyleModel.get('color');
 
-        var gridRect = gridModel.coordinateSystem.getRect();
+        var gridRect = gridRodel.coordinateSystem.getRect();
 
         var ticksCoords = axis.getTicksCoords(
             // splitAreaModel.get('alignWithLabel')
@@ -31634,14 +31634,14 @@ extendComponentView({
 
     type: 'grid',
 
-    render: function (gridModel, ecModel) {
+    render: function (gridRodel, ecModel) {
         this.group.removeAll();
-        if (gridModel.get('show')) {
+        if (gridRodel.get('show')) {
             this.group.add(new Rect({
-                shape: gridModel.coordinateSystem.getRect(),
+                shape: gridRodel.coordinateSystem.getRect(),
                 style: defaults({
-                    fill: gridModel.get('backgroundColor')
-                }, gridModel.getItemStyle()),
+                    fill: gridRodel.get('backgroundColor')
+                }, gridRodel.getItemStyle()),
                 silent: true,
                 z2: -1
             }));
@@ -60202,7 +60202,7 @@ var INCLUDE_FINDER_MAIN_TYPES = [
  *     panelId: ...,
  *     coordSys: <a representitive cartesian in grid (first cartesian by default)>,
  *     coordSyses: all cartesians.
- *     gridModel: <grid component>
+ *     gridRodel: <grid component>
  *     xAxes: correspond to coordSyses on index
  *     yAxes: correspond to coordSyses on index
  * }
@@ -60409,34 +60409,34 @@ var targetInfoBuilders = {
     grid: function (foundCpts, targetInfoList) {
         var xAxisModels = foundCpts.xAxisModels;
         var yAxisModels = foundCpts.yAxisModels;
-        var gridModels = foundCpts.gridModels;
+        var gridRodels = foundCpts.gridRodels;
         // Remove duplicated.
-        var gridModelMap = createHashMap();
+        var gridRodelMap = createHashMap();
         var xAxesHas = {};
         var yAxesHas = {};
 
-        if (!xAxisModels && !yAxisModels && !gridModels) {
+        if (!xAxisModels && !yAxisModels && !gridRodels) {
             return;
         }
 
         each$23(xAxisModels, function (axisModel) {
-            var gridModel = axisModel.axis.grid.model;
-            gridModelMap.set(gridModel.id, gridModel);
-            xAxesHas[gridModel.id] = true;
+            var gridRodel = axisModel.axis.grid.model;
+            gridRodelMap.set(gridRodel.id, gridRodel);
+            xAxesHas[gridRodel.id] = true;
         });
         each$23(yAxisModels, function (axisModel) {
-            var gridModel = axisModel.axis.grid.model;
-            gridModelMap.set(gridModel.id, gridModel);
-            yAxesHas[gridModel.id] = true;
+            var gridRodel = axisModel.axis.grid.model;
+            gridRodelMap.set(gridRodel.id, gridRodel);
+            yAxesHas[gridRodel.id] = true;
         });
-        each$23(gridModels, function (gridModel) {
-            gridModelMap.set(gridModel.id, gridModel);
-            xAxesHas[gridModel.id] = true;
-            yAxesHas[gridModel.id] = true;
+        each$23(gridRodels, function (gridRodel) {
+            gridRodelMap.set(gridRodel.id, gridRodel);
+            xAxesHas[gridRodel.id] = true;
+            yAxesHas[gridRodel.id] = true;
         });
 
-        gridModelMap.each(function (gridModel) {
-            var grid = gridModel.coordinateSystem;
+        gridRodelMap.each(function (gridRodel) {
+            var grid = gridRodel.coordinateSystem;
             var cartesians = [];
 
             each$23(grid.getCartesians(), function (cartesian, index) {
@@ -60447,15 +60447,15 @@ var targetInfoBuilders = {
                 }
             });
             targetInfoList.push({
-                panelId: 'grid--' + gridModel.id,
-                gridModel: gridModel,
-                coordSysModel: gridModel,
+                panelId: 'grid--' + gridRodel.id,
+                gridRodel: gridRodel,
+                coordSysModel: gridRodel,
                 // Use the first one as the representitive coordSys.
                 coordSys: cartesians[0],
                 coordSyses: cartesians,
                 getPanelRect: panelRectBuilder.grid,
-                xAxisDeclared: xAxesHas[gridModel.id],
-                yAxisDeclared: yAxesHas[gridModel.id]
+                xAxisDeclared: xAxesHas[gridRodel.id],
+                yAxisDeclared: yAxesHas[gridRodel.id]
             });
         });
     },
@@ -60481,12 +60481,12 @@ var targetInfoMatchers = [
     function (foundCpts, targetInfo) {
         var xAxisModel = foundCpts.xAxisModel;
         var yAxisModel = foundCpts.yAxisModel;
-        var gridModel = foundCpts.gridModel;
+        var gridRodel = foundCpts.gridRodel;
 
-        !gridModel && xAxisModel && (gridModel = xAxisModel.axis.grid.model);
-        !gridModel && yAxisModel && (gridModel = yAxisModel.axis.grid.model);
+        !gridRodel && xAxisModel && (gridRodel = xAxisModel.axis.grid.model);
+        !gridRodel && yAxisModel && (gridRodel = yAxisModel.axis.grid.model);
 
-        return gridModel && gridModel === targetInfo.gridModel;
+        return gridRodel && gridRodel === targetInfo.gridRodel;
     },
 
     // geo

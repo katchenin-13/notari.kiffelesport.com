@@ -17,6 +17,10 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Controller\BaseController;
+<<<<<<< HEAD
+=======
+use App\Entity\Comptefour;
+>>>>>>> 11b7eb5 (save pour review)
 use App\Form\MarchePaiementType;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\QueryBuilder;
@@ -203,7 +207,14 @@ class MarcheController extends BaseController
 
             if ($form->isValid()) {
                 if ($marche->getMontanttotal() != null) {
-                    $marche->setSolde($marche->getMontanttotal());
+                    //enregistrement d'un compte de fournisseur
+                    $comptefour = new Comptefour();
+                    $comptefour->setFournisseurs($marche->getFournisseur());
+                    $comptefour->setMontant($marche->getMontanttotal());
+                    $comptefour->setSolde($marche->getMontanttotal());
+                    $marche->addComptefour($comptefour);
+                    // $entityManager->persist($compteFournisseur);
+                    // $entityManager->flush();
                     # code...
                 } else {
                     throw new \Exception("Le montant total est obligatoire");
