@@ -31,8 +31,8 @@ class Compte
     #[ORM\JoinColumn(nullable: false)]
     private ?string $solde = null;
 
-    #[ORM\Column(type: 'boolean')]
-    private $active;
+    // #[ORM\Column(type: 'boolean',)]
+    // private $active;
 
 
     #[ORM\Column(type: 'boolean', nullable: true)]
@@ -94,17 +94,17 @@ class Compte
 
         return $this;
     }
-    public function getActive(): ?bool
-    {
-        return $this->active;
-    }
+    // public function getActive(): ?bool
+    // {
+    //     return $this->active;
+    // }
 
-    public function setActive(bool $active): self
-    {
-        $this->active = $active;
+    // public function setActive(bool $active): self
+    // {
+    //     $this->active = $active;
 
-        return $this;
-    }
+    //     return $this;
+    // }
 
 
 
