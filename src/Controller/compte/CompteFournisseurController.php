@@ -19,16 +19,18 @@ use Symfony\Component\Routing\Annotation\Route;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Controller\BaseController;
 use App\Entity\Compte;
+use App\Entity\CompteFournisseur;
 use App\Form\CalendarType;
+use App\Form\CompteFournisseurType;
 use App\Form\CompteType;
 use Doctrine\ORM\QueryBuilder;
 
-#[Route('/ads/compte/frais')]
-class CompteController extends BaseController
+#[Route('/ads/compte/fournisseur')]
+class CompteFournisseurController extends BaseController
 {
-    const INDEX_ROOT_NAME = 'app_compte_frais_index';
+    const INDEX_ROOT_NAME = 'app_compte_fournisseur_index';
 
-    #[Route('/', name: 'app_compte_frais_index', methods: ['GET', 'POST'])]
+    #[Route('/', name: 'app_compte_fournisseur_index', methods: ['GET', 'POST'])]
     public function index(Request $request, DataTableFactory $dataTableFactory): Response
     {
 
@@ -36,11 +38,11 @@ class CompteController extends BaseController
         $permission = $this->menu->getPermissionIfDifferentNull($this->security->getUser()->getGroupe()->getId(), self::INDEX_ROOT_NAME);
 
         $table = $dataTableFactory->create()
-            ->add('client', TextColumn::class, ['label' => 'Client','field'=> 'cl.nom'])
-            ->add('dossier', TextColumn::class, ['label' => 'N° Dossier', 'field' => 'd.numeroOuverture'])
+            ->add('fournisseurs', TextColumn::class, ['label' => 'Fournisseur','field'=> 'f.nom'])
+            ->add('marches', TextColumn::class, ['label' => 'Marché', 'field' => 'm.libelle'])
             ->add('datecreation', DateTimeColumn::class,  ['label' => 'Date de creation ', 'format' => 'd/m/Y', 'searchable' => false])
             ->add('montant', TextColumn::class,  ['label' => 'Montant dû '])
-            ->add('montantpaye', TextColumn::class, ['label' => 'Total payé', "searchable" => false, 'render' => function ($value, Compte $context) {
+            ->add('montantpaye', TextColumn::class, ['label' => 'Total payé', "searchable" => false, 'render' => function ($value, CompteFournisseur $context) {
                 $montantpaye = (float)$context->getMontant() - (float)$context->getSolde();
                 return $montantpaye ;
             }])
@@ -48,18 +50,18 @@ class CompteController extends BaseController
             ->add('solde', TextColumn::class,  ['label' => 'Solde '])
 
             ->createAdapter(ORMAdapter::class, [
-                'entity' => Compte::class,
+                'entity' => CompteFournisseur::class,
                 'query' => function (QueryBuilder $qb)  {
-                    $qb->select(['c',])
-                        ->from(Compte::class, 'c')
-                        ->join('c.client', 'cl')
-                        ->join('c.dossier', 'd')
+                    $qb->select(['c'])
+                        ->from(CompteFournisseur::class, 'c')
+                        ->join('c.fournisseurs', 'f')
+                        ->join('c.marches', 'm')
                         ->orderBy('c.id ', 'DESC');
 
                     
                 }
             ])
-            ->setName('dt_app_compte_frais');
+            ->setName('dt_app_compte_fournisseur');
         if ($permission != null) {
 
             $renders = [
@@ -127,7 +129,7 @@ class CompteController extends BaseController
                     'orderable' => false,
                     'globalSearchable' => false,
                     'className' => 'grid_row_actions',
-                    'render' => function ($value, Compte $context) use ($renders) {
+                    'render' => function ($value, CompteFournisseur $context) use ($renders) {
                         $options = [
                             'default_class' => 'btn btn-xs btn-clean btn-icon mr-2 ',
                             'target' => '#exampleModalSizeLg2',
@@ -136,14 +138,14 @@ class CompteController extends BaseController
                             'actions' => [
                                 // 'edit' => [
                                 //     'target' => '#exampleModalSizeSm2',
-                                //     'url' => $this->generateUrl('app_compte_frais_edit', ['id' => $value]),
+                                //     'url' => $this->generateUrl('app_compte_fournisseur_edit', ['id' => $value]),
                                 //     'ajax' => true,
                                 //     'icon' => '%icon% bi bi-pen',
                                 //     'attrs' => ['class' => 'btn-default'],
                                 //     'render' => $renders['edit']
                                 // ],
                                 // 'show' => [
-                                //     'url' => $this->generateUrl('app_compte_frais_show', ['id' => $value]),
+                                //     'url' => $this->generateUrl('app_compte_fournisseur_show', ['id' => $value]),
                                 //     'ajax' => true,
                                 //     'icon' => '%icon% bi bi-eye',
                                 //     'attrs' => ['class' => 'btn-primary'],
@@ -151,7 +153,7 @@ class CompteController extends BaseController
                                 // ],
                                 'payer_load' => [
                                     'target' => '#exampleModalSizeSm2',
-                                    'url' => $this->generateUrl('app_config_frais_paiement_index', ['id' => $value]),
+                                    'url' => $this->generateUrl('app_config_fournisseur_paiement_index', ['id' => $value]),
                                     'ajax' => true,
                                     'stacked' => false,
                                     'icon' => '%icon% bi bi-cash',
@@ -160,7 +162,7 @@ class CompteController extends BaseController
                                 ],
                                 // 'delete' => [
                                 //     'target' => '#exampleModalSizeNormal',
-                                //     'url' => $this->generateUrl('app_compte_frais_delete', ['id' => $value]),
+                                //     'url' => $this->generateUrl('app_compte_fournisseur_delete', ['id' => $value]),
                                 //     'ajax' => true,
                                 //     'icon' => '%icon% bi bi-trash',
                                 //     'attrs' => ['class' => 'btn-main'],
@@ -182,22 +184,22 @@ class CompteController extends BaseController
         }
 
 
-        return $this->render('compte/frais/index.html.twig', [
+        return $this->render('compte/fournisseur/index.html.twig', [
             'datatable' => $table,
             'permition' => $permission,
             'titre' => "Liste des  activités"
         ]);
     }
 
-    #[Route('/new/new', name: 'app_compte_frais_new', methods: ['GET', 'POST'])]
+    #[Route('/new/new', name: 'app_compte_fournisseur_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager, FormError $formError): Response
     {
 
         $titre = "Ajouter un événement";
-        $compte = new Compte();
-        $form = $this->createForm(CompteType::class, $compte, [
+        $comptefournisseur = new CompteFournisseur();
+        $form = $this->createForm(CompteFournisseurType::class, $comptefournisseur, [
             'method' => 'POST',
-            'action' => $this->generateUrl('app_compte_frais_new')
+            'action' => $this->generateUrl('app_compte_fournisseur_new')
         ]);
         $form->handleRequest($request);
 
@@ -241,9 +243,10 @@ class CompteController extends BaseController
                         'telephone' =>  '0704314164'
                     ]
                 );*/
-                // $compte->setActive(1);
+                
+                $comptefournisseur->setActive(1);
 
-                $entityManager->persist($compte);
+                $entityManager->persist($comptefournisseur);
                 $entityManager->flush();
                 // 
                 $data = true;
@@ -269,29 +272,29 @@ class CompteController extends BaseController
             }
         }
 
-        return $this->renderForm('compte/frais/new.html.twig', [
-            'calendar' => $compte,
+        return $this->renderForm('compte/fournisseur/new.html.twig', [
+            'calendar' => $comptefournisseur,
             'form' => $form,
             'titre' => $titre
         ]);
     }
 
-    #[Route('/{id}/show', name: 'app_compte_frais_show', methods: ['GET'])]
-    public function show(Compte $compte): Response
+    #[Route('/{id}/show', name: 'app_compte_fournisseur_show', methods: ['GET'])]
+    public function show(CompteFournisseur $comptefournisseur): Response
     {
-        return $this->render('compte/frais/show.html.twig', [
-            'compte' => $compte,
+        return $this->render('compte/fournisseur/show.html.twig', [
+            'compte' => $comptefournisseur,
         ]);
     }
 
-    #[Route('/{id}/edit', name: 'app_compte_frais_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Compte $compte, EntityManagerInterface $entityManager, FormError $formError): Response
+    #[Route('/{id}/edit', name: 'app_compte_fournisseur_edit', methods: ['GET', 'POST'])]
+    public function edit(Request $request, CompteFournisseur $comptefournisseur, EntityManagerInterface $entityManager, FormError $formError): Response
     {
 
-        $form = $this->createForm(CompteType::class, $compte, [
+        $form = $this->createForm(CompteType::class, $comptefournisseur, [
             'method' => 'POST',
-            'action' => $this->generateUrl('app_compte_frais_edit', [
-                'id' => $compte->getId()
+            'action' => $this->generateUrl('app_compte_fournisseur_edit', [
+                'id' => $comptefournisseur->getId()
             ])
         ]);
 
@@ -310,7 +313,7 @@ class CompteController extends BaseController
 
             if ($form->isValid()) {
 
-                $entityManager->persist($compte);
+                $entityManager->persist($comptefournisseur);
                 $entityManager->flush();
 
                 $data = true;
@@ -335,21 +338,21 @@ class CompteController extends BaseController
             }
         }
 
-        return $this->renderForm('compte/frais/edit.html.twig', [
-            'calendar' => $compte,
+        return $this->renderForm('compte/fournisseur/edit.html.twig', [
+            'calendar' => $comptefournisseur,
             'form' => $form,
         ]);
     }
 
-    #[Route('/{id}/delete', name: 'app_compte_frais_delete', methods: ['DELETE', 'GET'])]
-    public function delete(Request $request, Compte $compte, EntityManagerInterface $entityManager): Response
+    #[Route('/{id}/delete', name: 'app_compte_fournisseur_delete', methods: ['DELETE', 'GET'])]
+    public function delete(Request $request, CompteFournisseur $comptefournisseur, EntityManagerInterface $entityManager): Response
     {
         $form = $this->createFormBuilder()
             ->setAction(
                 $this->generateUrl(
-                    'app_compte_frais_delete',
+                    'app_compte_fournisseur_delete',
                     [
-                        'id' => $compte->getId()
+                        'id' => $comptefournisseur->getId()
                     ]
                 )
             )
@@ -358,7 +361,7 @@ class CompteController extends BaseController
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $data = true;
-            $entityManager->remove($compte);
+            $entityManager->remove($comptefournisseur);
             $entityManager->flush();
 
             $redirect = $this->generateUrl('app_config_parametre_compte_index');
@@ -381,8 +384,8 @@ class CompteController extends BaseController
             }
         }
 
-        return $this->renderForm('compte/frais/delete.html.twig', [
-            'calendar' => $compte,
+        return $this->renderForm('compte/fournisseur/delete.html.twig', [
+            'calendar' => $comptefournisseur,
             'form' => $form,
         ]);
     }

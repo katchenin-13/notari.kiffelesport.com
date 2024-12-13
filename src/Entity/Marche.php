@@ -42,7 +42,11 @@ class Marche
     private ?\DateTimeInterface $datecreation = null;
 
 
+<<<<<<< HEAD
     #[ORM\OneToMany(mappedBy: 'marches', targetEntity: Comptefour::class, orphanRemoval: true, cascade: ['persist', 'remove'])]
+=======
+    #[ORM\OneToMany(mappedBy: 'marches', targetEntity: CompteFournisseur::class, orphanRemoval: true, cascade: ['persist', 'remove'])]
+>>>>>>> b6f1842a7fec2506df675de17037826c2c1327b4
     private Collection $compteFournisseurs;
     public function __construct()
     {
@@ -132,14 +136,24 @@ class Marche
 
    
     /**
+<<<<<<< HEAD
      * @return Collection<int, Comptefour>
      */
     public function getComptefours(): Collection
+=======
+     * @return Collection<int, CompteFournisseur>
+     */
+    public function getCompteFournisseurs(): Collection
+>>>>>>> b6f1842a7fec2506df675de17037826c2c1327b4
     {
         return $this->compteFournisseurs;
     }
 
+<<<<<<< HEAD
     public function addComptefour(Comptefour $compteFournisseur): static
+=======
+    public function addCompteFournisseur(CompteFournisseur $compteFournisseur): static
+>>>>>>> b6f1842a7fec2506df675de17037826c2c1327b4
     {
         if (!$this->compteFournisseurs->contains($compteFournisseur)) {
             $this->compteFournisseurs->add($compteFournisseur);
@@ -149,7 +163,11 @@ class Marche
         return $this;
     }
 
+<<<<<<< HEAD
     public function removeComptefour(Comptefour $compteFournisseur): static
+=======
+    public function removeCompteFournisseur(CompteFournisseur $compteFournisseur): static
+>>>>>>> b6f1842a7fec2506df675de17037826c2c1327b4
     {
         if ($this->compteFournisseurs->removeElement($compteFournisseur)) {
             // set the owning side to null (unless already changed)

@@ -52,8 +52,12 @@
 {% endblock %}
 {% block page_content %}
 <div class="modal-header">
+<<<<<<< HEAD
         <h5 class="modal-title" id="exampleModalLabel">INTERFACE PAIEMENTS DU DOSSIER N°{{compte.dossier.getNumeroOuverture| upper ~' | '~
           compte.id }}</h5>
+=======
+    <h5 class="modal-title" id="exampleModalLabel"> </h5>
+>>>>>>> b6f1842a7fec2506df675de17037826c2c1327b4
     <div class="btn btn-icon btn-sm  ms-2" data-bs-dismiss="modal" aria-label="Close">
         <span class="svg-icon svg-icon-2x text-white">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -94,7 +98,11 @@
 
             </div>
             <div class="row">
+<<<<<<< HEAD
                 <a title="Modification" href="{{ path('app_comptabilte_ligneversementfrais_new',{'id':compte.id }) }}"
+=======
+                <a title="Modification" href="{{ path('app_comptabilte_lignepaiementmarche_new',{'id':id }) }}"
+>>>>>>> b6f1842a7fec2506df675de17037826c2c1327b4
                     class="btn btn-primary btn-sm test" data-bs-stacked-toggle="modal" data-bs-stacked-modal="#modal-xl2"><i
                         class="bi bi-pen text-light"></i>
                     Faire un versement

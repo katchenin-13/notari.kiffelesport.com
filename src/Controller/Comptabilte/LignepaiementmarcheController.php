@@ -2,9 +2,7 @@
 
 namespace App\Controller\Comptabilte;
 
-use App\Entity\Ligneversementfrais;
-use App\Form\LigneversementfraisType;
-use App\Repository\LigneversementfraisRepository;
+
 use App\Service\ActionRender;
 use App\Service\FormError;
 use Omines\DataTablesBundle\Adapter\Doctrine\ORMAdapter;
@@ -17,54 +15,60 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Controller\BaseController;
-use App\Entity\Compte;
+use App\Entity\CompteFournisseur;
+use App\Entity\Lignepaiementmarche;
+use App\Form\LignepaiementmarcheEditType;
+use App\Form\LignepaiementmarcheEditTypeEditType;
+use App\Form\LignepaiementmarcheType;
 use App\Form\LigneVersementFaisEditType;
+use App\Repository\LignepaiementmarcheRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\QueryBuilder;
 use Mpdf\Tag\Li;
 
-#[Route('/ads/comptabilte/ligneversementfrais')]
-class LigneversementfraisController extends BaseController
+#[Route('/ads/comptabilte/lignepaiementmarche')] 
+class LignepaiementmarcheController extends BaseController
 {
-    const INDEX_ROOT_NAME = 'app_comptabilte_ligneversementfrais_index';
+    const INDEX_ROOT_NAME = 'app_comptabilte_lignepaiementmarche_index';
 
-    const TAB_ID = 'parametre-tabs';
+ const TAB_ID = 'parametre-tabs';
+
+   
 
 
-    public function getdata($idR) {}
-
-    #[Route('/liste/paiement/{idR}', name: 'app_comptabilte_ligneversementfrais_index', methods: ['GET', 'POST'])]
-    public function indexCompte(Request $request, DataTableFactory $dataTableFactory, int $idR): Response
+    #[Route('/liste/paiement/{idM}', name: 'app_comptabilte_lignepaiementmarche_index', methods: ['GET', 'POST'])]
+    public function indexCompteFournisseur(Request $request, DataTableFactory $dataTableFactory, int $idM): Response
     {
-
+      
 
         $table = $dataTableFactory->create()
-            ->add('compte', TextColumn::class, ['label' => 'N° Compte', 'field' => 'c.id'])
-            ->add('dateversementfrais', DateTimeColumn::class, ['label' => 'Date de paiement', 'format' => 'd/m/Y'])
+            ->add('comptefournisseurs', TextColumn::class, ['label' => 'N° Compte', 'field' => 'c.id'])
+            ->add('datepaiement', DateTimeColumn::class, ['label' => 'Date de paiement', 'format' => 'd/m/Y'])
             ->add('montantverse', TextColumn::class, ['label' => 'Montant'])
             ->createAdapter(ORMAdapter::class, [
-                'entity' => Ligneversementfrais::class,
-                'query' => function (QueryBuilder $qb) use ($idR) {
-                    $qb->select('l, c')
-                        ->from(Ligneversementfrais::class, 'l')
-                        ->join('l.compte', 'c')
+                'entity' => Lignepaiementmarche::class,
+                'query' => function (QueryBuilder $qb) use ($idM) {
+                    $qb->select('c,l')
+                    ->from(Lignepaiementmarche::class, 'l')
+                        ->join('l.comptefournisseurs', 'c')
+                        // ->join('c.fournisseurs', 'f')
                         ->andWhere('c.id = :id')
-                        ->setParameter('id', $idR);
+                        ->setParameter('id', $idM);
                 }
             ])
-            ->setName('dt_app_comptabilte_ligneversementfrais' . $idR);
+            ->setName('dt_app_comptabilte_lignepaiementmarche' . $idM);
 
         $renders = [
-            'edit' =>  new ActionRender(function () {
-                return true;
-            }),
-            'show' => new ActionRender(function () {
-                return true;
-            }),
-            'delete' => new ActionRender(function () {
-                return true;
-            }),
-        ];
+                'edit' =>  new ActionRender(function () {
+                    return true;
+                }),
+                'show' => new ActionRender(function () {
+                    return true;
+                }),
+                'delete' => new ActionRender(function () {
+                    return true;
+                }),
+            ];
 
 
         $hasActions = false;
@@ -82,14 +86,14 @@ class LigneversementfraisController extends BaseController
                 'orderable' => false,
                 'globalSearchable' => false,
                 'className' => 'grid_row_actions',
-                'render' => function ($value, Ligneversementfrais $context) use ($renders) {
+                'render' => function ($value, Lignepaiementmarche $context) use ($renders) {
                     $options = [
                         'default_class' => 'btn btn-xs btn-clean btn-icon mr-2 ',
                         'target' => '#modal-xl2',
 
                         'actions' => [
                             'edit' => [
-                                'url' => $this->generateUrl('app_comptabilte_ligneversementfrais_edit', ['id' => $value]),
+                                'url' => $this->generateUrl('app_comptabilte_lignepaiementmarche_edit', ['id' => $value]),
                                 'ajax' => true,
                                 'stacked' => true,
                                 'icon' => '%icon% bi bi-pen',
@@ -97,7 +101,7 @@ class LigneversementfraisController extends BaseController
                                 'render' => $renders['edit']
                             ],
                             'show' => [
-                                'url' => $this->generateUrl('app_comptabilte_ligneversementfrais_show', ['id' => $value]),
+                                'url' => $this->generateUrl('app_comptabilte_lignepaiementmarche_show', ['id' => $value]),
                                 'ajax' => true,
                                 'stacked' => true,
                                 'icon' => '%icon% bi bi-eye',
@@ -106,7 +110,7 @@ class LigneversementfraisController extends BaseController
                             ],
                             'delete' => [
                                 'target' => '#exampleModalSizeNormal',
-                                'url' => $this->generateUrl('app_comptabilte_ligneversementfrais_delete', ['id' => $value]),
+                                'url' => $this->generateUrl('app_comptabilte_lignepaiementmarche_delete', ['id' => $value]),
                                 'ajax' => true,
                                 'stacked' => true,
                                 'icon' => '%icon% bi bi-trash',
@@ -126,22 +130,22 @@ class LigneversementfraisController extends BaseController
             return $table->getResponse();
         }
 
-        return $this->render('comptabilte/ligneversementfrais/index.html.twig', [
+        return $this->render('comptabilte/lignepaiementmarche/index.html.twig', [
             'datatable' => $table,
-            'id' => $idR
+            'id' => $idM
         ]);
     }
 
 
     
-    #[Route('/{id}/new', name: 'app_comptabilte_ligneversementfrais_new', methods: ['GET', 'POST'])]
-    public function new(Request $request,Compte $compte,   Ligneversementfrais $ligneversementfrai, LigneversementfraisRepository $ligneversementfraisRepository, EntityManagerInterface $entityManager, FormError $formError): Response
+    #[Route('/{id}/new', name: 'app_comptabilte_lignepaiementmarche_new', methods: ['GET', 'POST'])]
+    public function new(Request $request,CompteFournisseur $compteFournisseur,Lignepaiementmarche $lignepaiementmarche, LignepaiementmarcheRepository $lignepaiementmarcheRepository, EntityManagerInterface $entityManager, FormError $formError): Response
     {
 
-        $form = $this->createForm(LigneversementfraisType::class, $compte, [
+        $form = $this->createForm(LignepaiementmarcheType::class, $compteFournisseur, [
             'method' => 'POST',
-            'action' => $this->generateUrl('app_comptabilte_ligneversementfrais_new', [
-                'id' => $compte->getId()
+            'action' => $this->generateUrl('app_comptabilte_lignepaiementmarche_new', [
+                'id' => $compteFournisseur->getId()
             ])
         ]);
 
@@ -165,16 +169,16 @@ class LigneversementfraisController extends BaseController
             $somme = 0;
 
 
-            $lignes = $ligneversementfraisRepository->findBy(['compte' => $compte->getId()]);
+            $lignes = $lignepaiementmarcheRepository->findBy(['compte' => $compteFournisseur->getId()]);
 
             if ($lignes) {
 
                 foreach ($lignes as $key => $info) {
                     $somme += (int)$info->getMontantverse();
-                    $resteAPayer = abs((int)$compte->getMontant() - $somme);
+                    $resteAPayer = abs((int)$compteFournisseur->getMontant() - $somme);
                 }
             } else {
-                $resteAPayer = abs((int)$compte->getMontant());
+                $resteAPayer = abs((int)$compteFournisseur->getMontant());
             }
 
 
@@ -183,16 +187,16 @@ class LigneversementfraisController extends BaseController
 
                 if ($resteAPayer >= $montant) {
 
-                    $ligneversementfrai = new Ligneversementfrais();
-                    $ligneversementfrai->setDateversementfrais($date);
-                    $ligneversementfrai->setCompte($compte);
+                    $ligneversementfrai = new Lignepaiementmarche();
+                    $ligneversementfrai->setDatepaiement($date);
+                    $ligneversementfrai->setComptefournisseurs($compteFournisseur);
                     $ligneversementfrai->setMontantverse($montant);
                     $entityManager->persist($ligneversementfrai);
                     $entityManager->flush();
 
-                    $compte->setSolde($resteAPayer);
+                    $compteFournisseur->setSolde($resteAPayer);
 
-                    $entityManager->persist($compte);
+                    $entityManager->persist($compteFournisseur);
                     $entityManager->flush();
 
                     $load_tab = true;
@@ -211,7 +215,7 @@ class LigneversementfraisController extends BaseController
 
                 $url = [
                     'url' => $this->generateUrl('app_config_frais_paiement_index', [
-                        'id' => $compte->getId()
+                        'id' => $compteFournisseur->getId()
                     ]),
                     'tab' => '#module0',
                     'current' => '#module0'
@@ -242,21 +246,21 @@ class LigneversementfraisController extends BaseController
             }
         }
 
-        return $this->renderForm('comptabilte/ligneversementfrais/new.html.twig', [
+        return $this->renderForm('comptabilte/lignepaiementmarche/new.html.twig', [
             // 'ligneversementfrai' => $ligneversementfrai,
-            'compte' => $compte,
+            'compteFournisseur' => $compteFournisseur,
             'form' => $form,
         ]);
     }
 
-    #[Route('/{id}/edit', name: 'app_comptabilte_ligneversementfrais_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Ligneversementfrais $ligneversementfrai,LigneversementfraisRepository $ligneversementfraisRepository, EntityManagerInterface $entityManager, FormError $formError): Response
+    #[Route('/{id}/edit', name: 'app_comptabilte_lignepaiementmarche_edit', methods: ['GET', 'POST'])]
+    public function edit(Request $request, Lignepaiementmarche $lignepaiementmarche,LignepaiementmarcheRepository $lignepaiementmarcheRepository, EntityManagerInterface $entityManager, FormError $formError): Response
     {
        
-        $form = $this->createForm(LigneVersementFaisEditType::class, $ligneversementfrai, [
+        $form = $this->createForm(LignepaiementmarcheEditType::class, $lignepaiementmarche, [
             'method' => 'POST',
-            'action' => $this->generateUrl('app_comptabilte_ligneversementfrais_edit', [
-                'id' => $ligneversementfrai->getId()
+            'action' => $this->generateUrl('app_comptabilte_lignepaiementmarche_edit', [
+                'id' => $lignepaiementmarche->getId()
             ])
         ]);
 
@@ -271,41 +275,41 @@ class LigneversementfraisController extends BaseController
         if ($form->isSubmitted()) {
             $response = [];
             $redirect = '';
-            // $redirect = $this->generateUrl('app_comptabilte_ligneversementfrais_index', [ 'id' => $ligneversementfrai->getCompte()->getId() ]);
+            // $redirect = $this->generateUrl('app_comptabilte_lignepaiementmarche_index', [ 'id' => $ligneversementfrai->getCompte()->getId() ]);
             $montant = (int) $form->get('montantverse')->getData();
             $date = $form->get('dateversementfrais')->getData();
             $somme = 0;
            
 
-            $lignes = $ligneversementfraisRepository->findBy(['compte' => $ligneversementfrai->getCompte()->getId()]);
+            $lignes = $lignepaiementmarcheRepository->findBy(['compte' => $lignepaiementmarche->getComptefournisseurs()->getId()]);
 
             if ($lignes) {
 
                 foreach ($lignes as $key => $info) {
                     $somme += (int)$info->getMontantverse();
-                    $resteAPayer = abs((int)$ligneversementfrai->getCompte()->getMontant() - $somme);
+                    $resteAPayer = abs((int)$lignepaiementmarche->getComptefournisseurs()->getMontant() - $somme);
                 }
             } else {
-                $resteAPayer = abs((int)$ligneversementfrai->getCompte()->getMontant());
+                $resteAPayer = abs((int)$lignepaiementmarche->getComptefournisseurs()->getMontant());    
             }
 
             if ($form->isValid()) {
 
                 if ($resteAPayer >= $montant) {
 
-                    $ligneversementfrai->setDateversementfrais($date);
-                    $ligneversementfrai->setMontantverse($montant);
+                    $lignepaiementmarche->setDatepaiement($date);
+                    $lignepaiementmarche->setMontantverse($montant);
                 
-                    $entityManager->persist($ligneversementfrai);
+                    $entityManager->persist($lignepaiementmarche);
                     $entityManager->flush();
 
-                    $compte = $ligneversementfrai->getCompte();
+                    $compte = $lignepaiementmarche->getComptefournisseurs();
                     $compte->setSolde($resteAPayer);
 
                     $entityManager->persist($compte);
                     $entityManager->flush();
                 }
-                $entityManager->persist($ligneversementfrai);
+                $entityManager->persist($lignepaiementmarche);  
                 $entityManager->flush();
 
                 $data = true;
@@ -314,7 +318,7 @@ class LigneversementfraisController extends BaseController
                 $this->addFlash('success', $message);
                  $url = [
                     'url' => $this->generateUrl('app_config_frais_paiement_index', [
-                        'id' => $ligneversementfrai->getCompte()->getId()
+                        'id' => $lignepaiementmarche->getComptefournisseurs()->getId()
                     ]),
                     'tab' => '#module0',
                     'current' => '#module0'
@@ -345,30 +349,30 @@ class LigneversementfraisController extends BaseController
             }
         }
 
-        return $this->renderForm('comptabilte/ligneversementfrais/edit.html.twig', [
-            'compte' => $compte,
+        return $this->renderForm('comptabilte/lignepaiementmarche/edit.html.twig', [
+            'lignepaiementmarche' => $lignepaiementmarche,
             'form' => $form,
         ]);
     }
 
-    #[Route('/{id}/show', name: 'app_comptabilte_ligneversementfrais_show', methods: ['GET'])]
-    public function show(Ligneversementfrais $ligneversementfrai): Response
+    #[Route('/{id}/show', name: 'app_comptabilte_lignepaiementmarche_show', methods: ['GET'])]
+    public function show(Lignepaiementmarche $lignepaiementmarche): Response
     {
-        return $this->render('comptabilte/ligneversementfrais/show.html.twig', [
-            'ligneversementfrai' => $ligneversementfrai,
+        return $this->render('comptabilte/lignepaiementmarche/show.html.twig', [
+            'lignepaiementmarche' => $lignepaiementmarche,
         ]);
     }
 
 
-    #[Route('/{id}/delete', name: 'app_comptabilte_ligneversementfrais_delete', methods: ['DELETE', 'GET'])]
-    public function delete(Request $request, Ligneversementfrais $ligneversementfrai, EntityManagerInterface $entityManager): Response
+    #[Route('/{id}/delete', name: 'app_comptabilte_lignepaiementmarche_delete', methods: ['DELETE', 'GET'])]
+    public function delete(Request $request, Lignepaiementmarche $lignepaiementmarche, EntityManagerInterface $entityManager): Response
     {
         $form = $this->createFormBuilder()
             ->setAction(
                 $this->generateUrl(
-                    'app_comptabilte_ligneversementfrais_delete',
+                    'app_comptabilte_lignepaiementmarche_delete',
                     [
-                        'id' => $ligneversementfrai->getId()
+                        'id' => $lignepaiementmarche->getId()
                     ]
                 )
             )
@@ -377,10 +381,10 @@ class LigneversementfraisController extends BaseController
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $data = true;
-            $entityManager->remove($ligneversementfrai);
+            $entityManager->remove($lignepaiementmarche);
             $entityManager->flush();
 
-            $redirect = $this->generateUrl('app_comptabilte_ligneversementfrais_index');
+            $redirect = $this->generateUrl('app_comptabilte_lignepaiementmarche_index');
 
             $message = 'Opération effectuée avec succès';
 
@@ -400,9 +404,10 @@ class LigneversementfraisController extends BaseController
             }
         }
 
-        return $this->renderForm('comptabilte/ligneversementfrais/delete.html.twig', [
-            'ligneversementfrai' => $ligneversementfrai,
+        return $this->renderForm('comptabilte/lignepaiementmarche/delete.html.twig', [
+            'lignepaiementmarche' => $lignepaiementmarche,
             'form' => $form,
         ]);
-    }
+    } 
+
 }
