@@ -772,6 +772,8 @@ et indication du nombre des rôles, mots et chiffres nuls
 
         $oldPieces = $dossier->getPieces();
 
+        //dd($dossier->getPieces());
+
 
 
          if (!$dossier->getPieces()->count()) {
