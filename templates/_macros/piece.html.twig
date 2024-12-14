@@ -27,11 +27,11 @@
 </tr>
 
 {% endmacro %}
-{% macro prototype_piece(form) %}
+{% macro prototype_piece(form,attributs) %}
 <div class="list-colonne" data-prototype="{{ _self.piece(form.pieces.vars.prototype)|e }}">
 </div>
 <ul class="nav nav-tabs nav-line-tabs mb-5 fs-6" id="customTabs" role="tablist">
-    {% for item in form.pieces %}
+    {% for item in attributs %}
         <li class="nav-item">
             <a class="nav-link {% if loop.first %}active{% endif %}" 
                id="tab-{{ loop.index }}" 
@@ -40,15 +40,17 @@
                role="tab" 
                aria-controls="kt_tab_pane_{{ loop.index }}" 
                aria-selected="{{ loop.first ? 'true' : 'false' }}">
-                 {{ item.vars.value.attribut |upper }}
+                 {{ item.attribut |upper }}
             </a>
         </li>
     {% endfor %}
 </ul>
 
 <div class="tab-content" id="myTabContent">
-    {% for item in form.pieces %}
-        <div class="tab-pane fade {% if loop.first %}show active{% endif %}" 
+
+{% for attribut in attributs %}
+   
+         <div class="tab-pane fade {% if loop.first %}show active{% endif %}" 
              id="kt_tab_pane_{{ loop.index }}" 
              role="tabpanel" 
              aria-labelledby="tab-{{ loop.index }}">
@@ -67,11 +69,20 @@
                     </tr>
                 </thead>
                 <tbody>
+                 {% for item in form.pieces %}
+                 
+                    {% if attribut.attribut == item.vars.value.attribut %}
                       {{ _self.piece(item) }}
+
+                    {% endif %}
+       
+                    {% endfor %}
                 </tbody>
             </table>
         </div>
-    {% endfor %}
+  
+
+{% endfor %}
 </div>
 
 {% endmacro %}

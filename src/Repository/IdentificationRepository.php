@@ -30,6 +30,16 @@ class IdentificationRepository extends ServiceEntityRepository
         }
     }
 
+    public function getAttribut($dossier){
+        return $this->createQueryBuilder('i')
+        ->select('distinct(i.attribut),i.attribut')
+            ->join('i.dossier', 'd')
+            ->andwhere('d.id=:id')
+            ->setParameter('id', $dossier)
+            ->getQuery()
+            ->getResult();
+    }
+
     public function remove(Identification $entity, bool $flush = false): void
     {
         $this->getEntityManager()->remove($entity);

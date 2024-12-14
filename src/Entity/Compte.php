@@ -48,6 +48,7 @@ class Compte
     public function __construct()
     {
         $this->ligneversementfrais = new ArrayCollection();
+        $this->active = true;
     }
 
     public function getId(): ?int

@@ -753,7 +753,8 @@ et indication du nombre des rôles, mots et chiffres nuls
         WorkflowRepository $workflowRepository,
         DossierWorkflowRepository $dossierWorkflowRepository,
         FichierRepository $fichierRepository,
-        DocumentClientRepository $documentClientRepository
+        DocumentClientRepository $documentClientRepository,
+        IdentificationRepository $identificationRepository
     ) {
 
 
@@ -797,6 +798,8 @@ et indication du nombre des rôles, mots et chiffres nuls
             }
 
         } 
+
+        //dd();
 
 
         /* dd($dossier->getPieces()); */
@@ -917,6 +920,7 @@ et indication du nombre des rôles, mots et chiffres nuls
             'route_without_prefix' => $routeWithoutPrefix,
             'form' => $form->createView(),
             'montant'=> $dossier->getMontantTotal(),
+            'attributs'=> $identificationRepository->getAttribut($dossier->getId()),
         ]);
     }
 
