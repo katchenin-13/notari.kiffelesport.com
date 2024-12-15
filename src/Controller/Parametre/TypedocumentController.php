@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Controller\Gestionfournisseur\Fournisseur;
+namespace App\Controller\Parametre;
 
-use App\Entity\Fournisseur;
-use App\Form\FournisseurType;
-use App\Repository\FournisseurRepository;
+use App\Entity\Typedocument;
+use App\Form\TypedocumentType;
+use App\Repository\TypedocumentRepository;
 use App\Service\ActionRender;
 use App\Service\FormError;
 use Omines\DataTablesBundle\Adapter\Doctrine\ORMAdapter;
@@ -19,27 +19,23 @@ use Symfony\Component\Routing\Annotation\Route;
 use App\Controller\BaseController;
 use Doctrine\ORM\EntityManagerInterface;
 
-#[Route('/ads/gestionfournisseur/fournisseur')]
-class FournisseurController extends BaseController
+#[Route('/ads/parametre/typedocument')]
+class TypedocumentController extends BaseController
 {
-    const INDEX_ROOT_NAME = 'app_gestionfournisseur_fournisseur_index';
+    const INDEX_ROOT_NAME = 'app_parametre_typedocument_index';
 
-    #[Route('/', name: 'app_gestionfournisseur_fournisseur_index', methods: ['GET', 'POST'])]
+    #[Route('/', name: 'app_parametre_typedocument_index', methods: ['GET', 'POST'])]
     public function index(Request $request, DataTableFactory $dataTableFactory): Response
     {
 
-
         $permission = $this->menu->getPermissionIfDifferentNull($this->security->getUser()->getGroupe()->getId(), self::INDEX_ROOT_NAME);
-        
+
         $table = $dataTableFactory->create()
-            // ->add('id', TextColumn::class, ['label' => 'Identifiant'])
-            ->add('nom', TextColumn::class, ['label' => 'Nom'])
-            ->add('adresse', TextColumn::class, ['label' => 'Adresse'])
-            ->add('contact', TextColumn::class, ['label' => 'Contact'])
+            ->add('libelle', TextColumn::class, ['label' => 'Libellé'])
             ->createAdapter(ORMAdapter::class, [
-                'entity' => Fournisseur::class,
+                'entity' => Typedocument::class,
             ])
-            ->setName('dt_app_gestionfournisseur_fournisseur');
+            ->setName('dt_app_parametre_typedocument');
         if ($permission != null) {
 
             $renders = [
@@ -107,21 +103,21 @@ class FournisseurController extends BaseController
                     'orderable' => false,
                     'globalSearchable' => false,
                     'className' => 'grid_row_actions',
-                    'render' => function ($value, Fournisseur $context) use ($renders) {
+                    'render' => function ($value, Typedocument $context) use ($renders) {
                         $options = [
                             'default_class' => 'btn btn-xs btn-clean btn-icon mr-2 ',
                             'target' => '#exampleModalSizeLg2',
 
                             'actions' => [
                                 'edit' => [
-                                    'url' => $this->generateUrl('app_gestionfournisseur_fournisseur_edit', ['id' => $value]),
+                                    'url' => $this->generateUrl('app_parametre_typedocument_edit', ['id' => $value]),
                                     'ajax' => true,
                                     'icon' => '%icon% bi bi-pen',
                                     'attrs' => ['class' => 'btn-default'],
                                     'render' => $renders['edit']
                                 ],
                                 'show' => [
-                                    'url' => $this->generateUrl('app_gestionfournisseur_fournisseur_show', ['id' => $value]),
+                                    'url' => $this->generateUrl('app_parametre_typedocument_show', ['id' => $value]),
                                     'ajax' => true,
                                     'icon' => '%icon% bi bi-eye',
                                     'attrs' => ['class' => 'btn-primary'],
@@ -129,7 +125,7 @@ class FournisseurController extends BaseController
                                 ],
                                 'delete' => [
                                     'target' => '#exampleModalSizeNormal',
-                                    'url' => $this->generateUrl('app_gestionfournisseur_fournisseur_delete', ['id' => $value]),
+                                    'url' => $this->generateUrl('app_parametre_typedocument_delete', ['id' => $value]),
                                     'ajax' => true,
                                     'icon' => '%icon% bi bi-trash',
                                     'attrs' => ['class' => 'btn-main'],
@@ -151,19 +147,19 @@ class FournisseurController extends BaseController
         }
 
 
-        return $this->render('gestionfournisseur/fournisseur/index.html.twig', [
+        return $this->render('parametre/typedocument/index.html.twig', [
             'datatable' => $table,
             'permition' => $permission
         ]);
     }
 
-    #[Route('/new', name: 'app_gestionfournisseur_fournisseur_new', methods: ['GET', 'POST'])]
+    #[Route('/new', name: 'app_parametre_typedocument_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager, FormError $formError): Response
     {
-        $fournisseur = new Fournisseur();
-        $form = $this->createForm(FournisseurType::class, $fournisseur, [
+        $typedocument = new Typedocument();
+        $form = $this->createForm(TypedocumentType::class, $typedocument, [
             'method' => 'POST',
-            'action' => $this->generateUrl('app_gestionfournisseur_fournisseur_new')
+            'action' => $this->generateUrl('app_parametre_typedocument_new')
         ]);
         $form->handleRequest($request);
 
@@ -174,12 +170,12 @@ class FournisseurController extends BaseController
 
         if ($form->isSubmitted()) {
             $response = [];
-            $redirect = $this->generateUrl('app_gestionfournisseur_fournisseur_index');
+            $redirect = $this->generateUrl('app_parametre_typedocument_index');
 
 
             if ($form->isValid()) {
 
-                $entityManager->persist($fournisseur);
+                $entityManager->persist($typedocument);
                 $entityManager->flush();
 
                 $data = true;
@@ -205,28 +201,28 @@ class FournisseurController extends BaseController
             }
         }
 
-        return $this->renderForm('gestionfournisseur/fournisseur/new.html.twig', [
-            'fournisseur' => $fournisseur,
+        return $this->renderForm('parametre/typedocument/new.html.twig', [
+            'typedocument' => $typedocument,
             'form' => $form,
         ]);
     }
 
-    #[Route('/{id}/show', name: 'app_gestionfournisseur_fournisseur_show', methods: ['GET'])]
-    public function show(Fournisseur $fournisseur): Response
+    #[Route('/{id}/show', name: 'app_parametre_typedocument_show', methods: ['GET'])]
+    public function show(Typedocument $typedocument): Response
     {
-        return $this->render('gestionfournisseur/fournisseur/show.html.twig', [
-            'fournisseur' => $fournisseur,
+        return $this->render('parametre/typedocument/show.html.twig', [
+            'typedocument' => $typedocument,
         ]);
     }
 
-    #[Route('/{id}/edit', name: 'app_gestionfournisseur_fournisseur_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Fournisseur $fournisseur, EntityManagerInterface $entityManager, FormError $formError): Response
+    #[Route('/{id}/edit', name: 'app_parametre_typedocument_edit', methods: ['GET', 'POST'])]
+    public function edit(Request $request, Typedocument $typedocument, EntityManagerInterface $entityManager, FormError $formError): Response
     {
 
-        $form = $this->createForm(FournisseurType::class, $fournisseur, [
+        $form = $this->createForm(TypedocumentType::class, $typedocument, [
             'method' => 'POST',
-            'action' => $this->generateUrl('app_gestionfournisseur_fournisseur_edit', [
-                'id' => $fournisseur->getId()
+            'action' => $this->generateUrl('app_parametre_typedocument_edit', [
+                'id' => $typedocument->getId()
             ])
         ]);
 
@@ -240,12 +236,12 @@ class FournisseurController extends BaseController
 
         if ($form->isSubmitted()) {
             $response = [];
-            $redirect = $this->generateUrl('app_gestionfournisseur_fournisseur_index');
+            $redirect = $this->generateUrl('app_parametre_typedocument_index');
 
 
             if ($form->isValid()) {
 
-                $entityManager->persist($fournisseur);
+                $entityManager->persist($typedocument);
                 $entityManager->flush();
 
                 $data = true;
@@ -270,21 +266,21 @@ class FournisseurController extends BaseController
             }
         }
 
-        return $this->renderForm('gestionfournisseur/fournisseur/edit.html.twig', [
-            'fournisseur' => $fournisseur,
+        return $this->renderForm('parametre/typedocument/edit.html.twig', [
+            'typedocument' => $typedocument,
             'form' => $form,
         ]);
     }
 
-    #[Route('/{id}/delete', name: 'app_gestionfournisseur_fournisseur_delete', methods: ['DELETE', 'GET'])]
-    public function delete(Request $request, Fournisseur $fournisseur, EntityManagerInterface $entityManager): Response
+    #[Route('/{id}/delete', name: 'app_parametre_typedocument_delete', methods: ['DELETE', 'GET'])]
+    public function delete(Request $request, Typedocument $typedocument, EntityManagerInterface $entityManager): Response
     {
         $form = $this->createFormBuilder()
             ->setAction(
                 $this->generateUrl(
-                    'app_gestionfournisseur_fournisseur_delete',
+                    'app_parametre_typedocument_delete',
                     [
-                        'id' => $fournisseur->getId()
+                        'id' => $typedocument->getId()
                     ]
                 )
             )
@@ -293,10 +289,10 @@ class FournisseurController extends BaseController
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $data = true;
-            $entityManager->remove($fournisseur);
+            $entityManager->remove($typedocument);
             $entityManager->flush();
 
-            $redirect = $this->generateUrl('app_gestionfournisseur_fournisseur_index');
+            $redirect = $this->generateUrl('app_parametre_typedocument_index');
 
             $message = 'Opération effectuée avec succès';
 
@@ -316,8 +312,8 @@ class FournisseurController extends BaseController
             }
         }
 
-        return $this->renderForm('gestionfournisseur/fournisseur/delete.html.twig', [
-            'fournisseur' => $fournisseur,
+        return $this->renderForm('parametre/typedocument/delete.html.twig', [
+            'typedocument' => $typedocument,
             'form' => $form,
         ]);
     }

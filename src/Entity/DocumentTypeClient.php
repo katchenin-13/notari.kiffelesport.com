@@ -16,8 +16,8 @@ class DocumentTypeClient
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $libelle = null;
+    // #[ORM\Column(length: 255)]
+    // private ?string $libelle = null;
 
     #[ORM\ManyToOne(inversedBy: 'documentTypeClients')]
     #[ORM\JoinColumn(nullable: false)]
@@ -28,6 +28,9 @@ class DocumentTypeClient
 
     #[ORM\OneToMany(mappedBy: 'type', targetEntity: Piece::class)]
     private Collection $pieces;
+
+    #[ORM\ManyToOne(inversedBy: 'documentTypeClients')]
+    private ?Typedocument $typesdocuments = null;
 
  
 
@@ -42,17 +45,17 @@ class DocumentTypeClient
         return $this->id;
     }
 
-    public function getLibelle(): ?string
-    {
-        return $this->libelle;
-    }
+    // public function getLibelle(): ?string
+    // {
+    //     return $this->libelle;
+    // }
 
-    public function setLibelle(string $libelle): static
-    {
-        $this->libelle = $libelle;
+    // public function setLibelle(string $libelle): static
+    // {
+    //     $this->libelle = $libelle;
 
-        return $this;
-    }
+    //     return $this;
+    // }
 
     public function getTypeclient(): ?TypeClient
     {
@@ -92,8 +95,7 @@ class DocumentTypeClient
                 $documentClient->setDocumentTypeClient(null);
             }
         }
-
-        return $this;
+          return $this;
     }
 
     /**
@@ -122,6 +124,18 @@ class DocumentTypeClient
                 $piece->setType(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getTypesdocuments(): ?Typedocument
+    {
+        return $this->typesdocuments;
+    }
+
+    public function setTypesdocuments(?Typedocument $typesdocuments): static
+    {
+        $this->typesdocuments = $typesdocuments;
 
         return $this;
     }

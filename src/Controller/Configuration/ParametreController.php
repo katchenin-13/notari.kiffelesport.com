@@ -48,6 +48,7 @@ class ParametreController extends BaseController
                 'icon' => 'bi bi-truck',
                 'href' => $this->generateUrl('app_config_parametre_ls', ['module' => 'rh'])
             ],*/
+            
             // [
             //     'label' => 'Gestion utilisateur',
             //     'icon' => 'bi bi-users',
@@ -150,27 +151,35 @@ class ParametreController extends BaseController
 
             'config' => [
 
-                [
-                    'label' => 'Civilité',
-                    'id' => 'param_article',
-                    'href' => $this->generateUrl('app_parametre_civilite_index')
-                ],
+                // [
+                //     'label' => 'Civilité',
+                //     'id' => 'param_article',
+                //     'href' => $this->generateUrl('app_parametre_civilite_index')
+                // ],
                 //new  menu
                 [
-                    'label' => 'Type de client',
-                    'id' => 'param_client',
-                    'href' => $this->generateUrl('app_parametre_type_client_index')
+                    
+                    'label' => 'Type de documents',
+                    'id' => 'param_document',
+                    'href' => $this->generateUrl('app_parametre_typedocument_index')
                 ],
                 [
-                    'label' => 'Type d\'actes',
+                    'label' => 'Type de clients',
+                    'id' => 'param_client',
+                    'href' => $this->generateUrl('app_parametre_type_client_index')
+                ],  
+               
+                [
+                    'label' => 'Type de dossiers ',
                     'id' => 'param_acts',
                     'href' => $this->generateUrl('app_parametre_type_index')
                 ],
-                [
-                    'label' => 'Le process de traitement des actes',
-                    'id' => 'param_soci',
-                    'href' => $this->generateUrl('app_parametre_workflow_index')
-                ],
+                // [
+                //     'label' => 'Le process de traitement des actes',
+                //     'id' => 'param_soci',
+                //     'href' => $this->generateUrl('app_parametre_workflow_index')
+                // ],
+
                 [
                     'label' => 'Type de société',
                     'id' => 'param_soci',

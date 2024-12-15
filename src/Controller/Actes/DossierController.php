@@ -343,7 +343,7 @@ et indication du nombre des rôles, mots et chiffres nuls
             ->add('etape', TextColumn::class, ['className' => 'w-100px', 'field' => 'l.id', 'label' => 'Etape', 'render' => function ($value, Dossier $context) {
 
 
-                return $context->getEtape() == '' ? 'Non entamer' : $context->getEtape();
+                return $context->getEtape() == '' ? 'Non entamé ' : $context->getEtape();
             }])
             ->createAdapter(ORMAdapter::class, [
                 'entity' => Dossier::class,
@@ -930,6 +930,7 @@ et indication du nombre des rôles, mots et chiffres nuls
      * @Route("/dossier/{id}/identification", name="acte_vente_identification", methods={"GET", "POST", "PUT"})
      *
      */
+    
     public function identification(
         Request $request,
         Dossier $dossier,

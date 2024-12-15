@@ -1,15 +1,23 @@
 
 {% macro ligne_document_dossier(colonne) %}
     <tr class="row-colonne even pointer table-light">
-        <td class="p-2">
+        <td width="40%"class="p-2">
           
             <div style="display:no " class="field-matiere">{{ form_widget(colonne.document) }}</div>
         </td>
-        <td class="p-2">
+        <td width="40%"class="p-2">
           
             <div style="display:no " class="field-matiere">{{ form_widget(colonne.fichier) }}</div>
+            <div style="display:no " class="field-matiere">
+                {% if colonne.vars.value %}
+            
+                <a class="btn btn-dark btn-sm" target="_blank"
+                    href="{{ path('fichier_index', {id:  colonne.vars.value.fichier.id}) }}" download> <i class="bi bi-upload"></i>
+                </a>
+                {% endif %}
+            </div>
         </td>
-        <td class="p-2">
+        {# <td  class="p-2">
           
             <div style="display:no " class="field-matiere">
               {% if colonne.vars.value %}
@@ -18,9 +26,9 @@
                 </a>
              {% endif %}
             </div>
-        </td>
+        </td> #}
     
-        <td class="p-2 del-col " data-parent=".row-colonne">{# <a href="#" class="btn btn-danger btn-xs"><span class="bi bi-trash"></span></a> #}</td>
+        <td width="20%" class="p-2 del-col " data-parent=".row-colonne">{# <a href="#" class="btn btn-danger btn-xs"><span class="bi bi-trash"></span></a> #}</td>
     </tr>
 {% endmacro  %}
 
@@ -28,17 +36,25 @@
 {% macro prototype_ligne_document_dossier(form) %}
     <div class="list-colonne"  data-prototype="{{ _self.ligne_document_dossier(form.documents.vars.prototype)|e }}"></div>
 
-      <button type="button" data-protoname="__name__" class="btn btn-default add_line btn-xs" id="add_ligne"  data-protoclass=".list-colonne" data-container=".column-container">
+      {# <button type="button" data-protoname="__name__" class="btn btn-default add_line btn-xs" id="add_ligne"  data-protoclass=".list-colonne" data-container=".column-container">
         <i class="fa fa-plus"></i> Ajouter un document
-    </button><br>
+    </button><br> #}
     <table class="table table-bordered table-custom">
         <thead class="thead-dark">
+            <tr width="100%" style="border: 0px !important;">
+                <th colspan="4" class="p-2 text-center text-bold text-uppercase">Liste des document </th>
+            </tr>
             <tr>
                 <th width="50%" class="p-2">Document</th>
                 <th width="40%" class="p-2">Fichier</th>
-                <th width="5%" class="p-2"></th>
                
-                <th></th>
+                <th colspan="2" width="10%">
+                    <button type="button" data-protoname="__name__" class="btn btn-default add_line btn-xs" id="add_ligne"
+                        data-protoclass=".list-colonne" data-container=".column-container">
+                        <i class="fa fa-plus"></i> Ajouter
+                    </button>
+                </th>
+             
             </tr>
         </thead>
         <tbody  class="column-container proto-container" data-childclass=""">

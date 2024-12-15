@@ -2,13 +2,17 @@
 
 
 {% macro ligne_document_type(colonne) %}
+ 
     <tr class="row-colonne even pointer table-light">
-        <td class="p-2">
-            {# <span class="label">{{ data.matiere.vars.data.libelle | default('') }}</span> #}
+        <td width="80%" class="p-2">
+    
             <div style="display:no " class="field-matiere">{{ form_widget(colonne.libelle) }}</div>
         </td>
     
-        <td class="p-2 del-col " data-parent=".row-colonne">{# <a href="#" class="btn btn-danger btn-xs"><span class="bi bi-trash"></span></a> #}</td>
+    
+    
+        <td width="20%" class="p-2 del-col " data-parent=".row-colonne">{# <a href="#" class="btn btn-danger btn-xs"><span
+                    class="bi bi-trash"></span></a> #}</td>
     </tr>
 {% endmacro  %}
 
@@ -16,15 +20,23 @@
 {% macro prototype_ligne_document_type(form) %}
     <div class="list-colonne"  data-prototype="{{ _self.ligne_document_type(form.documentTypeActes.vars.prototype)|e }}"></div>
 
-      <button type="button" data-protoname="__name__" class="btn btn-default add_line btn-xs" id="add_ligne"  data-protoclass=".list-colonne" data-container=".column-container">
-        <i class="fa fa-plus"></i> Ajouter un document
-    </button><br>
+     
     <table class="table table-bordered table-custom">
         <thead class="thead-dark">
+            <tr width="100%" style="border: 0px !important;">
+                <th colspan="2" class="p-2 text-center text-bold text-uppercase">Liste des types de document ce dossier </th>
+            </tr>
             <tr>
-                <th width="95%" class="p-2">Libelle</th>
-               
-                <th></th>
+                <th width="80%" class="p-2">Libelle</th>
+        
+                {# <th width="5%" class="p-2"></th> #}
+        
+                <th width="20%">
+                    <button type="button" data-protoname="__name__" class="btn btn-default add_line btn-xs" id="add_ligne"
+                        data-protoclass=".list-colonne" data-container=".column-container">
+                        <i class="fa fa-plus"></i> Ajouter
+                    </button>
+                </th>
             </tr>
         </thead>
         <tbody  class="column-container proto-container" data-childclass=""">

@@ -3,16 +3,19 @@
 
 
     <tr class="row-colonne even pointer table-light">
-        <td class="p-2">
+         <td width="40%" class="p-2">
+
             <div style="display:non" class="field-matiere">{{ form_widget(colonne.document_type_client) }}</div>
 {#             <div style="display:non" class="field-matiere">{{ colonne.document_type_client.vars.value }} </div>
              #}
         </td>
-        <td class="p-2">
+         <td width="40%" class="p-2">
+
           
             <div style="display:no " class="field-matiere">{{ form_widget(colonne.fichier) }}</div>
         </td>
-        <td class="p-2">
+        <td width="20%" class="p-2">
+
           
             <div style="display:no " class="field-matiere">
 
@@ -20,16 +23,10 @@
                  <a class="btn btn-dark btn-sm" style="margin-top: 0px;" target="_blank" href="{{ asset('uploads/media_entreprise/' ~ colonne.vars.value.fichier.alt) }} " download> <i class="bi bi-upload"></i>
                 </a>
              {% endif %}
-
-             {#  {% if colonne.vars.value %}
-          
-                 <a class="btn btn-dark btn-sm" style="margin-top: 0px;" target="_blank" href="{{ asset('uploads/media_entreprise/' ~ colonne.vars.value.fichier) }} " download> <i class="bi bi-upload"></i>
-                </a> 
-             {% endif %} #}
             </div>
         </td>
     
-        <td class="p-2 del-col " data-parent=".row-colonne">{# <a href="#" class="btn btn-danger btn-xs"><span class="bi bi-trash"></span></a> #}</td>
+        {# <td class="p-2 del-col " data-parent=".row-colonne">{# <a href="#" class="btn btn-danger btn-xs"><span class="bi bi-trash"></span></a> #}</td> #}
     </tr>
 {% endmacro  %}
 
@@ -40,10 +37,12 @@
      
     <table class="table table-bordered table-custom">
         <thead class="thead-dark">
+                    <tr width="100%" style="border: 0px !important;">
+                        <th colspan="4" class="p-2 text-center text-bold text-uppercase">Liste des pièces </th>
+                    </tr>
             <tr>
-                <th width="50%" class="p-2">Libelle</th>
-                <th width="40%" class="p-2">Document</th>
-                <th width="5%" class="p-2"></th>
+                <th width="50%" class="p-2">Type de pièce</th>
+                <th width="40%" class="p-2">Fichier</th>
                
                 <th></th>
             </tr>

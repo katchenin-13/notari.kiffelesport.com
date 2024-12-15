@@ -1,15 +1,15 @@
 {# {% extends 'base-layout.html.twig' %}
 
-{% block title %}Liste des types{% endblock %}
-{% block header %}types{% endblock %}
+{% block title %}Liste des typedocuments{% endblock %}
+{% block header %}typedocuments{% endblock %}
 {% block breadcrumb %}{% endblock %} #}
 {% block body %}
 <div class="card shadow-sm">
     <div class="card-header card-header-sm">
-        <h3 class="card-title"> Liste des types de dossiers</h3>
+        <h3 class="card-title"> Liste des types de documents</h3>
         <div class="card-toolbar">
             {% if permition in ["CR","CRU","CRUD"] %}
-            <a href="{{ path('app_parametre_type_new') }}" class="btn btn-main btn-sm"  
+            <a href="{{ path('app_parametre_typedocument_new') }}" class="btn btn-main btn-sm"  
                 data-bs-toggle="modal" data-bs-target="#exampleModalSizeLg2">
                 <i class="bi bi-plus-square text-light"></i>
                 Nouveau
@@ -21,7 +21,7 @@
         <div class="row">
             <div class="col-sm-12">
                 {% if permition != null %}
-                <div id="grid_app_parametre_type" class="grid-dt-wrapper">Chargement....</div>
+                <div id="grid_app_parametre_typedocument" class="grid-dt-wrapper">Chargement....</div>
                 {% else %}
                 <div class="d-flex flex-column flex-center flex-column-fluid">
                     <!--begin::Content-->
@@ -55,9 +55,9 @@
     <script src="{{ asset('assets/js/datatables.js') }}"></script>
     <script> 
         $(function() { 
-              $('#grid_app_parametre_type').initDataTables({{ datatable_settings(datatable) }}, {
+              $('#grid_app_parametre_typedocument').initDataTables({{ datatable_settings(datatable) }}, {
                   searching: true,
-                  ajaxUrl: "{{ path('app_parametre_type_index') }}",
+                  ajaxUrl: "{{ path('app_parametre_typedocument_index') }}",
                   language: {
                       url: asset_base_path + "/js/i18n/French.json"
                   }

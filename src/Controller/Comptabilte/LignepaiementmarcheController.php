@@ -171,7 +171,6 @@ class LignepaiementmarcheController extends BaseController
             $somme = 0;
             
             // Récupération des lignes de paiement liées au compte fournisseur
-           // $lignes = $lignepaiementmarcheRepository->findBy(['comptefours' => $comptefour->getId()]);
             
            $montantSolde = (int)str_replace(' ', '', $comptefour->getSolde());
            $resteAPayer = $montantSolde - $montant; // Montant saisi
