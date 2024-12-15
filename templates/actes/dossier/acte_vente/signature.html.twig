@@ -4,6 +4,7 @@
 
 {% from '_admin/macros/acte_vente.html.twig' import document_signe %}
 {% from '_admin/macros/acte_vente.html.twig' import document_signe_fichier %}
+{% from '_admin/macros/acte_vente.html.twig' import commentairesignature %}
  <div class="row">
     <div class="col-md-12">
         <div class="card">
@@ -11,6 +12,7 @@
                 {{ form_start(form, {'attr': {'role':'form', 'class': 'form', 'id': route_without_prefix}}) }}
                     <div id="prototype" data-prototype="{{ document_signe(form.documentSignes.vars.prototype, 1)|e }}"></div>
                     <div id="prototype" data-prototype="{{ document_signe_fichier(form.documentSigneFichiers.vars.prototype, 1)|e }}"></div>
+                    <div id="prototype" data-prototype="{{ commentairesignature(form.commentaireSignatures.vars.prototype, 1)|e }}"></div>
                     {{ include('_includes/ajax/response.html.twig') }}
                     <h3 style="color: orangered">Gestion des signatures et archivage de l’acte parafé</h3>
                    
@@ -21,8 +23,6 @@
                     {% endfor %}
                     </div>
                    <br>
-                        
-
                     <table class="table table-bordered table-custom">
                         <thead class="thead-dark">
 
@@ -45,6 +45,12 @@
                         </table>
 
 
+                         {% for commentaire in form.commentaireSignatures %}
+                                {{ commentairesignature(commentaire)}}
+                             {% endfor %}
+
+ {#  {{ prototype_commentaire_signature(form) }} #}
+                <br>
                   
                     <div class="row">
                         <div class="col-xl-12">

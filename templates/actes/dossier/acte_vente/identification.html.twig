@@ -4,6 +4,7 @@
 {% form_theme form 'widget/fields-block.html.twig' %}
 
 {% from '_macros/ligneidentificationclient.html.twig' import prototype_identification %}
+{% from '_macros/ligneidentificationclient.html.twig' import prototype_commentaire %}
 <div class="row">
     <div class="col-md-12">
         <div class="card">
@@ -12,6 +13,8 @@
                 {{ include('_includes/ajax/response.html.twig') }}
                 <h3 style="color: orangered">Identification des différentes parties</h3>
                 {{ prototype_identification(form) }}
+                {{ prototype_commentaire(form) }} 
+                <br>
                 <div class="row">
                     <div class="col-xl-12">
                         <div class="text-right">

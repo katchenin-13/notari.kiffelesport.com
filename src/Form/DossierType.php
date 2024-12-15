@@ -2,6 +2,7 @@
 
 namespace App\Form;
 
+use App\Entity\CommentaireIdentification;
 use App\Entity\Conservation;
 use App\Entity\Dossier;
 use App\Entity\Employe;
@@ -129,6 +130,20 @@ class DossierType extends AbstractType
                 'prototype' => true,
 
             ]);
+
+            
+            $builder->add('commentaireSignatures', CollectionType::class, [
+                'entry_type' => CommentaireSignatureType::class,
+                'entry_options' => [
+                    'label' => false
+                ],
+                'allow_add' => true,
+                'label' => false,
+                'by_reference' => false,
+                'allow_delete' => true,
+                'prototype' => true,
+
+            ]);
         }
 
 
@@ -138,6 +153,18 @@ class DossierType extends AbstractType
         if ($etape == 'identification') {
             $builder->add('identifications', CollectionType::class, [
                 'entry_type' => IdentificationType::class,
+                'entry_options' => [
+                    'label' => false
+                ],
+                'allow_add' => true,
+                'label' => false,
+                'by_reference' => false,
+                'allow_delete' => true,
+                'prototype' => true,
+
+            ]);
+            $builder->add('CommentaireIdentifications', CollectionType::class, [
+                'entry_type' => CommentaireIdentificationType::class,
                 'entry_options' => [
                     'label' => false
                 ],
@@ -183,6 +210,19 @@ class DossierType extends AbstractType
                 'prototype' => true,
 
             ]);
+
+            $builder->add('commentaireRedactions', CollectionType::class, [
+                'entry_type' => CommentaireRedactionType::class,
+                'entry_options' => [
+                    'label' => false
+                ],
+                'allow_add' => true,
+                'label' => false,
+                'by_reference' => false,
+                'allow_delete' => true,
+                'prototype' => true,
+
+            ]);
         }
 
         if ($etape == 'obtention') {
@@ -192,6 +232,18 @@ class DossierType extends AbstractType
                     'label' => false,
                     'doc_options' => $options['doc_options'],
                     'doc_required' => $options['doc_required']
+                ],
+                'allow_add' => true,
+                'label' => false,
+                'by_reference' => false,
+                'allow_delete' => true,
+                'prototype' => true,
+
+            ]);
+            $builder->add('commentaireObtentions', CollectionType::class, [
+                'entry_type' => CommentaireObtentionType::class,
+                'entry_options' => [
+                    'label' => false
                 ],
                 'allow_add' => true,
                 'label' => false,
@@ -218,6 +270,8 @@ class DossierType extends AbstractType
                 'prototype' => true,
 
             ]);
+
+           
         }
 
         if ($etape == 'piece') {
@@ -233,6 +287,19 @@ class DossierType extends AbstractType
                 'by_reference' => false,
                 'allow_delete' => true,
                 'prototype' => true,
+            ]);
+
+            $builder->add('commentairePieces', CollectionType::class, [
+                'entry_type' => CommentairePieceType::class,
+                'entry_options' => [
+                    'label' => false
+                ],
+                'allow_add' => true,
+                'label' => false,
+                'by_reference' => false,
+                'allow_delete' => true,
+                'prototype' => true,
+
             ]);
            
             
@@ -257,6 +324,19 @@ class DossierType extends AbstractType
                 'prototype' => true,
 
             ]);
+
+            $builder->add('commentaireEngs', CollectionType::class, [
+                'entry_type' => CommentaireEngType::class,
+                'entry_options' => [
+                    'label' => false
+                ],
+                'allow_add' => true,
+                'label' => false,
+                'by_reference' => false,
+                'allow_delete' => true,
+                'prototype' => true,
+
+            ]);
         }
 
         if ($etape == 'paiement') {
@@ -270,6 +350,19 @@ class DossierType extends AbstractType
                 /*  'delete_empty' => function (PaiementFrais $paiementFrais) {
                     return null === $paiementFrais || (!$paiementFrais->getId());
                 }, */
+                'allow_add' => true,
+                'label' => false,
+                'by_reference' => false,
+                'allow_delete' => true,
+                'prototype' => true,
+
+            ]);
+
+            $builder->add('commentairePaiements', CollectionType::class, [
+                'entry_type' => CommentairePaiementType::class,
+                'entry_options' => [
+                    'label' => false
+                ],
                 'allow_add' => true,
                 'label' => false,
                 'by_reference' => false,

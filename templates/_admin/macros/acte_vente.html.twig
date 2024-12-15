@@ -1,3 +1,30 @@
+{% macro commentaire(colonne) %}
+    <div class="row">
+         <div class="col-md-12">
+        {{ form_row(colonne.description) }}
+        </div>
+    </div>
+{% endmacro %}
+
+{% macro prototype_commentaire(form) %}
+<div class="list-colonneggg" data-prototype="{{ _self.commentaire(form.commentaireRedactions.vars.prototype)|e }}">
+</div>
+
+            {% for item in form.commentaireRedactions %}
+                {{ _self.commentaire(item|e) }}
+            {% endfor %}
+{% endmacro %}
+
+{% macro commentairesignature(colonne) %}
+    <div class="row">
+         <div class="col-md-12">
+        {{ form_row(colonne.description) }}
+        </div>
+    </div>
+{% endmacro %}
+
+
+
 {% macro list_piece(piece, client) %}
     <div class="row row-line">
        
@@ -114,10 +141,9 @@
     <div class="row row-container">
         <div class="col-md-1">{% if value and value.sens %} {{ constant('App\\Entity\\Enregistrement::SENS')[value.sens] }} {% endif %}</div>
         <div style="display:none">{{ form_row(enregistrement.sens) }}</div>
-        <div class="col-md-2">{{ form_row(enregistrement.numero) }}</div>
-        <div class="col-md-3">{{ form_row(enregistrement.date) }}</div>
-        <div class="col-md-4">{{ form_row(enregistrement.fichier) }}</div>
-        
+        <div class="col-md-1">{{ form_row(enregistrement.numero) }}</div>
+        <div class="col-md-2">{{ form_row(enregistrement.date) }}</div>
+        <div class="col-md-2">{{ form_row(enregistrement.fichier) }}</div>
         <div class="col-md-1 ">
             {% if value and  value.fichier %}
              {#  <a class="btn btn-dark btn-sm" target="_blank" href="{{ path('fichier_index', {id:  enregistrement.vars.value.fichier.id}) }}" download> <i class="bi bi-upload"></i>
@@ -126,9 +152,27 @@
                 </a>
             {% endif %}
         </div>
-        <div class="col-md-1 del-col d-none">
-
+        <div class="col-md-2">{{ form_row(enregistrement.fichierClient) }}</div>
+        <div class="col-md-1 ">
+            {% if value and  value.fichier %}
+             {#  <a class="btn btn-dark btn-sm" target="_blank" href="{{ path('fichier_index', {id:  enregistrement.vars.value.fichier.id}) }}" download> <i class="bi bi-upload"></i>
+                </a> #}
+                 <a class="btn btn-dark btn-sm" target="_blank" href="{{ asset('uploads/media_entreprise/' ~ enregistrement.vars.value.fichier.alt) }} " download> <i class="bi bi-upload"></i>
+                </a>
+            {% endif %}
         </div>
+        <div class="col-md-1">{{ form_row(enregistrement.fichierCourrier) }}</div>
+         <div class="col-md-1 ">
+            {% if value and  value.fichier %}
+             {#  <a class="btn btn-dark btn-sm" target="_blank" href="{{ path('fichier_index', {id:  enregistrement.vars.value.fichier.id}) }}" download> <i class="bi bi-upload"></i>
+                </a> #}
+                 <a class="btn btn-dark btn-sm" target="_blank" href="{{ asset('uploads/media_entreprise/' ~ enregistrement.vars.value.fichier.alt) }} " download> <i class="bi bi-upload"></i>
+                </a>
+            {% endif %}
+        </div>
+        
+        
+       
     </div>
 {% endmacro %}
 {% macro frais(frais) %}
@@ -210,6 +254,9 @@
         </div>
         {% endif %}
     </div>
+    <div class="row">
+        {{ form_row(remise.description) }}
+    <div>
 {% endmacro %}
 
 

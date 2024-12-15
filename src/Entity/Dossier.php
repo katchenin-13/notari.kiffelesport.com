@@ -130,6 +130,28 @@ class Dossier
     #[ORM\OneToMany(mappedBy: 'dossier', targetEntity: DocumentSigneFichier::class, cascade: ['persist', 'remove'])]
     private Collection $documentSigneFichiers;
 
+    #[ORM\OneToMany(mappedBy: 'dossier', targetEntity: CommentaireIdentification::class, cascade: ['persist'])]
+    private Collection $CommentaireIdentifications;
+
+    #[ORM\OneToMany(mappedBy: 'dossier', targetEntity: CommentairePiece::class, cascade: ['persist'])]
+    private Collection $commentairePieces;
+
+    #[ORM\OneToMany(mappedBy: 'dossier', targetEntity: CommentairePaiement::class, cascade: ['persist'])]
+    private Collection $commentairePaiements;
+
+    #[ORM\OneToMany(mappedBy: 'dossier', targetEntity: CommentaireRedaction::class, cascade: ['persist'])]
+    private Collection $commentaireRedactions;
+
+    #[ORM\OneToMany(mappedBy: 'dossier', targetEntity: CommentaireSignature::class, cascade: ['persist'])]
+    private Collection $commentaireSignatures;
+
+    #[ORM\OneToMany(mappedBy: 'dossier', targetEntity: CommentaireEng::class, cascade: ['persist'])]
+    private Collection $commentaireEngs;
+
+    #[ORM\OneToMany(mappedBy: 'dossier', targetEntity: CommentaireObtention::class, cascade: ['persist'])]
+    private Collection $commentaireObtentions;
+
+
     public function __construct()
     {
         $this->calendars = new ArrayCollection();
@@ -150,6 +172,14 @@ class Dossier
         $this->dateCreation = new DateTime();
         $this->comptes = new ArrayCollection();
         $this->documentSigneFichiers = new ArrayCollection();
+        $this->CommentaireIdentifications = new ArrayCollection();
+        $this->commentairePieces = new ArrayCollection();
+        $this->commentairePaiements = new ArrayCollection();
+        $this->commentaireRedactions = new ArrayCollection();
+        $this->commentaireSignatures = new ArrayCollection();
+        $this->commentaireEngs = new ArrayCollection();
+        $this->commentaireObtentions = new ArrayCollection();
+      
     }
 
 
@@ -851,5 +881,217 @@ class Dossier
 
         return $this;
     }
+
+    /**
+     * @return Collection<int, CommentaireIdentification>
+     */
+    public function getCommentaireIdentifications(): Collection
+    {
+        return $this->CommentaireIdentifications;
+    }
+
+    public function addCommentaireIdentification(CommentaireIdentification $CommentaireIdentification): static
+    {
+        if (!$this->CommentaireIdentifications->contains($CommentaireIdentification)) {
+            $this->CommentaireIdentifications->add($CommentaireIdentification);
+            $CommentaireIdentification->setDossier($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCommentaireIdentification(CommentaireIdentification $CommentaireIdentification): static
+    {
+        if ($this->CommentaireIdentifications->removeElement($CommentaireIdentification)) {
+            // set the owning side to null (unless already changed)
+            if ($CommentaireIdentification->getDossier() === $this) {
+                $CommentaireIdentification->setDossier(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, CommentairePiece>
+     */
+    public function getCommentairePieces(): Collection
+    {
+        return $this->commentairePieces;
+    }
+
+    public function addCommentairePiece(CommentairePiece $commentairePiece): static
+    {
+        if (!$this->commentairePieces->contains($commentairePiece)) {
+            $this->commentairePieces->add($commentairePiece);
+            $commentairePiece->setDossier($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCommentairePiece(CommentairePiece $commentairePiece): static
+    {
+        if ($this->commentairePieces->removeElement($commentairePiece)) {
+            // set the owning side to null (unless already changed)
+            if ($commentairePiece->getDossier() === $this) {
+                $commentairePiece->setDossier(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, CommentairePaiement>
+     */
+    public function getCommentairePaiements(): Collection
+    {
+        return $this->commentairePaiements;
+    }
+
+    public function addCommentairePaiement(CommentairePaiement $commentairePaiement): static
+    {
+        if (!$this->commentairePaiements->contains($commentairePaiement)) {
+            $this->commentairePaiements->add($commentairePaiement);
+            $commentairePaiement->setDossier($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCommentairePaiement(CommentairePaiement $commentairePaiement): static
+    {
+        if ($this->commentairePaiements->removeElement($commentairePaiement)) {
+            // set the owning side to null (unless already changed)
+            if ($commentairePaiement->getDossier() === $this) {
+                $commentairePaiement->setDossier(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, CommentaireRedaction>
+     */
+    public function getCommentaireRedactions(): Collection
+    {
+        return $this->commentaireRedactions;
+    }
+
+    public function addCommentaireRedaction(CommentaireRedaction $commentaireRedaction): static
+    {
+        if (!$this->commentaireRedactions->contains($commentaireRedaction)) {
+            $this->commentaireRedactions->add($commentaireRedaction);
+            $commentaireRedaction->setDossier($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCommentaireRedaction(CommentaireRedaction $commentaireRedaction): static
+    {
+        if ($this->commentaireRedactions->removeElement($commentaireRedaction)) {
+            // set the owning side to null (unless already changed)
+            if ($commentaireRedaction->getDossier() === $this) {
+                $commentaireRedaction->setDossier(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, CommentaireSignature>
+     */
+    public function getCommentaireSignatures(): Collection
+    {
+        return $this->commentaireSignatures;
+    }
+
+    public function addCommentaireSignature(CommentaireSignature $commentaireSignature): static
+    {
+        if (!$this->commentaireSignatures->contains($commentaireSignature)) {
+            $this->commentaireSignatures->add($commentaireSignature);
+            $commentaireSignature->setDossier($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCommentaireSignature(CommentaireSignature $commentaireSignature): static
+    {
+        if ($this->commentaireSignatures->removeElement($commentaireSignature)) {
+            // set the owning side to null (unless already changed)
+            if ($commentaireSignature->getDossier() === $this) {
+                $commentaireSignature->setDossier(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, CommentaireEng>
+     */
+    public function getCommentaireEngs(): Collection
+    {
+        return $this->commentaireEngs;
+    }
+
+    public function addCommentaireEng(CommentaireEng $commentaireEng): static
+    {
+        if (!$this->commentaireEngs->contains($commentaireEng)) {
+            $this->commentaireEngs->add($commentaireEng);
+            $commentaireEng->setDossier($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCommentaireEng(CommentaireEng $commentaireEng): static
+    {
+        if ($this->commentaireEngs->removeElement($commentaireEng)) {
+            // set the owning side to null (unless already changed)
+            if ($commentaireEng->getDossier() === $this) {
+                $commentaireEng->setDossier(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, CommentaireObtention>
+     */
+    public function getCommentaireObtentions(): Collection
+    {
+        return $this->commentaireObtentions;
+    }
+
+    public function addCommentaireObtention(CommentaireObtention $commentaireObtention): static
+    {
+        if (!$this->commentaireObtentions->contains($commentaireObtention)) {
+            $this->commentaireObtentions->add($commentaireObtention);
+            $commentaireObtention->setDossier($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCommentaireObtention(CommentaireObtention $commentaireObtention): static
+    {
+        if ($this->commentaireObtentions->removeElement($commentaireObtention)) {
+            // set the owning side to null (unless already changed)
+            if ($commentaireObtention->getDossier() === $this) {
+                $commentaireObtention->setDossier(null);
+            }
+        }
+
+        return $this;
+    }
+
+   
 
 }
