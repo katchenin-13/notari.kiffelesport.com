@@ -12,9 +12,25 @@
     </div> #}
    
     <div class="modal-body">
-        <table class="table table-bordered">
+        <table class="table table-bordered table-custom">
+            <thead class="thead-dark">
+                <tr>
+                    <th width="30%" class="p-2">Fournisseur</th>
+                    <th width="30%" class="p-2">Object du marche</th>
+                    <th width="15%" class="p-2">Montant dû </th>
+                    <th width="15%" class="p-2">Total payé</th>
+                    <th width="10%" class="p-2">solde</th>
+                </tr>
+            </thead>
         <tbody>
-                            <tr>
+            <tr>
+                <td width="30%" class="p-2">Fournisseur</td>
+                <td width="30%" class="p-2">Object du marche</td>
+                <td width="15%" class="p-2">compte.compte.solde</td>
+                <td width="15%" class="p-2">Total payé</td>
+                <td width="10%" class="p-2">compte.solde</td>
+            </tr>
+             <tr>
                     <th>Id</th>
                     <td>{{ compte.id }}</td>
                 </tr>
