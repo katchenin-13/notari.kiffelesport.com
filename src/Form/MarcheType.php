@@ -22,12 +22,15 @@ class MarcheType extends AbstractType
                 'required' => true,
                 'class' => Fournisseur::class,
                 'choice_label' => 'nom',
-                'attr' => ['class' => 'input-select']
+                'attr' => [
+                    'label' => ' Choix fournisseur',
+                    'class' => 'input-select'
+                    ]
             ])
-            ->add('libelle', null, ['label' => 'Libellé'])
+            ->add('libelle', null, ['label' => 'Objet du marché'])
             ->add('datecreation', DateType::class, ['widget' => 'single_text', 'format' => 'yyyy-MM-dd', 'attr' => ['class' => 'datepicker no-auto skip-init']], ['label' => 'Date de creation'])
         ->add('montanttotal', TextType::class, [
-            'label' => 'Montant total',
+            'label' => 'Montant',
             'attr' => ['class' => 'input-money input-mnt'],
             'empty_data' => '0',
             // 'constraints' => [
@@ -36,7 +39,7 @@ class MarcheType extends AbstractType
             // ],
         ])
             ->add('fichier', FileType::class, [
-                'label' => 'Fichier',
+                'label' => 'Joindre la facture',
                 'mapped' => false,
                 'required' => false,
                 'attr' => [

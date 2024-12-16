@@ -33,7 +33,7 @@ class FournisseurController extends BaseController
         
         $table = $dataTableFactory->create()
             // ->add('id', TextColumn::class, ['label' => 'Identifiant'])
-            ->add('nom', TextColumn::class, ['label' => 'Nom'])
+            ->add('nom', TextColumn::class, ['label' => 'Raison sociale'])
             ->add('adresse', TextColumn::class, ['label' => 'Adresse'])
             ->add('contact', TextColumn::class, ['label' => 'Contact'])
             ->createAdapter(ORMAdapter::class, [
