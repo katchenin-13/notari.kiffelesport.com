@@ -30,6 +30,9 @@ class TypeClient
     #[ORM\OneToMany(mappedBy: 'typeclient', targetEntity: DocumentTypeClient::class, orphanRemoval: true, cascade: ['persist'])]
     private Collection $documentTypeClients;
 
+    #[ORM\OneToMany(mappedBy: 'type', targetEntity: Identification::class)]
+    private Collection $identifications;
+
 
 
 
@@ -38,6 +41,7 @@ class TypeClient
         $this->clients = new ArrayCollection();
         $this->active = 1;
         $this->documentTypeClients = new ArrayCollection();
+        $this->identifications = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -135,6 +139,36 @@ class TypeClient
             // set the owning side to null (unless already changed)
             if ($documentTypeClient->getTypeclient() === $this) {
                 $documentTypeClient->setTypeclient(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Identification>
+     */
+    public function getIdentifications(): Collection
+    {
+        return $this->identifications;
+    }
+
+    public function addIdentification(Identification $identification): static
+    {
+        if (!$this->identifications->contains($identification)) {
+            $this->identifications->add($identification);
+            $identification->setType($this);
+        }
+
+        return $this;
+    }
+
+    public function removeIdentification(Identification $identification): static
+    {
+        if ($this->identifications->removeElement($identification)) {
+            // set the owning side to null (unless already changed)
+            if ($identification->getType() === $this) {
+                $identification->setType(null);
             }
         }
 

@@ -34,6 +34,9 @@ class Identification
     #[ORM\Column(length: 255)]
     private ?string $attribut = null;
 
+    #[ORM\ManyToOne(inversedBy: 'identifications')]
+    private ?TypeClient $type = null;
+
 
     public function getId(): ?int
     {
@@ -96,6 +99,18 @@ class Identification
     public function setClients(?Client $clients): static
     {
         $this->clients = $clients;
+
+        return $this;
+    }
+
+    public function getType(): ?TypeClient
+    {
+        return $this->type;
+    }
+
+    public function setType(?TypeClient $type): static
+    {
+        $this->type = $type;
 
         return $this;
     }

@@ -3,26 +3,36 @@
 {% form_theme form 'widget/fields-block.html.twig' %}
 
 {% from '_admin/macros/acte_vente.html.twig' import obtention %}
+{% from '_admin/macros/acte_vente.html.twig' import commentairesignature %}
+
  <div class="row">
     <div class="col-md-12">
         <div class="card">
             <div class="card-body form-card">
                 {{ form_start(form, {'attr': {'role':'form', 'class': 'form', 'id': route_without_prefix}}) }}
+                  <div id="prototype" data-prototype="{{ obtention(form.obtentions.vars.prototype, 1)|e }}"></div>
+                    <div id="prototypeg" data-prototype="{{ commentairesignature(form.commentaireObtentions.vars.prototype, 1)|e }}"></div>
+
                     {{ include('_includes/ajax/response.html.twig') }}
                     <h3 style="color: orangered">Obtention titre de propriéte</h3>
                     <button type="button" class="add-document btn btn-sm btn-info mb-4" data-container=".doc-list">Ajouter un document</button>
+                  
                         <div class="row">
-                           <div class="col-md-3">Doc</div>
+                           <div class="col-md-3">Document</div>
                             <div class="col-md-4">Fichier</div>
-                            <div class="col-md-3">D. Obtention</div>
+                            <div class="col-md-3">Date Obtention</div>
                             <div class="col-md-2">&nbsp;</div>
                         </div>
-                    <div class="doc-list">
+                     <div class="list-red">
                      {% for obtention in form.obtentions %}
                         {{ obtention(obtention)}}
                     {% endfor %}
                     </div>
-                   
+
+                    <br>
+                       {% for commentaire in form.commentaireObtentions %}
+                                {{ commentairesignature(commentaire)}}
+                             {% endfor %}
                     <div class="row">
                         <div class="col-xl-12">
                             <div class="text-right">
@@ -40,15 +50,19 @@
 </div>
 {% endblock %}
 {% block javascripts %}
-    <script>
+       <script>
         $(function () {
             init_select2(null, null, '.form-card');
 
-            $('.no-auto').each(function () {
+
+
+       
+        
+          $('.no-auto').each(function () {
                 const $this = $(this);
                 const $id = $('#' + $this.attr('id'));
                 init_date_picker($id,  'down', (start, e) => {
-                      
+                    //$this.val(start.format('DD/MM/YYYY'));
                 }, null, null, false);
 
                 $id.on('apply.daterangepicker', function (ev, picker) {
@@ -57,7 +71,7 @@
             });
 
 
-            const $container = $('.doc-list');
+            const $container = $('.list-red');
             var index = $container.find('.row-line').length;
 
             const $addLink = $('.add-document');
@@ -83,7 +97,7 @@
                     });
 
 
-                    $this.find('.no-auto').each(function () {
+                   $this.find('.no-auto').each(function () {
                         const $this = $(this);
                         const $id = $('#' + $this.attr('id'));
                         init_date_picker($id,  'down', (start, e) => {
@@ -93,7 +107,9 @@
                         $id.on('apply.daterangepicker', function (ev, picker) {
                             $(this).val(picker.startDate.format('DD/MM/YYYY'));
                         });
-                    });
+                     });
+
+
                    
                 });
             }
@@ -101,6 +117,7 @@
 
             // La fonction qui ajoute un formulaire Categorie
             function addLine($container) {
+                //const last_index = +$('.row-line').last().find('.num-version').val();
                 // Dans le contenu de l'attribut « data-prototype », on remplace :
                 // - le texte "__name__label__" qu'il contient par le label du champ
                 // - le texte "__name__" qu'il contient par le numéro du champ
@@ -128,10 +145,15 @@
                     });
                 });
 
-                
 
+               
+                
+            
+                //$prototype.find('.num-version').val(last_index + 1);
                 
                 index++;
+
+                
             }
 
 
@@ -153,7 +175,6 @@
                     e.preventDefault(); // évite qu'un # apparaisse dans l'URL
                 });
             }
-        });
-        
+         });
     </script>
 {% endblock %}

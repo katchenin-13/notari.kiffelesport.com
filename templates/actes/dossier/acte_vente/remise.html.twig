@@ -9,7 +9,7 @@
             <div class="card-body form-card">
                 {{ form_start(form, {'attr': {'role':'form', 'class': 'form', 'id': route_without_prefix}}) }}
                     {{ include('_includes/ajax/response.html.twig') }}
-                    <h3 style="color: orangered">Titre de propriété</h3>
+                    <h3 style="color: orangered">Remise des documents</h3>
                     {% for remise in form.remises %}
                         {{ remise(remise)}}
                     {% endfor %}

@@ -35,11 +35,20 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Controller\BaseController;
+use App\Entity\CommentaireEng;
+use App\Entity\CommentaireIdentification;
+use App\Entity\CommentaireObtention;
+use App\Entity\CommentairePaiement;
+use App\Entity\CommentairePiece;
+use App\Entity\CommentaireRedaction;
+use App\Entity\CommentaireSignature;
 use App\Entity\Compte;
 use App\Entity\DocumentSigne;
 use App\Entity\DocumentSigneFichier;
 use App\Entity\RemiseActe;
+use App\Entity\TypeClient;
 use App\Form\DossierType;
+use App\Repository\ClientRepository;
 use App\Repository\DocumentClientRepository;
 use App\Repository\DocumentTypeActeRepository;
 use App\Repository\DossierWorkflowRepository;
@@ -47,6 +56,7 @@ use App\Repository\TypeRepository;
 use App\Repository\WorkflowRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\QueryBuilder;
+use Egulias\EmailValidator\Parser\Comment;
 use PhpOffice\PhpSpreadsheet\Style\Alignment;
 use Symfony\Component\Validator\Constraints\Language;
 
@@ -56,6 +66,34 @@ class DossierController extends BaseController
     const TAB_ID = 'smartwizard-3';
     const INDEX_ROOT_NAME = 'app_actes_dossier_index';
 
+
+    #[Route('/{id}/fullname', name: 'app_get_fullname', methods: ['DELETE', 'GET'])]
+    public function getFullNameClient(ClientRepository $clientRepository,TypeClient $typeClient){
+        $response = new Response();
+        $tabClient = array();
+        $clients = $clientRepository->findBy(['type_client'=>$typeClient]);
+        $i = 0;
+
+        foreach ($clients as $e) {
+            // transformer la réponse de la requete en tableau qui remplira le select pour ensembles
+
+            
+            $tabClient[$i]['id'] = $e->getId();
+            $tabClient[$i]['nom'] = $e->getTypeClient()->getCode() == "P" ? $e->getNom() .' '.$e->getPrenom() : $e->getRaisonSocial();
+
+
+            $i++;
+        }
+
+        //$dataWithoutDoublon =array_unique($tabClient, SORT_REGULAR);
+
+        $dataService = json_encode($tabClient); // formater le résultat de la requête en json
+       /*  dd($dataService); */
+        $response->headers->set('Content-Type', 'application/json');
+        $response->setContent($dataService);
+    /* } */
+    return $response;
+    }
 
     #[Route('/{id}/print-cr', name: 'app_reunion_print_cr', methods: ['DELETE', 'GET'])]
     public function printAction(Request $request, Dossier $dossier, IdentificationRepository $identificationRepository)
@@ -776,6 +814,11 @@ et indication du nombre des rôles, mots et chiffres nuls
         //dd($dossier->getPieces());
 
 
+        if(!$dossier->getCommentairePieces()->count()){
+            $commentaire = new CommentairePiece();
+            $commentaire->setDescription("");
+            $dossier->addCommentairePiece($commentaire);
+        }
 
          if (!$dossier->getPieces()->count()) {
           
@@ -946,6 +989,12 @@ et indication du nombre des rôles, mots et chiffres nuls
 
 
         $current = $workflowRepository->findOneBy(['typeActe' => $typeActe, 'route' => $routeWithoutPrefix]);
+        
+        if(!$dossier->getCommentaireIdentifications()->count()){
+            $commentaire = new CommentaireIdentification();
+            $commentaire->setDescription("");
+            $dossier->addCommentaireIdentification($commentaire);
+        }
 
         if (!$dossier->getIdentifications()->count()) {
             $identification = new Identification();
@@ -1072,6 +1121,13 @@ et indication du nombre des rôles, mots et chiffres nuls
 
 
         $current = $workflowRepository->findOneBy(['typeActe' => $typeActe, 'route' => $routeWithoutPrefix]);
+
+
+        if(!$dossier->getCommentaireRedactions()->count()){
+            $commentaire = new CommentaireRedaction();
+            $commentaire->setDescription("");
+            $dossier->addCommentaireRedaction($commentaire);
+        }
 
         if (!$dossier->getRedactions()->count()) {
             $redaction = new Redaction();
@@ -1321,6 +1377,11 @@ et indication du nombre des rôles, mots et chiffres nuls
 
         $current = $workflowRepository->findOneBy(['typeActe' => $typeActe, 'route' => $routeWithoutPrefix]);
 
+        if(!$dossier->getCommentaireSignatures()->count()){
+            $commentaire = new CommentaireSignature();
+            $commentaire->setDescription("");
+            $dossier->addCommentaireSignature($commentaire);
+        }
 
         if(!$dossier->getDocumentSignes()->count()){
             foreach ($dossier->getIdentifications() as $key => $value) {
@@ -1465,6 +1526,12 @@ et indication du nombre des rôles, mots et chiffres nuls
 
         $oldEnregistrements = $dossier->getEnregistrements();
 
+        if(!$dossier->getCommentaireEngs()->count()){
+            $commentaire = new CommentaireEng();
+            $commentaire->setDescription("");
+            $dossier->addCommentaireEng($commentaire);
+        }
+
         foreach (Enregistrement::SENS as $idSens => $value) {
             $hasValue = $oldEnregistrements->filter(function (Enregistrement $enregistrement) use ($idSens) {
                 return $enregistrement->getSens() == $idSens;
@@ -1608,6 +1675,12 @@ et indication du nombre des rôles, mots et chiffres nuls
         $ii = 1;
      
 
+        if(!$dossier->getCommentairePaiements()->count()){
+            $commentaire = new CommentairePaiement();
+            $commentaire->setDescription("");
+            $dossier->addCommentairePaiement($commentaire);
+        }
+
         if (!$dossier->getPaiementFrais()->count()) {
           
             foreach ($dossier->getIdentifications() as $key => $value) {
@@ -1709,7 +1782,7 @@ et indication du nombre des rôles, mots et chiffres nuls
 
                 if ($somme != str_replace(' ', '', $dossier->getMontantTotal())) {
                     $statut = 0;
-                    $message       = sprintf('La somme total des montants %s doit être egal au montant honorais %s ', $somme, $dossier->getMontantTotal());
+                    $message       = sprintf('Le montant total doit être égal à celui des honoraires');
                 } else { 
                     $suiviDossierRepository = $em->getRepository(SuiviDossierWorkflow::class);
                     $dossierWorkflow = $dossierWorkflowRepository->findOneBy(['dossier' => $dossier, 'workflow' => $current]);
@@ -1942,6 +2015,11 @@ et indication du nombre des rôles, mots et chiffres nuls
 
 
         $current = $workflowRepository->findOneBy(['typeActe' => $typeActe, 'route' => $routeWithoutPrefix]);
+        if(!$dossier->getCommentaireObtentions()->count()){
+            $commentaire = new CommentaireObtention();
+            $commentaire->setDescription("");
+            $dossier->addCommentaireObtention($commentaire);
+        }
 
         if (!$dossier->getObtentions()->count()) {
             $obtention = new Obtention();

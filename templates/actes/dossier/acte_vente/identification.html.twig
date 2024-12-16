@@ -4,6 +4,7 @@
 {% form_theme form 'widget/fields-block.html.twig' %}
 
 {% from '_macros/ligneidentificationclient.html.twig' import prototype_identification %}
+{% from '_macros/ligneidentificationclient.html.twig' import prototype_commentaire %}
 <div class="row">
     <div class="col-md-12">
         <div class="card">
@@ -12,6 +13,8 @@
                 {{ include('_includes/ajax/response.html.twig') }}
                 <h3 style="color: orangered">Identification des différentes parties</h3>
                 {{ prototype_identification(form) }}
+                {{ prototype_commentaire(form) }} 
+                <br>
                 <div class="row">
                     <div class="col-xl-12">
                         <div class="text-right">
@@ -33,7 +36,70 @@
     $(function () {
         init_select2(null, null, '.form-card');
     });
+
+
+    function load_content(){
+         
+
+                $(".type").each(function () {
+                    const $this = $(this);
+
+                     var urlTemplate = "{{ path('app_get_fullname', {id: 'id'}) }}";
+
+            var url = urlTemplate
+            .replace('id', $this.val());
+                        $.ajax({
+                    url:  url,
+                    type:  'get',
+                    async: false,
+                    dataType:   'json',
+                    success: function(json){
+                    const client = $this.closest('.row-colonne').find('.client').val();
+                    $this.closest('.row-colonne').find(".client").html(''); //je vide la 2ème list
+                        
+                        $.each(json, function(index, value) { // et une boucle sur la réponse contenu dans la variable passé à la function du success "json"                     
+                            $('#'+ $this.closest('.row-colonne').find('.client').attr("id")).append('<option value="'+ value.id +'" ' + (value.id == client ? 'selected' : '') + '  >' + value.nom +'</option>');
+                          });
+                    }
+                });
+                    init_select2('select', null, '#exampleModalSizeSm2');
+                  
+                });
+    }
+
+    function load(id,element){
+
+          var urlTemplate = "{{ path('app_get_fullname', {id: 'id'}) }}";
+
+        var url = urlTemplate
+        .replace('id', id);
+         $.ajax({
+                    url:  url,
+                    type:  'get',
+                    async: false,
+                    dataType:   'json',
+                    success: function(json){
+                    console.log(element.closest('.row-colonne').find('.client').attr("id"))
+                    element.closest('.row-colonne').find(".client").html(''); //je vide la 2ème list
+                         $('#'+ element.closest('.row-colonne').find('.client').attr("id")).append('<option value selected="default" >Choisissez</option>');
+                        $.each(json, function(index, value) { // et une boucle sur la réponse contenu dans la variable passé à la function du success "json"                     
+                            $('#'+ element.closest('.row-colonne').find('.client').attr("id")).append('<option value="'+ value.id +'"   >' + value.nom +'</option>');
+                          });
+                    }
+                });
+ init_select2('select', null, '#exampleModalSizeSm2');
+                 /*  init_select2($this, null, '#exampleModalSizeSm2'); */
+    }
     $(function () {
+
+load_content();
+   $(".type").on('change', function (e) {
+        const $this = $(this);
+       
+       load($this.val(),$this)
+       
+       
+      });
 
 
         const $container = $('.proto-container');
@@ -67,8 +133,16 @@
 
 
             addLine($container, name, proto_class);
+load_content();
 
 
+        $(".type").on('change', function (e) {
+                const $this = $(this);
+            
+            load($this.val(),$this)
+            
+            
+            });
 
             e.preventDefault(); // évite qu'un # apparaisse dans l'URL
         });

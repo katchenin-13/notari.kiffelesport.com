@@ -3,6 +3,7 @@
 {% form_theme form 'widget/fields-block.html.twig' %}
 
 {% from '_macros/frais.html.twig' import prototype_frais %}
+{% from '_macros/frais.html.twig' import prototype_commentaire %}
 <div class="row">
     <div class="col-md-12">
         <div class="card">
@@ -23,7 +24,8 @@
                 
                 <br>
                 {{ prototype_frais(form) }}
-                
+                 {{ prototype_commentaire(form) }}
+                <br>
                 <div class="row">
                     <div class="col-xl-12">
                         <div class="text-right">

@@ -17,15 +17,17 @@ class RemiseType extends AbstractType
     {
         $builder
         ->add('date', DateType::class, [
-            'label' => false
+            'label' => "Date de remise"
             , 'html5' => false
             , 'attr' => ['class' => 'has-datepicker no-auto skip-init', 'autocomplete' => 'off']
             , 'widget' => 'single_text'
             , 'format' => 'dd/MM/yyyy'
             , 'empty_data' => date('d/m/Y')
         ])
-        ->add('fichier', FichierType::class, ['label' => 'Fichier', 'label' => false, 'doc_options' => $options['doc_options'], 'required' => $options['doc_required'] ?? true]);
-
+        ->add('fichier', FichierType::class, ['label' => 'Fichier', 'label' => 'Accusé de réception ', 'doc_options' => $options['doc_options'], 'required' => $options['doc_required'] ?? true])
+        ->add('description',TextareaType::class,[
+            'label'=>'Commentaire'
+        ])
          /*   ->add('dossier')*/
         ;
     }

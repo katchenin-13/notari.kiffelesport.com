@@ -35,11 +35,9 @@
 
 {% block java %}
     <script>
+      
         $(function () {
-            init_select2('select');
-        });
-        $(function () {
-            init_select2('select', null, '.content-doc');
+            init_select2('select', null, '#exampleModalSizeLg2');
         });
 
 
@@ -88,12 +86,13 @@
                         const $this = $(this);
                         addDeleteLink($this);
                         const $select = $this.find("select");
+   
 
 
 
                         $select.each(function () {
                             const $this = $(this);
-                            init_select2($this, null, '#exampleModalSizeSm2');
+                            init_select2($this, null, '#exampleModalSizeLg2');
                             if ($this.hasClass('select-type')) {
                                 let field_str = $this.find('option:selected').attr('data-require-fields');
                                 const $parent = $this.closest('.row-colonne');
@@ -127,7 +126,7 @@
                         .replace(new RegExp(name, 'g'), index));
 
 
-                    init_select2($prototype.find('select'), null, '#exampleModalSizeSm2');
+                    init_select2($prototype.find('select'), null, '#exampleModalSizeLg2');
 
 
                     // On ajoute au prototype un lien pour pouvoir supprimer la prestation

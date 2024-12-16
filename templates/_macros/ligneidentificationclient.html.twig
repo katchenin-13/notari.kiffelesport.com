@@ -3,6 +3,11 @@
 
 <tr class="row-colonne even pointer table-light">
     <td class="p-2">
+        <div style="display:non" class="field-matiere">{{ form_widget(colonne.type) }}</div>
+        {# <div style="display:non" class="field-matiere">{{ colonne.document_type_client.vars.value }} </div>
+        #}
+    </td>
+    <td class="p-2">
         <div style="display:non" class="field-matiere">{{ form_widget(colonne.clients) }}</div>
         {# <div style="display:non" class="field-matiere">{{ colonne.document_type_client.vars.value }} </div>
         #}
@@ -17,6 +22,22 @@
                 class="bi bi-trash"></span></a> #}</td>
 </tr>
 {% endmacro %}
+{% macro commentaire(colonne) %}
+    <div class="row">
+         <div class="col-md-12">
+        {{ form_row(colonne.description) }}
+        </div>
+    </div>
+{% endmacro %}
+
+{% macro prototype_commentaire(form) %}
+<div class="list-colonneggg" data-prototype="{{ _self.commentaire(form.CommentaireIdentifications.vars.prototype)|e }}">
+</div>
+
+            {% for item in form.CommentaireIdentifications %}
+                {{ _self.commentaire(item|e) }}
+            {% endfor %}
+{% endmacro %}
 
 {% macro prototype_identification(form) %}
 <div class="list-colonne" data-prototype="{{ _self.identification(form.identifications.vars.prototype)|e }}">
@@ -27,7 +48,8 @@
     <thead class="thead-dark">
 
         <tr>
-            <th width="40%" class="p-2">Client conserné</th>
+            <th width="40%" class="p-2">Type client</th>
+            <th width="40%" class="p-2">Client concerné</th>
             <th width="50%" class="p-2">Attribut</th>
     
     
@@ -42,10 +64,10 @@
         </tr>
     </thead>
     
-    <tbody class="column-container proto-container" data-childclass=""">
+    <tbody class="column-container proto-container" data-childclass="">
             {% for item in form.identifications %}
                 {{ _self.identification(item|e) }}
             {% endfor %}
- </tbody>
+        </tbody>
     </table>
 {% endmacro %}

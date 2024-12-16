@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\RemiseRepository;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: RemiseRepository::class)]
@@ -28,6 +29,9 @@ class Remise
     #[ORM\OneToOne(cascade: ["persist"], fetch: "EAGER")]
     #[ORM\JoinColumn(nullable: true)]
     private ?FichierAdmin $fichier = null;
+
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private ?string $description = null;
 
     public function getId(): ?int
     {
@@ -80,6 +84,18 @@ class Remise
     public function setFichier(FichierAdmin $fichier): self
     {
         $this->fichier = $fichier;
+
+        return $this;
+    }
+
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    public function setDescription(?string $description): static
+    {
+        $this->description = $description;
 
         return $this;
     }
