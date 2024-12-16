@@ -29,7 +29,8 @@
                         </div>
                     </div>
                 </div>
-                {{ form_end(form) }}
+                 {{ form_widget(form._token) }}
+                 {{ form_end(form, {render_rest: false}) }}
             </div>
         </div>
     </div>
@@ -70,7 +71,7 @@
         init_select2(null, null, '.form-card');
     });
     $(function () {
-getTotal();
+        getTotal();
 
         const $container = $('.proto-container');
 

@@ -46,7 +46,9 @@ use App\Entity\Compte;
 use App\Entity\DocumentSigne;
 use App\Entity\DocumentSigneFichier;
 use App\Entity\RemiseActe;
+use App\Entity\TypeClient;
 use App\Form\DossierType;
+use App\Repository\ClientRepository;
 use App\Repository\DocumentClientRepository;
 use App\Repository\DocumentTypeActeRepository;
 use App\Repository\DossierWorkflowRepository;
@@ -64,6 +66,34 @@ class DossierController extends BaseController
     const TAB_ID = 'smartwizard-3';
     const INDEX_ROOT_NAME = 'app_actes_dossier_index';
 
+
+    #[Route('/{id}/fullname', name: 'app_get_fullname', methods: ['DELETE', 'GET'])]
+    public function getFullNameClient(ClientRepository $clientRepository,TypeClient $typeClient){
+        $response = new Response();
+        $tabClient = array();
+        $clients = $clientRepository->findBy(['type_client'=>$typeClient]);
+        $i = 0;
+
+        foreach ($clients as $e) {
+            // transformer la réponse de la requete en tableau qui remplira le select pour ensembles
+
+            
+            $tabClient[$i]['id'] = $e->getId();
+            $tabClient[$i]['nom'] = $e->getTypeClient()->getCode() == "P" ? $e->getNom() .' '.$e->getPrenom() : $e->getRaisonSocial();
+
+
+            $i++;
+        }
+
+        //$dataWithoutDoublon =array_unique($tabClient, SORT_REGULAR);
+
+        $dataService = json_encode($tabClient); // formater le résultat de la requête en json
+       /*  dd($dataService); */
+        $response->headers->set('Content-Type', 'application/json');
+        $response->setContent($dataService);
+    /* } */
+    return $response;
+    }
 
     #[Route('/{id}/print-cr', name: 'app_reunion_print_cr', methods: ['DELETE', 'GET'])]
     public function printAction(Request $request, Dossier $dossier, IdentificationRepository $identificationRepository)

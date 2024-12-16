@@ -3,6 +3,11 @@
 
 <tr class="row-colonne even pointer table-light">
     <td class="p-2">
+        <div style="display:non" class="field-matiere">{{ form_widget(colonne.type) }}</div>
+        {# <div style="display:non" class="field-matiere">{{ colonne.document_type_client.vars.value }} </div>
+        #}
+    </td>
+    <td class="p-2">
         <div style="display:non" class="field-matiere">{{ form_widget(colonne.clients) }}</div>
         {# <div style="display:non" class="field-matiere">{{ colonne.document_type_client.vars.value }} </div>
         #}
@@ -43,6 +48,7 @@
     <thead class="thead-dark">
 
         <tr>
+            <th width="40%" class="p-2">Type client</th>
             <th width="40%" class="p-2">Client concerné</th>
             <th width="50%" class="p-2">Attribut</th>
     

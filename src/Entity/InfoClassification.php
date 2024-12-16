@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\InfoClassificationRepository;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: InfoClassificationRepository::class)]
@@ -22,6 +23,9 @@ class InfoClassification
     #[ORM\OneToOne(targetEntity: Dossier::class, inversedBy: 'infoClassification', cascade: ['persist', 'remove'])]
     #[ORM\JoinColumn(nullable: false)]
     private $dossier;
+
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private ?string $description = null;
 
     public function getId(): ?int
     {
@@ -60,6 +64,18 @@ class InfoClassification
     public function setDossier(Dossier $dossier): self
     {
         $this->dossier = $dossier;
+
+        return $this;
+    }
+
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    public function setDescription(?string $description): static
+    {
+        $this->description = $description;
 
         return $this;
     }

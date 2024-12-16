@@ -2,43 +2,22 @@
 
 {% form_theme form 'widget/fields-block.html.twig' %}
 
-{% from '_admin/macros/acte_vente.html.twig' import enregistrement %}
+{% from '_admin/macros/acte_vente.html.twig' import prototype_eng %}
 {% from '_admin/macros/acte_vente.html.twig' import commentairesignature %}
  <div class="row">
     <div class="col-md-12">
         <div class="card">
             <div class="card-body form-card">
                 {{ form_start(form, {'attr': {'role':'form', 'class': 'form', 'id': route_without_prefix}}) }}
-                    <div id="prototype" data-prototype="{{ enregistrement(form.enregistrements.vars.prototype, 1)|e }}"></div>
+                    {# <div id="prototype" data-prototype="{{ enregistrement(form.enregistrements.vars.prototype, 1)|e }}"></div> #}
                     <div id="prototype" data-prototype="{{ commentairesignature(form.commentaireEngs.vars.prototype, 1)|e }}"></div>
                     {{ include('_includes/ajax/response.html.twig') }}
                     <h3 style="color: orangered">Taxation de la comptabilité et expédition de l’acte à la conservation</h3>
                     <button type="button" class="add-document btn btn-sm btn-info mb-4 d-none" data-container=".doc-list">Ajouter un document</button>
-                     <div class="row row-header">
-                            <div class="col-md-1">&nbsp;</div>
-                            <div class="col-md-1">N° Bord</div>
-                            <div class="col-md-2">Date </div>
-                            <div class="col-md-2">Fiche taxation</div>
-                            <div class="col-md-1">
+                     
 
-                            </div>
-                            <div class="col-md-2">Fiche client</div>
-                            <div class="col-md-1">
+  {{ prototype_eng(form) }}
 
-                            </div>
-                            <div class="col-md-1">Fiche trans.</div>
-                            <div class="col-md-1">
-
-                            </div>
-                           
-                            
-                        </div>
-                    <div class="doc-list">
-                        {% for document in form.enregistrements %}
-                            {{ enregistrement(document)}}
-                        {% endfor %}
-                       
-                    </div>
                     <br>
                      {% for commentaire in form.commentaireEngs %}
                             {{ commentairesignature(commentaire)}}

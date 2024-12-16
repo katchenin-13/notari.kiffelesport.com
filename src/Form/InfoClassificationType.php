@@ -5,6 +5,7 @@ namespace App\Form;
 use App\Entity\InfoClassification;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -22,6 +23,9 @@ class InfoClassificationType extends AbstractType
                 , 'format' => 'dd/MM/yyyy'
                 , 'empty_data' => date('d/m/Y')
                 , 'label' => 'Date de classification'
+            ])
+            ->add('description',TextareaType::class,[
+                'label'=>'Commentaire'
             ])
         ;
     }

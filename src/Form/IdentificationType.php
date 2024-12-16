@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\Identification;
 use App\Entity\Client;
+use App\Entity\TypeClient;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
@@ -19,11 +20,17 @@ class IdentificationType extends AbstractType
     {
         $builder
 
+            ->add('type', EntityType::class, [
+                'label' => false,
+                'class' => TypeClient::class,
+                'choice_label' => 'titre',
+                'attr' => ['class' => 'form-control has-select2 type']
+            ])
             ->add('clients', EntityType::class, [
                 'label' => false,
                 'class' => Client::class,
                 'choice_label' => 'nom',
-                'attr' => ['class' => 'form-control has-select2']
+                'attr' => ['class' => 'form-control has-select2 client']
             ])
             ->add('attribut', TextType::class, ['label' => 'Attribut', 'label' => false, 'required' => false])
         ;
