@@ -19,6 +19,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Controller\BaseController;
 use App\Form\CalendarType;
+use App\Service\SendMailService;
 use Doctrine\ORM\QueryBuilder;
 
 #[Route('/ads/agenda/calendar')]
@@ -165,7 +166,7 @@ class CalendarController extends BaseController
     }
 
     #[Route('/new/new', name: 'app_agenda_calendar_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager, FormError $formError): Response
+    public function new(Request $request, EntityManagerInterface $entityManager, FormError $formError,SendMailService $sendMailService): Response
     {
 
         $titre = "Ajouter un événement";
@@ -216,6 +217,24 @@ class CalendarController extends BaseController
                         'telephone' =>  '0704314164'
                     ]
                 );*/
+
+                $info_user = [
+                    'login' => "ddd",
+                    'password' => "ttt"
+                ];
+
+                $context = compact('info_user');
+
+                // TO DO
+                $sendMailService->send(
+                    'konatenhamed@ufrseg.enig-sarl.com',
+                    "konatenhamed@gmail.com",
+                    'Informations',
+                    'agenda_mail',
+                    $context
+                );
+
+
                 $calendar->setActive(1)
                     ->setAllDay(false)
                     ->setBackgroundColor("#31F74F")
@@ -264,7 +283,7 @@ class CalendarController extends BaseController
     }
 
     #[Route('/{id}/edit', name: 'app_agenda_calendar_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Calendar $calendar, EntityManagerInterface $entityManager, FormError $formError): Response
+    public function edit(Request $request, Calendar $calendar, EntityManagerInterface $entityManager, FormError $formError,SendMailService $sendMailService): Response
     {
 
         $form = $this->createForm(CalendarType::class, $calendar, [
@@ -291,6 +310,22 @@ class CalendarController extends BaseController
 
                 $entityManager->persist($calendar);
                 $entityManager->flush();
+
+                $info_user = [
+                    'login' => "ddd",
+                    'password' => "ttt"
+                ];
+
+                $context = compact('info_user');
+
+                      // TO DO
+                      $sendMailService->send(
+                        'konatenhamed@ufrseg.enig-sarl.com',
+                        "konatenhamed@gmail.com",
+                        'Informations',
+                        'agenda_mail',
+                        $context
+                    );
 
                 $data = true;
                 $message = 'Opération effectuée avec succès';
