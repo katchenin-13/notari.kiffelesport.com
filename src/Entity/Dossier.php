@@ -151,6 +151,9 @@ class Dossier
     #[ORM\OneToMany(mappedBy: 'dossier', targetEntity: CommentaireObtention::class, cascade: ['persist'])]
     private Collection $commentaireObtentions;
 
+    #[ORM\OneToMany(mappedBy: 'dossier', targetEntity: EnregistrementDocument::class, cascade: ['persist'])]
+    private Collection $enregistrementDocuments;
+
 
     public function __construct()
     {
@@ -179,6 +182,7 @@ class Dossier
         $this->commentaireSignatures = new ArrayCollection();
         $this->commentaireEngs = new ArrayCollection();
         $this->commentaireObtentions = new ArrayCollection();
+        $this->enregistrementDocuments = new ArrayCollection();
       
     }
 
@@ -657,7 +661,7 @@ class Dossier
     public function validate(ExecutionContextInterface $context, $payload)
     {
         $enregistrements = $this->getEnregistrements();
-
+/* 
         foreach ($enregistrements as $index => $enregistrement) {
 
             if ($enregistrement->getDate() && (!$enregistrement->getNumero() ||  !$enregistrement->getFichier())) {
@@ -677,7 +681,7 @@ class Dossier
                 ))
                     ->addViolation();
             }
-        }
+        } */
     }
 
     public function getMontantTotal(): ?string
@@ -1086,6 +1090,36 @@ class Dossier
             // set the owning side to null (unless already changed)
             if ($commentaireObtention->getDossier() === $this) {
                 $commentaireObtention->setDossier(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, EnregistrementDocument>
+     */
+    public function getEnregistrementDocuments(): Collection
+    {
+        return $this->enregistrementDocuments;
+    }
+
+    public function addEnregistrementDocument(EnregistrementDocument $enregistrementDocument): static
+    {
+        if (!$this->enregistrementDocuments->contains($enregistrementDocument)) {
+            $this->enregistrementDocuments->add($enregistrementDocument);
+            $enregistrementDocument->setDossier($this);
+        }
+
+        return $this;
+    }
+
+    public function removeEnregistrementDocument(EnregistrementDocument $enregistrementDocument): static
+    {
+        if ($this->enregistrementDocuments->removeElement($enregistrementDocument)) {
+            // set the owning side to null (unless already changed)
+            if ($enregistrementDocument->getDossier() === $this) {
+                $enregistrementDocument->setDossier(null);
             }
         }
 

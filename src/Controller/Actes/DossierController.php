@@ -45,6 +45,7 @@ use App\Entity\CommentaireSignature;
 use App\Entity\Compte;
 use App\Entity\DocumentSigne;
 use App\Entity\DocumentSigneFichier;
+use App\Entity\EnregistrementDocument;
 use App\Entity\RemiseActe;
 use App\Entity\TypeClient;
 use App\Form\DossierType;
@@ -1530,6 +1531,12 @@ et indication du nombre des rôles, mots et chiffres nuls
             $commentaire = new CommentaireEng();
             $commentaire->setDescription("");
             $dossier->addCommentaireEng($commentaire);
+        }
+
+        if(!$dossier->getEnregistrementDocuments()->count()){
+            $docs = new EnregistrementDocument();
+            
+            $dossier->addEnregistrementDocument($docs);
         }
 
         foreach (Enregistrement::SENS as $idSens => $value) {

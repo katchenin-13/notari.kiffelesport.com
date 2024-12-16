@@ -22,9 +22,9 @@ class EnregistrementType extends AbstractType
                 'label' => false,
                 'empty_data' => ''
             ])
-            ->add('fichier', FichierType::class, ['label' => false, 'doc_options' => $options['doc_options'], 'required' => $options['doc_required'] ?? true])
+            /* ->add('fichier', FichierType::class, ['label' => false, 'doc_options' => $options['doc_options'], 'required' => $options['doc_required'] ?? true])
             ->add('fichierClient', FichierType::class, ['label' => false, 'doc_options' => $options['doc_options'], 'required' => $options['doc_required'] ?? true])
-            ->add('fichierCourrier', FichierType::class, ['label' => false, 'doc_options' => $options['doc_options'], 'required' => $options['doc_required'] ?? true])
+            ->add('fichierCourrier', FichierType::class, ['label' => false, 'doc_options' => $options['doc_options'], 'required' => $options['doc_required'] ?? true]) */
             ->add('date', DateType::class, [
                 'label' => false, 'html5' => false, 'attr' => ['class' => 'no-auto skip-init has-datepicker'], 'widget' => 'single_text', 'format' => 'dd/MM/yyyy', 'empty_data' => ''
             ])
