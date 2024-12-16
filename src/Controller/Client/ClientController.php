@@ -269,6 +269,7 @@ class ClientController extends BaseController
         return $this->renderForm('client/client/edit.html.twig', [
             'client' => $client,
             'form' => $form,
+            'type'=>"edit"
         ]);
     }
 

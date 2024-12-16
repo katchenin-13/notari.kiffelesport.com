@@ -37,7 +37,12 @@ class PieceType extends AbstractType
         ->add('type', EntityType::class, [
             'label' => false,
             'class' => DocumentTypeClient::class,
-            'choice_label' => 'libelle',
+            'choice_label' => 'getLibelle',
+           'query_builder' => function (EntityRepository $er) {
+                    return $er->createQueryBuilder('c')
+                        ->innerJoin("c.typesdocuments","t")
+                      ;
+                },
             'attr' => ['class' => 'form-control has-select2']
         ])
         ->add('path', FichierType::class, ['label' => false,  'doc_options' => $options['doc_options'], 'required' => $options['doc_required'] ?? true])

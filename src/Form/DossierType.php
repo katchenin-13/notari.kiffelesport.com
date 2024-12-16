@@ -325,6 +325,22 @@ class DossierType extends AbstractType
 
             ]);
 
+            $builder->add('enregistrementDocuments', CollectionType::class, [
+                'entry_type' => EnregistrementDocumentType::class,
+                'entry_options' => [
+                    'label' => false,
+                    'doc_options' => $options['doc_options'],
+                    'doc_required' => $options['doc_required']
+                ],
+               
+                'allow_add' => true,
+                'label' => false,
+                'by_reference' => false,
+                'allow_delete' => true,
+                'prototype' => true,
+
+            ]);
+
             $builder->add('commentaireEngs', CollectionType::class, [
                 'entry_type' => CommentaireEngType::class,
                 'entry_options' => [
@@ -374,7 +390,7 @@ class DossierType extends AbstractType
 
 
         if ($etape == 'classification') {
-            $builder->add('infoClassification', InfoClassificationType::class);;
+            $builder->add('infoClassification', InfoClassificationType::class);
         }
 
         if ($etape == 'enregistrement') {
