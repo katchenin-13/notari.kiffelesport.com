@@ -22,7 +22,10 @@ class DocumentClientType extends AbstractType
             ->add('document_type_client', EntityType::class, [
                 'label' => false,
                  'class' => DocumentTypeClient::class, 
-                 'choice_label' => 'libelle',
+                 'choice_label' => function(DocumentTypeClient $d) { 
+                    $libelle = $d->getTypesdocuments();
+                    return  $libelle->getLibelle();
+                 },
                   'attr' => [
                     'class' => 'form-control has-select2'
                     ]
