@@ -28,6 +28,15 @@ class RemiseActe
     #[ORM\Column(length: 255)]
     private ?string $commentaire = null;
 
+    #[ORM\Column(type: 'boolean')]
+    private $active;
+
+    public function __construct()
+    {
+        $this->active = false;
+    }
+
+    
     public function getId(): ?int
     {
         return $this->id;
@@ -86,4 +95,17 @@ class RemiseActe
 
         return $this;
     }
+
+    public function getActive(): ?bool
+    {
+        return $this->active;
+    }
+
+    public function setActive(bool $active): static
+    {
+        $this->active = $active;
+
+        return $this;
+    }
+
 }

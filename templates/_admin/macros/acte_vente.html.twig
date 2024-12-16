@@ -3,6 +3,9 @@
          <div class="col-md-12">
         {{ form_row(colonne.description) }}
         </div>
+        {# <div class="col-md-12 mt-3 " style="font-weight: bold;font-size: 20px;color: red">
+            {{ form_row(colonne.active) }}
+        </div> #}
     </div>
 {% endmacro %}
 
@@ -19,6 +22,9 @@
     <div class="row">
          <div class="col-md-12">
         {{ form_row(colonne.description) }}
+        </div>
+        <div class="col-md-12 mt-3 " style="font-weight: bold;font-size: 20px;color: red">
+            {{ form_row(colonne.active) }}
         </div>
     </div>
 {% endmacro %}
@@ -333,7 +339,12 @@
         {% endif %}
     </div>
     <div class="row">
-        {{ form_row(remise.description) }}
+        <div class="col-md-12">
+            {{ form_row(remise.description) }}
+        </div>
+        <div class="col-md-12 mt-3 " style="font-weight: bold;font-size: 20px;color: red">
+            {{ form_row(remise.active) }}
+        </div>
     <div>
 {% endmacro %}
 
@@ -357,6 +368,9 @@
         </div>
         {% endif %}
         <div class="col-md-12">{{ form_row(remiseActe.commentaire) }}</div>
+        <div class="col-md-12 mt-3 " style="font-weight: bold;font-size: 20px;color: red">
+            {{ form_row(remiseActe.active) }}
+        </div>
        
     </div>
 {% endmacro %}

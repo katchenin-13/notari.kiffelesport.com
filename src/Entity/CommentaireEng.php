@@ -20,6 +20,13 @@ class CommentaireEng
     #[ORM\ManyToOne(inversedBy: 'commentaireEngs')]
     private ?Dossier $dossier = null;
 
+    #[ORM\Column(type: 'boolean')]
+    private $active;
+
+    public function __construct()   {
+        $this->active = false;
+    }
+
     public function getId(): ?int
     {
         return $this->id;
@@ -45,6 +52,18 @@ class CommentaireEng
     public function setDossier(?Dossier $dossier): static
     {
         $this->dossier = $dossier;
+
+        return $this;
+    }
+
+    public function getActive(): ?bool
+    {
+        return $this->active;
+    }
+
+    public function setActive(bool $active): self
+    {
+        $this->active = $active;
 
         return $this;
     }
