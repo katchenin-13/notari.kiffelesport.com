@@ -15,8 +15,8 @@ class Enregistrement
     const SENS_ARRIVE = 2;
 
     const SENS = [
-        1 => 'Depart',
-        2 => 'Arrivé'
+        1 => 'Départ',
+        2 => 'Arrivée'
     ];
     #[ORM\Id]
     #[ORM\GeneratedValue]
