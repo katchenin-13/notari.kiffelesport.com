@@ -4,6 +4,7 @@
 
 {% from '_admin/macros/acte_vente.html.twig' import prototype_eng %}
 {% from '_admin/macros/acte_vente.html.twig' import commentairesignature %}
+{% from '_admin/macros/acte_vente.html.twig' import prototype_ernregistrement_document %}
  <div class="row">
     <div class="col-md-12">
         <div class="card">
@@ -14,9 +15,10 @@
                     {{ include('_includes/ajax/response.html.twig') }}
                     <h3 style="color: orangered">Taxation de la comptabilité et expédition de l’acte à la conservation</h3>
                     <button type="button" class="add-document btn btn-sm btn-info mb-4 d-none" data-container=".doc-list">Ajouter un document</button>
-                     
+                  <br>
+                    {{ prototype_ernregistrement_document(form) }} <br>
 
-  {{ prototype_eng(form) }}
+                    {{ prototype_eng(form) }}
 
                     <br>
                      {% for commentaire in form.commentaireEngs %}

@@ -223,6 +223,7 @@ class HomeController extends AbstractController
             'client' => $client,
             'form' => $form,
             'documentTypeClients' => $documentTypeClients,
+            'type'=>'new'
         ]);
     }
     #[Route('/new/load/{typeClient}', name: 'app_client_client_new_load', methods: ['GET', 'POST'], options: ['expose' => true])]
@@ -311,6 +312,7 @@ class HomeController extends AbstractController
             'typeClient' => $typeClient,
             'code'=>$typeClientRepository->find($typeClient)->getCode(),
             'documentTypeClients' => $documentTypeClients,
+            'type'=>'new'
         ]);
     }
 }
