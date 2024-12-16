@@ -16,13 +16,14 @@
         {{ include('_includes/ajax/response.html.twig') }}
     <div class="row">
         <div class="col-md-4">{{ form_row(form.fournisseur) }}</div>
-        <div class="col-md-4">{{ form_row(form.libelle) }}</div>
-        <div class="col-md-4">{{ form_row(form.datecreation) }}</div>
+        <div class="col-md-8">{{ form_row(form.libelle) }}</div>
+       
 
     </div>
     <div class="row">
-        <div class="col-md-6">{{ form_row(form.montanttotal) }}</div>
-        <div class=" col-md-6 field-matiere  ">{{ form_row(form.fichier) }}</div>
+        <div class="col-md-4">{{ form_row(form.datecreation) }}</div>
+        <div class="col-md-4">{{ form_row(form.montanttotal) }}</div>
+        <div class=" col-md-4 field-matiere  ">{{ form_row(form.fichier) }}</div>
     </div>
     </div>
     <div class="modal-footer">

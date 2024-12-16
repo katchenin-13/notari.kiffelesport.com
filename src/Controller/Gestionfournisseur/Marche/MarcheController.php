@@ -39,8 +39,8 @@ class MarcheController extends BaseController
         $table = $dataTableFactory->create()
             ->add('fournisseur', TextColumn::class, ['label' => 'Fournisseur', 'field' => 'f.nom'])
             ->add('datecreation', DateTimeColumn::class, ['label' => 'Date de creation', 'format' => 'd/m/Y'])
-            ->add('libelle', TextColumn::class, ['label' => 'Libelle'])
-            ->add('montanttotal', TextColumn::class, ['label' => 'Montant Total'])
+            ->add('libelle', TextColumn::class, ['label' => 'Objet du marché'])
+            ->add('montanttotal', TextColumn::class, ['label' => 'Montant'])
             ->add('solde', TextColumn::class, ['label' => 'Solde'])
             // ->add('montantpaye', TextColumn::class, [
             //     'label' => 'Total payé',
