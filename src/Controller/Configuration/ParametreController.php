@@ -174,11 +174,11 @@ class ParametreController extends BaseController
                     'id' => 'param_acts',
                     'href' => $this->generateUrl('app_parametre_type_index')
                 ],
-                // [
-                //     'label' => 'Le process de traitement des actes',
-                //     'id' => 'param_soci',
-                //     'href' => $this->generateUrl('app_parametre_workflow_index')
-                // ],
+                [
+                    'label' => 'Le process de traitement des actes',
+                    'id' => 'param_soci',
+                    'href' => $this->generateUrl('app_parametre_workflow_index')
+                ],
 
                 [
                     'label' => 'Type de société',
