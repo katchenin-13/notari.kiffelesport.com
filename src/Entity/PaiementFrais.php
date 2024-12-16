@@ -32,6 +32,8 @@ class PaiementFrais
     #[ORM\ManyToOne(inversedBy: 'paiementFrais')]
     private ?Client $client = null;
 
+    
+
     public function getId(): ?int
     {
         return $this->id;

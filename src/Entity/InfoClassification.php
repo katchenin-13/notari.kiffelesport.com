@@ -26,6 +26,14 @@ class InfoClassification
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $description = null;
+    
+    #[ORM\Column(type: 'boolean')]
+    private ?bool $active = null;
+
+    
+    public function __construct(){
+     $this->active = false;
+    }
 
     public function getId(): ?int
     {
@@ -76,6 +84,18 @@ class InfoClassification
     public function setDescription(?string $description): static
     {
         $this->description = $description;
+
+        return $this;
+    }
+
+    public function getActive(): ?bool
+    {
+        return $this->active;
+    }
+
+    public function setActive(bool $active): static
+    {
+        $this->active = $active;
 
         return $this;
     }
