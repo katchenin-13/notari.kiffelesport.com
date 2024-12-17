@@ -12,21 +12,38 @@
     </div> #}
    
     <div class="modal-body">
-        <table class="table table-bordered">
-        <tbody>
-                            <tr>
-                    <th>Id</th>
-                    <td>{{ compte.id }}</td>
+        <table class="table table-bordered table-custom">
+            <thead class="thead-dark">
+                <tr>
+                    <th width="30%" class="p-2">Dossier</th>
+                    <th width="30%" class="p-2">Objet du Dossier</th>
+                    <th width="15%" class="p-2">Montant dû </th>
+                    <th width="15%" class="p-2">Total payé</th>
+                    <th width="10%" class="p-2">solde</th>
                 </tr>
-                            <tr>
-                    <th>Montant</th>
-                    <td>{{ compte.montant }}</td>
+            </thead>
+            <tbody>
+                <tr>
+                    <td width="30%" class="p-2">{{ compte.dossier.numeroOuverture }}</td>
+                    <td width="30%" class="p-2">{{ compte.dossier.objet }}</td>
+                    <td width="15%" class="p-2">
+                        {{ (compte.montant|default('0')|replace({',' : '', ' ' : ''})|number_format(0, '.', ',')) }}
+                    </td>
+                    <td width="15%" class="p-2">
+                        {{ (compte.montant|default('0')|replace({',' : '', ' ' : ''}) -
+                        compte.solde|default('0')|replace({',' : '', ' ' : ''}))|number_format(0, '.', ',') }}
+                    </td>
+                    <td width="10%" class="p-2">
+                        {{ compte.solde|default('0')|replace({',' : '', ' ' : ''})|number_format(0, '.', ',') }}
+                    </td>
                 </tr>
-                            <tr>
-                    <th>Solde</th>
-                    <td>{{ compte.solde }}</td>
-                </tr>
-                    </tbody>
+            
+            
+            
+            
+            
+            </tbody>
+        
     </table>
     </div>
     <div class="modal-footer">

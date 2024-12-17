@@ -37,7 +37,7 @@ class ConfigMarcheController extends AbstractController
             ],
             [
 
-                'label' => 'DETAIL Du COMPTE',
+                'label' => 'DETAIL DU COMPTE',
                 'icon' => 'bi bi-list',
                 'module' => 'general',
                 'href' => $this->generateUrl('app_compte_fournisseur_show', ['id' => $id])

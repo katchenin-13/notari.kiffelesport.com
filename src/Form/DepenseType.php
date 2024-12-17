@@ -47,13 +47,13 @@ class DepenseType extends AbstractType
             //         'readonly' => true, // Empêche la modification directe
             //     ],
             // ])
-            ->add('mois', TextType::class, [
-                'label' => 'Mois',
-                'attr' => [
-                    'class' => 'form-control',
-                    'readonly' => true, // Empêche l'utilisateur de le modifier
-                ],
-            ])
+            // ->add('mois', TextType::class, [
+            //     'label' => 'Mois',
+            //     'attr' => [
+            //         'class' => 'form-control',
+            //         'readonly' => true, // Empêche l'utilisateur de le modifier
+            //     ],
+            // ])
 
             ->add('lignedepenses', CollectionType::class, [
                 'entry_type' => LignedepenseType::class,
