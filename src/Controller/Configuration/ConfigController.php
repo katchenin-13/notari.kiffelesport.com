@@ -34,7 +34,7 @@ class ConfigController extends AbstractController
             ],
             [
 
-                'label' => 'PAIEMENT',
+                'label' => 'DETAIL DU COMPTE',
                 'icon' => 'bi bi-list',
                 'module' => 'general',
                 'href' => $this->generateUrl('app_compte_frais_show', ['id' => $id])

@@ -281,7 +281,7 @@ class ComptefourController extends BaseController
     public function show(Comptefour $comptefour): Response
     {
         return $this->render('compte/fournisseur/show.html.twig', [
-            'compte' => $comptefour,
+            'comptefour' => $comptefour,
         ]);
     }
 

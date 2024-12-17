@@ -27,7 +27,8 @@ class DocumentClientType extends AbstractType
                     return  $libelle->getLibelle();
                  },
                   'attr' => [
-                    'class' => 'form-control has-select2'
+                    'class' => 'form-control has-select2',
+                'readonly' => true,
                     ]
                 ]);
             // ->add('libelle', null, ['label' => false, 'empty_data' => '']);;

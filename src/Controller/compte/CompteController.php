@@ -37,7 +37,7 @@ class CompteController extends BaseController
 
         $table = $dataTableFactory->create()
             ->add('client', TextColumn::class, ['label' => 'Client','field'=> 'cl.nom'])
-            ->add('dossier', TextColumn::class, ['label' => 'N° Dossier', 'field' => 'd.numeroOuverture'])
+            ->add('dossier', TextColumn::class, ['label' => 'Objet du dossier', 'field' => 'd.objet'])
             ->add('datecreation', DateTimeColumn::class,  ['label' => 'Date de creation ', 'format' => 'd/m/Y', 'searchable' => false])
             ->add('montant', TextColumn::class,  ['label' => 'Montant dû '])
             ->add('montantpaye', TextColumn::class, ['label' => 'Total payé', "searchable" => false, 'render' => function ($value, Compte $context) {
