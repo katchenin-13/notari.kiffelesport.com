@@ -63,6 +63,7 @@ class Employe
     #[ORM\JoinColumn(nullable: true)]
     private ?FichierAdmin $piece = null;
 
+  
 
     public function __construct()
     {
@@ -242,4 +243,9 @@ class Employe
 
         return $this;
     }
+
+
+
+  
+
 }
