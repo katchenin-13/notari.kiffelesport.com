@@ -1,0 +1,66 @@
+
+{% block page_content %}
+{# {% set new = menu.getRoute |slice(0, -8) %} #}
+
+    <div class="modal-header bg-secondary-gradient">
+        <h2 class="modal-title">RAPPORT-{{ titre | upper  }}</h2>
+        <button class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+        </button>
+    </div>
+    <br>
+
+
+    <div class="modal-body">
+       {# {{ dump(data) }} #}
+       
+       <div class="row">
+           <div class="col-md-8">
+               <div class="form-group">
+
+                   <input class="form-control titre" type="text" value="{{ data.alt | upper}}">
+               </div>
+           </div>
+           <div class="col-md-4">
+          {#  <a class="btn btn-dark btn-sm" target="_blank" href="{{ path('fichier_index', {id:  fichier.fichier}) }}" download> <i class="bi bi-upload"></i>
+                </a> #}
+                 <a class="btn btn-dark btn-sm" style="margin-top: 0px;" target="_blank" href="{{ asset('uploads/media_entreprise/' ~ data.alt) }} " download> <i class="bi bi-upload"></i>
+                </a>
+               {# <a class="btn btn-primary-gradient" target="_blank" href="{{ asset('uploads/images/' ~ fichier.path) }}" download> <i class="fe fe-download"></i>
+                   <span style="font-weight: bolder;color: white">Télecharger</span></a> #}
+           </div>
+       </div>
+
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default btn-sm" data-bs-dismiss="modal">Annuler</button>
+
+        {# <button class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>#}
+
+    </div>
+
+
+
+{% endblock %}
+{#{% include 'admin/macros/fichier.html.twig'  %}#}
+
+{% block javascripts %}
+
+
+    <script>
+        $('.titre').attr('readonly', true)
+        $(function () {
+            $('.no-auto').each(function () {
+                const $this = $(this);
+                const $id = $('#' + $this.attr('id'));
+                init_date_picker($id,  'down', (start, e) => {
+                    //$this.val(start.format('DD/MM/YYYY'));
+                }, null, null, false);
+
+                $id.on('apply.daterangepicker', function (ev, picker) {
+                    $(this).val(picker.startDate.format('DD/MM/YYYY'));
+                });
+            });
+        });
+       </script>
+{% endblock %}

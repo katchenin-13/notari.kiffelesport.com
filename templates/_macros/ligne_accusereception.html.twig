@@ -9,12 +9,14 @@
         
        
         <td class="p-2">
-          
+           
             <div style="display:no " class="field-matiere">
               {% if colonne.vars.value %}
-              
-            <a class="btn btn-dark btn-sm" target="_blank" href="{{ path('fichier_index', {id:  colonne.vars.value.fichier.id}) }}" download> <i class="bi bi-upload"></i>
+          
+            <a class="btn btn-dark btn-sm" target="_blank" href=" {{ asset('uploads/media_entreprise/' ~  colonne.vars.value.fichier.alt) }} " download> <i class="bi bi-upload"></i>
                 </a>
+                                
+
              {% endif %}
             </div>
         </td>

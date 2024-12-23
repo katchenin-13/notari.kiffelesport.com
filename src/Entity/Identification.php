@@ -32,7 +32,7 @@ class Identification
     private ?Client $clients = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $attribut = null;
+    private ?string $attribut;
 
     #[ORM\ManyToOne(inversedBy: 'identifications')]
     private ?TypeClient $type = null;

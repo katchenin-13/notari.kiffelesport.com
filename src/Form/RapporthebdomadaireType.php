@@ -26,7 +26,7 @@ class RapporthebdomadaireType extends AbstractType
                 'required' => false,
                 'attr' => [
                     'class' => 'input-file',
-                    'accept' => '.pdf,.doc,.docx,.jpg,.jpeg,.png',
+                    'accept' => '.pdf,',
                 ],
             ])
         ;

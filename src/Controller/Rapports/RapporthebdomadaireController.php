@@ -142,27 +142,13 @@ class RapporthebdomadaireController extends BaseController
                                     'attrs' => ['class' => 'btn-default'],
                                     'render' => $renders['edit']
                                 ],
-                                'imprime' => [
-                                    'url' => $this->generateUrl('default_print_iframe', [
-                                        'r' => 'app_rapports_rapporthebdomadaire_fichier',
-                                        'params' => [
-                                            'id' => $value,
-                                        ]
-                                    ]),
+                             'imprimer' => [
+                                    'url' => $this->generateUrl('app_rapports_rapporthebdomadaire_fichier', ['id' => $value]),
                                     'ajax' => true,
-                                    'target' =>  '#exampleModalSizeSm2',
-                                    'icon' => '%icon% bi bi-printer',
-                                    'attrs' => ['class' => 'btn-main btn-stack']
-                                    ,
+                                    'icon' => '%icon% bi bi-file',
+                                    'attrs' => ['class' => 'btn-secondary', 'title' => 'Télécharger le fichier joindre du rapport'],
                                     'render' => $renders['imprimer']
                                 ],
-                                // 'imprimer' => [
-                                //     'url' => $this->generateUrl('app_rapports_rapporthebdomadaire_show', ['id' => $value]),
-                                //     'ajax' => true,
-                                //     'icon' => '%icon% bi bi-print',
-                                //     'attrs' => ['class' => 'btn-default'],
-                                //     'render' => $renders['imprimer']
-                                // ],
                                 'delete' => [
                                     'target' => '#exampleModalSizeNormal',
                                     'url' => $this->generateUrl('app_rapports_rapporthebdomadaire_delete', ['id' => $value]),
@@ -172,6 +158,7 @@ class RapporthebdomadaireController extends BaseController
                                     'render' => $renders['delete']
                                 ]
                             ]
+                            
 
                         ];
                         return $this->renderView('_includes/default_actions.html.twig', compact('options', 'context'));
@@ -358,34 +345,13 @@ class RapporthebdomadaireController extends BaseController
             'form' => $form,
         ]);
     }
-
-    /**
-     * @throws MpdfException
-     */
-    #[Route('/{id}/imprime', name: 'app_rapports_rapporthebdomadaire_fichier', methods: ['GET'])]
-    public function imprimerPreinscription(Rapporthebdomadaire $rapporthebdomadaire,RapporthebdomadaireRepository $rapporthebdomadaireRepository,): Response
+#[Route('/{id}/imprimer', name: 'app_rapports_rapporthebdomadaire_fichier', methods: ['GET', 'POST'])]
+    public  function  archive(Rapporthebdomadaire $rapporthebdomadaire, RapporthebdomadaireRepository $rapporthebdomadaireRepository)
     {
-
-        $datas = $rapporthebdomadaire->getFichier();
-        
-        $filePath = $this->getParameter('upload_dir') . '/' . $datas->getPath() . '/' . $datas->getFileName();
-        return $this->renderPdf("rapports/rapporthebdomadaire/impression.html.twig", [
-            'data' => $filePath,
-        ],[
-            'orientation' => 'P',
-            'protected' => true,
-
-            'format' => 'A4',
-
-            'showWaterkText' => true,
-            'fontDir' => [
-                $this->getParameter('font_dir') . '/arial',
-                $this->getParameter('font_dir') . '/trebuchet',
-            ],
-            'watermarkImg' => '',
-            'entreprise' => ''
-        ], true);
-        //return $this->renderForm("stock/sortie/imprime.html.twig");
-
+        $datas = $rapporthebdomadaire->getFichier();    
+        return $this->render('rapports/rapporthebdomadaire/archive.html.twig', [
+            'data' => $datas,
+        ]);
     }
+   
 }

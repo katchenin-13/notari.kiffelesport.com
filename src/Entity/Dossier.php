@@ -96,6 +96,7 @@ class Dossier
     private $montantTotal;
 
     #[ORM\ManyToOne(targetEntity: Conservation::class, inversedBy: 'dossiers')]
+    #[ORM\JoinColumn(nullable: false)]
     private $conservation;
 
     #[ORM\OneToMany(targetEntity: PaiementFrais::class, mappedBy: 'dossier', cascade: ['persist', 'remove'])]
@@ -154,6 +155,10 @@ class Dossier
     #[ORM\OneToMany(mappedBy: 'dossier', targetEntity: EnregistrementDocument::class, cascade: ['persist'])]
     private Collection $enregistrementDocuments;
 
+    #[ORM\Column(length: 50)]
+    #[ORM\JoinColumn(nullable: true)]
+    #[Assert\Choice(choices: ['societe', 'notariat'], message: 'Veuillez sélectionner une option valide.')]
+    private ?string $natureDossier;
 
     public function __construct()
     {
@@ -183,7 +188,6 @@ class Dossier
         $this->commentaireEngs = new ArrayCollection();
         $this->commentaireObtentions = new ArrayCollection();
         $this->enregistrementDocuments = new ArrayCollection();
-      
     }
 
 
@@ -1126,6 +1130,18 @@ class Dossier
         return $this;
     }
 
-   
+    
+
+    public function getNatureDossier(): ?string
+    {
+        return $this->natureDossier;
+    }
+
+    public function setNatureDossier(string $natureDossier): self
+    {
+        $this->natureDossier = $natureDossier;
+
+        return $this;
+    }
 
 }

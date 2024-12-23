@@ -13,6 +13,7 @@ use App\Service\Omines\Column\NumberFormatColumn;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
@@ -32,7 +33,7 @@ class DossierType extends AbstractType
         if (!$options['etape']) {
             $builder
 
-                ->add('numeroOuverture', null, ['label' => 'Numéro d\'ouverture'])
+                ->add('numeroOuverture', null, ['label' => 'Numéro du dossier'])
                 ->add('numeroRepertoire', null, ['label' => 'Numéro répertoire'])
                 ->add('description', TextareaType::class, ['label' => 'Description'])
                 ->add(
@@ -82,7 +83,7 @@ class DossierType extends AbstractType
                 // ])
                 //->add('montantTotal', TextType::class, ['attr' => ['class' => 'input-money input-mnt']])
                 ->add('conservation', EntityType::class, [
-                    'required' => true,
+                    'required' => false,
                     'class' => Conservation::class,
                     'choice_attr' => function (Conservation $typeClient) {
                         return ['data-code' => $typeClient->getCode()];
@@ -97,7 +98,16 @@ class DossierType extends AbstractType
                 ->add('dateCreation', DateType::class, [
                     'label' => "Date de création", 'html5' => false, 'attr' => ['class' => 'no-auto skip-init'], 'widget' => 'single_text', 'format' => 'dd/MM/yyyy', 'empty_data' => date('d/m/Y')
                 ])
-                ->add('objet', null, ['label' => 'Objet']);
+                ->add('objet', null, ['label' => 'Objet'])
+            ->add('natureDossier', ChoiceType::class, [
+                'choices' => [
+                    'Société' => 'societe',
+                    'Notariat' => 'notariat',
+                ],
+                'placeholder' => 'Sélectionnez une option',
+                'label' => 'Nature du dossier',
+                'required' => true,
+            ]);
         }
 
 

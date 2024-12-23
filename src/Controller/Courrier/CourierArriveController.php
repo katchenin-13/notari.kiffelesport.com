@@ -139,21 +139,21 @@ class CourierArriveController extends BaseController
                     }
                 }),
 
-                'accuse' => new ActionRender(function () use ($permission) {
-                    if ($permission == 'R') {
-                        return true;
-                    } elseif ($permission == 'RD') {
-                        return true;
-                    } elseif ($permission == 'RU') {
-                        return true;
-                    } elseif ($permission == 'CRUD') {
-                        return true;
-                    } elseif ($permission == 'CRU') {
-                        return true;
-                    } elseif ($permission == 'CR') {
-                        return true;
-                    }
-                }),
+                // 'accuse' => new ActionRender(function () use ($permission) {
+                //     if ($permission == 'R') {
+                //         return true;
+                //     } elseif ($permission == 'RD') {
+                //         return true;
+                //     } elseif ($permission == 'RU') {
+                //         return true;
+                //     } elseif ($permission == 'CRUD') {
+                //         return true;
+                //     } elseif ($permission == 'CRU') {
+                //         return true;
+                //     } elseif ($permission == 'CR') {
+                //         return true;
+                //     }
+                // }),
 
 
             ];
@@ -189,9 +189,7 @@ class CourierArriveController extends BaseController
                                     'url' => $this->generateUrl('app_courrier_courier_arrive_delete', ['id' => $value]), 'ajax' => true, 'icon' => '%icon% bi bi-trash', 'attrs' => ['class' => 'btn-main'], 'render' => $renders['delete']
                                 ],
                                 'archive' => [
-                                    'url' => $this->generateUrl('app_courrier_courier_arrive_archive', ['id' => $value]), 'ajax' => true, 'icon' => '%icon% bi bi-file', 'attrs' => ['class' => 'btn-dark', 'title' => 'Archive'], 'render' => new ActionRender(function () use ($renders) {
-                                        return $renders['archive'];
-                                    })
+                                    'url' => $this->generateUrl('app_courrier_courier_arrive_archive', ['id' => $value]), 'ajax' => true, 'icon' => '%icon% bi bi-file', 'attrs' => ['class' => 'btn-main', 'title' => 'Archive'], 'render' => $renders['archive']
                                 ],
                                 'imputer' => [
                                     'target' => '#exampleModalSizeLg2',
@@ -201,14 +199,16 @@ class CourierArriveController extends BaseController
                                     'attrs' => ['class' => 'btn-main', 'title' => 'Imputer'],
                                     'render' => $renders['imputer']
                                 ],
-                                'accuse' => [
-                                    'target' => '#exampleModalSizeLg2',
-                                    'url' => $this->generateUrl('courierArrive_accuse_arrive', ['id' => $value]),
-                                    'ajax' => true,
-                                    'icon' => '%icon% bi bi-reply',
-                                    'attrs' => ['class' => 'btn-main', 'title' => 'accuse'],
-                                    'render' => $renders['accuse']
-                                ],
+
+                                // 'accuse' => [
+                                //     'target' => '#exampleModalSizeLg2',
+                                //     'url' => $this->generateUrl('courierArrive_accuse_arrive', ['id' => $value]),
+                                //     'ajax' => true,
+                                //     'icon' => '%icon% bi bi-reply',
+                                //     'attrs' => ['class' => 'btn-main', 'title' => 'accuse'],
+                                //     'render' => $renders['accuse']
+                                // ],
+                       
                             ]
 
                         ];
@@ -462,70 +462,70 @@ class CourierArriveController extends BaseController
     }
 
 
-    #[Route('/accuse/{id}', name: 'courierArrive_accuse_arrive', methods: ['POST', 'GET'])]
-    public function accuse(Request $request, CourierArrive $courierArrive, EntityManagerInterface $em): Response
-    {
-        $validationGroups = ['Default', 'FileRequired', 'autre'];
-        $filePath = 'courrier';
-        $form = $this->createForm(CourierArriveType::class, $courierArrive, [
-            'method' => 'POST',
-            'doc_options' => [
-                'uploadDir' => $this->getUploadDir(self::UPLOAD_PATH, true),
-                'attrs' => ['class' => 'filestyle'],
-            ],
-            'type' => 'accuse',
-            'validation_groups' => $validationGroups,
-            'action' => $this->generateUrl('courierArrive_accuse_arrive', [
-                'id' => $courierArrive->getId(),
-            ])
-        ]);
+    // #[Route('/accuse/{id}', name: 'courierArrive_accuse_arrive', methods: ['POST', 'GET'])]
+    // public function accuse(Request $request, CourierArrive $courierArrive, EntityManagerInterface $em): Response
+    // {
+    //     $validationGroups = ['Default', 'FileRequired', 'autre'];
+    //     $filePath = 'courrier';
+    //     $form = $this->createForm(CourierArriveType::class, $courierArrive, [
+    //         'method' => 'POST',
+    //         'doc_options' => [
+    //             'uploadDir' => $this->getUploadDir(self::UPLOAD_PATH, true),
+    //             'attrs' => ['class' => 'filestyle'],
+    //         ],
+    //         'type' => 'accuse',
+    //         'validation_groups' => $validationGroups,
+    //         'action' => $this->generateUrl('courierArrive_accuse_arrive', [
+    //             'id' => $courierArrive->getId(),
+    //         ])
+    //     ]);
 
-        $file = new FichierAdmin();
-        $file->setPath("");
+    //     $file = new FichierAdmin();
+    //     $file->setPath("");
 
-         //$courierArrive->addFichier($file);
+    //      //$courierArrive->addFichier($file);
 
-        $form->handleRequest($request);
+    //     $form->handleRequest($request);
 
-        $isAjax = $request->isXmlHttpRequest();
-        //  $type = $form->getData()->getType();
-        if ($form->isSubmitted()) {
+    //     $isAjax = $request->isXmlHttpRequest();
+    //     //  $type = $form->getData()->getType();
+    //     if ($form->isSubmitted()) {
 
-            $redirect = $this->generateUrl('app_courrier_courier_arrive_index');
-            //$brochureFile = $form->get('fichiers')->getData();
+    //         $redirect = $this->generateUrl('app_courrier_courier_arrive_index');
+    //         //$brochureFile = $form->get('fichiers')->getData();
 
-            if ($form->isValid()) {
+    //         if ($form->isValid()) {
 
-                /*   foreach ($brochureFile as $image) {
-                    $file = new File($image->getPath());
-                    $newFilename = md5(uniqid()) . '.' . $file->guessExtension();
-                    // $fileName = md5(uniqid()).'.'.$file->guessExtension();
-                    $file->move($this->getParameter('images_directory'), $newFilename);
-                    $image->setPath($newFilename);
-                } */
-                $em->persist($courierArrive);
-                $em->flush();
+    //             /*   foreach ($brochureFile as $image) {
+    //                 $file = new File($image->getPath());
+    //                 $newFilename = md5(uniqid()) . '.' . $file->guessExtension();
+    //                 // $fileName = md5(uniqid()).'.'.$file->guessExtension();
+    //                 $file->move($this->getParameter('images_directory'), $newFilename);
+    //                 $image->setPath($newFilename);
+    //             } */
+    //             $em->persist($courierArrive);
+    //             $em->flush();
 
-                $message = 'Opération effectuée avec succès';
-                $statut = 1;
-                $this->addFlash('success', $message);
-            }
+    //             $message = 'Opération effectuée avec succès';
+    //             $statut = 1;
+    //             $this->addFlash('success', $message);
+    //         }
 
-            if ($isAjax) {
-                return $this->json(compact('statut', 'message', 'redirect'));
-            } else {
-                if ($statut == 1) {
-                    return $this->redirect($redirect);
-                }
-            }
-        }
+    //         if ($isAjax) {
+    //             return $this->json(compact('statut', 'message', 'redirect'));
+    //         } else {
+    //             if ($statut == 1) {
+    //                 return $this->redirect($redirect);
+    //             }
+    //         }
+    //     }
 
-        return $this->render('courrier/courier_arrive/accuse.html.twig', [
-            'titre' => "ACCUSE DE RECEPTION",
-            'courierArrive' => $courierArrive,
-            'form' => $form->createView(),
-        ]);
-    }
+    //     return $this->render('courrier/courier_arrive/accuse.html.twig', [
+    //         'titre' => "ACCUSE DE RECEPTION",
+    //         'courierArrive' => $courierArrive,
+    //         'form' => $form->createView(),
+    //     ]);
+    // }
 
 
 
