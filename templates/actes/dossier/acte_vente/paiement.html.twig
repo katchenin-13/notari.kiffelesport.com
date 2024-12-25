@@ -10,21 +10,22 @@
             <div class="card-body form-card">
                 {{ form_start(form, {'attr': {'role':'form', 'class': 'form', 'id': route_without_prefix}}) }}
                 {{ include('_includes/ajax/response.html.twig') }}
-                <h3 style="color: orangered">Définition des frais d’honoraires et attribution des montants aux différentes parties</h3>
+                <h3 style="color: orangered">Définition des frais d’honoraires et attribution des montants aux
+                    différentes parties</h3>
                 <br>
                 <br>
-                 <div class="row">
+                <div class="row">
                     <div class="" style="color:red;font-weight:bolder;font-size: 25px;">
-                       Montant total honoraire : {{ montant }}  Fr
+                        Montant total honoraire : {{ montant }} Fr
                     </div>
                     <div class="">
-                        
+
                     </div>
-                 </div>
-                
+                </div>
+
                 <br>
                 {{ prototype_frais(form) }}
-                 {{ prototype_commentaire(form) }}
+                {{ prototype_commentaire(form) }}
                 <br>
                 <div class="row">
                     <div class="col-xl-12">
@@ -46,37 +47,37 @@
 <script>
 
 
-        function getTotal(){
-                let total = 0;
-                $("#exampleModalSizeSm2").find('.input-mnt').each(function(e){
-                 const $this = $(this);
-                                //somme = somme +parseInt($this.val())
-                  total = total + parseInt($this.val().replaceAll(' ', ''));
-                 })
+    function getTotal() {
+        let total = 0;
+        $("#exampleModalSizeSm2").find('.input-mnt').each(function (e) {
+            const $this = $(this);
+            //somme = somme +parseInt($this.val())
+            total = total + parseInt($this.val().replaceAll(' ', ''));
+        })
 
-               $("#exampleModalSizeSm2").find('.col-total').html(total)
-        }
-      $("#exampleModalSizeSm2").find('.input-mnt').on('input', function (e, val, element) {
-                      
-                        total = 0;
-                    $("#exampleModalSizeSm2").find('.input-mnt').each(function(e){
-                    const $this = $(this);
-                        //somme = somme +parseInt($this.val())
-                        total = total + parseInt($this.val().replaceAll(' ', ''));
-                    })
+        $("#exampleModalSizeSm2").find('.col-total').html(total)
+    }
+    $("#exampleModalSizeSm2").find('.input-mnt').on('input', function (e, val, element) {
 
-            
+        total = 0;
+        $("#exampleModalSizeSm2").find('.input-mnt').each(function (e) {
+            const $this = $(this);
+            //somme = somme +parseInt($this.val())
+            total = total + parseInt($this.val().replaceAll(' ', ''));
+        })
 
-                        $("#exampleModalSizeSm2").find('.col-total').html(total)
-            
-                })
-     
-    
+
+
+        $("#exampleModalSizeSm2").find('.col-total').html(total)
+
+    })
+
+
     $(function () {
         init_select2(null, null, '.form-card');
     });
     $(function () {
-getTotal();
+        getTotal();
 
         const $container = $('.proto-container');
 
@@ -109,7 +110,7 @@ getTotal();
 
             addLine($container, name, proto_class);
 
-/*    init_select2($this, null, '#exampleModalSizeSm2'); */
+            /*    init_select2($this, null, '#exampleModalSizeSm2'); */
 
 
             e.preventDefault(); // évite qu'un # apparaisse dans l'URL
@@ -160,7 +161,7 @@ getTotal();
 
 
             init_select2($prototype.find('select'), null, '#exampleModalSizeSm2');
-               /* init_select2($this, null, '#exampleModalSizeSm2'); */
+            /* init_select2($this, null, '#exampleModalSizeSm2'); */
 
 
             // On ajoute au prototype un lien pour pouvoir supprimer la prestation

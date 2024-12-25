@@ -69,18 +69,19 @@ class DossierController extends BaseController
 
 
     #[Route('/{id}/fullname', name: 'app_get_fullname', methods: ['DELETE', 'GET'])]
-    public function getFullNameClient(ClientRepository $clientRepository,TypeClient $typeClient){
+    public function getFullNameClient(ClientRepository $clientRepository, TypeClient $typeClient)
+    {
         $response = new Response();
         $tabClient = array();
-        $clients = $clientRepository->findBy(['type_client'=>$typeClient]);
+        $clients = $clientRepository->findBy(['type_client' => $typeClient]);
         $i = 0;
 
         foreach ($clients as $e) {
             // transformer la réponse de la requete en tableau qui remplira le select pour ensembles
 
-            
+
             $tabClient[$i]['id'] = $e->getId();
-            $tabClient[$i]['nom'] = $e->getTypeClient()->getCode() == "P" ? $e->getNom() .' '.$e->getPrenom() : $e->getRaisonSocial();
+            $tabClient[$i]['nom'] = $e->getTypeClient()->getCode() == "P" ? $e->getNom() . ' ' . $e->getPrenom() : $e->getRaisonSocial();
 
 
             $i++;
@@ -89,11 +90,11 @@ class DossierController extends BaseController
         //$dataWithoutDoublon =array_unique($tabClient, SORT_REGULAR);
 
         $dataService = json_encode($tabClient); // formater le résultat de la requête en json
-       /*  dd($dataService); */
+        /*  dd($dataService); */
         $response->headers->set('Content-Type', 'application/json');
         $response->setContent($dataService);
-    /* } */
-    return $response;
+        /* } */
+        return $response;
     }
 
     #[Route('/{id}/print-cr', name: 'app_reunion_print_cr', methods: ['DELETE', 'GET'])]
@@ -143,7 +144,8 @@ class DossierController extends BaseController
         ', ['bold' => true, 'size' => 14, 'underline' => 'single'], ['align' => 'center']);
 
         $box = $section->addTextBox([
-            'alignment'   => \PhpOffice\PhpWord\SimpleType\Jc::START,  'width' => 450,
+            'alignment'   => \PhpOffice\PhpWord\SimpleType\Jc::START,
+            'width' => 450,
             'height'      => 50,
             'borderSize'  => 2,
             'borderColor' => 'black',
@@ -376,8 +378,8 @@ et indication du nombre des rôles, mots et chiffres nuls
             ->add('numeroRepertoire', TextColumn::class, ['label' => 'N° repertoire'])
             ->add('objet', TextColumn::class, ['label' => 'Objet'])
             ->add('typeActe', TextColumn::class, ['label' => 'Type d\'acte', 'field' => 't.titre'])
-   /*          ->add('employe', TextColumn::class, ['label' => 'Cler en charge', 'field' => 'emp.nom'])
- */
+            //   ->add('employe', TextColumn::class, ['label' => 'Cler en charge', 'field' => 'emp.nom'])
+
             ->add('dateCreation', DateTimeColumn::class,  ['label' => 'Date création', 'format' => 'd/m/Y', 'searchable' => false])
             ->add('etape', TextColumn::class, ['className' => 'w-100px', 'field' => 'l.id', 'label' => 'Etape', 'render' => function ($value, Dossier $context) {
 
@@ -387,14 +389,14 @@ et indication du nombre des rôles, mots et chiffres nuls
             ->createAdapter(ORMAdapter::class, [
                 'entity' => Dossier::class,
                 'query' => function (QueryBuilder $qb) use ($etat) {
-                    $qb->select(['p','t'])
+                    $qb->select(['p', 't'])
                         ->from(Dossier::class, 'p')
                         ->join('p.entreprise', 'en')
-                       /*  ->join('p.employe', 'emp') */
+                        /*  ->join('p.employe', 'emp') */
                         ->innerJoin('p.typeActe', 't')
 
                         ->orderBy('p.id ', 'DESC');
-                     
+
 
                     if ($etat == 'termine') {
                         $qb->andWhere("JSON_CONTAINS(p.etat, '1', '$.termine') = 1");
@@ -481,7 +483,11 @@ et indication du nombre des rôles, mots et chiffres nuls
 
             if ($hasActions) {
                 $table->add('id', TextColumn::class, [
-                    'label' => 'Actions', 'orderable' => false, 'globalSearchable' => false, 'className' => 'grid_row_actions', 'render' => function ($value, Dossier $context) use ($renders) {
+                    'label' => 'Actions',
+                    'orderable' => false,
+                    'globalSearchable' => false,
+                    'className' => 'grid_row_actions',
+                    'render' => function ($value, Dossier $context) use ($renders) {
                         $options = [
                             'default_class' => 'btn btn-xs btn-clean btn-icon mr-2 ',
                             'target' => '#exampleModalSizeLg2',
@@ -489,18 +495,34 @@ et indication du nombre des rôles, mots et chiffres nuls
                             'actions' => [
                                 'edit' => [
                                     'target' => '#exampleModalSizeSm2',
-                                    'url' => $this->generateUrl('app_actes_dossier_edit', ['id' => $value]), 'ajax' => true, 'icon' => '%icon% bi bi-pen', 'attrs' => ['class' => 'btn-default'], 'render' => $renders['edit']
+                                    'url' => $this->generateUrl('app_actes_dossier_edit', ['id' => $value]),
+                                    'ajax' => true,
+                                    'icon' => '%icon% bi bi-pen',
+                                    'attrs' => ['class' => 'btn-default'],
+                                    'render' => $renders['edit']
                                 ],
                                 'suivi' => [
                                     'target' => '#exampleModalSizeSm2',
-                                    'url' => $this->generateUrl('dossier_suivi', ['id' => $value]), 'ajax' => true, 'icon' => '%icon% bi bi-folder', 'attrs' => ['class' => 'btn-dark'], 'render' => $renders['edit']
+                                    'url' => $this->generateUrl('dossier_suivi', ['id' => $value]),
+                                    'ajax' => true,
+                                    'icon' => '%icon% bi bi-folder',
+                                    'attrs' => ['class' => 'btn-dark'],
+                                    'render' => $renders['edit']
                                 ],
                                 'show' => [
-                                    'url' => $this->generateUrl('app_actes_dossier_show', ['id' => $value]), 'ajax' => true, 'icon' => '%icon% bi bi-eye', 'attrs' => ['class' => 'btn-primary'], 'render' => $renders['show']
+                                    'url' => $this->generateUrl('app_actes_dossier_show', ['id' => $value]),
+                                    'ajax' => true,
+                                    'icon' => '%icon% bi bi-eye',
+                                    'attrs' => ['class' => 'btn-primary'],
+                                    'render' => $renders['show']
                                 ],
                                 'delete' => [
                                     'target' => '#exampleModalSizeNormal',
-                                    'url' => $this->generateUrl('app_actes_dossier_delete', ['id' => $value]), 'ajax' => true, 'icon' => '%icon% bi bi-trash', 'attrs' => ['class' => 'btn-main'], 'render' => $renders['delete']
+                                    'url' => $this->generateUrl('app_actes_dossier_delete', ['id' => $value]),
+                                    'ajax' => true,
+                                    'icon' => '%icon% bi bi-trash',
+                                    'attrs' => ['class' => 'btn-main'],
+                                    'render' => $renders['delete']
                                 ]
                             ]
 
@@ -551,7 +573,10 @@ et indication du nombre des rôles, mots et chiffres nuls
         DossierRepository $repository,
         TypeRepository $typeRepository
     ): Response {
+
         $dossier = new Dossier();
+        $clientParties = new Identification();
+        $dossier->addIdentification($clientParties);
         $form = $this->createForm(DossierType::class, $dossier, [
             'method' => 'POST',
             'action' => $this->generateUrl('app_actes_dossier_new')
@@ -564,6 +589,22 @@ et indication du nombre des rôles, mots et chiffres nuls
         $isAjax = $request->isXmlHttpRequest();
 
         if ($form->isSubmitted()) {
+
+            //recuperation du montant total des parties de ce dossiers
+            $sommeMontantParties = 0;
+            $parties = $form->get('identifications')->getData();
+            foreach ($parties as $key => $value) {
+                // Récupération et conversion du montant en nombre
+                $montant = str_replace(' ', '', $value->getMontant());
+                $montant = is_numeric($montant) ? (float)$montant : 0; // Validation et conversion
+
+                // Ajout du montant à la somme
+                $sommeMontantParties += $montant;
+            }
+            //formatage du montant total 
+            $formatsommeMontantParties = str_replace(' ', '', $sommeMontantParties);
+
+
             $response = [];
             $redirect = $this->generateUrl('app_config_parametre_dossier_index');
 
@@ -578,31 +619,58 @@ et indication du nombre des rôles, mots et chiffres nuls
 
             if ($form->isValid()) {
 
-                $currentDate = new \DateTime();
-                foreach ($workflows as $workflow) {
+                //formatage de du montant total des parties
+                $formatmontant = str_replace(' ', '', $dossier->getMontantTotal());
 
-                    $dossierWorkflow = new DossierWorkflow();
-                    $nbre = $workflow->getNombreJours();
-                    $dossierWorkflow->setDossier($dossier)
-                        ->setWorkflow($workflow)
-                        ->setDateDebut($currentDate);
+                if ($formatsommeMontantParties != $formatmontant) {
+                    $statut = 0;
+                    $message       = sprintf('Le montant total doit être égal à celui des honoraires');
+                } else {
+                    $currentDate = new \DateTime();
 
-                    $currentDate->modify("+{$nbre} day");
-                    $dossierWorkflow->setDateFin($currentDate);
+                    //creation de compte pour chaque partie
+                    foreach ($parties as $key => $value) {
+                        //verification du montant des parties
+                        
+                            //si ok alors on creer un  compte pour le client de pour ce dossier(compte pour la partie)
+                            $compte = new Compte();
+                            $compte->setClient($value->getClients())
+                                ->setMontant($value->getMontant())
+                                ->setSolde($value->getMontant())
+                                ->setActive(1);
+                            $em->persist($compte);
+                            $em->flush();
+                        
+                    }
 
-                    $dossier->addDossierWorkflow($dossierWorkflow);
+
+                    foreach ($workflows as $workflow) {
+
+                        $dossierWorkflow = new DossierWorkflow();
+                        $nbre = $workflow->getNombreJours();
+                        $dossierWorkflow->setDossier($dossier)
+                            ->setWorkflow($workflow)
+                            ->setDateDebut($currentDate);
+
+                        $currentDate->modify("+{$nbre} day");
+                        $dossierWorkflow->setDateFin($currentDate);
+
+                        $dossier->addDossierWorkflow($dossierWorkflow);
+                    }
+
+                    $this->dossierWorkflow->getMarking($dossier);
+
+                    $dossier->setEntreprise($this->entreprise);
+                    $dossier->setTypeActe($acteVente);
+                    $dossier->setEtape('');
+                    $em->persist($dossier);
+                    $entityManager->flush();
+
+                    $data = true;
+                    $message = 'Opération effectuée avec succès';
+                    $statut = 1;
+                    $this->addFlash('success', $message);
                 }
-                $this->dossierWorkflow->getMarking($dossier);
-                $dossier->setEntreprise($this->entreprise);
-                $dossier->setTypeActe($acteVente);
-                $dossier->setEtape('');
-                $em->persist($dossier);
-                $entityManager->flush();
-
-                $data = true;
-                $message = 'Opération effectuée avec succès';
-                $statut = 1;
-                $this->addFlash('success', $message);
             } else {
                 $message = $formError->all($form);
                 $statut = 0;
@@ -625,6 +693,7 @@ et indication du nombre des rôles, mots et chiffres nuls
         return $this->renderForm('actes/dossier/new.html.twig', [
             'dossier' => $dossier,
             'form' => $form,
+            'montant' => $dossier->getMontantTotal(),
         ]);
     }
 
@@ -633,6 +702,7 @@ et indication du nombre des rôles, mots et chiffres nuls
     {
         return $this->render('actes/dossier/show.html.twig', [
             'dossier' => $dossier,
+
         ]);
     }
 
@@ -800,10 +870,10 @@ et indication du nombre des rôles, mots et chiffres nuls
         $typeActe = $dossier->getTypeActe();
         //$documents =  $documentTypeActeRepository->getDocumentsEtape($typeActe, 'piece');
 
-       /* dd($dossier->getPieces()); */
+        /* dd($dossier->getPieces()); */
         $identification = $dossier->getIdentifications()->first();
 
-      
+
 
         $prefixe = $typeActe->getCode();
         $currentRoute = $request->attributes->get('_route');
@@ -815,15 +885,15 @@ et indication du nombre des rôles, mots et chiffres nuls
         //dd($dossier->getPieces());
 
 
-        if(!$dossier->getCommentairePieces()->count()){
+        if (!$dossier->getCommentairePieces()->count()) {
             $commentaire = new CommentairePiece();
             $commentaire->setDescription("");
             $dossier->addCommentairePiece($commentaire);
         }
 
-         if (!$dossier->getPieces()->count()) {
-          
-          /*   foreach ($dossier->getIdentifications() as $key => $value) {
+        if (!$dossier->getPieces()->count()) {
+
+            /*   foreach ($dossier->getIdentifications() as $key => $value) {
                 $piece = new Piece();
                 $piece->setAttribut($value->getAttribut());
                 $piece->setClient($value->getClients());
@@ -831,17 +901,15 @@ et indication du nombre des rôles, mots et chiffres nuls
             } */
 
             foreach ($dossier->getIdentifications() as $key => $value) {
-                foreach ($documentClientRepository->findBy(['client'=>$value->getClients()]) as $key => $doc) {
+                foreach ($documentClientRepository->findBy(['client' => $value->getClients()]) as $key => $doc) {
                     $piece = new Piece();
                     $piece->setAttribut($value->getAttribut());
                     $piece->setClient($value->getClients());
                     $piece->setPath($doc->getFichier());
                     $dossier->addPiece($piece);
                 }
-                
             }
-
-        } 
+        }
 
         //dd();
 
@@ -877,63 +945,63 @@ et indication du nombre des rôles, mots et chiffres nuls
         $isAjax = $request->isXmlHttpRequest();
 
         if ($form->isSubmitted()) {
-          
+
 
             $response = [];
             $redirect = $this->generateUrl($currentRoute, $urlParams);
             $isNext = $form->has('next') && $form->get('next')->isClicked();
 
-           
+
 
             //dd($somme, str_replace(' ', '', $dossier->getMontantTotal()));
 
 
             if ($form->isValid()) {
 
-               /*  if ($somme != str_replace(' ', '', $dossier->getMontantTotal())) {
+                /*  if ($somme != str_replace(' ', '', $dossier->getMontantTotal())) {
                     $statut = 0;
                     $message       = sprintf('La somme total des montants %s doit être egal au montant honorais %s ', $somme, $dossier->getMontantTotal());
                 } else { */
-                    $message       = 'Opération effectuée avec succès';
-                    $statut = 1;
-                    $suiviDossierRepository = $em->getRepository(SuiviDossierWorkflow::class);
-                    $dossierWorkflow = $dossierWorkflowRepository->findOneBy(['dossier' => $dossier, 'workflow' => $current]);
+                $message       = 'Opération effectuée avec succès';
+                $statut = 1;
+                $suiviDossierRepository = $em->getRepository(SuiviDossierWorkflow::class);
+                $dossierWorkflow = $dossierWorkflowRepository->findOneBy(['dossier' => $dossier, 'workflow' => $current]);
 
-                    $suivi = $suiviDossierRepository->findOneBy(compact('dossierWorkflow'));
+                $suivi = $suiviDossierRepository->findOneBy(compact('dossierWorkflow'));
 
-                    
 
-                    if (!$suivi) {
-                        $date = new \DateTime();
-                        $suivi = new SuiviDossierWorkflow();
-                        $suivi->setDossierWorkflow($dossierWorkflow);
-                        $suivi->setDateDebut($date);
-                        $suivi->setDateFin($date);
+
+                if (!$suivi) {
+                    $date = new \DateTime();
+                    $suivi = new SuiviDossierWorkflow();
+                    $suivi->setDossierWorkflow($dossierWorkflow);
+                    $suivi->setDateDebut($date);
+                    $suivi->setDateFin($date);
+                }
+
+                if ($isNext && $next) {
+
+                    $url = [
+                        'url' => $this->generateUrl($next['code'] . '_' . $next['route'], $urlParams),
+                        'tab' => '#' . $next['route'],
+                        'current' => '#' . $routeWithoutPrefix
+                    ];
+                    $hash = $next['route'];
+                    $tabId = self::TAB_ID;
+                    $redirect = $url['url'];
+                    if (!$suivi->getEtat()) {
+                        $suivi->setDateFin(new \DateTime());
+                        $dossier->setEtape($next['route']);
                     }
 
-                    if ($isNext && $next) {
-
-                        $url = [
-                            'url' => $this->generateUrl($next['code'] . '_' . $next['route'], $urlParams),
-                            'tab' => '#' . $next['route'],
-                            'current' => '#' . $routeWithoutPrefix
-                        ];
-                        $hash = $next['route'];
-                        $tabId = self::TAB_ID;
-                        $redirect = $url['url'];
-                        if (!$suivi->getEtat()) {
-                            $suivi->setDateFin(new \DateTime());
-                            $dossier->setEtape($next['route']);
-                        }
-
-                        $suivi->setEtat(true);
-                    } else {
-                        $redirect = $this->generateUrl($currentRoute, $urlParams);
-                    }
-                    $em->persist($suivi);
-                    $em->persist($dossier);
-                    $em->flush();
-               /*  }
+                    $suivi->setEtat(true);
+                } else {
+                    $redirect = $this->generateUrl($currentRoute, $urlParams);
+                }
+                $em->persist($suivi);
+                $em->persist($dossier);
+                $em->flush();
+                /*  }
  */
                 $modal = false;
                 $data = null;
@@ -963,145 +1031,135 @@ et indication du nombre des rôles, mots et chiffres nuls
             'dossier' => $dossier,
             'route_without_prefix' => $routeWithoutPrefix,
             'form' => $form->createView(),
-            'montant'=> $dossier->getMontantTotal(),
-            'attributs'=> $identificationRepository->getAttribut($dossier->getId()),
+            'montant' => $dossier->getMontantTotal(),
+            'attributs' => $identificationRepository->getAttribut($dossier->getId()),
         ]);
     }
 
 
 
-    /**
-     * @Route("/dossier/{id}/identification", name="acte_vente_identification", methods={"GET", "POST", "PUT"})
-     *
-     */
-    
-    public function identification(
-        Request $request,
-        Dossier $dossier,
-        EntityManagerInterface $em,
-        FormError $formError,
-        WorkflowRepository $workflowRepository,
-        DossierWorkflowRepository $dossierWorkflowRepository
-    ) {
-        $typeActe = $dossier->getTypeActe();
-        $prefixe = $typeActe->getCode();
-        $currentRoute = $request->attributes->get('_route');
-        $routeWithoutPrefix = str_replace("{$prefixe}_", '', $currentRoute);
+
+    // #[Route('/dossier/{id}/identification', name: 'acte_vente_identification', methods: ['GET', 'POST', 'PUT'])]    
+    // public function identification(  Request $request,Dossier $dossier, EntityManagerInterface $em,FormError $formError,WorkflowRepository $workflowRepository, DossierWorkflowRepository $dossierWorkflowRepository) {
+    //     $typeActe = $dossier->getTypeActe();
+    //     $prefixe = $typeActe->getCode();
+    //     $currentRoute = $request->attributes->get('_route');
+    //     $routeWithoutPrefix = str_replace("{$prefixe}_", '', $currentRoute);
 
 
-        $current = $workflowRepository->findOneBy(['typeActe' => $typeActe, 'route' => $routeWithoutPrefix]);
-        
-        if(!$dossier->getCommentaireIdentifications()->count()){
-            $commentaire = new CommentaireIdentification();
-            $commentaire->setDescription("");
-            $dossier->addCommentaireIdentification($commentaire);
-        }
+    //     $current = $workflowRepository->findOneBy(['typeActe' => $typeActe, 'route' => $routeWithoutPrefix]);
 
-        if (!$dossier->getIdentifications()->count()) {
-            $identification = new Identification();
-            $dossier->addIdentification($identification);
-        }
+    //     if(!$dossier->getCommentaireIdentifications()->count()){
+    //         $commentaire = new CommentaireIdentification();
+    //         $commentaire->setDescription("");
+    //         $dossier->addCommentaireIdentification($commentaire);
+    //     }
 
-        $urlParams = ['id' => $dossier->getId()];
+    //     if (!$dossier->getIdentifications()->count()) {
+    //         $identification = new Identification();
+    //         $dossier->addIdentification($identification);
+    //     }
 
-
-        $next = $workflowRepository->getNext($typeActe->getId(), $current->getNumeroEtape());
+    //     $urlParams = ['id' => $dossier->getId()];
 
 
-        $form = $this->createForm(DossierType::class, $dossier, [
-            'method' => 'POST',
-            'current_etape' => $dossier->getEtape(),
-            'etape' => strtolower(__FUNCTION__),
-            'validation_groups' => ['Default', $routeWithoutPrefix],
-            'action' => $this->generateUrl($currentRoute, ['id' => $dossier->getId()])
-        ]);
-        $form->handleRequest($request);
+    //     $next = $workflowRepository->getNext($typeActe->getId(), $current->getNumeroEtape());
 
-        $data = null;
-        $url = null;
-        $tabId = null;
-        $modal = true;
 
-        $isAjax = $request->isXmlHttpRequest();
+    //     $form = $this->createForm(DossierType::class, $dossier, [
+    //         'method' => 'POST',
+    //         'current_etape' => $dossier->getEtape(),
+    //         'etape' => strtolower(__FUNCTION__),
+    //         'validation_groups' => ['Default', $routeWithoutPrefix],
+    //         'action' => $this->generateUrl($currentRoute, ['id' => $dossier->getId()])
+    //     ]);
+    //     $form->handleRequest($request);
+
+    //     $data = null;
+    //     $url = null;
+    //     $tabId = null;
+    //     $modal = true;
+
+    //     $isAjax = $request->isXmlHttpRequest();
 
 
 
-        if ($form->isSubmitted()) {
+    //     if ($form->isSubmitted()) {
 
-            $response = [];
-            $redirect = $this->generateUrl($currentRoute, $urlParams);
-            $isNext = $form->has('next') && $form->get('next')->isClicked();
+    //         $response = [];
+    //         $redirect = $this->generateUrl($currentRoute, $urlParams);
+    //         $isNext = $form->has('next') && $form->get('next')->isClicked();
 
-            if ($form->isValid()) {
-                if ($this->dossierWorkflow->can($dossier, 'post_creation')) {
-                    $this->dossierWorkflow->apply($dossier, 'post_creation');
-                }
+    //         if ($form->isValid()) {
+    //             if ($this->dossierWorkflow->can($dossier, 'post_creation')) {
+    //                 $this->dossierWorkflow->apply($dossier, 'post_creation');
+    //             }
 
-                $suiviDossierRepository = $em->getRepository(SuiviDossierWorkflow::class);
-                $dossierWorkflow = $dossierWorkflowRepository->findOneBy(['dossier' => $dossier, 'workflow' => $current]);
+    //             $suiviDossierRepository = $em->getRepository(SuiviDossierWorkflow::class);
+    //             $dossierWorkflow = $dossierWorkflowRepository->findOneBy(['dossier' => $dossier, 'workflow' => $current]);
 
-                $suivi = $suiviDossierRepository->findOneBy(compact('dossierWorkflow'));
+    //             $suivi = $suiviDossierRepository->findOneBy(compact('dossierWorkflow'));
 
-                if (!$suivi) {
-                    $date = new \DateTime();
-                    $suivi = new SuiviDossierWorkflow();
-                    $suivi->setDossierWorkflow($dossierWorkflow);
-                    $suivi->setDateDebut($date);
-                    $suivi->setDateFin($date);
-                }
-                if ($isNext && $next) {
+    //             if (!$suivi) {
+    //                 $date = new \DateTime();
+    //                 $suivi = new SuiviDossierWorkflow();
+    //                 $suivi->setDossierWorkflow($dossierWorkflow);
+    //                 $suivi->setDateDebut($date);
+    //                 $suivi->setDateFin($date);
+    //             }
+    //             if ($isNext && $next) {
 
-                    $url = [
-                        'url' => $this->generateUrl($next['code'] . '_' . $next['route'], $urlParams),
-                        'tab' => '#' . $next['route'],
-                        'current' => '#' . $routeWithoutPrefix
-                    ];
-                    $hash = $next['route'];
-                    $tabId = self::TAB_ID;
-                    $redirect = $url['url'];
+    //                 $url = [
+    //                     'url' => $this->generateUrl($next['code'] . '_' . $next['route'], $urlParams),
+    //                     'tab' => '#' . $next['route'],
+    //                     'current' => '#' . $routeWithoutPrefix
+    //                 ];
+    //                 $hash = $next['route'];
+    //                 $tabId = self::TAB_ID;
+    //                 $redirect = $url['url'];
 
-                    if (!$suivi->getEtat()) {
-                        $suivi->setDateFin(new \DateTime());
-                        $dossier->setEtape($next['route']);
-                    }
-                    $suivi->setEtat(true);
-                } else {
-                    $redirect = $this->generateUrl($currentRoute, $urlParams);
-                }
-                $modal = false;
-                $em->persist($suivi);
-                $em->persist($dossier);
-                $em->flush();
-                $data = null;
+    //                 if (!$suivi->getEtat()) {
+    //                     $suivi->setDateFin(new \DateTime());
+    //                     $dossier->setEtape($next['route']);
+    //                 }
+    //                 $suivi->setEtat(true);
+    //             } else {
+    //                 $redirect = $this->generateUrl($currentRoute, $urlParams);
+    //             }
+    //             $modal = false;
+    //             $em->persist($suivi);
+    //             $em->persist($dossier);
+    //             $em->flush();
+    //             $data = null;
 
-                $message       = 'Opération effectuée avec succès';
-                $statut = 1;
-                $this->addFlash('success', $message);
-            } else {
-                $message = $formError->all($form);
-                $statut = 0;
-                if (!$isAjax) {
-                    $this->addFlash('warning', $message);
-                }
-            }
-
-
-            if ($isAjax) {
-                return $this->json(compact('statut', 'message', 'redirect', 'data', 'url', 'tabId', 'modal'));
-            } else {
-                if ($statut == 1) {
-                    return $this->redirect($redirect);
-                }
-            }
-        }
+    //             $message       = 'Opération effectuée avec succès';
+    //             $statut = 1;
+    //             $this->addFlash('success', $message);
+    //         } else {
+    //             $message = $formError->all($form);
+    //             $statut = 0;
+    //             if (!$isAjax) {
+    //                 $this->addFlash('warning', $message);
+    //             }
+    //         }
 
 
-        return $this->render("actes/dossier/{$prefixe}/{$routeWithoutPrefix}.html.twig",  [
-            'dossier' => $dossier,
-            'route_without_prefix' => $routeWithoutPrefix,
-            'form' => $form->createView()
-        ]);
-    }
+    //         if ($isAjax) {
+    //             return $this->json(compact('statut', 'message', 'redirect', 'data', 'url', 'tabId', 'modal'));
+    //         } else {
+    //             if ($statut == 1) {
+    //                 return $this->redirect($redirect);
+    //             }
+    //         }
+    //     }
+
+
+    //     return $this->render("actes/dossier/{$prefixe}/{$routeWithoutPrefix}.html.twig",  [
+    //         'dossier' => $dossier,
+    //         'route_without_prefix' => $routeWithoutPrefix,
+    //         'form' => $form->createView()
+    //     ]);
+    // }
 
     /**
      * @Route("/dossier/{id}/redaction", name="acte_vente_redaction", methods={"GET", "POST"})
@@ -1124,7 +1182,7 @@ et indication du nombre des rôles, mots et chiffres nuls
         $current = $workflowRepository->findOneBy(['typeActe' => $typeActe, 'route' => $routeWithoutPrefix]);
 
 
-        if(!$dossier->getCommentaireRedactions()->count()){
+        if (!$dossier->getCommentaireRedactions()->count()) {
             $commentaire = new CommentaireRedaction();
             $commentaire->setDescription("");
             $dossier->addCommentaireRedaction($commentaire);
@@ -1149,7 +1207,8 @@ et indication du nombre des rôles, mots et chiffres nuls
             'doc_options' => [
                 'uploadDir' => $this->getUploadDir(self::UPLOAD_PATH, true),
                 'attrs' => ['class' => 'filestyle'],
-            ], 'validation_groups' => $validationGroups,
+            ],
+            'validation_groups' => $validationGroups,
             'action' => $this->generateUrl($currentRoute, ['id' => $dossier->getId()])
         ]);
         $form->handleRequest($request);
@@ -1276,7 +1335,8 @@ et indication du nombre des rôles, mots et chiffres nuls
             'doc_options' => [
                 'uploadDir' => $this->getUploadDir(self::UPLOAD_PATH, true),
                 'attrs' => ['class' => 'filestyle'],
-            ], 'validation_groups' => $validationGroups,
+            ],
+            'validation_groups' => $validationGroups,
             'action' => $this->generateUrl($currentRoute, ['id' => $dossier->getId()])
         ]);
         $form->handleRequest($request);
@@ -1378,31 +1438,28 @@ et indication du nombre des rôles, mots et chiffres nuls
 
         $current = $workflowRepository->findOneBy(['typeActe' => $typeActe, 'route' => $routeWithoutPrefix]);
 
-        if(!$dossier->getCommentaireSignatures()->count()){
+        if (!$dossier->getCommentaireSignatures()->count()) {
             $commentaire = new CommentaireSignature();
             $commentaire->setDescription("");
             $dossier->addCommentaireSignature($commentaire);
         }
 
-        if(!$dossier->getDocumentSignes()->count()){
+        if (!$dossier->getDocumentSignes()->count()) {
             foreach ($dossier->getIdentifications() as $key => $value) {
-            $documentSigne = new DocumentSigne();
-            $documentSigne->setClient($value->getClients());
+                $documentSigne = new DocumentSigne();
+                $documentSigne->setClient($value->getClients());
 
-            $dossier->addDocumentSigne($documentSigne);
-            
+                $dossier->addDocumentSigne($documentSigne);
             }
         }
-        if(!$dossier->getDocumentSigneFichiers()->count()){
-            
+        if (!$dossier->getDocumentSigneFichiers()->count()) {
+
             $documentSigneFichier = new DocumentSigneFichier();
             $documentSigneFichier->setFichier(null);
 
             $dossier->addDocumentSigneFichier($documentSigneFichier);
-            
-          
         }
-       
+
 
         $urlParams = ['id' => $dossier->getId()];
 
@@ -1417,7 +1474,8 @@ et indication du nombre des rôles, mots et chiffres nuls
             'doc_options' => [
                 'uploadDir' => $this->getUploadDir(self::UPLOAD_PATH, true),
                 'attrs' => ['class' => 'filestyle'],
-            ], 'validation_groups' => $validationGroups,
+            ],
+            'validation_groups' => $validationGroups,
             'action' => $this->generateUrl($currentRoute, ['id' => $dossier->getId()])
         ]);
         $form->handleRequest($request);
@@ -1527,15 +1585,15 @@ et indication du nombre des rôles, mots et chiffres nuls
 
         $oldEnregistrements = $dossier->getEnregistrements();
 
-        if(!$dossier->getCommentaireEngs()->count()){
+        if (!$dossier->getCommentaireEngs()->count()) {
             $commentaire = new CommentaireEng();
             $commentaire->setDescription("");
             $dossier->addCommentaireEng($commentaire);
         }
 
-        if(!$dossier->getEnregistrementDocuments()->count()){
+        if (!$dossier->getEnregistrementDocuments()->count()) {
             $docs = new EnregistrementDocument();
-            
+
             $dossier->addEnregistrementDocument($docs);
         }
 
@@ -1565,7 +1623,8 @@ et indication du nombre des rôles, mots et chiffres nuls
             'doc_options' => [
                 'uploadDir' => $this->getUploadDir(self::UPLOAD_PATH, true),
                 'attrs' => ['class' => 'filestyle'],
-            ], 'validation_groups' => $validationGroups,
+            ],
+            'validation_groups' => $validationGroups,
             'action' => $this->generateUrl($currentRoute, ['id' => $dossier->getId()])
         ]);
         $form->handleRequest($request);
@@ -1655,19 +1714,9 @@ et indication du nombre des rôles, mots et chiffres nuls
     }
 
 
-    /**
-     * @Route("/dossier/{id}/paiement-acte", name="acte_vente_paiement", methods={"GET", "POST"})
-     *
-     */
-    public function paiement(
-        Request $request,
-        Dossier $dossier,
-        EntityManagerInterface $em,
-        FormError $formError,
-        WorkflowRepository $workflowRepository,
-        DossierWorkflowRepository $dossierWorkflowRepository,
-        DocumentClientRepository $documentClientRepository
-    ) {
+    #[Route("/dossier/{id}/paiement-acte", name: "acte_vente_paiement", methods: ["GET", "POST"])]
+    public function paiement(Request $request, Dossier $dossier, EntityManagerInterface $em, FormError $formError, WorkflowRepository $workflowRepository, DossierWorkflowRepository $dossierWorkflowRepository, DocumentClientRepository $documentClientRepository)
+    {
         $typeActe = $dossier->getTypeActe();
         $prefixe = $typeActe->getCode();
         $currentRoute = $request->attributes->get('_route');
@@ -1675,36 +1724,33 @@ et indication du nombre des rôles, mots et chiffres nuls
 
 
         $current = $workflowRepository->findOneBy(['typeActe' => $typeActe, 'route' => $routeWithoutPrefix]);
-       
-        $oldEnregistrements = $dossier->getPaiementFrais();
-        
-       
-        $ii = 1;
-     
 
-        if(!$dossier->getCommentairePaiements()->count()){
+        $oldEnregistrements = $dossier->getPaiementFrais();
+
+
+        $ii = 1;
+
+
+        if (!$dossier->getCommentairePaiements()->count()) {
             $commentaire = new CommentairePaiement();
             $commentaire->setDescription("");
             $dossier->addCommentairePaiement($commentaire);
         }
 
         if (!$dossier->getPaiementFrais()->count()) {
-          
+
             foreach ($dossier->getIdentifications() as $key => $value) {
 
                 $paiement = new PaiementFrais();
                 $paiement->setAttribut($value->getAttribut());
                 $paiement->setClient($value->getClients());
                 $dossier->addPaiementFrai($paiement);
-                
-
             }
-
-        } 
-
+        }
 
 
-      /*   if (!$oldEnregistrements->count()) {
+
+        /*   if (!$oldEnregistrements->count()) {
 
             foreach ($dossier->getPieces() as $key => $value) {
                
@@ -1715,10 +1761,10 @@ et indication du nombre des rôles, mots et chiffres nuls
           
         } */
         /*  $enregistrement->setSens(intval($idSens)); */
-         
 
 
-     /*    foreach (PaiementFrais::Sens as $idSens => $value) {
+
+        /*    foreach (PaiementFrais::Sens as $idSens => $value) {
             $hasValue = $oldEnregistrements->filter(function (PaiementFrais $enregistrement) use ($idSens) {
                 return $enregistrement->getSens() == $idSens;
             })->current();
@@ -1732,7 +1778,7 @@ et indication du nombre des rôles, mots et chiffres nuls
             }
         } */
 
-       /*  dd($oldEnregistrements); */
+        /*  dd($oldEnregistrements); */
         $urlParams = ['id' => $dossier->getId()];
 
 
@@ -1746,7 +1792,8 @@ et indication du nombre des rôles, mots et chiffres nuls
             'doc_options' => [
                 'uploadDir' => $this->getUploadDir(self::UPLOAD_PATH, true),
                 'attrs' => ['class' => 'filestyle'],
-            ], 'validation_groups' => $validationGroups,
+            ],
+            'validation_groups' => $validationGroups,
             'action' => $this->generateUrl($currentRoute, ['id' => $dossier->getId()])
         ]);
         $form->handleRequest($request);
@@ -1778,7 +1825,7 @@ et indication du nombre des rôles, mots et chiffres nuls
 
 
 
-          /*   $resiltat = $dataLigne->filter(function (PaiementFrais $enregistrement) use ($dossier) {
+            /*   $resiltat = $dataLigne->filter(function (PaiementFrais $enregistrement) use ($dossier) {
                 return $enregistrement->getSens() == 2;
             }); */
 
@@ -1790,7 +1837,7 @@ et indication du nombre des rôles, mots et chiffres nuls
                 if ($somme != str_replace(' ', '', $dossier->getMontantTotal())) {
                     $statut = 0;
                     $message       = sprintf('Le montant total doit être égal à celui des honoraires');
-                } else { 
+                } else {
                     $suiviDossierRepository = $em->getRepository(SuiviDossierWorkflow::class);
                     $dossierWorkflow = $dossierWorkflowRepository->findOneBy(['dossier' => $dossier, 'workflow' => $current]);
 
@@ -1798,18 +1845,17 @@ et indication du nombre des rôles, mots et chiffres nuls
 
                     foreach ($datas as $key => $value) {
 
-                        if($value->getMontant() > 0){
-                        $compte = new Compte();
-                        $compte->setClient($value->getClient());
-                        $compte->setDossier($dossier);
-                        $compte->setMontant($value->getMontant());
-                        $compte->setSolde($value->getMontant());
-                        $em->persist($compte);
-                        $em->flush();
+                        if ($value->getMontant() > 0) {
+                            $compte = new Compte();
+                            $compte->setClient($value->getClient());
+                            $compte->setDossier($dossier);
+                            $compte->setMontant($value->getMontant());
+                            $compte->setSolde($value->getMontant());
+                            $em->persist($compte);
+                            $em->flush();
                         }
-                      
                     }
-                    
+
 
                     if (!$suivi) {
                         $date = new \DateTime();
@@ -1872,7 +1918,7 @@ et indication du nombre des rôles, mots et chiffres nuls
             'dossier' => $dossier,
             'route_without_prefix' => $routeWithoutPrefix,
             'form' => $form->createView(),
-            'montant'=> $dossier->getMontantTotal(),
+            'montant' => $dossier->getMontantTotal(),
         ]);
     }
 
@@ -1914,7 +1960,8 @@ et indication du nombre des rôles, mots et chiffres nuls
             'doc_options' => [
                 'uploadDir' => $this->getUploadDir(self::UPLOAD_PATH, true),
                 'attrs' => ['class' => 'filestyle'],
-            ], 'validation_groups' => $validationGroups,
+            ],
+            'validation_groups' => $validationGroups,
             'action' => $this->generateUrl($currentRoute, ['id' => $dossier->getId()])
         ]);
         $form->handleRequest($request);
@@ -2022,7 +2069,7 @@ et indication du nombre des rôles, mots et chiffres nuls
 
 
         $current = $workflowRepository->findOneBy(['typeActe' => $typeActe, 'route' => $routeWithoutPrefix]);
-        if(!$dossier->getCommentaireObtentions()->count()){
+        if (!$dossier->getCommentaireObtentions()->count()) {
             $commentaire = new CommentaireObtention();
             $commentaire->setDescription("");
             $dossier->addCommentaireObtention($commentaire);
@@ -2048,7 +2095,8 @@ et indication du nombre des rôles, mots et chiffres nuls
             'doc_options' => [
                 'uploadDir' => $this->getUploadDir(self::UPLOAD_PATH, true),
                 'attrs' => ['class' => 'filestyle'],
-            ], 'validation_groups' => $validationGroups,
+            ],
+            'validation_groups' => $validationGroups,
             'action' => $this->generateUrl($currentRoute, ['id' => $dossier->getId()])
         ]);
         $form->handleRequest($request);
@@ -2176,7 +2224,8 @@ et indication du nombre des rôles, mots et chiffres nuls
             'doc_options' => [
                 'uploadDir' => $this->getUploadDir(self::UPLOAD_PATH, true),
                 'attrs' => ['class' => 'filestyle'],
-            ], 'validation_groups' => $validationGroups,
+            ],
+            'validation_groups' => $validationGroups,
             'action' => $this->generateUrl($currentRoute, ['id' => $dossier->getId()])
         ]);
         $form->handleRequest($request);

@@ -36,12 +36,7 @@ class DossierType extends AbstractType
                 ->add('numeroOuverture', null, ['label' => 'Numéro du dossier'])
                 ->add('numeroRepertoire', null, ['label' => 'Numéro répertoire'])
                 ->add('description', TextareaType::class, ['label' => 'Description'])
-                ->add(
-                    'montantTotal',
-                    TextType::class,
-
-                    ['label' => 'Montant des honoraires', 'attr' => ['class' => 'input-money input-mnt'], 'empty_data' => '0',]
-                )
+                ->add('montantTotal', TextType::class, ['label' => 'Montant des honoraires', 'attr' => ['class' => 'input-money input-mnt'], 'empty_data' => '0',])
                 ->add('typeActe', EntityType::class, [
                     'required' => true,
                     'class' => Type::class,
@@ -59,16 +54,15 @@ class DossierType extends AbstractType
                     'query_builder' => function (EntityRepository $er) {
                         return $er->createQueryBuilder('u')
                             ->innerJoin('u.fonction', 'f')
-                            ->where('f.libelle = :libelle') 
+                            ->where('f.libelle = :libelle')
                             ->setParameter('libelle', 'CLERC')
                             ->orderBy('u.id', 'DESC');
-                            
                     },
                     'choice_label' => function ($employe) {
                         return $employe->getNom() . ' ' . $employe->getPrenom();
                     },
                     'label' => 'CLERC EN CHARGE',
-                   'attr' => ['class' => 'form-control has-select2'],
+                    'attr' => ['class' => 'form-control has-select2'],
                 ])
                 // ->add('communaute', EntityType::class, [
                 //     'class'        => Communaute::class,
@@ -96,18 +90,35 @@ class DossierType extends AbstractType
                 ])
 
                 ->add('dateCreation', DateType::class, [
-                    'label' => "Date de création", 'html5' => false, 'attr' => ['class' => 'no-auto skip-init'], 'widget' => 'single_text', 'format' => 'dd/MM/yyyy', 'empty_data' => date('d/m/Y')
+                    'label' => "Date de création",
+                    'html5' => false,
+                    'attr' => ['class' => 'no-auto skip-init'],
+                    'widget' => 'single_text',
+                    'format' => 'dd/MM/yyyy',
+                    'empty_data' => date('d/m/Y')
                 ])
                 ->add('objet', null, ['label' => 'Objet'])
-            ->add('natureDossier', ChoiceType::class, [
-                'choices' => [
-                    'Société' => 'societe',
-                    'Notariat' => 'notariat',
-                ],
-                'placeholder' => 'Sélectionnez une option',
-                'label' => 'Nature du dossier',
-                'required' => true,
-            ]);
+                ->add('natureDossier', ChoiceType::class, [
+                    'choices' => [
+                        'Société' => 'societe',
+                        'Notariat' => 'notariat',
+                    ],
+                    'placeholder' => 'Sélectionnez une option',
+                    'label' => 'Nature du dossier',
+                    'required' => true,
+                ])
+                ->add('identifications', CollectionType::class, [
+                    'entry_type' => IdentificationType::class,
+                    'entry_options' => [
+                        'label' => false
+                    ],
+                    'allow_add' => true,
+                    'label' => false,
+                    'by_reference' => false,
+                    'allow_delete' => true,
+                    'prototype' => true,
+
+                ]);
         }
 
 
@@ -141,7 +152,7 @@ class DossierType extends AbstractType
 
             ]);
 
-            
+
             $builder->add('commentaireSignatures', CollectionType::class, [
                 'entry_type' => CommentaireSignatureType::class,
                 'entry_options' => [
@@ -160,32 +171,32 @@ class DossierType extends AbstractType
 
 
 
-        if ($etape == 'identification') {
-            $builder->add('identifications', CollectionType::class, [
-                'entry_type' => IdentificationType::class,
-                'entry_options' => [
-                    'label' => false
-                ],
-                'allow_add' => true,
-                'label' => false,
-                'by_reference' => false,
-                'allow_delete' => true,
-                'prototype' => true,
+        // if ($etape == 'identification') {
+        //     $builder->add('identifications', CollectionType::class, [
+        //         'entry_type' => IdentificationType::class,
+        //         'entry_options' => [
+        //             'label' => false
+        //         ],
+        //         'allow_add' => true,
+        //         'label' => false,
+        //         'by_reference' => false,
+        //         'allow_delete' => true,
+        //         'prototype' => true,
 
-            ]);
-            $builder->add('CommentaireIdentifications', CollectionType::class, [
-                'entry_type' => CommentaireIdentificationType::class,
-                'entry_options' => [
-                    'label' => false
-                ],
-                'allow_add' => true,
-                'label' => false,
-                'by_reference' => false,
-                'allow_delete' => true,
-                'prototype' => true,
+        //     ]);
+        //     $builder->add('CommentaireIdentifications', CollectionType::class, [
+        //         'entry_type' => CommentaireIdentificationType::class,
+        //         'entry_options' => [
+        //             'label' => false
+        //         ],
+        //         'allow_add' => true,
+        //         'label' => false,
+        //         'by_reference' => false,
+        //         'allow_delete' => true,
+        //         'prototype' => true,
 
-            ]);
-        }
+        //     ]);
+        // }
 
         if ($etape == 'remise_acte') {
             $builder->add('remiseActes', CollectionType::class, [
@@ -280,8 +291,6 @@ class DossierType extends AbstractType
                 'prototype' => true,
 
             ]);
-
-           
         }
 
         if ($etape == 'piece') {
@@ -311,8 +320,6 @@ class DossierType extends AbstractType
                 'prototype' => true,
 
             ]);
-           
-            
         }
 
 
@@ -342,7 +349,7 @@ class DossierType extends AbstractType
                     'doc_options' => $options['doc_options'],
                     'doc_required' => $options['doc_required']
                 ],
-               
+
                 'allow_add' => true,
                 'label' => false,
                 'by_reference' => false,

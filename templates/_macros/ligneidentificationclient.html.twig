@@ -3,12 +3,12 @@
 
 <tr class="row-colonne even pointer table-light">
     <td class="p-2">
-        <div style="display:non" class="field-matiere">{{ form_widget(colonne.type) }}</div>
+        <div style="display:no" class="field-matiere">{{ form_widget(colonne.type) }}</div>
         {# <div style="display:non" class="field-matiere">{{ colonne.document_type_client.vars.value }} </div>
         #}
     </td>
     <td class="p-2">
-        <div style="display:non" class="field-matiere">{{ form_widget(colonne.clients) }}</div>
+        <div style="display:no" class="field-matiere">{{ form_widget(colonne.clients) }}</div>
         {# <div style="display:non" class="field-matiere">{{ colonne.document_type_client.vars.value }} </div>
         #}
     </td>
@@ -17,11 +17,16 @@
         {# <div style="display:non" class="field-matiere">{{ colonne.document_type_client.vars.value }} </div>
         #}
     </td>
+    <td class="p-2">
+        <div style="display:no " class="field-matiere">{{ form_widget(colonne.montant) }}</div>
+        {# <div style="display:non" class="field-matiere">{{ colonne.document_type_client.vars.value }} </div>
+        #}
+    </td>
  
     <td class="p-2 del-col " data-parent=".row-colonne">{# <a href="#" class="btn btn-danger btn-xs"><span
                 class="bi bi-trash"></span></a> #}</td>
 </tr>
-{% endmacro %}
+{# {% endmacro %}
 {% macro commentaire(colonne) %}
     <div class="row">
          <div class="col-md-12">
@@ -31,16 +36,16 @@
                 {{ form_row(colonne.active) }}
             </div>
     </div>
-{% endmacro %}
+{% endmacro %} #}
 
-{% macro prototype_commentaire(form) %}
+{# {% macro prototype_commentaire(form) %}
 <div class="list-colonneggg" data-prototype="{{ _self.commentaire(form.CommentaireIdentifications.vars.prototype)|e }}">
 </div>
 
             {% for item in form.CommentaireIdentifications %}
                 {{ _self.commentaire(item|e) }}
-            {% endfor %}
-{% endmacro %}
+            {% endfor %}#}
+{% endmacro %} 
 
 {% macro prototype_identification(form) %}
 <div class="list-colonne" data-prototype="{{ _self.identification(form.identifications.vars.prototype)|e }}">
@@ -49,11 +54,15 @@
 
 <table class="table table-bordered table-custom">
     <thead class="thead-dark">
+        <tr width="100%" style="border: 0px !important;">
+            <th colspan="5" class="p-2 text-center text-bold text-uppercase">DENTIFICATION DES CLIENTS </th>
+        </tr>
 
         <tr>
-            <th width="40%" class="p-2">Type client</th>
-            <th width="40%" class="p-2">Client concerné</th>
-            <th width="50%" class="p-2">Attribut</th>
+            <th width="30%" class="p-2">Type client</th>
+            <th width="30%" class="p-2">Client concerné</th>
+            <th width="20%" class="p-2">Attribut</th>
+            <th width="20%" class="p-2">Montant à payer</th>
     
     
           

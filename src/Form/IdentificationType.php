@@ -33,51 +33,9 @@ class IdentificationType extends AbstractType
                 'attr' => ['class' => 'form-control has-select2 client']
             ])
             ->add('attribut', TextType::class, ['label' => 'Attribut', 'label' => false, 'required' => false])
+            ->add('montant',TextType::class,['label' => false,'attr' => ['class' => 'input-money input-mnt'],'empty_data' => '0'])
         ;
-            // ->add('acheteur', EntityType::class, [
-            //     'required' => false,
-            //     'class' => Client::class,
-            //     'query_builder' => function (EntityRepository $er) {
-            //         return $er->createQueryBuilder('u')
-            //             ->where('u.active = :val')
-            //             ->setParameter('val', 1)
-            //             ->orderBy('u.id', 'DESC');
-            //     },
-            //     'label' => false,
-            //     'placeholder' => "Veuillez selectionner un acheteur",
-            //     'choice_label' => function ($client) {
-            //         if ($client->getRaisonSocial() == "") {
-            //             return $client->getNom() . ' ' . $client->getPrenom();
-            //         } else {
-
-            //             return $client->getRaisonSocial();
-            //         }
-            //     },
-            //     'attr'=>['class' =>'form-control has-select2']
-
-            // ])
-            // ->add('vendeur', EntityType::class, [
-            //     'required' => false,
-            //     'class' => Client::class,
-            //     'query_builder' => function (EntityRepository $er) {
-            //         return $er->createQueryBuilder('u')
-            //             ->where('u.active = :val')
-            //             ->setParameter('val', 1)
-            //             ->orderBy('u.id', 'DESC');
-            //     },
-            //     'label' => false,
-            //     'placeholder' => 'Veuillez selectionner un vendeur',
-            //     'choice_label' => function ($client) {
-            //         if ($client->getRaisonSocial() == "") {
-            //             return $client->getNom() . ' ' . $client->getPrenom();
-            //         } else {
-
-            //             return $client->getRaisonSocial();
-            //         }
-            //     },
-            //     'attr'=>['class' =>'form-control has-select2']
-
-            // ])
+           
         
 
 
