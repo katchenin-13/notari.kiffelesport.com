@@ -114,6 +114,22 @@ class MarcheController extends BaseController
                     }
                 }),
 
+                'imprimer' => new ActionRender(function () use ($permission) {
+                    if ($permission == 'R') {
+                        return true;
+                    } elseif ($permission == 'RD') {
+                        return true;
+                    } elseif ($permission == 'RU') {
+                        return true;
+                    } elseif ($permission == 'CRUD') {
+                        return true;
+                    } elseif ($permission == 'CRU') {
+                        return true;
+                    } elseif ($permission == 'CR') {
+                        return true;
+                    }
+                }),
+
             ];
 
 
@@ -144,6 +160,13 @@ class MarcheController extends BaseController
                                     'icon' => '%icon% bi bi-pen',
                                     'attrs' => ['class' => 'btn-default'],
                                     'render' => $renders['edit']
+                                ],
+                                'imprimer' => [
+                                    'url' => $this->generateUrl('app_facture_marche_fichier', ['id' => $value]),
+                                    'ajax' => true,
+                                    'icon' => '%icon% bi bi-file',
+                                    'attrs' => ['class' => 'btn-secondary', 'title' => 'Télécharger le fichier joindre du rapport'],
+                                    'render' => $renders['imprimer']
                                 ],
                                 'show' => [
                                     'url' => $this->generateUrl('app_gestionfournisseur_marche_show', ['id' => $value]),
@@ -186,10 +209,15 @@ class MarcheController extends BaseController
     public function new(Request $request, EntityManagerInterface $entityManager, FormError $formError): Response
     {
         $marche = new Marche();
-
+        $validationGroups = ['Default', 'FileRequired', 'oui'];
+        $filePath = 'marche';
         $form = $this->createForm(MarcheType::class, $marche, [
             'method' => 'POST',
-            'action' => $this->generateUrl('app_gestionfournisseur_marche_new')
+            'doc_options' => [
+                'uploadDir' => $this->getUploadDir(self::UPLOAD_PATH, true),
+                'attrs' => ['class' => 'filestyle'],   
+            ],
+            'validation_groups' => $validationGroups,            'action' => $this->generateUrl('app_gestionfournisseur_marche_new')
         ]);
         $form->handleRequest($request);
 
@@ -202,14 +230,15 @@ class MarcheController extends BaseController
 
             $response = [];
             $redirect = $this->generateUrl('app_gestionfournisseur_marche_index');
-            
+            $montants = str_replace(' ', '', $marche->getMontanttotal());
+
             if ($form->isValid()) {
-                if ($marche->getMontanttotal() != null) {
+                if ($montants != null) {
                     //enregistrement d'un compte de fournisseur
                     $comptefour = new Comptefour();
                     $comptefour->setFournisseurs($marche->getFournisseur());
-                    $comptefour->setMontant($marche->getMontanttotal());
-                    $comptefour->setSolde($marche->getMontanttotal());
+                    $comptefour->setMontant($montants);
+                    $comptefour->setSolde($montants);
                     $marche->addComptefour($comptefour);
                     // $entityManager->persist($compteFournisseur);
                     // $entityManager->flush();
@@ -218,7 +247,7 @@ class MarcheController extends BaseController
                     throw new \Exception("Le montant total est obligatoire");
                 }
                 //dd($comptefour);
-                $marche->setSolde($marche->getMontanttotal());
+                $marche->setSolde($montants);
                 $entityManager->persist($marche);
                 $entityManager->flush();
 
@@ -262,9 +291,15 @@ class MarcheController extends BaseController
     #[Route('/{id}/edit', name: 'app_gestionfournisseur_marche_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Marche $marche, EntityManagerInterface $entityManager,ComptefourRepository $comptefourRepository, FormError $formError): Response
     {
-
+        $validationGroups = ['Default', 'FileRequired', 'oui'];
+        $filePath = 'marche';
         $form = $this->createForm(MarcheType::class, $marche, [
             'method' => 'POST',
+            'doc_options' => [
+                'uploadDir' => $this->getUploadDir(self::UPLOAD_PATH, true),
+                'attrs' => ['class' => 'filestyle' ],
+            ],
+            'validation_groups' => $validationGroups,
             'action' => $this->generateUrl('app_gestionfournisseur_marche_edit', [
                 'id' => $marche->getId()
             ])
@@ -286,8 +321,8 @@ class MarcheController extends BaseController
             $comptefour = $comptefourRepository->findOneBy(['marches' => $marche]);
 
             if ($form->isValid()) {
-
-                $comptefour->setSolde($marche->getMontanttotal());
+                $montants = str_replace(' ', '', $marche->getMontanttotal());
+                $comptefour->setSolde($montants);
 
                 $entityManager->persist($comptefour);
                 $entityManager->flush();
@@ -427,4 +462,14 @@ class MarcheController extends BaseController
             'form' => $form,
         ]);
     }
+
+    #[Route('/{id}/imprimer', name: 'app_facture_marche_fichier', methods: ['GET', 'POST'])]
+    public  function  archive(Marche $marche)
+    {
+        $datas = $marche->getFichier();
+        return $this->render('gestionfournisseur/marche/archive.html.twig', [
+            'data' => $datas,
+        ]);
+    }
+   
 }

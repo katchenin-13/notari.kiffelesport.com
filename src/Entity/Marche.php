@@ -35,7 +35,7 @@ class Marche
 
     #[ORM\OneToOne(cascade: ["persist"], fetch: "EAGER")]
     #[ORM\JoinColumn(nullable: true)]
-    private ?FichierAdmin $path = null;
+    private ?FichierAdmin   $fichier = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
     #[Gedmo\Timestampable(on: 'create')]
@@ -78,14 +78,15 @@ class Marche
         return $this;
     }
 
-    public function getPath(): ?FichierAdmin
+
+    public function getFichier(): ?FichierAdmin
     {
-        return $this->path;
+        return $this->fichier;
     }
 
-    public function setPath(?FichierAdmin $path): self
+    public function setFichier(?FichierAdmin $fichier): self
     {
-        $this->path = $path;
+        $this->fichier = $fichier;
 
         return $this;
     }

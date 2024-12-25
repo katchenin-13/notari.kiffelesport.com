@@ -201,7 +201,7 @@ class Employe
         return $this->numPiece;
     }
 
-    public function setNumPiece(string $numPiece): static
+    public function setNumPiece(string $numPiece): self
     {
         $this->numPiece = $numPiece;
 
@@ -213,7 +213,7 @@ class Employe
         return $this->contacts;
     }
 
-    public function setContacts(string $contacts): static
+    public function setContacts(string $contacts): self
     {
         $this->contacts = $contacts;
 
@@ -225,7 +225,7 @@ class Employe
         return $this->residence;
     }
 
-    public function setResidence(string $residence): static
+    public function setResidence(string $residence): self
     {
         $this->residence = $residence;
 
@@ -237,7 +237,7 @@ class Employe
         return $this->piece;
     }
 
-    public function setPiece(FichierAdmin $piece): static
+    public function setPiece(FichierAdmin $piece): self
     {
         $this->piece = $piece;
 

@@ -24,16 +24,15 @@ class Rapporthebdomadaire
     #[ORM\Column(type: Types::TEXT)]
     private ?string $description = null;
 
-    #[ORM\OneToOne(cascade: ["persist"], fetch: "EAGER")]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?FichierAdmin $fichier = null;
+   #[ORM\OneToOne(cascade: ["persist"], fetch: "EAGER")]
+    #[ORM\JoinColumn(nullable: true)]
+    private ?FichierAdmin   $fichier = null;
 
 
     #[ORM\ManyToOne(inversedBy: 'rapporthebdomadaires')]
     #[ORM\JoinColumn(nullable: false)]
     #[Gedmo\Blameable(on: 'create')]
     private ?utilisateur $utilisateur = null;
-
 
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]

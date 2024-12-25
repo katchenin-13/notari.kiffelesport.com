@@ -633,7 +633,7 @@ class Dossier
         return $this;
     }
 
-    public function removeRemiseActe(RemiseActe $remiseActe): self
+    public function removeRemiseActe(RemiseActe $remiseActe): void
     {
         if ($this->remiseActes->removeElement($remiseActe)) {
             // set the owning side to null (unless already changed)
@@ -759,7 +759,7 @@ class Dossier
         return $this->entreprise;
     }
 
-    public function setEntreprise(?Entreprise $entreprise): static
+    public function setEntreprise(?Entreprise $entreprise): self
     {
         $this->entreprise = $entreprise;
 
@@ -823,7 +823,7 @@ class Dossier
         return $this->utilisateur;
     }
 
-    public function setUtilisateur(?Utilisateur $utilisateur): static
+    public function setUtilisateur(?Utilisateur $utilisateur): self
     {
         $this->utilisateur = $utilisateur;
 
@@ -838,7 +838,7 @@ class Dossier
         return $this->comptes;
     }
 
-    public function addCompte(Compte $compte): static
+    public function addCompte(Compte $compte): self
     {
         if (!$this->comptes->contains($compte)) {
             $this->comptes->add($compte);
@@ -848,7 +848,7 @@ class Dossier
         return $this;
     }
 
-    public function removeCompte(Compte $compte): static
+    public function removeCompte(Compte $compte): self
     {
         if ($this->comptes->removeElement($compte)) {
             // set the owning side to null (unless already changed)
@@ -868,7 +868,7 @@ class Dossier
         return $this->documentSigneFichiers;
     }
 
-    public function addDocumentSigneFichier(DocumentSigneFichier $documentSigneFichier): static
+    public function addDocumentSigneFichier(DocumentSigneFichier $documentSigneFichier): self
     {
         if (!$this->documentSigneFichiers->contains($documentSigneFichier)) {
             $this->documentSigneFichiers->add($documentSigneFichier);
@@ -878,7 +878,7 @@ class Dossier
         return $this;
     }
 
-    public function removeDocumentSigneFichier(DocumentSigneFichier $documentSigneFichier): static
+    public function removeDocumentSigneFichier(DocumentSigneFichier $documentSigneFichier): self
     {
         if ($this->documentSigneFichiers->removeElement($documentSigneFichier)) {
             // set the owning side to null (unless already changed)
@@ -898,7 +898,7 @@ class Dossier
         return $this->CommentaireIdentifications;
     }
 
-    public function addCommentaireIdentification(CommentaireIdentification $CommentaireIdentification): static
+    public function addCommentaireIdentification(CommentaireIdentification $CommentaireIdentification): self
     {
         if (!$this->CommentaireIdentifications->contains($CommentaireIdentification)) {
             $this->CommentaireIdentifications->add($CommentaireIdentification);
@@ -908,7 +908,7 @@ class Dossier
         return $this;
     }
 
-    public function removeCommentaireIdentification(CommentaireIdentification $CommentaireIdentification): static
+    public function removeCommentaireIdentification(CommentaireIdentification $CommentaireIdentification): self
     {
         if ($this->CommentaireIdentifications->removeElement($CommentaireIdentification)) {
             // set the owning side to null (unless already changed)
@@ -928,7 +928,7 @@ class Dossier
         return $this->commentairePieces;
     }
 
-    public function addCommentairePiece(CommentairePiece $commentairePiece): static
+    public function addCommentairePiece(CommentairePiece $commentairePiece): self
     {
         if (!$this->commentairePieces->contains($commentairePiece)) {
             $this->commentairePieces->add($commentairePiece);
@@ -938,7 +938,7 @@ class Dossier
         return $this;
     }
 
-    public function removeCommentairePiece(CommentairePiece $commentairePiece): static
+    public function removeCommentairePiece(CommentairePiece $commentairePiece): self
     {
         if ($this->commentairePieces->removeElement($commentairePiece)) {
             // set the owning side to null (unless already changed)
@@ -958,7 +958,7 @@ class Dossier
         return $this->commentairePaiements;
     }
 
-    public function addCommentairePaiement(CommentairePaiement $commentairePaiement): static
+    public function addCommentairePaiement(CommentairePaiement $commentairePaiement): self
     {
         if (!$this->commentairePaiements->contains($commentairePaiement)) {
             $this->commentairePaiements->add($commentairePaiement);
@@ -968,7 +968,7 @@ class Dossier
         return $this;
     }
 
-    public function removeCommentairePaiement(CommentairePaiement $commentairePaiement): static
+    public function removeCommentairePaiement(CommentairePaiement $commentairePaiement): self
     {
         if ($this->commentairePaiements->removeElement($commentairePaiement)) {
             // set the owning side to null (unless already changed)
@@ -988,7 +988,7 @@ class Dossier
         return $this->commentaireRedactions;
     }
 
-    public function addCommentaireRedaction(CommentaireRedaction $commentaireRedaction): static
+    public function addCommentaireRedaction(CommentaireRedaction $commentaireRedaction): self
     {
         if (!$this->commentaireRedactions->contains($commentaireRedaction)) {
             $this->commentaireRedactions->add($commentaireRedaction);
@@ -998,7 +998,7 @@ class Dossier
         return $this;
     }
 
-    public function removeCommentaireRedaction(CommentaireRedaction $commentaireRedaction): static
+    public function removeCommentaireRedaction(CommentaireRedaction $commentaireRedaction): self
     {
         if ($this->commentaireRedactions->removeElement($commentaireRedaction)) {
             // set the owning side to null (unless already changed)
@@ -1018,7 +1018,7 @@ class Dossier
         return $this->commentaireSignatures;
     }
 
-    public function addCommentaireSignature(CommentaireSignature $commentaireSignature): static
+    public function addCommentaireSignature(CommentaireSignature $commentaireSignature): self
     {
         if (!$this->commentaireSignatures->contains($commentaireSignature)) {
             $this->commentaireSignatures->add($commentaireSignature);
@@ -1028,7 +1028,7 @@ class Dossier
         return $this;
     }
 
-    public function removeCommentaireSignature(CommentaireSignature $commentaireSignature): static
+    public function removeCommentaireSignature(CommentaireSignature $commentaireSignature): self
     {
         if ($this->commentaireSignatures->removeElement($commentaireSignature)) {
             // set the owning side to null (unless already changed)
@@ -1048,7 +1048,7 @@ class Dossier
         return $this->commentaireEngs;
     }
 
-    public function addCommentaireEng(CommentaireEng $commentaireEng): static
+    public function addCommentaireEng(CommentaireEng $commentaireEng): self
     {
         if (!$this->commentaireEngs->contains($commentaireEng)) {
             $this->commentaireEngs->add($commentaireEng);
@@ -1058,7 +1058,7 @@ class Dossier
         return $this;
     }
 
-    public function removeCommentaireEng(CommentaireEng $commentaireEng): static
+    public function removeCommentaireEng(CommentaireEng $commentaireEng): self
     {
         if ($this->commentaireEngs->removeElement($commentaireEng)) {
             // set the owning side to null (unless already changed)
@@ -1078,7 +1078,7 @@ class Dossier
         return $this->commentaireObtentions;
     }
 
-    public function addCommentaireObtention(CommentaireObtention $commentaireObtention): static
+    public function addCommentaireObtention(CommentaireObtention $commentaireObtention): self
     {
         if (!$this->commentaireObtentions->contains($commentaireObtention)) {
             $this->commentaireObtentions->add($commentaireObtention);
@@ -1088,7 +1088,7 @@ class Dossier
         return $this;
     }
 
-    public function removeCommentaireObtention(CommentaireObtention $commentaireObtention): static
+    public function removeCommentaireObtention(CommentaireObtention $commentaireObtention): self
     {
         if ($this->commentaireObtentions->removeElement($commentaireObtention)) {
             // set the owning side to null (unless already changed)
@@ -1108,7 +1108,7 @@ class Dossier
         return $this->enregistrementDocuments;
     }
 
-    public function addEnregistrementDocument(EnregistrementDocument $enregistrementDocument): static
+    public function addEnregistrementDocument(EnregistrementDocument $enregistrementDocument): self
     {
         if (!$this->enregistrementDocuments->contains($enregistrementDocument)) {
             $this->enregistrementDocuments->add($enregistrementDocument);
@@ -1118,7 +1118,7 @@ class Dossier
         return $this;
     }
 
-    public function removeEnregistrementDocument(EnregistrementDocument $enregistrementDocument): static
+    public function removeEnregistrementDocument(EnregistrementDocument $enregistrementDocument): self
     {
         if ($this->enregistrementDocuments->removeElement($enregistrementDocument)) {
             // set the owning side to null (unless already changed)

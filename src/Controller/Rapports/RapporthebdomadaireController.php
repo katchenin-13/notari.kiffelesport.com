@@ -184,8 +184,15 @@ class RapporthebdomadaireController extends BaseController
     public function new(Request $request, EntityManagerInterface $entityManager, FormError $formError): Response
     {
         $rapporthebdomadaire = new Rapporthebdomadaire();
+        $validationGroups = ['Default', 'FileRequired', 'oui'];
+        $filePath = 'rapporthebdomadaire';
         $form = $this->createForm(RapporthebdomadaireType::class, $rapporthebdomadaire, [
             'method' => 'POST',
+            'doc_options' => [
+                'uploadDir' => $this->getUploadDir(self::UPLOAD_PATH, true),
+                'attrs' => ['class' => 'filestyle input-file','accept' => '.pdf'],
+            ],
+            'validation_groups' => $validationGroups,
             'action' => $this->generateUrl('app_rapports_rapporthebdomadaire_new')
         ]);
         $form->handleRequest($request);
@@ -246,9 +253,15 @@ class RapporthebdomadaireController extends BaseController
     #[Route('/{id}/edit', name: 'app_rapports_rapporthebdomadaire_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Rapporthebdomadaire $rapporthebdomadaire, EntityManagerInterface $entityManager, FormError $formError): Response
     {
-
+        $validationGroups = ['Default', 'FileRequired', 'oui'];
+        $filePath = 'rapporthebdomadaire';
         $form = $this->createForm(RapporthebdomadaireType::class, $rapporthebdomadaire, [
             'method' => 'POST',
+            'doc_options' => [
+                'uploadDir' => $this->getUploadDir(self::UPLOAD_PATH, true),
+                'attrs' => ['class' => 'filestyle input-file', 'accept' => '.pdf'],
+            ],
+            'validation_groups' => $validationGroups,
             'action' => $this->generateUrl('app_rapports_rapporthebdomadaire_edit', [
                 'id' => $rapporthebdomadaire->getId()
             ])

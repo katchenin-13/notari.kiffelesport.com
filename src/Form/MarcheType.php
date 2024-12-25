@@ -38,15 +38,8 @@ class MarcheType extends AbstractType
             //     new Assert\Type(['type' => 'numeric']),
             // ],
         ])
-            ->add('fichier', FileType::class, [
-                'label' => 'Joindre la facture',
-                'mapped' => false,
-                'required' => false,
-                'attr' => [
-                    'class' => 'input-file',
-                    'accept' => '.pdf,.doc,.docx,.jpg,.jpeg,.png',
-                ],
-            ])
+            ->add('fichier', FichierType::class, ['label' => 'Fichier joint', 'doc_options' => $options['doc_options'], 'required' => $options['doc_required'] ?? true,])
+
         ;
     }
 
@@ -54,6 +47,9 @@ class MarcheType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Marche::class,
+            'doc_required' => true
         ]);
+        $resolver->setRequired('doc_options');
+        $resolver->setRequired('doc_required');
     }
 }
