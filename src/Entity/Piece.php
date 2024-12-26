@@ -17,7 +17,6 @@ class Piece
     #[ORM\Column(type: 'integer')]
     private $id;
 
-
     #[ORM\ManyToOne(targetEntity: Dossier::class, inversedBy: 'pieces')]
     #[ORM\JoinColumn(onDelete: "CASCADE")]
     private $dossier;
@@ -27,11 +26,10 @@ class Piece
     #[ORM\JoinColumn(nullable: false)]
     private ?FichierAdmin $path = null;
 
-    
+
 
     #[ORM\Column(length: 255)]
     private ?string $attribut = null;
-
 
 
     #[ORM\ManyToOne(inversedBy: 'allPieces')]
@@ -83,12 +81,13 @@ class Piece
         return $this->attribut;
     }
 
-    public function setAttribut(string $attribut): static
+    public function setAttribut(string $attribut): self
     {
         $this->attribut = $attribut;
 
         return $this;
     }
+
 
 
 
@@ -116,6 +115,9 @@ class Piece
 
         return $this;
     }
+
+   
+
 
 
 }

@@ -55,20 +55,12 @@
         <div class="row">
             <div class="col-md-12"> {{ form_row(form.description) }}</div>
         </div>
-        <div class="row">
-            <div class="col-md-6"> {{ form_row(form.montantTotal) }}</div>
-            <div class="col-md-6"> {{ form_row(form.numeroRepertoire) }}</div>
-        </div>
-
-
-<div class="row">
-    <div class="" style="color:red;font-weight:bolder;font-size: 25px;">
-        Montant total honoraire : {{ montant }} Fr
+    <div class="row">
+        <div class="col-md-4"> {{ form_row(form.montantTotal) }}</div>
+        <div class="col-md-4"> {{ form_row(form.numeroRepertoire) }}</div>
+        <div class="col-md-4"> {{ form_row(form.numcompte) }}</div>
     </div>
-    <div class="">
 
-    </div>
-</div>
 </br>
     </div>
     {{ prototype_identification(form) }}
@@ -92,13 +84,11 @@
     $(function () {
         init_select2('select', null, '#exampleModalSizeSm2');
     });
-/*************  ✨ Codeium Command ⭐  *************/
     /**
      * This function sums all the values in the fields with class 'input-mnt' and
      * puts the result in the field with class 'col-total'.
      * @return {void}
      */
-/******  b4a1ee31-878d-48b0-bef2-dd162f231c53  *******/
      function getTotal() {
             let total = 0;
             $("#exampleModalSizeSm2").find('.input-mnt').each(function (e) {

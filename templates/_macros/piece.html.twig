@@ -2,28 +2,34 @@
 
 
 <tr class="row-colonne even pointer table-light">
- <td class="p-2">
-        <div style="display:no " class="field-matiere">{{ form_widget(colonne.type,{'attr':{'readOnly':'readOnly'}}) }}</div>
-       
+    <td class="p-2">
+        <div style="display:no " class="field-matiere">{{ form_widget(colonne.type,{'attr':{'readOnly':'readOnly'}}) }}
+        </div>
+
     </td>
     <td class="p-2">
-        <div style="display:non" class="field-matiere">{{ form_widget(colonne.client,{'attr':{'readOnly':'readOnly'}}) }}</div>
-       
+        <div style="display:non" class="field-matiere">{{ form_widget(colonne.client,{'attr':{'readOnly':'readOnly'}})
+            }}</div>
+
     </td>
-   {#  <td class="p-2">
-        <div style="display:no " class="field-matiere">{{ form_widget(colonne.attribut,{'attr':{'readOnly':'readOnly'}}) }}</div>
-      
-    </td> #}
+
+    <div style="display:none " class="field-matiere">{{ form_widget(colonne.attribut,{'attr':{'readOnly':'readOnly'}})
+        }}</div>
+
+
     <td class="p-2">
         <div style="display:no " class="field-matiere">{{ form_widget(colonne.path) }}</div>
-      
+
     </td>
-    <td class="p-2 del-coldd " > {% if colonne.children.path.vars.data %}
-              
-            
-                 <a class="btn btn-dark btn-sm" style="margin-top: 0px;" target="_blank" href="{{ asset('uploads/media_entreprise/' ~ colonne.vars.value.path.alt) }} " download> <i class="bi bi-upload"></i>
-                </a>
-             {% endif %}</td>
+    <td class="p-2 del-coldd "> {% if colonne.children.path.vars.data %}
+
+
+        <a class="btn btn-dark btn-sm" style="margin-top: 0px;" target="_blank"
+            href="{{ asset('uploads/media_entreprise/' ~ colonne.vars.value.path.alt) }} " download> <i
+                class="bi bi-upload"></i>
+        </a>
+        {% endif %}
+    </td>
 </tr>
 
 {% endmacro %}
@@ -32,78 +38,72 @@
 </div>
 <ul class="nav nav-tabs nav-line-tabs mb-5 fs-6" id="customTabs" role="tablist">
     {% for item in attributs %}
-        <li class="nav-item">
-            <a class="nav-link {% if loop.first %}active{% endif %}" 
-               id="tab-{{ loop.index }}" 
-               data-bs-toggle="tab" 
-               href="#kt_tab_pane_{{ loop.index }}" 
-               role="tab" 
-               aria-controls="kt_tab_pane_{{ loop.index }}" 
-               aria-selected="{{ loop.first ? 'true' : 'false' }}">
-                 {{ item.attribut |upper }}
-            </a>
-        </li>
+    <li class="nav-item">
+        <a class="nav-link {% if loop.first %}active{% endif %}" id="tab-{{ loop.index }}" data-bs-toggle="tab"
+            href="#kt_tab_pane_{{ loop.index }}" role="tab" aria-controls="kt_tab_pane_{{ loop.index }}"
+            aria-selected="{{ loop.first ? 'true' : 'false' }}">
+            {{ item.attribut |upper }}
+        </a>
+    </li>
     {% endfor %}
 </ul>
 
 <div class="tab-content" id="myTabContent">
 
-{% for attribut in attributs %}
-   
-         <div class="tab-pane fade {% if loop.first %}show active{% endif %}" 
-             id="kt_tab_pane_{{ loop.index }}" 
-             role="tabpanel" 
-             aria-labelledby="tab-{{ loop.index }}">
-         
+    {% for attribut in attributs %}
 
-             <table class="table table-bordered table-custom">
-                <thead class="thead-dark">
-            
+    <div class="tab-pane fade {% if loop.first %}show active{% endif %}" id="kt_tab_pane_{{ loop.index }}"
+        role="tabpanel" aria-labelledby="tab-{{ loop.index }}">
+
+
+        <table class="table table-bordered table-custom">
+            <thead class="thead-dark">
+
                 <thead>
                     <tr>
                         <th>Type</th>
                         <th>Client</th>
-                       {#  <th>Attribut</th> #}
+                        {# <th>Attribut</th> #}
                         <th>DOC</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
-                <tbody>
-                 {% for item in form.pieces %}
-                 
-                    {% if attribut.attribut == item.vars.value.attribut %}
-                      {{ _self.piece(item) }}
+            <tbody>
+                {% for item in form.pieces %}
 
-                    {% endif %}
-       
-                    {% endfor %}
-                </tbody>
-            </table>
-        </div>
-  
+                {% if attribut.attribut == item.vars.value.attribut %}
+                {{ _self.piece(item) }}
 
-{% endfor %}
+                {% endif %}
+
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+
+    {% endfor %}
 </div>
 
 {% endmacro %}
 
 
 {% macro commentaire(colonne) %}
-    <div class="row">
-         <div class="col-md-12">
+<div class="row">
+    <div class="col-md-12">
         {{ form_row(colonne.description) }}
-        </div>
-        <div class="col-md-12 mt-3 " style="font-weight: bold;font-size: 20px;color: red">
-            {{ form_row(colonne.active) }}
-        </div>  
     </div>
+    <div class="col-md-12 mt-3 " style="font-weight: bold;font-size: 20px;color: red">
+        {{ form_row(colonne.active) }}
+    </div>
+</div>
 {% endmacro %}
 
 {% macro prototype_commentaire(form) %}
 <div class="list-colonneggg" data-prototype="{{ _self.commentaire(form.commentairePieces.vars.prototype)|e }}">
 </div>
 
-            {% for item in form.commentairePieces %}
-                {{ _self.commentaire(item|e) }}
-            {% endfor %}
+{% for item in form.commentairePieces %}
+{{ _self.commentaire(item|e) }}
+{% endfor %}
 {% endmacro %}

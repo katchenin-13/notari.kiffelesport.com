@@ -50,19 +50,22 @@ class Dossier
     private $objet;
 
     #[ORM\ManyToOne(targetEntity: Type::class, inversedBy: 'dossiers')]
+    // #[ORM\JoinColumn(nullable: false)]
     private $typeActe;
 
-    #[ORM\OneToMany(targetEntity: DossierWorkflow::class, mappedBy: 'dossier', )]
+    #[ORM\OneToMany(targetEntity: DossierWorkflow::class, mappedBy: 'dossier', cascade: ['persist'])]
     private $dossierWorkflows;
 
-    #[ORM\OneToMany(targetEntity: Identification::class, mappedBy: 'dossier', cascade: ['persist', 'remove'])]
+    #[ORM\OneToMany(targetEntity: Identification::class, mappedBy: 'dossier', cascade: ['persist'])]
     #[Assert\Valid(groups: ['identification'])]
     private $identifications;
 
-    #[ORM\OneToMany(targetEntity: Piece::class, mappedBy: 'dossier', cascade: ['persist', 'remove'] )]
+
+
+    #[ORM\OneToMany(targetEntity: Piece::class, mappedBy: 'dossier', cascade: ['persist'])]
     private $pieces;
 
-    #[ORM\OneToMany(targetEntity: DocumentSigne::class, mappedBy: 'dossier', cascade: ['persist', 'remove'])]
+    #[ORM\OneToMany(targetEntity: DocumentSigne::class, mappedBy: 'dossier', cascade: ['persist'])]
     private $documentSignes;
 
     #[ORM\Column(type: 'string', length: 255)]
@@ -71,19 +74,19 @@ class Dossier
     #[ORM\Column(type: 'text')]
     private $description;
 
-    #[ORM\OneToMany(targetEntity: Enregistrement::class, mappedBy: 'dossier', cascade: ['persist', 'remove'])]
+    #[ORM\OneToMany(targetEntity: Enregistrement::class, mappedBy: 'dossier', cascade: ['persist'])]
     private $enregistrements;
 
-    #[ORM\OneToMany(targetEntity: PieceVendeur::class, mappedBy: 'dossier', cascade: ['persist', 'remove'])]
+    #[ORM\OneToMany(targetEntity: PieceVendeur::class, mappedBy: 'dossier', cascade: ['persist'])]
     private $pieceVendeurs;
 
-    #[ORM\OneToMany(targetEntity: Redaction::class, mappedBy: 'dossier', cascade: ['persist', 'remove'])]
+    #[ORM\OneToMany(targetEntity: Redaction::class, mappedBy: 'dossier', cascade: ['persist'])]
     private $redactions;
 
-    #[ORM\OneToMany(targetEntity: Obtention::class, mappedBy: 'dossier', cascade: ['persist', 'remove'])]
+    #[ORM\OneToMany(targetEntity: Obtention::class, mappedBy: 'dossier', cascade: ['persist'])]
     private $obtentions;
 
-    #[ORM\OneToMany(targetEntity: Remise::class, mappedBy: 'dossier', cascade: ['persist', 'remove'])]
+    #[ORM\OneToMany(targetEntity: Remise::class, mappedBy: 'dossier', cascade: ['persist'])]
     private $remises;
 
     #[ORM\OneToMany(targetEntity: RemiseActe::class, mappedBy: 'dossier', cascade: ['persist', 'remove'])]
@@ -95,11 +98,11 @@ class Dossier
     #[ORM\Column(type: 'string', length: 255)]
     private $montantTotal;
 
-    #[ORM\ManyToOne(targetEntity: Conservation::class, inversedBy: 'dossiers', cascade: ['persist', 'remove'])]
+    #[ORM\ManyToOne(targetEntity: Conservation::class, inversedBy: 'dossiers', cascade: ['persist'])]
     #[ORM\JoinColumn(nullable: false)]
     private $conservation;
 
-    // #[ORM\OneToMany(targetEntity: PaiementFrais::class, mappedBy: 'dossier', cascade: ['persist', 'remove'])]
+    // #[ORM\OneToMany(targetEntity: PaiementFrais::class, mappedBy: 'dossier', cascade: ['persist'])]
     // private $paiementFrais;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true, unique: true)]
@@ -117,7 +120,7 @@ class Dossier
     // #[Gedmo\Blameable(on: 'create')]
     // private ?utilisateur $utilisateur = null;
 
-    #[ORM\OneToMany(targetEntity: Calendar::class, mappedBy: 'dossier',  cascade: ['persist', 'remove'] )]
+    #[ORM\OneToMany(targetEntity: Calendar::class, mappedBy: 'dossier',  cascade: ['persist'] )]
     private $calendars;
 
     #[ORM\ManyToOne(inversedBy: 'dossiers')]
@@ -125,39 +128,44 @@ class Dossier
     #[Gedmo\Blameable(on: 'create')]
     private ?Utilisateur $utilisateur = null;
 
+    // #[ORM\OneToMany(mappedBy: 'dossier', targetEntity: Compte::class)]
+    // private Collection $comptes;
 
-
-    #[ORM\OneToMany(mappedBy: 'dossier', targetEntity: DocumentSigneFichier::class)]
+    #[ORM\OneToMany(mappedBy: 'dossier', targetEntity: DocumentSigneFichier::class, cascade: ['persist'])]
     private Collection $documentSigneFichiers;
 
-    #[ORM\OneToMany(mappedBy: 'dossier', targetEntity: CommentaireIdentification::class)]
-    private Collection $CommentaireIdentifications;
+    // #[ORM\OneToMany(mappedBy: 'dossier', targetEntity: CommentaireIdentification::class)]
+    // private Collection $CommentaireIdentifications;
 
-    #[ORM\OneToMany(mappedBy: 'dossier', targetEntity: CommentairePiece::class)]
+    #[ORM\OneToMany(mappedBy: 'dossier', targetEntity: CommentairePiece::class, cascade: ['persist'])]
     private Collection $commentairePieces;
 
-    #[ORM\OneToMany(mappedBy: 'dossier', targetEntity: CommentairePaiement::class)]
-    private Collection $commentairePaiements;
+    // #[ORM\OneToMany(mappedBy: 'dossier', targetEntity: CommentairePaiement::class)]
+    // private Collection $commentairePaiements;
 
-    #[ORM\OneToMany(mappedBy: 'dossier', targetEntity: CommentaireRedaction::class)]
+    #[ORM\OneToMany(mappedBy: 'dossier', targetEntity: CommentaireRedaction::class, cascade: ['persist'])]
     private Collection $commentaireRedactions;
 
-    #[ORM\OneToMany(mappedBy: 'dossier', targetEntity: CommentaireSignature::class)]
+    #[ORM\OneToMany(mappedBy: 'dossier', targetEntity: CommentaireSignature::class, cascade: ['persist'])]
     private Collection $commentaireSignatures;
 
-    #[ORM\OneToMany(mappedBy: 'dossier', targetEntity: CommentaireEng::class)]
+    #[ORM\OneToMany(mappedBy: 'dossier', targetEntity: CommentaireEng::class, cascade: ['persist'])]
     private Collection $commentaireEngs;
 
-    #[ORM\OneToMany(mappedBy: 'dossier', targetEntity: CommentaireObtention::class)]
+    #[ORM\OneToMany(mappedBy: 'dossier', targetEntity: CommentaireObtention::class, cascade: ['persist'])]
     private Collection $commentaireObtentions;
 
-    #[ORM\OneToMany(mappedBy: 'dossier', targetEntity: EnregistrementDocument::class)]
+    #[ORM\OneToMany(mappedBy: 'dossier', targetEntity: EnregistrementDocument::class, cascade: ['persist'])]
     private Collection $enregistrementDocuments;
 
     #[ORM\Column(length: 50)]
     #[ORM\JoinColumn(nullable: true)]
     #[Assert\Choice(choices: ['societe', 'notariat'], message: 'Veuillez sélectionner une option valide.')]
     private ?string $natureDossier;
+
+    #[ORM\Column(length: 255)]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?string $numcompte=null;
 
     public function __construct()
     {
@@ -177,11 +185,11 @@ class Dossier
         $this->setMontantVendeur(0);
         //$this->paiementFrais = new ArrayCollection();
         $this->dateCreation = new DateTime();
-       
+    //    $this->comptes = new ArrayCollection();
         $this->documentSigneFichiers = new ArrayCollection();
-        $this->CommentaireIdentifications = new ArrayCollection();
+        // $this->CommentaireIdentifications = new ArrayCollection();
         $this->commentairePieces = new ArrayCollection();
-        $this->commentairePaiements = new ArrayCollection();
+        // $this->commentairePaiements = new ArrayCollection();
         $this->commentaireRedactions = new ArrayCollection();
         $this->commentaireSignatures = new ArrayCollection();
         $this->commentaireEngs = new ArrayCollection();
@@ -379,6 +387,37 @@ class Dossier
 
         return $this;
     }
+
+    //  /**
+    //  * @return Collection<int, Compte>
+    //  */
+    // public function getComptes(): Collection
+    // {
+    //     return $this->comptes;
+    // }
+
+    // public function addCompte(Compte $compte): static
+    // {
+    //     if (!$this->comptes->contains($compte)) {
+    //         $this->comptes->add($compte);
+    //         $compte->setDossier($this);
+    //     }
+
+    //     return $this;
+    // }
+
+    // public function removeCompte(Compte $compte): static
+    // {
+    //     if ($this->comptes->removeElement($compte)) {
+    //         // set the owning side to null (unless already changed)
+    //         if ($compte->getDossier() === $this) {
+    //             $compte->setDossier(null);
+    //         }
+    //     }
+
+    //     return $this;
+    // }
+
 
     /**
      * @return Collection<int, Piece>
@@ -861,35 +900,35 @@ class Dossier
         return $this;
     }
 
-    /**
-     * @return Collection<int, CommentaireIdentification>
-     */
-    public function getCommentaireIdentifications(): Collection
-    {
-        return $this->CommentaireIdentifications;
-    }
+    // /**
+    //  * @return Collection<int, CommentaireIdentification>
+    //  */
+    // public function getCommentaireIdentifications(): Collection
+    // {
+    //     return $this->CommentaireIdentifications;
+    // }
 
-    public function addCommentaireIdentification(CommentaireIdentification $CommentaireIdentification): self
-    {
-        if (!$this->CommentaireIdentifications->contains($CommentaireIdentification)) {
-            $this->CommentaireIdentifications->add($CommentaireIdentification);
-            $CommentaireIdentification->setDossier($this);
-        }
+    // public function addCommentaireIdentification(CommentaireIdentification $CommentaireIdentification): self
+    // {
+    //     if (!$this->CommentaireIdentifications->contains($CommentaireIdentification)) {
+    //         $this->CommentaireIdentifications->add($CommentaireIdentification);
+    //         $CommentaireIdentification->setDossier($this);
+    //     }
 
-        return $this;
-    }
+    //     return $this;
+    // }
 
-    public function removeCommentaireIdentification(CommentaireIdentification $CommentaireIdentification): self
-    {
-        if ($this->CommentaireIdentifications->removeElement($CommentaireIdentification)) {
-            // set the owning side to null (unless already changed)
-            if ($CommentaireIdentification->getDossier() === $this) {
-                $CommentaireIdentification->setDossier(null);
-            }
-        }
+    // public function removeCommentaireIdentification(CommentaireIdentification $CommentaireIdentification): self
+    // {
+    //     if ($this->CommentaireIdentifications->removeElement($CommentaireIdentification)) {
+    //         // set the owning side to null (unless already changed)
+    //         if ($CommentaireIdentification->getDossier() === $this) {
+    //             $CommentaireIdentification->setDossier(null);
+    //         }
+    //     }
 
-        return $this;
-    }
+    //     return $this;
+    // }
 
     /**
      * @return Collection<int, CommentairePiece>
@@ -921,35 +960,35 @@ class Dossier
         return $this;
     }
 
-    /**
-     * @return Collection<int, CommentairePaiement>
-     */
-    public function getCommentairePaiements(): Collection
-    {
-        return $this->commentairePaiements;
-    }
+    // /**
+    //  * @return Collection<int, CommentairePaiement>
+    //  */
+    // public function getCommentairePaiements(): Collection
+    // {
+    //     return $this->commentairePaiements;
+    // }
 
-    public function addCommentairePaiement(CommentairePaiement $commentairePaiement): self
-    {
-        if (!$this->commentairePaiements->contains($commentairePaiement)) {
-            $this->commentairePaiements->add($commentairePaiement);
-            $commentairePaiement->setDossier($this);
-        }
+    // public function addCommentairePaiement(CommentairePaiement $commentairePaiement): self
+    // {
+    //     if (!$this->commentairePaiements->contains($commentairePaiement)) {
+    //         $this->commentairePaiements->add($commentairePaiement);
+    //         $commentairePaiement->setDossier($this);
+    //     }
 
-        return $this;
-    }
+    //     return $this;
+    // }
 
-    public function removeCommentairePaiement(CommentairePaiement $commentairePaiement): self
-    {
-        if ($this->commentairePaiements->removeElement($commentairePaiement)) {
-            // set the owning side to null (unless already changed)
-            if ($commentairePaiement->getDossier() === $this) {
-                $commentairePaiement->setDossier(null);
-            }
-        }
+    // public function removeCommentairePaiement(CommentairePaiement $commentairePaiement): self
+    // {
+    //     if ($this->commentairePaiements->removeElement($commentairePaiement)) {
+    //         // set the owning side to null (unless already changed)
+    //         if ($commentairePaiement->getDossier() === $this) {
+    //             $commentairePaiement->setDossier(null);
+    //         }
+    //     }
 
-        return $this;
-    }
+    //     return $this;
+    // }
 
     /**
      * @return Collection<int, CommentaireRedaction>
@@ -1111,6 +1150,18 @@ class Dossier
     public function setNatureDossier(string $natureDossier): self
     {
         $this->natureDossier = $natureDossier;
+
+        return $this;
+    }
+
+    public function getNumcompte(): ?string
+    {
+        return $this->numcompte;
+    }
+
+    public function setNumcompte(string $numcompte): static
+    {
+        $this->numcompte = $numcompte;
 
         return $this;
     }

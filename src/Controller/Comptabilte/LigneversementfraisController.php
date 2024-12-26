@@ -164,24 +164,28 @@ class LigneversementfraisController extends BaseController
             $date = $form->get('datePaiement')->getData();
             $somme = 0;
 
+               // Récupération des lignes de paiement liées au compte client
+            $montantSolde = (int)str_replace(' ', '', $compte->getSolde());
+            $resteAPayer = $montantSolde - $montant; // Montant saisi
 
-            $lignes = $ligneversementfraisRepository->findBy(['compte' => $compte->getId()]);
+            // $lignes = $ligneversementfraisRepository->findBy(['compte' => $compte->getId()]);
 
-            if ($lignes) {
+            // if ($lignes) {
 
-                foreach ($lignes as $key => $info) {
-                    $somme += (int)$info->getMontantverse();
-                    $resteAPayer = abs((int)$compte->getMontant() - $somme);
-                }
-            } else {
-                $resteAPayer = abs((int)$compte->getMontant());
-            }
-
-
+            //     foreach ($lignes as $key => $info) {
+            //         $somme += (int)$info->getMontantverse();
+            //         $resteAPayer = abs((int)$compte->getMontant() - $somme);
+            //     }
+            // } else {
+            //     $resteAPayer = abs((int)$compte->getMontant());
+            // }
+         
+          
             if ($form->isValid()) {
 
 
-                if ($resteAPayer >= $montant) {
+                if ($montantSolde >= $montant)
+                {
 
                     $ligneversementfrai = new Ligneversementfrais();
                     $ligneversementfrai->setDateversementfrais($date);
@@ -252,6 +256,8 @@ class LigneversementfraisController extends BaseController
     #[Route('/{id}/edit', name: 'app_comptabilte_ligneversementfrais_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Ligneversementfrais $ligneversementfrai,LigneversementfraisRepository $ligneversementfraisRepository, EntityManagerInterface $entityManager, FormError $formError): Response
     {
+        //recuperation du montant a editer
+    //    $montantold = (int)$ligneversementfrai->getMontantverse();
        
         $form = $this->createForm(LigneVersementFaisEditType::class, $ligneversementfrai, [
             'method' => 'POST',
@@ -275,7 +281,8 @@ class LigneversementfraisController extends BaseController
             $montant = (int) $form->get('montantverse')->getData();
             $date = $form->get('dateversementfrais')->getData();
             $somme = 0;
-           
+
+
 
             $lignes = $ligneversementfraisRepository->findBy(['compte' => $ligneversementfrai->getCompte()->getId()]);
 
@@ -285,9 +292,7 @@ class LigneversementfraisController extends BaseController
                     $somme += (int)$info->getMontantverse();
                     $resteAPayer = abs((int)$ligneversementfrai->getCompte()->getMontant() - $somme);
                 }
-            } else {
-                $resteAPayer = abs((int)$ligneversementfrai->getCompte()->getMontant());
-            }
+            } 
 
             if ($form->isValid()) {
 
@@ -295,7 +300,7 @@ class LigneversementfraisController extends BaseController
 
                     $ligneversementfrai->setDateversementfrais($date);
                     $ligneversementfrai->setMontantverse($montant);
-                
+
                     $entityManager->persist($ligneversementfrai);
                     $entityManager->flush();
 
@@ -305,6 +310,7 @@ class LigneversementfraisController extends BaseController
                     $entityManager->persist($compte);
                     $entityManager->flush();
                 }
+          
                 $entityManager->persist($ligneversementfrai);
                 $entityManager->flush();
 
@@ -346,7 +352,7 @@ class LigneversementfraisController extends BaseController
         }
 
         return $this->renderForm('comptabilte/ligneversementfrais/edit.html.twig', [
-            
+            'ligneversementfrai' => $ligneversementfrai,
             'form' => $form,
         ]);
     }

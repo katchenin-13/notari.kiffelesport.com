@@ -15,21 +15,21 @@
         <table class="table table-bordered table-custom">
             <thead class="thead-dark">
                 <tr>
-                    <th width="30%" class="p-2">Dossier</th>
-                    <th width="30%" class="p-2">Objet du Dossier</th>
-                    <th width="15%" class="p-2">Montant dû </th>
-                    <th width="15%" class="p-2">Total payé</th>
+                    <th width="30%" class="p-2">Client conserné</th>
+                    <th width="30%" class="p-2">Montant dû </th>
+                    <th width="30%" class="p-2">Total payé</th>
                     <th width="10%" class="p-2">solde</th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
-                    <td width="30%" class="p-2">{{ compte.dossier.numeroOuverture }}</td>
-                    <td width="30%" class="p-2">{{ compte.dossier.objet }}</td>
-                    <td width="15%" class="p-2">
+                <td width="30%" class="p-2">
+                    {{ compte.client.nom ~ (compte.client.prenom ? ' ' ~ compte.client.prenom : '') }}
+                </td>
+                    <td width="30%" class="p-2">
                         {{ (compte.montant|default('0')|replace({',' : '', ' ' : ''})|number_format(0, '.', ',')) }}
                     </td>
-                    <td width="15%" class="p-2">
+                    <td width="30%" class="p-2">
                         {{ (compte.montant|default('0')|replace({',' : '', ' ' : ''}) -
                         compte.solde|default('0')|replace({',' : '', ' ' : ''}))|number_format(0, '.', ',') }}
                     </td>

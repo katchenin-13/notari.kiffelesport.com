@@ -18,8 +18,9 @@ class Identification
 
 
 
-    #[ORM\ManyToOne( inversedBy: 'identifications',)]
-    private ?Dossier $dossier = null;
+    #[ORM\ManyToOne(targetEntity: Dossier::class, inversedBy: 'identifications',)]
+    #[ORM\JoinColumn(onDelete: "CASCADE")]
+    private $dossier;
  
 
     #[ORM\ManyToOne(inversedBy: 'identifications')]

@@ -21,6 +21,8 @@ class Compte
     #[ORM\ManyToOne( inversedBy: 'comptes')]
     private ?Client $client = null;
 
+    // #[ORM\ManyToOne(inversedBy: 'comptes')]
+    // private ?Dossier $dossier= null;
 
     #[ORM\Column(length: 255)]
     private ?string $montant = null;
@@ -66,7 +68,17 @@ class Compte
         return $this;
     }
 
+//   public function getDossier(): ?Dossier
+//     {
+//         return $this->dossier;
+//     }
 
+//     public function setDossier(?Dossier $dossier): static
+//     {
+//         $this->dossier = $dossier;
+
+//         return $this;
+//     }
     public function getMontant(): ?string
     {
         return $this->montant;
