@@ -38,30 +38,25 @@ class DepenseController extends BaseController
         $permission = $this->menu->getPermissionIfDifferentNull($this->security->getUser()->getGroupe()->getId(), self::INDEX_ROOT_NAME);
 
         $table = $dataTableFactory->create()
-            ->add('datedepense', DateTimeColumn::class,  ['label' => 'Date de creation ', 'format' => 'd/m/Y', 'searchable' => false])
+            // ->add('datedepense', DateTimeColumn::class,  ['label' => 'Date de creation ', 'format' => 'd/m/Y', 'searchable' => false])
+            ->add('datedepense', DateTimeColumn::class, [
+                'label' => 'Date de création',
+                'format' => 'd/m/Y', // Affiche la date complète au format français
+                'searchable' => false,
+            ])
+
             ->add('mois', TextColumn::class, [
                 'label' => 'Mois',
-                'searchable' => false,
+                'searchable' => false, // Désactive la recherche pour cette colonne         
                 'render' => function ($value, $context) {
-                    // Tableau des mois
-                    $moisCorrespondance = [
-                        1 => 'Janvier',
-                        2 => 'Février',
-                        3 => 'Mars',
-                        4 => 'Avril',
-                        5 => 'Mai',
-                        6 => 'Juin',
-                        7 => 'Juillet',
-                        8 => 'Août',
-                        9 => 'Septembre',
-                        10 => 'Octobre',
-                        11 => 'Novembre',
-                        12 => 'Décembre',
-                    ];
-
-                    // Récupère le numéro du mois depuis la base
-                    $numeroMois = $context->getMois(); // Supposons que 'mois' est l'attribut stocké
-                    return $moisCorrespondance[$numeroMois] ?? 'Inconnu'; // Retourne 'Inconnu' si le numéro est invalide
+                    // Récupère la date et formate le mois en français
+                    $datedepense = $context->getDatedepense();
+                    if ($datedepense) {
+                        // Définir la locale en français
+                        setlocale(LC_TIME, 'fr_FR.UTF-8');
+                        return strftime('%B', $datedepense->getTimestamp()); // Ex. : "janvier", "février"
+                    }
+                    return 'Non défini'; // Valeur par défaut si la date est vide
                 },
             ])
             ->add('libelle', TextColumn::class, ['label' => 'Libelle'])

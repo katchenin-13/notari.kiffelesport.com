@@ -19,9 +19,9 @@ class Depense
     #[ORM\Column(length: 255)]
     private ?string $libelle = null;
 
-    #[ORM\Column(length: 255)]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?string $mois = null;
+    // #[ORM\Column(length: 255)]
+    // #[ORM\JoinColumn(nullable: false)]
+    // private ?string $mois = null;
 
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
@@ -31,7 +31,7 @@ class Depense
     private Collection $lignedepenses;
 
     public function __construct()
-    {
+    { 
         $this->lignedepenses = new ArrayCollection();
     }
 
@@ -52,17 +52,17 @@ class Depense
         return $this;
     }
 
-    public function getMois(): ?string
-    {
-        return $this->mois;
-    }
+    // public function getMois(): ?string
+    // {
+    //     return $this->mois;
+    // }
 
-    public function setMois(string $mois): static
-    {
-        $this->mois = $mois;
+    // public function setMois(string $mois): static
+    // {
+    //     $this->mois = $mois;
 
-        return $this;
-    }
+    //     return $this;
+    // }
 
 
 

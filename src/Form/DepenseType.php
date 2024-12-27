@@ -70,27 +70,27 @@ class DepenseType extends AbstractType
                 'prototype' => true,
 
             ])
-            ->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
-                $depense = $event->getData();
-                $form = $event->getForm();
+            // ->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
+            //     $depense = $event->getData();
+            //     $form = $event->getForm();
 
-                // Vérifier si la date de dépense est présente et définir le mois
-                if ($depense && $depense->getDatedepense()) {
-                    $mois = $depense->getDatedepense()->format('m');
-                    $depense->setMois($mois); // Remplir la propriété directement
-                    $form->get('mois')->setData($mois); // Remplir le champ du formulaire
-                }
-            })
-            ->addEventListener(FormEvents::PRE_SUBMIT, function (FormEvent $event) {
-                $data = $event->getData();
+            //     // Vérifier si la date de dépense est présente et définir le mois
+            //     if ($depense && $depense->getDatedepense()) {
+            //         $mois = $depense->getDatedepense()->format('m');
+            //         $depense->setMois($mois); // Remplir la propriété directement
+            //         $form->get('mois')->setData($mois); // Remplir le champ du formulaire
+            //     }
+            // })
+            // ->addEventListener(FormEvents::PRE_SUBMIT, function (FormEvent $event) {
+            //     $data = $event->getData();
 
-                // Si une date est envoyée, calculer et définir le mois correspondant
-                if (isset($data['datedepense'])) {
-                    $date = new \DateTime($data['datedepense']);
-                    $data['mois'] = $date->format('m'); // Mettre à jour la donnée soumise
-                    $event->setData($data);
-                }
-            });
+            //     // Si une date est envoyée, calculer et définir le mois correspondant
+            //     if (isset($data['datedepense'])) {
+            //         $date = new \DateTime($data['datedepense']);
+            //         $data['mois'] = $date->format('m'); // Mettre à jour la donnée soumise
+            //         $event->setData($data);
+            //     }
+            // });
 
 
     //         ->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
@@ -112,7 +112,8 @@ class DepenseType extends AbstractType
     //                 $data['mois'] = $date->format('m');
     //                 $event->setData($data);
     //             }
-    //         });
+    //         })
+    ;
      }
 
     public function configureOptions(OptionsResolver $resolver): void
