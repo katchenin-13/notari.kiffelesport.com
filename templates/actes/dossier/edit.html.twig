@@ -31,7 +31,7 @@
             <div class="col-md-6 ">
                 {{ form_row(form.numeroOuverture) }}
             </div>
-
+        
         </div>
         <div class="row">
             <div class="col-md-6">
@@ -42,14 +42,18 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-md-4 ">
+        
+            <div class="col-md-6">
                 {{ form_row(form.employe) }}
             </div>
-            <div class="col-md-4 ">
-                {{ form_row(form.objet) }}
-            </div>
-            <div class="col-md-4 ">
+        
+            <div class="col-md-6">
                 {{ form_row(form.conservation) }}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 ">
+                {{ form_row(form.objet) }}
             </div>
         </div>
         <div class="row">
@@ -57,8 +61,9 @@
         </div>
         <div class="row">
             <div class="col-md-4"> {{ form_row(form.montantTotal) }}</div>
-            <div class="col-md-4"> {{ form_row(form.numeroRepertoire) }}</div>
             <div class="col-md-4"> {{ form_row(form.numcompte) }}</div>
+            <div class="col-md-4"> {{ form_row(form.numeroRepertoire) }}</div>
+        
         </div>
 
         </br>
@@ -79,9 +84,7 @@
 
 {% block java %}
 <script>
-    $(function () {
-        init_select2('select');
-    });
+
     $(function () {
         init_select2('select', null, '#exampleModalSizeSm2');
     });
@@ -167,7 +170,7 @@
 
                 $select.each(function () {
                     const $this = $(this);
-                    init_select2($this, null, '#exampleModalSizeLg2');
+                    init_select2($this, null, '#exampleModalSizeSm2');
                     if ($this.hasClass('select-type')) {
                         let field_str = $this.find('option:selected').attr('data-require-fields');
                         const $parent = $this.closest('.row-colonne');
@@ -201,7 +204,7 @@
                 .replace(new RegExp(name, 'g'), index));
 
 
-            init_select2($prototype.find('select'), null, '#exampleModalSizeLg2');
+            init_select2($prototype.find('select'), null, '#exampleModalSizeSm2');
 
 
             // On ajoute au prototype un lien pour pouvoir supprimer la prestation

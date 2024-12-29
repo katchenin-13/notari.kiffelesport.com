@@ -19,13 +19,21 @@ class RemiseActe
 
     #[ORM\OneToOne(cascade: ["persist"], fetch: "EAGER")]
     #[ORM\JoinColumn(nullable: true)]
-    private ?FichierAdmin $fichier = null;
+    private ?FichierAdmin $expedition = null;
+
+    #[ORM\OneToOne(cascade: ["persist"], fetch: "EAGER")]
+    #[ORM\JoinColumn(nullable: true)]
+    private ?FichierAdmin $copie = null;
+
+    #[ORM\OneToOne(cascade: ["persist"], fetch: "EAGER")]
+    #[ORM\JoinColumn(nullable: true)]
+    private ?FichierAdmin $grosse = null;
 
     #[ORM\ManyToOne(targetEntity: Dossier::class, inversedBy: 'remiseActes')]
     #[ORM\JoinColumn(onDelete: "CASCADE")]
     private $dossier;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, nullable: true)]
     private ?string $commentaire = null;
 
     #[ORM\Column(type: 'boolean')]
@@ -69,20 +77,49 @@ class RemiseActe
     }
 
 
-    public function getFichier(): ?FichierAdmin
+    public function getExpedition(): ?FichierAdmin
     {
-        return $this->fichier;
+        return $this->expedition;
     }
 
-    public function setFichier(?FichierAdmin $fichier): self
+    public function setExpedition(?FichierAdmin $expedition): self
     {
         /*  if ($fichier->getFile()) { */
-        $this->fichier = $fichier;
+        $this->expedition = $expedition;
         /*  } */
+        return $this;
+    }
 
+
+    public function getCopie(): ?FichierAdmin
+    {
+        return $this->copie;
+    }
+
+    public function setCopie(?FichierAdmin $copie): self
+    {
+        /*  if ($fichier->getFile()) { */
+        $this->copie = $copie;
+        /*  } */
 
         return $this;
     }
+
+
+    public function getGrosse(): ?FichierAdmin
+    {
+        return $this->grosse;
+    }
+
+    public function setGrosse(?FichierAdmin $grosse): self
+    {
+        /*  if ($fichier->getFile()) { */
+        $this->grosse = $grosse;
+        /*  } */
+
+        return $this;
+    }
+ 
 
     public function getCommentaire(): ?string
     {

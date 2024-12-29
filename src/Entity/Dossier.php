@@ -99,7 +99,7 @@ class Dossier
     private $montantTotal;
 
     #[ORM\ManyToOne(targetEntity: Conservation::class, inversedBy: 'dossiers', cascade: ['persist'])]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(nullable: true)]
     private $conservation;
 
     // #[ORM\OneToMany(targetEntity: PaiementFrais::class, mappedBy: 'dossier', cascade: ['persist'])]
@@ -154,9 +154,10 @@ class Dossier
 
     #[ORM\OneToMany(mappedBy: 'dossier', targetEntity: CommentaireObtention::class, cascade: ['persist'])]
     private Collection $commentaireObtentions;
-
     #[ORM\OneToMany(mappedBy: 'dossier', targetEntity: EnregistrementDocument::class, cascade: ['persist'])]
     private Collection $enregistrementDocuments;
+
+   
 
     #[ORM\Column(length: 50)]
     #[ORM\JoinColumn(nullable: true)]
@@ -166,6 +167,8 @@ class Dossier
     #[ORM\Column(length: 255)]
     #[ORM\JoinColumn(nullable: false)]
     private ?string $numcompte=null;
+
+  
 
     public function __construct()
     {
@@ -1165,5 +1168,6 @@ class Dossier
 
         return $this;
     }
+
 
 }

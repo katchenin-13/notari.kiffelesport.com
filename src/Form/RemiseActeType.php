@@ -17,14 +17,18 @@ class RemiseActeType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder->add('date', DateType::class, [
-            'label' => false
+            'label' => 'Date'
             , 'html5' => false
             , 'attr' => ['class' => 'has-datepicker no-auto skip-init', 'autocomplete' => 'off']
             , 'widget' => 'single_text'
             , 'format' => 'dd/MM/yyyy'
             , 'empty_data' => date('d/m/Y')
         ])
-        ->add('fichier', FichierType::class, ['label' => 'Fichier', 'label' => false, 'doc_options' => $options['doc_options'], 'required' => $options['doc_required'] ?? true])
+        ->add('expedition', FichierType::class, ['label' => 'Expédition','label'=>false, 'doc_options' => $options['doc_options'], 'required' => $options['doc_required'] ?? true])
+            ->add('copie', FichierType::class, ['label' => 'Copié', 'label' => false,'doc_options' => $options['doc_options'], 'required' => $options['doc_required'] ?? true])
+        ->add('grosse', FichierType::class, ['label' => 'Grosse', 'label' => false,'doc_options' => $options['doc_options'], 'required' => $options['doc_required'] ?? true])
+
+
         ->add('commentaire', TextareaType::class, ['label' => 'Commentaire', 'attr' => ['class' => 'description']])
          ->add('active', CheckboxType::class, [
                 'label' => 'Envoyer un email', // Texte affiché à côté de la checkbox

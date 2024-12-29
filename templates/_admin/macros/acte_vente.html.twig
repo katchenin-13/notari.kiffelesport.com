@@ -29,8 +29,6 @@
 </div>
 {% endmacro %}
 
-
-
 {% macro list_piece(piece, client) %}
 <div class="row row-line">
 
@@ -191,6 +189,13 @@
 {% endmacro %}
 
 
+
+
+
+
+
+
+
 {% macro enregistrement(enregistrement) %}
 {% set value = enregistrement.vars.value %}
 
@@ -225,21 +230,21 @@
 
 
 <table class="table table-bordered table-custom  row-header">
-    <thead class="thead-dark">
 
-        <thead>
-            <tr>
-                <th>&nbsp;</th>
-                <th>N° Bordereau</th>
-                <th>Date</th>
-                {# <th>Fiche taxation</th>
-                <th></th>
-                <th>Fiche client</th>
-                <th></th>
-                <th>Fiche transmission</th>
-                <th></th> #}
-            </tr>
-        </thead>
+
+    <thead>
+        <tr>
+            <th>&nbsp;</th>
+            <th>N° Bordereau</th>
+            <th>Date</th>
+            {# <th>Fiche taxation</th>
+            <th></th>
+            <th>Fiche client</th>
+            <th></th>
+            <th>Fiche transmission</th>
+            <th></th> #}
+        </tr>
+    </thead>
     <tbody>
         {% for item in form.enregistrements %}
         {{ _self.enregistrement(item) }}
@@ -258,19 +263,19 @@
 
 
 <table class="table table-bordered table-custom  row-header">
-    <thead class="thead-dark">
 
-        <thead>
-            <tr>
 
-                <th>Fiche taxation</th>
-                <th></th>
-                <th>Fiche client</th>
-                <th></th>
-                <th>Fiche transmission</th>
-                <th></th>
-            </tr>
-        </thead>
+    <thead>
+        <tr>
+
+            <th>Fiche taxation</th>
+            <th></th>
+            <th>Fiche client</th>
+            <th></th>
+            <th>Fiche transmission</th>
+            <th></th>
+        </tr>
+    </thead>
     <tbody>
         {% for item in form.enregistrementDocuments %}
         {{ _self.enregistrementDocument(item) }}
@@ -281,6 +286,8 @@
 
 
 {% endmacro %}
+
+
 {% macro frais(frais) %}
 {% set value = frais.vars.value %}
 
@@ -382,28 +389,78 @@
         {% endmacro %}
 
 
+        {% macro remisesFichier(remiseActes) %}
+
+        <div class="col-md-3">{{ form_row(remiseActes.date) }}</div>
+
+        {% set value = remiseActes.vars.value %}
+
+        <td class="p-2  ">
+            <div style="display:no " class="field-matiere">{{ form_row(remiseActes.expedition) }}</div>
+        </td>
+        <td class="p-2  ">
+            {% if value and value.expedition %}
+            <a class="btn btn-dark btn-sm" target="_blank"
+                href="{{ asset('uploads/media_entreprise/' ~ remiseActes.vars.value.expedition.alt) }} " download> <i
+                    class="bi bi-upload"></i>
+            </a>
+            {% endif %}
+        </td>
+        <td class="p-2">
+            <div style="display:no " class="field-matiere">{{ form_row(remiseActes.copie) }}</div>
+        </td>
+        <td class="p-2">
+            {% if value and value.copie %}
+            <a class="btn btn-dark btn-sm" target="_blank"
+                href="{{ asset('uploads/media_entreprise/' ~ remiseActes.vars.value.copie.alt) }} " download> <i
+                    class="bi bi-upload"></i>
+            </a>
+            {% endif %}
+        </td>
+        <td class="p-2  ">{{ form_row(remiseActes.grosse) }} </td>
+        <td class="p-2  "> {% if value and value.grosse %}
+
+            <a class="btn btn-dark btn-sm" target="_blank"
+                href="{{ asset('uploads/media_entreprise/' ~ remiseActes.vars.value.grosse.alt) }} " download> <i
+                    class="bi bi-upload"></i>
+            </a>
+            {% endif %}
+        </td>
+        {% endmacro %}
+
+        {% macro prototype_remises_fichier(form) %}
+        <div class="list-colonned" data-prototype="{{ _self.remisesFichier(form.remiseActes.vars.prototype)|e }}">
+        </div>
+
+
+        <table class="table table-bordered table-custom  row-header">
+
+
+            <thead>
+                <tr>
+
+                    <th>Fiche Expédition</th>
+                    <th></th>
+                    <th>Fiche Copié</th>
+                    <th></th>
+                    <th>Fiche Grosse</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in form.remiseActes %}
+                {{ _self.remisesFichier(item) }}
+                {% endfor %}
+            </tbody>
+        </table>
+
+
+
+        {% endmacro %}
         {% macro remise_acte(remiseActe) %}
         <div class="row">
-            <div class="col-md-3">{{ form_row(remiseActe.date) }}</div>
-            {% set file_attrs = {} %}
-            {% set has_file = remiseActe.vars.value and remiseActe.vars.value.fichier %}
-            {% if has_file %}
-            {% set file_attrs = file_attrs|merge({'data-file': remiseActe.vars.value.fichier.alt}) %}
-            {% endif %}
-            <div class="col-md-7">{{ form_row(remiseActe.fichier, file_attrs) }}</div>
-            {% if has_file %}
-            <div class="col-md-1">
-                {# <a class="btn btn-dark btn-sm" target="_blank"
-                    href="{{ path('fichier_index', {id:  remiseActe.vars.value.fichier.id}) }}" download> <i
-                        class="bi bi-upload"></i>
-                </a> #}
-                <a class="btn btn-dark btn-sm" target="_blank"
-                    href="{{ asset('uploads/media_entreprise/' ~ remiseActe.vars.value.fichier.alt) }} " download> <i
-                        class="bi bi-upload"></i>
-                </a>
 
-            </div>
-            {% endif %}
+
             <div class="col-md-12">{{ form_row(remiseActe.commentaire) }}</div>
             <div class="col-md-12 mt-3 " style="font-weight: bold;font-size: 20px;color: red">
                 {{ form_row(remiseActe.active) }}
@@ -411,3 +468,74 @@
 
         </div>
         {% endmacro %}
+
+
+
+
+
+
+
+
+        {% set file_attrs = {} %}
+        {% set has_file = remiseActe.vars.value and remiseActe.vars.value.expedition %}
+        {% if has_file %}
+        {% set file_attrs = file_attrs|merge({'data-file': remiseActe.vars.value.expedition.alt}) %}
+        {% endif %}
+        <div class="col-md-7">{{ form_row(remiseActe.expedition, file_attrs) }}</div>
+
+        {% if has_file %}
+        <div class="col-md-1">
+            {# <a class="btn btn-dark btn-sm" target="_blank"
+                href="{{ path('fichier_index', {id:  remiseActe.vars.value.fichier.id}) }}" download> <i
+                    class="bi bi-upload"></i>
+            </a> #}
+            <a class="btn btn-dark btn-sm" target="_blank"
+                href="{{ asset('uploads/media_entreprise/' ~ remiseActe.vars.value.copie.alt) }} " download> <i
+                    class="bi bi-upload"></i>
+            </a>
+
+        </div>
+        {% endif %}
+
+        {% set file_attrs = {} %}
+        {% set has_file = remiseActe.vars.value and remiseActe.vars.value.copie %}
+        {% if has_file %}
+        {% set file_attrs = file_attrs|merge({'data-file': remiseActe.vars.value.copie.alt}) %}
+        {% endif %}
+        <div class="col-md-5">{{ form_row(remiseActe.copie, file_attrs) }}</div>
+
+        {% if has_file %}
+        <div class="col-md-1">
+            {# <a class="btn btn-dark btn-sm" target="_blank"
+                href="{{ path('fichier_index', {id:  remiseActe.vars.value.fichier.id}) }}" download> <i
+                    class="bi bi-upload"></i>
+            </a> #}
+            <a class="btn btn-dark btn-sm" target="_blank"
+                href="{{ asset('uploads/media_entreprise/' ~ remiseActe.vars.value.copie.alt) }} " download> <i
+                    class="bi bi-upload"></i>
+            </a>
+
+        </div>
+        {% endif %}
+
+
+        {% set file_attrs = {} %}
+        {% set has_file = remiseActe.vars.value and remiseActe.vars.value.grosse %}
+        {% if has_file %}
+        {% set file_attrs = file_attrs|merge({'data-file': remiseActe.vars.value.grosse.alt}) %}
+        {% endif %}
+        <div class="col-md-5">{{ form_row(remiseActe.grosse, file_attrs) }}</div>
+
+        {% if has_file %}
+        <div class="col-md-1">
+            {# <a class="btn btn-dark btn-sm" target="_blank"
+                href="{{ path('fichier_index', {id:  remiseActe.vars.value.fichier.id}) }}" download> <i
+                    class="bi bi-upload"></i>
+            </a> #}
+            <a class="btn btn-dark btn-sm" target="_blank"
+                href="{{ asset('uploads/media_entreprise/' ~ remiseActe.vars.value.grosse.alt) }} " download> <i
+                    class="bi bi-upload"></i>
+            </a>
+
+        </div>
+        {% endif %}
