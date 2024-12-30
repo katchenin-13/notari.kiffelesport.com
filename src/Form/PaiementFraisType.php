@@ -25,17 +25,23 @@ class PaiementFraisType extends AbstractType
             'choice_label' => 'nom',
             'attr' => ['class' => 'form-control has-select2']
         ])
-            ->add(
-                'montant',
-                TextType::class,
+
+            // ->add(
+            //     'montant',
+            //     TextType::class,
 
 
-                [
-                    'label' => false,
-                    'attr' => ['class' => 'input-money input-mnt'], 'empty_data' => '0',
-                ]
-            )
-            ->add('attribut', TextType::class, ['label' => 'Attribut', 'label' => false, 'required' => false]);
+            //     [
+            //         'label' => false,
+            //         'attr' => ['class' => 'input-money input-mnt'], 'empty_data' => '0',
+            //     ]
+            // )
+            ->add('attribut', TextType::class, ['label' => 'Attribut', 'label' => false, 'required' => false])
+
+            ->add('facture', FichierType::class, ['label' => 'Expédition', 'label' => false, 'doc_options' => $options['doc_options'], 'required' => $options['doc_required'] ?? true])
+            ->add('recu', FichierType::class, ['label' => 'Copié', 'label' => false, 'doc_options' => $options['doc_options'], 'required' => $options['doc_required'] ?? true])
+            ->add('decharge', FichierType::class, ['label' => 'Grosse', 'label' => false, 'doc_options' => $options['doc_options'], 'required' => $options['doc_required'] ?? true])
+            
           /*   ->add('path', FichierType::class, ['label' => false,  'doc_options' => $options['doc_options'], 'required' => $options['doc_required'] ?? true]) */
            /*  ->add('date', DateType::class, [
                 'label' => false, 'html5' => false,
@@ -45,8 +51,10 @@ class PaiementFraisType extends AbstractType
                 'required' => false
             ]) */
 
+
+
+
         ;
-        $builder->get('montant')->addModelTransformer(new ThousandNumberTransformer());
     }
 
     public function configureOptions(OptionsResolver $resolver): void

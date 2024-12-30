@@ -102,8 +102,8 @@ class Dossier
     #[ORM\JoinColumn(nullable: true)]
     private $conservation;
 
-    // #[ORM\OneToMany(targetEntity: PaiementFrais::class, mappedBy: 'dossier', cascade: ['persist'])]
-    // private $paiementFrais;
+    #[ORM\OneToMany(targetEntity: PaiementFrais::class, mappedBy: 'dossier', cascade: ['persist'])]
+    private $paiementFrais;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true, unique: true)]
     private $numeroRepertoire;
@@ -140,11 +140,12 @@ class Dossier
     #[ORM\OneToMany(mappedBy: 'dossier', targetEntity: CommentairePiece::class, cascade: ['persist'])]
     private Collection $commentairePieces;
 
-    // #[ORM\OneToMany(mappedBy: 'dossier', targetEntity: CommentairePaiement::class)]
-    // private Collection $commentairePaiements;
+    #[ORM\OneToMany(mappedBy: 'dossier', targetEntity: CommentairePaiement::class, cascade: ['persist'])]
+    private Collection $commentairePaiements;
 
     #[ORM\OneToMany(mappedBy: 'dossier', targetEntity: CommentaireRedaction::class, cascade: ['persist'])]
     private Collection $commentaireRedactions;
+
 
     #[ORM\OneToMany(mappedBy: 'dossier', targetEntity: CommentaireSignature::class, cascade: ['persist'])]
     private Collection $commentaireSignatures;
@@ -186,13 +187,13 @@ class Dossier
         $this->setActive(true);
         $this->setMontantAcheteur(0);
         $this->setMontantVendeur(0);
-        //$this->paiementFrais = new ArrayCollection();
+        $this->paiementFrais = new ArrayCollection();
         $this->dateCreation = new DateTime();
     //    $this->comptes = new ArrayCollection();
         $this->documentSigneFichiers = new ArrayCollection();
         // $this->CommentaireIdentifications = new ArrayCollection();
         $this->commentairePieces = new ArrayCollection();
-        // $this->commentairePaiements = new ArrayCollection();
+        $this->commentairePaiements = new ArrayCollection();
         $this->commentaireRedactions = new ArrayCollection();
         $this->commentaireSignatures = new ArrayCollection();
         $this->commentaireEngs = new ArrayCollection();
@@ -753,35 +754,35 @@ class Dossier
         return $this;
     }
 
-    // /**
-    //  * @return Collection<int, PaiementFrais>
-    //  */
-    // public function getPaiementFrais(): Collection
-    // {
-    //     return $this->paiementFrais;
-    // }
+    /**
+     * @return Collection<int, PaiementFrais>
+     */
+    public function getPaiementFrais(): Collection
+    {
+        return $this->paiementFrais;
+    }
 
-    // public function addPaiementFrai(PaiementFrais $paiementFrai): self
-    // {
-    //     if (!$this->paiementFrais->contains($paiementFrai)) {
-    //         $this->paiementFrais[] = $paiementFrai;
-    //         $paiementFrai->setDossier($this);
-    //     }
+    public function addPaiementFrai(PaiementFrais $paiementFrai): self
+    {
+        if (!$this->paiementFrais->contains($paiementFrai)) {
+            $this->paiementFrais[] = $paiementFrai;
+            $paiementFrai->setDossier($this);
+        }
 
-    //     return $this;
-    // }
+        return $this;
+    }
 
-    // public function removePaiementFrai(PaiementFrais $paiementFrai): self
-    // {
-    //     if ($this->paiementFrais->removeElement($paiementFrai)) {
-    //         // set the owning side to null (unless already changed)
-    //         if ($paiementFrai->getDossier() === $this) {
-    //             $paiementFrai->setDossier(null);
-    //         }
-    //     }
+    public function removePaiementFrai(PaiementFrais $paiementFrai): self
+    {
+        if ($this->paiementFrais->removeElement($paiementFrai)) {
+            // set the owning side to null (unless already changed)
+            if ($paiementFrai->getDossier() === $this) {
+                $paiementFrai->setDossier(null);
+            }
+        }
 
-    //     return $this;
-    // }
+        return $this;
+    }
 
     public function getNumeroRepertoire(): ?string
     {
@@ -963,35 +964,35 @@ class Dossier
         return $this;
     }
 
-    // /**
-    //  * @return Collection<int, CommentairePaiement>
-    //  */
-    // public function getCommentairePaiements(): Collection
-    // {
-    //     return $this->commentairePaiements;
-    // }
+    /**
+     * @return Collection<int, CommentairePaiement>
+     */
+    public function getCommentairePaiements(): Collection
+    {
+        return $this->commentairePaiements;
+    }
 
-    // public function addCommentairePaiement(CommentairePaiement $commentairePaiement): self
-    // {
-    //     if (!$this->commentairePaiements->contains($commentairePaiement)) {
-    //         $this->commentairePaiements->add($commentairePaiement);
-    //         $commentairePaiement->setDossier($this);
-    //     }
+    public function addCommentairePaiement(CommentairePaiement $commentairePaiement): self
+    {
+        if (!$this->commentairePaiements->contains($commentairePaiement)) {
+            $this->commentairePaiements->add($commentairePaiement);
+            $commentairePaiement->setDossier($this);
+        }
 
-    //     return $this;
-    // }
+        return $this;
+    }
 
-    // public function removeCommentairePaiement(CommentairePaiement $commentairePaiement): self
-    // {
-    //     if ($this->commentairePaiements->removeElement($commentairePaiement)) {
-    //         // set the owning side to null (unless already changed)
-    //         if ($commentairePaiement->getDossier() === $this) {
-    //             $commentairePaiement->setDossier(null);
-    //         }
-    //     }
+    public function removeCommentairePaiement(CommentairePaiement $commentairePaiement): self
+    {
+        if ($this->commentairePaiements->removeElement($commentairePaiement)) {
+            // set the owning side to null (unless already changed)
+            if ($commentairePaiement->getDossier() === $this) {
+                $commentairePaiement->setDossier(null);
+            }
+        }
 
-    //     return $this;
-    // }
+        return $this;
+    }
 
     /**
      * @return Collection<int, CommentaireRedaction>

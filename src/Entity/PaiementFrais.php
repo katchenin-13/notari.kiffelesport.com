@@ -16,8 +16,8 @@ class PaiementFrais
     #[ORM\Column(type: 'integer')]
     private $id;
 
-    #[ORM\Column(type: 'string', length: 255)]
-    private $montant;
+    // #[ORM\Column(type: 'string', length: 255)]
+    // private $montant;
 
     
 
@@ -32,6 +32,17 @@ class PaiementFrais
     #[ORM\ManyToOne(inversedBy: 'paiementFrais')]
     private ?Client $client = null;
 
+    #[ORM\OneToOne(cascade: ["persist"], fetch: "EAGER")]
+    #[ORM\JoinColumn(nullable: true)]
+    private ?FichierAdmin $facture = null;
+
+    #[ORM\OneToOne(cascade: ["persist"], fetch: "EAGER")]
+    #[ORM\JoinColumn(nullable: true)]
+    private ?FichierAdmin $recu = null;
+
+    #[ORM\OneToOne(cascade: ["persist"], fetch: "EAGER")]
+    #[ORM\JoinColumn(nullable: true)]
+    private ?FichierAdmin $decharge = null;
     
 
     public function getId(): ?int
@@ -54,19 +65,6 @@ class PaiementFrais
 
 
 
-
-    public function getMontant(): ?string
-    {
-        return $this->montant;
-    }
-
-    public function setMontant(string $montant): self
-    {
-        $this->montant = $montant;
-
-        return $this;
-    }
-
     public function getDossier(): ?Dossier
     {
         return $this->dossier;
@@ -88,6 +86,50 @@ class PaiementFrais
     {
         $this->client = $client;
 
+        return $this;
+    }
+
+
+
+    public function getFacture(): ?FichierAdmin
+    {
+        return $this->facture;
+    }
+
+    public function setFacture(?FichierAdmin $facture): self
+    {
+        /*  if ($fichier->getFile()) { */
+        $this->facture = $facture;
+        /*  } */
+        return $this;
+    }
+
+
+    public function getRecu(): ?FichierAdmin
+    {
+        return $this->recu;
+    }
+
+    public function setRecu(?FichierAdmin $recu): self
+    {
+        /*  if ($fichier->getFile()) { */
+        $this->recu = $recu;
+        /*  } */
+
+        return $this;
+    }
+
+
+    public function getDecharge(): ?FichierAdmin
+    {
+        return $this->decharge;
+    }
+
+    public function setDecharge(?FichierAdmin $decharge): self
+    {
+        /*  if ($fichier->getFile()) {*/   /*  } */
+        $this->decharge = $decharge;
+        
         return $this;
     }
 }

@@ -35,6 +35,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Controller\BaseController;
+use App\Entity\Client;
 use App\Entity\CommentaireEng;
 use App\Entity\CommentaireIdentification;
 use App\Entity\CommentaireObtention;
@@ -45,6 +46,7 @@ use App\Entity\CommentaireSignature;
 use App\Entity\Compte;
 use App\Entity\DocumentSigne;
 use App\Entity\DocumentSigneFichier;
+use App\Entity\Employe;
 use App\Entity\EnregistrementDocument;
 use App\Entity\RemiseActe;
 use App\Entity\TypeClient;
@@ -56,9 +58,11 @@ use App\Repository\DossierWorkflowRepository;
 use App\Repository\TypeRepository;
 use App\Repository\WorkflowRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\QueryBuilder;
 use Egulias\EmailValidator\Parser\Comment;
 use PhpOffice\PhpSpreadsheet\Style\Alignment;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Validator\Constraints\Language;
 
 #[Route('/ads/actes/dossier')]
@@ -373,14 +377,55 @@ et indication du nombre des rôles, mots et chiffres nuls
 
         $permission = $this->menu->getPermissionIfDifferentNull($this->security->getUser()->getGroupe()->getId(), self::INDEX_ROOT_NAME);
 
+        // $client = $request->query->get('cleint');
+        // $cler = $request->query->get('cler');
+        
+        // $builder = $this->createFormBuilder(null, [
+        //     'method' => 'GET',
+        //     'action' => $this->generateUrl('app_actes_dossier_index', compact('client', 'cler', 'dateDebut', 'dateFin', 'mode'))
+        // ])
+            // ->add('client', EntityType::class, [
+            //     'class' => Client::class,
+            //     'choice_label' => function(Client $client){
+            //        $clientselect = $client->getTypeClient()->getCode();
+            //       if ($clientselect == 'P') {
+            //         $nomCompte = $client->getNom() . ' ' . $client->getPrenom();
+            //         return $nomCompte;
+            //       }else{
+            //         return  $nomCompte = $client->getNom();
+            //       }
+            //     },
+            //     'label' => 'Client',
+            //     'placeholder' => '---',
+            //     'required' => false,
+            //     'attr' => ['class' => 'form-control-sm has-select2']
+            // ])
+
+            // ->add('employe', EntityType::class, [
+            //     'class' => Employe::class,
+            //     'query_builder' => function (EntityRepository $er) {
+            //         return $er->createQueryBuilder('u')
+            //             ->innerJoin('u.fonction', 'f')
+            //             ->where('f.libelle = :libelle')
+            //             ->setParameter('libelle', 'CLERC')
+            //             ->orderBy('u.id', 'DESC');
+            //     },
+            //     'choice_label' => function ($employe) {
+            //         return $employe->getNom() . ' ' . $employe->getPrenom();
+            //     },
+            //     'label' => 'CLERC EN CHARGE',
+            //     'attr' => ['class' => 'form-control has-select2'],
+            // ]);
         $table = $dataTableFactory->create()
             ->add('numeroOuverture', TextColumn::class, ['label' => 'N° ouverture'])
-            ->add('numeroRepertoire', TextColumn::class, ['label' => 'N° repertoire'])
-            ->add('objet', TextColumn::class, ['label' => 'Objet'])
-            ->add('typeActe', TextColumn::class, ['label' => 'Type d\'acte', 'field' => 't.titre'])
-            //   ->add('employe', TextColumn::class, ['label' => 'Cler en charge', 'field' => 'emp.nom'])
-
+            // ->add('numeroRepertoire', TextColumn::class, ['label' => 'N° repertoire'])
+            ->add('numcompte', TextColumn::class, ['label' => 'N° Compte'])
             ->add('dateCreation', DateTimeColumn::class,  ['label' => 'Date création', 'format' => 'd/m/Y', 'searchable' => false])
+            ->add('objet', TextColumn::class, ['label' => 'Objet'])
+            ->add('employe', TextColumn::class, ['label' => 'Cler en charge', 'field' => 'emp.nom'])
+            // ->add('typeActe', TextColumn::class, ['label' => 'Type d\'acte', 'field' => 't.titre'])
+            ->add('natureDossier', TextColumn::class, ['label' => 'Type de dossier'])
+
             ->add('etape', TextColumn::class, ['className' => 'w-100px', 'field' => 'l.id', 'label' => 'Etape', 'render' => function ($value, Dossier $context) {
 
 
@@ -392,26 +437,56 @@ et indication du nombre des rôles, mots et chiffres nuls
                     $qb->select(['p', 't'])
                         ->from(Dossier::class, 'p')
                         ->join('p.entreprise', 'en')
-                        /*  ->join('p.employe', 'emp') */
+                        ->join('p.employe', 'emp')
                         ->innerJoin('p.typeActe', 't')
 
                         ->orderBy('p.id ', 'DESC');
 
 
-                    if ($etat == 'termine') {
-                        $qb->andWhere("JSON_CONTAINS(p.etat, '1', '$.termine') = 1");
-                    } elseif ($etat == 'archive') {
-                        $qb->andWhere("JSON_CONTAINS(p.etat, '1', '$.archive') = 1");
-                    } elseif ($etat == 'cree') {
-                        $qb->andWhere("JSON_CONTAINS(p.etat, '1', '$.cree') = 1")
-                            ->orWhere("JSON_CONTAINS(p.etat, '1', '$.en_cours') = 1");
-                    }
+                // if ($client || $cler) {
+                //     if ($etat == 'termine') {
+                //         $qb->andWhere("JSON_CONTAINS(p.etat, '1', '$.termine') = 1")
+                //             ->andWhere('p.employe :cler')
+                //             ->setParameter('clier',$cler)
+                //             ->innerJoin('p.identifications','i')
+                //             ->orWhere('i.client :client')
+                //             ->setParameter('client', $client);
+                //     } elseif ($etat == 'archive') {
+                //         $qb->andWhere("JSON_CONTAINS(p.etat, '1', '$.archive') = 1")
+                //             ->andWhere('p.employe :cler')
+                //             ->setParameter('clier',$cler);
+                //     } elseif ($etat == 'cree') {
+                //         $qb->andWhere("JSON_CONTAINS(p.etat, '1', '$.cree') = 1")
+                //             ->orWhere("JSON_CONTAINS(p.etat, '1', '$.en_cours') = 1")
+                //                 ->andWhere('p.employe :cler')
+                //                 ->setParameter('clier',$cler);
+                //     }
+                // }
 
-
-                    if ($this->groupe != "SADM") {
-                        $qb->andWhere('en = :entreprise')
-                            ->setParameter('entreprise', $this->entreprise);
-                    }
+                if ($etat == 'termine') {
+                    $qb->andWhere("JSON_CONTAINS(p.etat, '1', '$.termine') = 1")
+                    // ->andWhere('p.employe :cler')
+                    //     ->setParameter('clier', $cler)
+                    //     ->innerJoin('p.identifications', 'i')
+                    //     ->orWhere('i.client :client')
+                    //     ->setParameter('client', $client)
+                    ;
+                } elseif ($etat == 'archive') {
+                    $qb->andWhere("JSON_CONTAINS(p.etat, '1', '$.archive') = 1")
+                    // ->andWhere('p.employe :cler')
+                    //     ->setParameter('clier', $cler)
+                        ;
+                } elseif ($etat == 'cree') {
+                    $qb->andWhere("JSON_CONTAINS(p.etat, '1', '$.cree') = 1")
+                    ->orWhere("JSON_CONTAINS(p.etat, '1', '$.en_cours') = 1")
+                    // ->andWhere('p.employe :cler')
+                    //     ->setParameter('clier', $cler)
+                    ;
+                }
+                if ($this->groupe != "SADM") {
+                    $qb->andWhere('en = :entreprise')
+                        ->setParameter('entreprise', $this->entreprise);
+                }
                 }
             ])
             ->setName('dt_app_actes_dossier' . $etat);
@@ -1758,213 +1833,188 @@ et indication du nombre des rôles, mots et chiffres nuls
     }
 
 
-    // #[Route("/dossier/{id}/paiement-acte", name: "acte_vente_paiement", methods: ["GET", "POST"])]
-    // public function paiement(Request $request, Dossier $dossier, EntityManagerInterface $em, FormError $formError, WorkflowRepository $workflowRepository, DossierWorkflowRepository $dossierWorkflowRepository, DocumentClientRepository $documentClientRepository)
-    // {
-    //     $typeActe = $dossier->getTypeActe();
-    //     $prefixe = $typeActe->getCode();
-    //     $currentRoute = $request->attributes->get('_route');
-    //     $routeWithoutPrefix = str_replace("{$prefixe}_", '', $currentRoute);
+    #[Route("/dossier/{id}/paiement-acte", name: "acte_vente_paiement", methods: ["GET", "POST"])]
+    public function paiement(Request $request, Dossier $dossier, EntityManagerInterface $em, FormError $formError, WorkflowRepository $workflowRepository, DossierWorkflowRepository $dossierWorkflowRepository, DocumentClientRepository $documentClientRepository)
+    {
+        $typeActe = $dossier->getTypeActe();
+        $prefixe = $typeActe->getCode();
+        $currentRoute = $request->attributes->get('_route');
+        $routeWithoutPrefix = str_replace("{$prefixe}_", '', $currentRoute);
 
 
-    //     $current = $workflowRepository->findOneBy(['typeActe' => $typeActe, 'route' => $routeWithoutPrefix]);
+        $current = $workflowRepository->findOneBy(['typeActe' => $typeActe, 'route' => $routeWithoutPrefix]);
 
-    //     $oldEnregistrements = $dossier->getPaiementFrais();
-
-
-    //     $ii = 1;
+        $oldEnregistrements = $dossier->getPaiementFrais();
 
 
-    //     if (!$dossier->getCommentairePaiements()->count()) {
-    //         $commentaire = new CommentairePaiement();
-    //         $commentaire->setDescription("");
-    //         $dossier->addCommentairePaiement($commentaire);
-    //     }
-
-    //     if (!$dossier->getPaiementFrais()->count()) {
-
-    //         foreach ($dossier->getIdentifications() as $key => $value) {
-
-    //             $paiement = new PaiementFrais();
-    //             $paiement->setAttribut($value->getAttribut());
-    //             $paiement->setClient($value->getClients());
-    //             $dossier->addPaiementFrai($paiement);
-    //         }
-    //     }
+        $ii = 1;
 
 
+        if (!$dossier->getCommentairePaiements()->count()) {
+            $commentaire = new CommentairePaiement();
+            $commentaire->setDescription("");
+            $dossier->addCommentairePaiement($commentaire);
+        }
 
-    //     /*   if (!$oldEnregistrements->count()) {
+        if (!$dossier->getPaiementFrais()->count()) {
 
-    //         foreach ($dossier->getPieces() as $key => $value) {
+            foreach ($dossier->getIdentifications() as $key => $value) {
+
+                $paiement = new PaiementFrais();
+                $paiement->setAttribut($value->getAttribut());
+                $paiement->setClient($value->getClients());
+                $dossier->addPaiementFrai($paiement);
+            }
+        }
+
+
+
+        /*   if (!$oldEnregistrements->count()) {
+
+            foreach ($dossier->getPieces() as $key => $value) {
                
-    //             $enregistrement = new PaiementFrais();
-    //             $enregistrement->setClient($value->getClient());
-    //             $dossier->addPaiementFrai($enregistrement);
-    //         }
+                $enregistrement = new PaiementFrais();
+                $enregistrement->setClient($value->getClient());
+                $dossier->addPaiementFrai($enregistrement);
+            }
           
-    //     } */
-    //     /*  $enregistrement->setSens(intval($idSens)); */
+        } */
+        /*  $enregistrement->setSens(intval($idSens)); */
 
 
 
-    //     /*    foreach (PaiementFrais::Sens as $idSens => $value) {
-    //         $hasValue = $oldEnregistrements->filter(function (PaiementFrais $enregistrement) use ($idSens) {
-    //             return $enregistrement->getSens() == $idSens;
-    //         })->current();
+        /*    foreach (PaiementFrais::Sens as $idSens => $value) {
+            $hasValue = $oldEnregistrements->filter(function (PaiementFrais $enregistrement) use ($idSens) {
+                return $enregistrement->getSens() == $idSens;
+            })->current();
 
 
 
-    //         if (!$hasValue) {
-    //             $enregistrement = new PaiementFrais();
-    //             $enregistrement->setSens(intval($idSens));
-    //             $dossier->addPaiementFrai($enregistrement);
-    //         }
-    //     } */
+            if (!$hasValue) {
+                $enregistrement = new PaiementFrais();
+                $enregistrement->setSens(intval($idSens));
+                $dossier->addPaiementFrai($enregistrement);
+            }
+        } */
 
-    //     /*  dd($oldEnregistrements); */
-    //     $urlParams = ['id' => $dossier->getId()];
-
-
-    //     $next = $workflowRepository->getNext($typeActe->getId(), $current->getNumeroEtape());
-    //     $validationGroups = ['Default', 'FileRequired', 'oui'];
-
-    //     $form = $this->createForm(DossierType::class, $dossier, [
-    //         'method' => 'POST',
-    //         'current_etape' => $dossier->getEtape(),
-    //         'etape' => strtolower(__FUNCTION__),
-    //         'doc_options' => [
-    //             'uploadDir' => $this->getUploadDir(self::UPLOAD_PATH, true),
-    //             'attrs' => ['class' => 'filestyle'],
-    //         ],
-    //         'validation_groups' => $validationGroups,
-    //         'action' => $this->generateUrl($currentRoute, ['id' => $dossier->getId()])
-    //     ]);
-    //     $form->handleRequest($request);
-
-    //     $data = null;
-    //     $url = null;
-    //     $tabId = null;
-    //     $modal = true;
-
-    //     $isAjax = $request->isXmlHttpRequest();
+        /*  dd($oldEnregistrements); */
+        $urlParams = ['id' => $dossier->getId()];
 
 
+        $next = $workflowRepository->getNext($typeActe->getId(), $current->getNumeroEtape());
+        $validationGroups = ['Default', 'FileRequired', 'oui'];
 
-    //     if ($form->isSubmitted()) {
+        $form = $this->createForm(DossierType::class, $dossier, [
+            'method' => 'POST',
+            'current_etape' => $dossier->getEtape(),
+            'etape' => strtolower(__FUNCTION__),
+            'doc_options' => [
+                'uploadDir' => $this->getUploadDir(self::UPLOAD_PATH, true),
+                'attrs' => ['class' => 'filestyle'],
+            ],
+            'validation_groups' => $validationGroups,
+            'action' => $this->generateUrl($currentRoute, ['id' => $dossier->getId()])
+        ]);
+        $form->handleRequest($request);
 
-    //         $somme = 0;
-    //         $datas = $form->get("paiementFrais")->getData();
+        $data = null;
+        $url = null;
+        $tabId = null;
+        $modal = true;
 
-    //         foreach ($datas as $key => $value) {
-    //             $somme = $somme + $value->getMontant();
-    //         }
-
-
-    //         $response = [];
-    //         $redirect = $this->generateUrl($currentRoute, $urlParams);
-    //         $isNext = $form->has('next') && $form->get('next')->isClicked();
-
-    //         $dataLigne = $form->get('paiementFrais')->getData();
+        $isAjax = $request->isXmlHttpRequest();
 
 
 
-    //         /*   $resiltat = $dataLigne->filter(function (PaiementFrais $enregistrement) use ($dossier) {
-    //             return $enregistrement->getSens() == 2;
-    //         }); */
-
-    //         //dd($resiltat[1]->getMontant(), $resiltat[1]->getDate(), $resiltat[1]->getPath());
-
-    //         if ($form->isValid()) {
+        if ($form->isSubmitted()) {
 
 
-    //             if ($somme != str_replace(' ', '', $dossier->getMontantTotal())) {
-    //                 $statut = 0;
-    //                 $message       = sprintf('Le montant total doit être égal à celui des honoraires');
-    //             } else {
-    //                 $suiviDossierRepository = $em->getRepository(SuiviDossierWorkflow::class);
-    //                 $dossierWorkflow = $dossierWorkflowRepository->findOneBy(['dossier' => $dossier, 'workflow' => $current]);
 
-    //                 $suivi = $suiviDossierRepository->findOneBy(compact('dossierWorkflow'));
+            $response = [];
+            $redirect = $this->generateUrl($currentRoute, $urlParams);
+            $isNext = $form->has('next') && $form->get('next')->isClicked();
 
-    //                 foreach ($datas as $key => $value) {
-
-    //                     if ($value->getMontant() > 0) {
-    //                         $compte = new Compte();
-    //                         $compte->setClient($value->getClient());
-    //                         $compte->setDossier($dossier);
-    //                         $compte->setMontant($value->getMontant());
-    //                         $compte->setSolde($value->getMontant());
-    //                         $em->persist($compte);
-    //                         $em->flush();
-    //                     }
-    //                 }
+            $dataLigne = $form->get('paiementFrais')->getData();
 
 
-    //                 if (!$suivi) {
-    //                     $date = new \DateTime();
-    //                     $suivi = new SuiviDossierWorkflow();
-    //                     $suivi->setDossierWorkflow($dossierWorkflow);
-    //                     $suivi->setDateDebut($date);
-    //                     $suivi->setDateFin($date);
-    //                 }
-    //                 if ($isNext && $next) {
 
-    //                     $url = [
-    //                         'url' => $this->generateUrl($next['code'] . '_' . $next['route'], $urlParams),
-    //                         'tab' => '#' . $next['route'],
-    //                         'current' => '#' . $routeWithoutPrefix
-    //                     ];
-    //                     $hash = $next['route'];
-    //                     $tabId = self::TAB_ID;
-    //                     $redirect = $url['url'];
+            /*   $resiltat = $dataLigne->filter(function (PaiementFrais $enregistrement) use ($dossier) {
+                return $enregistrement->getSens() == 2;
+            }); */
+
+            //dd($resiltat[1]->getMontant(), $resiltat[1]->getDate(), $resiltat[1]->getPath());
+
+            if ($form->isValid()) {
 
 
-    //                     if (!$suivi->getEtat()) {
-    //                         $suivi->setDateFin(new \DateTime());
-    //                         $dossier->setEtape($next['route']);
-    //                     }
-    //                     $suivi->setEtat(true);
-    //                 } else {
-    //                     $redirect = $this->generateUrl($currentRoute, $urlParams);
-    //                 }
-    //                 $em->persist($suivi);
-    //                 $em->persist($dossier);
-    //                 $em->flush();
-    //                 $message       = 'Opération effectuée avec succès';
-    //                 $statut = 1;
-    //             }
+                $suiviDossierRepository = $em->getRepository(SuiviDossierWorkflow::class);
+                $dossierWorkflow = $dossierWorkflowRepository->findOneBy(['dossier' => $dossier, 'workflow' => $current]);
+
+                $suivi = $suiviDossierRepository->findOneBy(compact('dossierWorkflow'));
+
+                if (!$suivi) {
+                    $date = new \DateTime();
+                    $suivi = new SuiviDossierWorkflow();
+                    $suivi->setDossierWorkflow($dossierWorkflow);
+                    $suivi->setDateDebut($date);
+                    $suivi->setDateFin($date);
+                }
+                if ($isNext && $next) {
+
+                    $url = [
+                        'url' => $this->generateUrl($next['code'] . '_' . $next['route'], $urlParams),
+                        'tab' => '#' . $next['route'],
+                        'current' => '#' . $routeWithoutPrefix
+                    ];
+                    $hash = $next['route'];
+                    $tabId = self::TAB_ID;
+                    $redirect = $url['url'];
 
 
-    //             $modal = false;
-    //             $data = null;
-    //             $this->addFlash('success', $message);
-    //         } else {
-    //             $message = $formError->all($form);
-    //             $statut = 0;
-    //             if (!$isAjax) {
-    //                 $this->addFlash('warning', $message);
-    //             }
-    //         }
+                    if (!$suivi->getEtat()) {
+                        $suivi->setDateFin(new \DateTime());
+                        $dossier->setEtape($next['route']);
+                    }
+                    $suivi->setEtat(true);
+                } else {
+                    $redirect = $this->generateUrl($currentRoute, $urlParams);
+                }
+                $em->persist($suivi);
+                $em->persist($dossier);
+                $em->flush();
+                $message       = 'Opération effectuée avec succès';
+                $statut = 1;
 
 
-    //         if ($isAjax) {
-    //             return $this->json(compact('statut', 'message', 'redirect', 'data', 'url', 'tabId', 'modal'));
-    //         } else {
-    //             if ($statut == 1) {
-    //                 return $this->redirect($redirect);
-    //             }
-    //         }
-    //     }
+                $modal = false;
+                $data = null;
+                $this->addFlash('success', $message);
+            } else {
+                $message = $formError->all($form);
+                $statut = 0;
+                if (!$isAjax) {
+                    $this->addFlash('warning', $message);
+                }
+            }
 
 
-    //     return $this->render("actes/dossier/{$prefixe}/{$routeWithoutPrefix}.html.twig",  [
-    //         'dossier' => $dossier,
-    //         'route_without_prefix' => $routeWithoutPrefix,
-    //         'form' => $form->createView(),
-    //         'montant' => $dossier->getMontantTotal(),
-    //     ]);
-    // }
+            if ($isAjax) {
+                return $this->json(compact('statut', 'message', 'redirect', 'data', 'url', 'tabId', 'modal'));
+            } else {
+                if ($statut == 1) {
+                    return $this->redirect($redirect);
+                }
+            }
+        }
+
+
+        return $this->render("actes/dossier/{$prefixe}/{$routeWithoutPrefix}.html.twig",  [
+            'dossier' => $dossier,
+            'route_without_prefix' => $routeWithoutPrefix,
+            'form' => $form->createView(),
+            'montant' => $dossier->getMontantTotal(),
+        ]);
+    }
 
     /**
      * @Route("/dossier/{id}/titre-propriete", name="acte_vente_remise", methods={"GET", "POST"})

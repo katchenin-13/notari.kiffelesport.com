@@ -10,10 +10,39 @@
         <div style="display:no " class="field-matiere">{{ form_widget(colonne.attribut,{'attr':{'readOnly':'readOnly'}}) }}</div>
        
     </td>
-    <td class="p-2">
-        <div style="display:no " class="field-matiere">{{ form_widget(colonne.montant) }}</div>
-       
-    </td>
+{% set value = colonne.vars.value %}
+
+<td class="p-2  ">
+    <div style="display:no " class="field-matiere">{{ form_row(colonne.facture) }}</div>
+</td>
+<td class="p-2  ">
+    {% if value and value.facture %}
+    <a class="btn btn-dark btn-sm" target="_blank"
+        href="{{ asset('uploads/media_entreprise/' ~ colonne.vars.value.facture.alt) }} " download> <i
+            class="bi bi-upload"></i>
+    </a>
+    {% endif %}
+</td>
+<td class="p-2">
+    <div style="display:no " class="field-matiere">{{ form_row(colonne.recu) }}</div>
+</td>
+<td class="p-2">
+    {% if value and value.recu %}
+    <a class="btn btn-dark btn-sm" target="_blank"
+        href="{{ asset('uploads/media_entreprise/' ~ colonne.vars.value.recu.alt) }} " download> <i
+            class="bi bi-upload"></i>
+    </a>
+    {% endif %}
+</td>
+<td class="p-2  ">{{ form_row(colonne.decharge) }} </td>
+<td class="p-2  "> {% if value and value.decharge %}
+
+    <a class="btn btn-dark btn-sm" target="_blank"
+        href="{{ asset('uploads/media_entreprise/' ~ colonne.vars.value.decharge.alt) }} " download> <i
+            class="bi bi-upload"></i>
+    </a>
+    {% endif %}
+</td>
   
     <td class="p-2 del-col " data-parent=".row-colonne"></td>
 </tr>
@@ -27,7 +56,7 @@
 
 
 <table class="table table-bordered table-custom">
-    <thead class="thead-dark">
+    {# <thead class="thead-dark">
 
         <tr>
             <th width="40%" class="p-2">Client conserné</th>
@@ -41,13 +70,11 @@
                 {# <button type="button" data-protoname="__name__" class="btn btn-default add_line btn-xs " id="add_ligne"
                     data-protoclass=".list-colonne" data-container=".column-container">
                     <i class="fa fa-plus"></i> Ajouter
-                </button> #}
+                </button> 
             </th>
         </tr>
     </thead>
   
-
-    
     <tbody class="column-container proto-container" data-childclass="">
             {% for item in form.paiementFrais %}
                 {{ _self.frais(item|e) }}
@@ -64,8 +91,27 @@
        
     </td>
 </tr>
-    </tfoot>
+    </tfoot>#}
+    <thead>
+        <tr>
+            <th>Client conserné</th>
+            <th>Attribut</th>
+            <th>Fiche Facture</th>
+            <th></th>
+            <th>Fiche Reçu</th>
+            <th></th>
+            <th>Fiche Décharge</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for item in form.paiementFrais %}
+        {{ _self.frais(item|e) }}
+        {% endfor %}
+    </tbody>
     </table>
+    
+    
 {% endmacro %}
 
 
