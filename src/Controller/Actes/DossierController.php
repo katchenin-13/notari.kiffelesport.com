@@ -35,6 +35,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Controller\BaseController;
+use App\Controller\FileTrait;
 use App\Entity\Client;
 use App\Entity\CommentaireEng;
 use App\Entity\CommentaireIdentification;
@@ -68,6 +69,7 @@ use Symfony\Component\Validator\Constraints\Language;
 #[Route('/ads/actes/dossier')]
 class DossierController extends BaseController
 {
+    use FileTrait;
     const TAB_ID = 'smartwizard-3';
     const INDEX_ROOT_NAME = 'app_actes_dossier_index';
 
@@ -370,52 +372,40 @@ et indication du nombre des rôles, mots et chiffres nuls
     }
 
 
-    #[Route('/{etat}', name: 'app_actes_dossier_index', methods: ['GET', 'POST'])]
+
+    #[Route('/{etat}', name: 'app_actes_dossier_index', methods: ['GET', 'POST'], options: ['expose' => true])]
     public function index(Request $request, DataTableFactory $dataTableFactory, $etat): Response
     {
 
+        $clair = $request->query->get('clair');
 
         $permission = $this->menu->getPermissionIfDifferentNull($this->security->getUser()->getGroupe()->getId(), self::INDEX_ROOT_NAME);
 
-        // $client = $request->query->get('cleint');
-        // $cler = $request->query->get('cler');
-        
-        // $builder = $this->createFormBuilder(null, [
-        //     'method' => 'GET',
-        //     'action' => $this->generateUrl('app_actes_dossier_index', compact('client', 'cler', 'dateDebut', 'dateFin', 'mode'))
-        // ])
-            // ->add('client', EntityType::class, [
-            //     'class' => Client::class,
-            //     'choice_label' => function(Client $client){
-            //        $clientselect = $client->getTypeClient()->getCode();
-            //       if ($clientselect == 'P') {
-            //         $nomCompte = $client->getNom() . ' ' . $client->getPrenom();
-            //         return $nomCompte;
-            //       }else{
-            //         return  $nomCompte = $client->getNom();
-            //       }
-            //     },
-            //     'label' => 'Client',
-            //     'placeholder' => '---',
-            //     'required' => false,
-            //     'attr' => ['class' => 'form-control-sm has-select2']
-            // ])
 
-            // ->add('employe', EntityType::class, [
-            //     'class' => Employe::class,
-            //     'query_builder' => function (EntityRepository $er) {
-            //         return $er->createQueryBuilder('u')
-            //             ->innerJoin('u.fonction', 'f')
-            //             ->where('f.libelle = :libelle')
-            //             ->setParameter('libelle', 'CLERC')
-            //             ->orderBy('u.id', 'DESC');
-            //     },
-            //     'choice_label' => function ($employe) {
-            //         return $employe->getNom() . ' ' . $employe->getPrenom();
-            //     },
-            //     'label' => 'CLERC EN CHARGE',
-            //     'attr' => ['class' => 'form-control has-select2'],
-            // ]);
+
+        $builder = $this->createFormBuilder(null, [
+            'method' => 'GET',
+            'action' => $this->generateUrl('app_actes_dossier_index', ['etat' => $etat, 'clair' => $clair])
+        ])
+
+
+            ->add('clair', EntityType::class, [
+                'class' => Employe::class,
+                'query_builder' => function (EntityRepository $er) {
+                    return $er->createQueryBuilder('u')
+                        ->innerJoin('u.fonction', 'f')
+                        ->where('f.libelle = :libelle')
+                        ->setParameter('libelle', 'CLERC')
+                        ->orderBy('u.id', 'DESC');
+                },
+                'choice_label' => function ($employe) {
+                    return $employe->getNom() . ' ' . $employe->getPrenom();
+                },
+                'label' => 'CLERC EN CHARGE',
+                'required' => false,
+                'attr' => ['class' => 'form-control has-select2'],
+            ]);
+
         $table = $dataTableFactory->create()
             ->add('numeroOuverture', TextColumn::class, ['label' => 'N° ouverture'])
             // ->add('numeroRepertoire', TextColumn::class, ['label' => 'N° repertoire'])
@@ -433,63 +423,48 @@ et indication du nombre des rôles, mots et chiffres nuls
             }])
             ->createAdapter(ORMAdapter::class, [
                 'entity' => Dossier::class,
-                'query' => function (QueryBuilder $qb) use ($etat) {
+                'query' => function (QueryBuilder $qb) use ($etat, $clair) {
                     $qb->select(['p', 't'])
                         ->from(Dossier::class, 'p')
                         ->join('p.entreprise', 'en')
-                        ->join('p.employe', 'emp')
+                        ->leftjoin('p.employe', 'emp')
                         ->innerJoin('p.typeActe', 't')
 
                         ->orderBy('p.id ', 'DESC');
 
 
-                // if ($client || $cler) {
-                //     if ($etat == 'termine') {
-                //         $qb->andWhere("JSON_CONTAINS(p.etat, '1', '$.termine') = 1")
-                //             ->andWhere('p.employe :cler')
-                //             ->setParameter('clier',$cler)
-                //             ->innerJoin('p.identifications','i')
-                //             ->orWhere('i.client :client')
-                //             ->setParameter('client', $client);
-                //     } elseif ($etat == 'archive') {
-                //         $qb->andWhere("JSON_CONTAINS(p.etat, '1', '$.archive') = 1")
-                //             ->andWhere('p.employe :cler')
-                //             ->setParameter('clier',$cler);
-                //     } elseif ($etat == 'cree') {
-                //         $qb->andWhere("JSON_CONTAINS(p.etat, '1', '$.cree') = 1")
-                //             ->orWhere("JSON_CONTAINS(p.etat, '1', '$.en_cours') = 1")
-                //                 ->andWhere('p.employe :cler')
-                //                 ->setParameter('clier',$cler);
-                //     }
-                // }
 
-                if ($etat == 'termine') {
-                    $qb->andWhere("JSON_CONTAINS(p.etat, '1', '$.termine') = 1")
-                    // ->andWhere('p.employe :cler')
-                    //     ->setParameter('clier', $cler)
-                    //     ->innerJoin('p.identifications', 'i')
-                    //     ->orWhere('i.client :client')
-                    //     ->setParameter('client', $client)
-                    ;
-                } elseif ($etat == 'archive') {
-                    $qb->andWhere("JSON_CONTAINS(p.etat, '1', '$.archive') = 1")
-                    // ->andWhere('p.employe :cler')
-                    //     ->setParameter('clier', $cler)
-                        ;
-                } elseif ($etat == 'cree') {
-                    $qb->andWhere("JSON_CONTAINS(p.etat, '1', '$.cree') = 1")
-                    ->orWhere("JSON_CONTAINS(p.etat, '1', '$.en_cours') = 1")
-                    // ->andWhere('p.employe :cler')
-                    //     ->setParameter('clier', $cler)
-                    ;
-                }
-                if ($this->groupe != "SADM") {
-                    $qb->andWhere('en = :entreprise')
+
+                    if ($etat == 'termine') {
+                        $qb->andWhere("JSON_CONTAINS(p.etat, '1', '$.termine') = 1");
+                    } elseif ($etat == 'archive') {
+                        $qb->andWhere("JSON_CONTAINS(p.etat, '1', '$.archive') = 1");
+                    } elseif ($etat == 'cree') {
+                        $qb->andWhere("JSON_CONTAINS(p.etat, '1', '$.cree') = 1")
+                        ->orWhere("JSON_CONTAINS(p.etat, '1', '$.en_cours') = 1");
+                    }
+
+
+
+                    if ($clair) {
+                        $qb
+                            ->andWhere('p.employe = :clair')
+                            ->setParameter('clair', $clair);
+                    }
+
+
+
+
+
+                    if ($this->groupe != "SADM") {
+                        $qb->andWhere('en = :entreprise')
                         ->setParameter('entreprise', $this->entreprise);
-                }
+                    }
                 }
             ])
-            ->setName('dt_app_actes_dossier' . $etat);
+            ->setName('dt_app_actes_dossier_' . $etat . '_' . $clair);
+
+        $form = $builder->getForm();
         if ($permission != null) {
 
             $renders = [
@@ -546,8 +521,9 @@ et indication du nombre des rôles, mots et chiffres nuls
 
             ];
 
-
+            $gridId = $etat . '_' . $clair;
             $hasActions = false;
+
 
             foreach ($renders as $_ => $cb) {
                 if ($cb->execute()) {
@@ -618,7 +594,10 @@ et indication du nombre des rôles, mots et chiffres nuls
         return $this->render('actes/dossier/index.html.twig', [
             'datatable' => $table,
             'permition' => $permission,
-            'etat' => $etat
+            'etat' => $etat,
+            'grid_id' => $gridId,
+
+            'form' => $form->createView(),
         ]);
     }
 
@@ -2404,6 +2383,55 @@ et indication du nombre des rôles, mots et chiffres nuls
             'dossier' => $dossier,
             'route_without_prefix' => $routeWithoutPrefix,
             'form' => $form->createView()
+        ]);
+    }
+
+
+    /**
+     * @throws MpdfException
+     */
+
+    // #[Route('/imprime/etat/dossier', name: 'app_actes_dossier_imprime', methods: ['GET', 'POST'], options: ['expose' => true], condition: "request.query.has('filters')")]
+    #[Route('/imprime/all/{etat}/{clair}', name: 'app_actes_dossier_imprime_all', methods: ['GET'])]
+    public function imprimerEtatDossier(
+        $etat = null,
+        $clair = null,
+        DossierRepository $dossierRepository
+    ): Response {
+
+        $dossiers = $dossierRepository->getListeDossierNative($clair);
+        $employe = $dossierRepository->getEmployeNomPrenom($clair);
+
+        $dataArray = [];
+        foreach ($dossiers as $key => $liste) {
+            $dataArray[] = [
+                'numeroOuverture' => $liste['numero_ouverture'],
+                'numcompte' => $liste['numcompte'],
+                'dateCreation' => $liste['date_creation'],
+                'objet' => $liste['objet'],
+                'employe' => $liste['employe_nom_prenom'],
+                'nature' => $liste['nature_dossier'],
+                'typeActe' => $liste['type_acte_nom'],
+                'etape' => $liste['etape'],
+            ];
+        }
+
+        return $this->renderPdf('actes/dossier/imprime.html.twig', [
+            'datas' => $dataArray,
+            'emploi' => $employe,
+            'date' => new \DateTime(),
+            'entreprise' => ' ',
+            'employe' => $employe
+        ], [
+            'orientation' => 'P',
+            'protected' => true,
+            'format' => 'A4',
+            'showWaterkText' => true,
+            'fontDir' => [
+                $this->getParameter('font_dir') . '/arial',
+                $this->getParameter('font_dir') . '/trebuchet',
+            ],
+            'watermarkImg' => '',
         ]);
     }
 }

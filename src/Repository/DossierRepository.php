@@ -64,7 +64,46 @@ class DossierRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+    public function getEmployeNomPrenom($id)
+    {
+        $qb = $this->createQueryBuilder('d')
+            ->select('CONCAT(e.nom, \' \', e.prenom)')
+            ->innerJoin('d.employe', 'e')
+            ->where('e.id = :id')
+            ->setParameter('id', $id)
+            ->getQuery();
 
+        return $qb->getSingleScalarResult();  // Retourne une seule valeur
+    }
+
+
+    public function getListeDossierNative(int $clair): array
+    {
+        $em = $this->getEntityManager();
+        $connection = $em->getConnection();
+
+        $sql = <<<SQL
+SELECT d.*, CONCAT(e.nom, ' ', e.prenom) AS employe_nom_prenom, t.titre AS type_acte_nom
+FROM dossier d
+INNER JOIN _admin_employe e ON d.employe_id = e.id
+INNER JOIN type_acte t ON d.type_acte_id = t.id
+WHERE d.active = 1
+--   AND JSON_EXTRACT(d.etat, :etatKey) = :etatValue
+  AND :clair IS NOT NULL
+ORDER BY d.id DESC
+SQL;
+        $params = [
+            // 'etatKey' => '$.' . $etat,
+            'etatValue' => 1,
+            'clair' => $clair,
+        ];
+
+
+        $stmt = $connection->executeQuery($sql, $params);
+        return $stmt->fetchAllAssociative();
+        // Utilisation de fetchAll() pour Doctrine DBAL 2.x
+        return $stmt->fetchAll();
+    }
     public function countAll($etat, $searchValue = null)
     {
         $em = $this->getEntityManager();
