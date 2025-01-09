@@ -18,25 +18,83 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Controller\BaseController;
+use App\Entity\Client;
 use App\Entity\Compte;
+use App\Entity\Dossier;
 use App\Form\CalendarType;
 use App\Form\CompteType;
+use App\Repository\CompteRepository;
 use Doctrine\ORM\QueryBuilder;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 
 #[Route('/ads/compte/frais')]
 class CompteController extends BaseController
 {
     const INDEX_ROOT_NAME = 'app_compte_frais_index';
 
-    #[Route('/', name: 'app_compte_frais_index', methods: ['GET', 'POST'])]
+    #[Route('/', name: 'app_compte_frais_index', methods: ['GET', 'POST'], options: ['expose' => true])]
     public function index(Request $request, DataTableFactory $dataTableFactory): Response
     {
+        $dossier = $request->query->get('dossier');
+        $datedebut = $request->query->get('datedebut');
+        $datefin = $request->query->get('datefin');
+        $builder = $this->createFormBuilder(null, [
+            'method' => 'GET',
+            'action' => $this->generateUrl(self::INDEX_ROOT_NAME, ['dossier' => $dossier, 'datedebut' => $datedebut, 'datefin' => $datefin]),
+        ])
+
+            ->add('dossier', EntityType::class, [
+                'class' => Client::class,
+                'choice_label' => function (Client $dossier) {
+                //   return 'Dossier N°_' . $dossier->getNumeroOuverture();
+                $typeClient = $dossier->getTypeClient(); 
+                if ($typeClient && $typeClient->getCode() === 'P') { // Si le type est "P"
+                    return $dossier->getNom() . ' ' . $dossier->getPrenom();
+                } elseif ($typeClient && $typeClient->getCode() === 'E') { // Si le type est "E"
+                    return $dossier->getNom();
+                }
+                return 'N/A'; 
+                },
+                'label' => 'Client conserné',
+                'placeholder' => '---',
+                'required' => false,
+                'attr' => ['class' => 'form-control-sm has-select2']
+            ])
+
+            // ->add('dossier',EntityType::class,[
+            //     'class' => Dossier::class,
+            //     'choice_label'=> function(Dossier $dossier){
+            //         return 'Dossier N°_' . $dossier->getNumeroOuverture();
+            //     },
+            //     'label'   => 'Dossier',
+            //     'placeholder' => '---',
+            //     'required' => false,
+            //     'attr' => ['class' => 'form-control-sm has-select2']
+            // ])
+
+            ->add('datedebut', DateType::class, [
+                'widget' => 'single_text',
+                'label'   => 'Date début',
+                'format'  => 'dd/MM/yyyy',
+                'required' => false,
+                'html5' => false,
+                'attr'    => ['autocomplete' => 'off', 'class' => 'form-control-sm datepicker no-auto'],
+            ])
+            ->add('datefin', DateType::class, [
+                'widget' => 'single_text',
+                'label'   => 'Date fin',
+                'format'  => 'dd/MM/yyyy',
+                'required' => false,
+                'html5' => false,
+                'attr'    => ['autocomplete' => 'off', 'class' => 'form-control-sm datepicker no-auto'],
+            ]);
 
 
         $permission = $this->menu->getPermissionIfDifferentNull($this->security->getUser()->getGroupe()->getId(), self::INDEX_ROOT_NAME);
 
         $table = $dataTableFactory->create()
-            ->add('client', TextColumn::class, ['label' => 'Client','field'=> 'cl.nom'])
+            ->add('client', TextColumn::class, ['label' => 'Client', 'field' => 'cl.nom'])
             // ->add('dossier', TextColumn::class, ['label' => 'Objet du dossier', 'field' => 'd.objet'])
             ->add('datecreation', DateTimeColumn::class,  ['label' => 'Date de creation ', 'format' => 'd/m/Y', 'searchable' => false])
             ->add('montant', TextColumn::class,  ['label' => 'Montant dû '])
@@ -44,23 +102,70 @@ class CompteController extends BaseController
                 $montantpaye = (float)$context->getMontant() - (float)$context->getSolde();
                 return $montantpaye;
             }])
-
             ->add('solde', TextColumn::class,  ['label' => 'Solde '])
-
             ->createAdapter(ORMAdapter::class, [
                 'entity' => Compte::class,
-                'query' => function (QueryBuilder $qb)  {
+                'query' => function (QueryBuilder $qb) use ($dossier, $datedebut, $datefin) {
                     $qb->select(['c',])
                         ->from(Compte::class, 'c')
                         ->join('c.client', 'cl')
                         // ->join('cl.identifications','i')
                         // ->join('i.dossier','d' )
                         ->orderBy('c.id ', 'DESC');
+               
+               
+                    if ($dossier || $datedebut || $datefin) {
+                    if ($dossier) {
+                        $qb->andWhere('c.client = :dossier')
+                            ->setParameter('dossier', $dossier);
+                    }
 
-                    
+                    // if ($dossier) {
+                    //     $qb ->innerJoin('cl.identification','i')
+                    //     ->innerJoin('i.dossier','d' )
+                    //     ->andWhere('d = :dossier')
+                    //         ->setParameter('dossier', $dossier);
+                    // }
+
+                    if ($datedebut != null && $datefin == null) {
+                        try {
+                            $new_date_debut = (new \DateTime($datedebut))->format('Y-m-d');
+
+                            $qb->andWhere('c.datecreation = :dateDebut')
+                                ->setParameter('dateDebut', $new_date_debut);
+                        } catch (\Exception $e) {
+                            // Gérez l'erreur si la date n'est pas au bon format
+                        }
+                    }
+
+                    if ($datefin != null && $datedebut == null) {
+                        try {
+                            $new_date_fin = (new \DateTime($datefin))->format('Y-m-d');
+
+                            $qb->andWhere('c.datecreation = :datefin')
+                                ->setParameter('datefin', $new_date_fin);
+                        } catch (\Exception $e) {
+                            // Gérez l'erreur si la date n'est pas au bon format
+                        }
+                    }
+
+                    if ($datedebut != null && $datefin != null) {
+                        try {
+                            $new_date_debut = (new \DateTime($datedebut))->format('Y-m-d');
+                            $new_date_fin = (new \DateTime($datefin))->format('Y-m-d');
+
+                            $qb->andWhere('c.datecreation BETWEEN :datedebut AND :datefin')
+                                ->setParameter('datedebut', $new_date_debut)
+                                ->setParameter('datefin', $new_date_fin);
+                        } catch (\Exception $e) {
+                            // Gérez l'erreur si la date n'est pas au bon format
+                        }
+                    }
+                }
+
                 }
             ])
-            ->setName('dt_app_compte_frais');
+            ->setName('dt_app_compte_frais_' . $dossier);
         if ($permission != null) {
 
             $renders = [
@@ -112,6 +217,7 @@ class CompteController extends BaseController
 
             ];
 
+            $gridId = $dossier;
 
             $hasActions = false;
 
@@ -175,7 +281,7 @@ class CompteController extends BaseController
                 ]);
             }
         }
-
+        $form = $builder->getForm()->createView();
         $table->handleRequest($request);
 
         if ($table->isCallback()) {
@@ -186,7 +292,9 @@ class CompteController extends BaseController
         return $this->render('compte/frais/index.html.twig', [
             'datatable' => $table,
             'permition' => $permission,
-            'titre' => "Liste des  activités"
+            'titre' => "Liste des  activités",
+            'form' => $form,
+            'grid_id' => $gridId
         ]);
     }
 
@@ -385,6 +493,55 @@ class CompteController extends BaseController
         return $this->renderForm('compte/frais/delete.html.twig', [
             'calendar' => $compte,
             'form' => $form,
+        ]);
+    }
+
+
+    /**
+     * @throws MpdfException
+     */
+
+    // #[Route('/imprime/etat/dossier', name: 'app_actes_dossier_imprime', methods: ['GET', 'POST'], options: ['expose' => true], condition: "request.query.has('filters')")]
+    #[Route('/imprime/all', name: 'app_compte_imprime_all', methods: ['GET'])]
+    public function imprimerEtatDossier(
+        $etat = null,
+        $clair = null,
+        CompteRepository $compteRepository
+    ): Response {
+
+        $dossiers = $compteRepository->getListeDossierNative($clair);
+        $employe = $compteRepository->getEmployeNomPrenom($clair);
+
+        $dataArray = [];
+        foreach ($dossiers as $key => $liste) {
+            $dataArray[] = [
+                'numeroOuverture' => $liste['numero_ouverture'],
+                'numcompte' => $liste['numcompte'],
+                'dateCreation' => $liste['date_creation'],
+                'objet' => $liste['objet'],
+                'employe' => $liste['employe_nom_prenom'],
+                'nature' => $liste['nature_dossier'],
+                'typeActe' => $liste['type_acte_nom'],
+                'etape' => $liste['etape'],
+            ];
+        }
+
+        return $this->renderPdf('actes/dossier/imprime.html.twig', [
+            'datas' => $dataArray,
+            'emploi' => $employe,
+            'date' => new \DateTime(),
+            'entreprise' => ' ',
+            'employe' => $employe
+        ], [
+            'orientation' => 'P',
+            'protected' => true,
+            'format' => 'A4',
+            'showWaterkText' => true,
+            'fontDir' => [
+                $this->getParameter('font_dir') . '/arial',
+                $this->getParameter('font_dir') . '/trebuchet',
+            ],
+            'watermarkImg' => '',
         ]);
     }
 }
