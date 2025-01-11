@@ -1,0 +1,197 @@
+{# {% set code =facture.typeFacture.code(true) %} #}
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>{# {{ code =='a' ? 'AVOIR': 'FACTURE' }} {{ facture.numero }} #}dd</title>
+  <style>
+    {
+      % block page_css %
+    }
+
+    @page {
+
+      margin-footer: 0.5cm;
+
+      /*header: html_headerContent;*/
+      footer: html_pageFooter;
+      margin-top: 0.5cm;
+      margin-header: 0cm;
+
+      /*background: ...
+  background-image: ...
+  background-position ...
+  background-repeat ...
+  background-color ...
+  background-gradient: ...*/
+    }
+
+    .clearfix:after,
+    {
+    % endblock %
+    }
+
+    .clearfix:before {
+      content: " ";
+      display: table;
+    }
+
+    .clearfix:after {
+      clear: both;
+    }
+
+    .mention {
+      position: absolute;
+      bottom: 100px;
+    }
+
+    /*@page :first {
+   header: html_headerContent;
+}*/
+    caption {
+      margin-bottom: 15px;
+    }
+
+    fieldset {
+      border: 1px solid #000 !important;
+      margin: 0;
+      xmin-width: 0;
+      padding: 10px;
+      position: relative;
+      border-radius: 4px;
+      background-color: #fff;
+      padding-left: 10px !important;
+    }
+
+    legend {
+      padding: 0 10px;
+      margin-left: 100px;
+      font-size: 14px;
+      font-weight: bold;
+      margin-bottom: 0px;
+      width: 35%;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      background-color: #ffffff;
+    }
+
+    table {
+      font-family: arial, sans-serif;
+      border-collapse: collapse;
+      width: 100%;
+    }
+
+    td,
+    th {
+      border: 1px solid #dddddd;
+      text-align: left;
+      padding: 8px;
+    }
+
+    tr:nth-child(even) {}
+
+    @media all {
+      /*.content { display: block; page-break-inside: avoid; }*/
+    }
+
+    .content {
+      /*margin-top: 18cm;*/
+    }
+
+      {
+      # .table-responsive.table-bordered {
+        border: 0;
+      }
+
+      #
+    }
+
+    .double_underline {
+      text-decoration: underline;
+      border-bottom: 1px solid #000;
+      text-align: center;
+    }
+  </style>
+</head>
+
+<body style="font-size:12px;">
+
+
+  <div class="clearfix">
+
+       <div style="width:100%;text-align:center;padding-top:40px;">
+      <div class="texte-center" style="border: 1px solid #000;padding:8px;">
+            <b style="font-size:15px;font-weight:bold;">CLERC EN CHARGE : {{ emploi|upper }} </b><br>
+      </div>
+<br><br>      {# <div
+        style="margin-top:-25px;text-align:center;bosrder: 1px solid #000;padding:8px;font-size:15px;font-weight:bold"
+        class=""> #}
+        {# <b>DOIT</b><br><br> #}
+        <table>
+          <caption>
+            <b  style="font-size:15px;font-weight:bold;text-decoration:underline;">LISTE DES DOSSIERS </b><br>
+          </caption>
+          <tr style="background-color: #ff6600">
+            <th style="vertical-align:middle; color: #ffffff">N° ouverture</th>
+            <th style="vertical-align:middle; color: #ffffff">N° compte</th>
+            <th style="vertical-align:middle; color: #ffffff"> Date création </th>
+
+            <th style="vertical-align:middle; color: #ffffff">Objet</th>
+            <th style="vertical-align:middle; color: #ffffff">Cler en charge</th>
+
+            <th style="vertical-align:middle; color: #ffffff">Type de dossier</th>
+            <th style="vertical-align:middle; color: #ffffff">Type d'acte</th>
+            <th style="vertical-align:middle; color: #ffffff">Etape</th>
+          </tr>
+          {% for key,data in datas %}
+
+          <tr>
+            <td style = "vertical-align:middle;">{{ data['numeroOuverture'] }}</td>
+            <td style = "vertical-align:middle;">{{ data['numcompte'] }}</td>
+            <td style = "vertical-align:middle;">{{ data['dateCreation'] }}</td>
+            <td style = "vertical-align:middle;">{{ data['objet'] }}</td>
+            <td style = "vertical-align:middle;">{{ data['employe'] }}</td>
+            <td style = "vertical-align:middle;">{{ data['nature'] }}</td>
+            <td style = "vertical-align:middle;">{{ data['typeActe'] }}</td>
+            <td style = "vertical-align:middle;">{{ data['etape'] }}</td>
+
+          </tr>
+          {% endfor %}
+
+
+
+        </table>
+        {#
+      </div> #}
+    </div>
+  </div>
+
+
+  </div><br>
+  {# <div style="border-top:20px solid grey"></div><br> #}
+
+
+
+  </div>
+
+  <htmlpagefooter name="pageFooter">
+    {# <table style="width:100%">
+      <tr>
+        <td style="width:50%;text-align:left;padding-bottom:8px">
+          <i><b>Client</b></i>
+        </td>
+        <td style="width:50%;text-align:right">
+          <i><b>Souche</b></i>
+        </td> secretariat@ufrseg-filierespro-ufhb.ci
+      </tr>
+    </table> #}
+    <div style="border-top:2px solid #000"></div>
+    <p align="center" style="align: center;margin-top:-1px">
+      UFHB/UFRSEG BP V43 ABIDJAN EMAIL:
+      <a href="mailto:secretariat@ufrseg-filierespro-ufhb.ci">secretariat@ufrseg-filierespro-ufhb.ci</a><br>
+      TEL : 01 01 15 44 44
+    </p>
+  </htmlpagefooter>
+</body>
+
+</html>

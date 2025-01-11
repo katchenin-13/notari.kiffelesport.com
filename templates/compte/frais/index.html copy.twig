@@ -90,54 +90,49 @@
 
 
 <script>
-   $(function () {
-            $('.no-auto').each(function () {
-                const $this = $(this);
-                const $id = $('#' + $this.attr('id'));
-                init_date_picker($id,  'down', (start, e) => {
-                    //$this.val(start.format('DD/MM/YYYY'));
-                }, null, null, false);
+    $(function () {
+        const grid_prefix_id = "{{ grid_id }}";
 
-                $id.on('apply.daterangepicker', function (ev, picker) {
-                    $(this).val(picker.startDate.format('DD/MM/YYYY'));
-                });
-            });
-      const grid_prefix_id = "{{ grid_id }}";
-      const $old_grid = $('#grid_app_compte_frais_' + grid_prefix_id);
-      init_select2('.has-select2');
 
-      function loadDataTable($grid, dossier,datedebut,datefin,options = null, contents = '') {
-        $grid.initDataTables(
-          options
-          ? options
-          : {{ datatable_settings(datatable) }}, {
-          searching: true,
-          ajaxUrl: Routing.generate('app_compte_frais_index', {
-            dossier: dossier,
-            dateDebut: datedebut,
-            dateFin: datefin,          
-          }),
-          language: {
-            url: asset_base_path + "/js/i18n/French.json"
-          },
-          headerCallback: function (tHead, aData, iStart, iEnd, aiDisplay) {},
-          initComplete: function (e, oSettings, json) {},
-          drawCallback: function (row, data) {}
+
+        const $old_grid = $('#grid_app_compte_frais_' + grid_prefix_id);
+        init_select2('.has-select2');
+
+        function loadDataTable($grid, dossier, datedebut, datefin, options = null, contents = '') {
+            $grid.initDataTables(
+                options
+                    ? options
+                    : {{ datatable_settings(datatable) }}, {
+            searching: true,
+                ajaxUrl: Routing.generate('app_compte_frais_index', {
+                    dossier: dossier,
+                    datedebut: datedebut,
+                    datefin: datefin,
+                }),
+                    language: {
+                url: asset_base_path + "/js/i18n/French.json"
+            },
+            headerCallback: function (tHead, aData, iStart, iEnd, aiDisplay) { },
+            initComplete: function (e, oSettings, json) { },
+
+            drawCallback: function (row, data) { }
         });
       }
 
-      const $dossier = $('#{{ form.dossier.vars.id }}');
-      const $datedebut = $('#{{ form.datedebut.vars.id }}');
-      const $datefin = $('#{{ form.datefin.vars.id }}');
-      
-       $('.imprimer').on('click', function (e) {
-        e.preventDefault(); 
-        let dossier_data = $dossier.val() ? $dossier.val()  : null
-        let datedebut_data = $datedebut.val() ? $datedebut.val().toString().replace(/\//g, "-")  : null
-        let datefin_data = $datefin.val() ? $datefin.val().toString().replace(/\//g, "-")  : null
-       executeGlobalFicheUrl(dossier_data,datedebut_data,datefin_data)
-     
-      });
+    const $dossier = $('#{{ form.dossier.vars.id }}');
+    const $datedebut = $('#{{ form.datedebut.vars.id }}');
+    const $datefin = $('#{{ form.datefin.vars.id }}');
+
+
+    $('.imprimer').on('click', function (e) {
+        e.preventDefault();
+        let dossier_data = $dossier.val() ? $dossier.val() : null;
+        let datedebut_data = $datedebut.val() ? $datedebut.val() : null;
+        let datefin_data = $datefin.val() ? $datefin.val() : null;
+
+        executeGlobalFicheUrl(dossier_data, datedebut_data, datefin_data);
+    });
+
     function executeGlobalFicheUrl(dossier, datedebut, datefin) {
         const urlTemplate = "{{ path('app_compte_imprime_all', { 'dossier': 'dossier', 'datedebut': 'datedebut','datefin':'datefin' }) }}";
         const url = urlTemplate
@@ -147,75 +142,80 @@
         window.open(url, '_blank');
     }
 
-      $dossier.on('change', function () {
+    $dossier.on('change', function () {
         const val = $(this).val();
-          $dossier.find('option').each(function () {
-          const $_this = $(this);
-          if ($_this.attr('data-type') == val) {
-           // $_this.prop('disabled', false).prop('hidden', false);
-          } else {
-            //$_this.prop('disabled', true).prop('hidden', true);
-          }
+        $dossier.find('option').each(function () {
+            const $_this = $(this);
+            if ($_this.attr('data-type') == val) {
+                // $_this.prop('disabled', false).prop('hidden', false);
+            } else {
+                //$_this.prop('disabled', true).prop('hidden', true);
+            }
         });
-     
-      });
 
-      loadDataTable($old_grid, null,null,null, {{ datatable_settings(datatable) }});
+    });
 
-      $('.btn-filter').on('click', function (e) {
+    loadDataTable($old_grid,null, null, null, {{ datatable_settings(datatable) }});
+
+    $('.btn-filter').on('click', function (e) {
         e.preventDefault();
         const $this = $(this);
         const $form = $this.closest('form');
 
-        //alert($dateDebut.val());
-        load_grid_data($form, $this, $dossier.val(),$datedebut.val(),$datefin.val());
-      });
+        console.log($form);
+        load_grid_data($form, $this, $form.find('.dossier').val(), $form.find('.datedebut').val(), $form.find('.datefin').val());
+    });
 
 
-     
 
-      function load_grid_data($form, $button, dossier,datedebut,datefin) {
+
+    function load_grid_data($form, $button, dossier, datedebut, datefin) {
         const id = $old_grid.find('table').attr('id');
         const $table = $old_grid.find(`#${id}`);
         const table = $table.DataTable();
         $.ajax({
-          url: $form.attr('action'),
-          type: $form.attr('method'),
-          data: {
-            dossier: dossier,
-            datedebut: datedebut,
-            datefin: datefin,
-          },
-          beforeSend: function () {
-            $button.append('<span class="spinner-border spinner-ajax spinner-border-sm" role="status" aria-hidden="true"></span> ');
-            $button.prop('disabled', true);
-          },
-          complete: function () {
-            $button.prop('disabled', false);
-            $button.find('.spinner-ajax').remove();
-          },
-          success: function (html) {
-            table.destroy();
-            if ($table.length) {
-              $table.empty();
-            }
+            url: Routing.generate('app_compte_frais_index', { dossier: dossier, datedebut: datedebut, datefin: datefin }),
+            type: 'GET',
+            data: {
+                dossier: dossier,
+                datedebut: datedebut,
+                datefin: datefin,
+            },
+            beforeSend: function () {
+                $button.append('<span class="spinner-border spinner-ajax spinner-border-sm" role="status" aria-hidden="true"></span> ');
+                $button.prop('disabled', true);
+            },
+            complete: function () {
+                $button.prop('disabled', false);
+                $button.find('.spinner-ajax').remove();
+            },
+            success: function (html) {
+                table.destroy();
+                if ($table.length) {
+                    $table.empty();
+                }
 
-            let grid_val = `${dossier}`;
+                let grid_val = `${dossier}`;
 
-            $old_grid.attr('id', `grid_app_compte_frais_${grid_val}`).empty().html(`
+
+                $old_grid.attr('id', `grid_app_actes_dossier_${grid_val}`).empty().html(`
                                     <div class="spinner spinner-track spinner-primary mr-15 text-primary">
                                         <div class="ml-15">Chargement des données de la grille</div>
                                     </div>
                             `);
-            var options = {{ datatable_settings(datatable) }};
-            var name = `dt_app_compte_frais_${grid_val}`;
+                var options = {{ datatable_settings(datatable) }};
 
-            options['name'] = name;
-            console.log(name);
-            loadDataTable($old_grid, dossier,datedebut,datefin,options)
-          }
+                options['name'] = `dt_app_compte_frais_${grid_val}`;
+
+                console.log(name);
+                loadDataTable($old_grid, dossier, datedebut, datefin, options);
+
+            }
         });
-      }
+      
+
+
+    }
     });
 
      

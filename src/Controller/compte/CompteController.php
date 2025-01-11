@@ -56,6 +56,9 @@ class CompteController extends BaseController
                 }
                 return 'N/A'; 
                 },
+            'choice_attr' => function (Client $user) {
+                return ['data-type' => $user->getId()];
+            },
                 'label' => 'Client conserné',
                 'placeholder' => '---',
                 'required' => false,
@@ -106,7 +109,7 @@ class CompteController extends BaseController
             ->createAdapter(ORMAdapter::class, [
                 'entity' => Compte::class,
                 'query' => function (QueryBuilder $qb) use ($dossier, $datedebut, $datefin) {
-                    $qb->select(['c',])
+                    $qb->select(['c','cl',])
                         ->from(Compte::class, 'c')
                         ->join('c.client', 'cl')
                         // ->join('cl.identifications','i')
@@ -116,7 +119,7 @@ class CompteController extends BaseController
                
                     if ($dossier || $datedebut || $datefin) {
                     if ($dossier) {
-                        $qb->andWhere('c.client = :dossier')
+                        $qb->andWhere('cl.id = :dossier')
                             ->setParameter('dossier', $dossier);
                     }
 
