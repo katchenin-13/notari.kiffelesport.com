@@ -2,10 +2,10 @@
 
 namespace App\Repository;
 
-
+use App\Entity\Compte;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
-use Proxies\__CG__\App\Entity\Compte;
+
 
 /**
  * @extends ServiceEntityRepository<Compte>
@@ -21,6 +21,61 @@ class CompteRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Compte::class);
     }
+
+//     public function searchResult($client = null, $datedebut = null, $datefin = null)
+//     {
+//         $sql = $this->createQueryBuilder('c')
+
+//             ->join('c.client', 'client')
+//             ->join('c.ligneversementfrais','lignevers')
+//             ->join('client.identifications', 'id')
+//             ->join('id.dossier', 'd')
+//             ->addSelect('client', 'id', 'd');
+    
+
+//         if ($client  || $datedebut || $datefin ) {
+
+//             if ($client != "null") {
+//                 $sql->andWhere('client.id = :client')
+//                 ->setParameter('client', $client);
+//             }
+           
+
+//             // dd($datedebut);
+
+//             if ($datedebut != null && $datefin == null) {
+//                 $truc = explode('-', str_replace("/", "-", $datedebut));
+//                 $new_date_debut = $truc[2] . '-' . $truc[1] . '-' . $truc[0];
+
+//                 $sql->andWhere('c.datecreation = :datedebut')
+//                 ->setParameter('datedebut', $new_date_debut);
+//             }
+//             if ($datefin != "null" && $datedebut == "null") {
+
+//                 $truc = explode('-', str_replace("/", "-", $datefin));
+//                 $new_date_fin = $truc[2] . '-' . $truc[1] . '-' . $truc[0];
+
+//                 $sql->andWhere('c.datecreation  = :datefin')
+//                 ->setParameter('datefin', $new_date_fin);
+//             }
+//             if ($datedebut != "null" && $datefin != "null") {
+
+//                 $truc_debut = explode('-', str_replace("/", "-", $datedebut));
+//                 $new_date_debut = $truc_debut[2] . '-' . $truc_debut[1] . '-' . $truc_debut[0];
+
+//                 $truc = explode('-', str_replace("/", "-", $datefin));
+//                 $new_date_fin = $truc[2] . '-' . $truc[1] . '-' . $truc[0];
+
+//                 $sql->andWhere('c.datecreation BETWEEN :datedebut AND :datefin')
+//                 ->setParameter('datedebut', $new_date_debut)
+//                     ->setParameter("datefin", $new_date_fin);
+//             }
+//  }
+
+//         // Retourner les résultats
+//         return $sql->getQuery()->getResult();
+//     }
+
 
 //    /**
 //     * @return Compte[] Returns an array of Compte objects

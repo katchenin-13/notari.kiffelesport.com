@@ -1,197 +1,139 @@
-{# {% set code =facture.typeFacture.code(true) %} #}
 <!DOCTYPE html>
-<html>
+<html lang="fr">
 
 <head>
-  <title>{# {{ code =='a' ? 'AVOIR': 'FACTURE' }} {{ facture.numero }} #}dd</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Liste des Paiements</title>
   <style>
-    {
-      % block page_css %
-    }
-
-    @page {
-
-      margin-footer: 0.5cm;
-
-      /*header: html_headerContent;*/
-      footer: html_pageFooter;
-      margin-top: 0.5cm;
-      margin-header: 0cm;
-
-      /*background: ...
-  background-image: ...
-  background-position ...
-  background-repeat ...
-  background-color ...
-  background-gradient: ...*/
-    }
-
-    .clearfix:after,
-    {
-    % endblock %
-    }
-
-    .clearfix:before {
-      content: " ";
-      display: table;
+    body {
+      font-size: 12px;
+      font-family: Arial, sans-serif;
     }
 
     .clearfix:after {
+      content: "";
+      display: table;
       clear: both;
     }
 
-    .mention {
-      position: absolute;
-      bottom: 100px;
-    }
-
-    /*@page :first {
-   header: html_headerContent;
-}*/
-    caption {
-      margin-bottom: 15px;
-    }
-
-    fieldset {
-      border: 1px solid #000 !important;
-      margin: 0;
-      xmin-width: 0;
-      padding: 10px;
-      position: relative;
-      border-radius: 4px;
-      background-color: #fff;
-      padding-left: 10px !important;
-    }
-
-    legend {
-      padding: 0 10px;
-      margin-left: 100px;
-      font-size: 14px;
-      font-weight: bold;
-      margin-bottom: 0px;
-      width: 35%;
-      border: 1px solid #ddd;
-      border-radius: 4px;
-      background-color: #ffffff;
-    }
-
     table {
-      font-family: arial, sans-serif;
       border-collapse: collapse;
+      margin-top: 20px;
+    }
+
+    th,
+    td {
+      border: 1px solid #ddd;
+      padding: 8px;
+      text-align: center;
+    }
+
+    caption {
+      background-color: rgba(229, 219, 216, 0.7);
+      padding: 10px;
+      font-weight: bold;
+      border: 2px solid black;
+    }
+
+    tbody th {
+      color: red;
+      font-size: 18px;
+      background-color: #ede2e2;
+    }
+
+    .tables-container {
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    table:first-of-type {
+      width: 65%;
+      margin-right: auto;
+    }
+     table.second-table1 {
       width: 100%;
     }
 
-    td,
-    th {
-      border: 1px solid #dddddd;
-      text-align: left;
-      padding: 8px;
-    }
-
-    tr:nth-child(even) {}
-
-    @media all {
-      /*.content { display: block; page-break-inside: avoid; }*/
-    }
-
-    .content {
-      /*margin-top: 18cm;*/
-    }
-
-      {
-      # .table-responsive.table-bordered {
-        border: 0;
-      }
-
-      #
-    }
-
-    .double_underline {
-      text-decoration: underline;
-      border-bottom: 1px solid #000;
-      text-align: center;
+    table.second-table {
+      width: 30%;
+      margin-left: auto;
     }
   </style>
 </head>
 
-<body style="font-size:12px;">
-
-
+<body>
   <div class="clearfix">
-
-       <div style="width:100%;text-align:center;padding-top:40px;">
-      <div class="texte-center" style="border: 1px solid #000;padding:8px;">
-            <b style="font-size:15px;font-weight:bold;">CLERC EN CHARGE : {{ emploi|upper }} </b><br>
-      </div>
-<br><br>      {# <div
-        style="margin-top:-25px;text-align:center;bosrder: 1px solid #000;padding:8px;font-size:15px;font-weight:bold"
-        class=""> #}
-        {# <b>DOIT</b><br><br> #}
-        <table>
-          <caption>
-            <b  style="font-size:15px;font-weight:bold;text-decoration:underline;">LISTE DES DOSSIERS </b><br>
-          </caption>
-          <tr style="background-color: #ff6600">
-            <th style="vertical-align:middle; color: #ffffff">N° ouverture</th>
-            <th style="vertical-align:middle; color: #ffffff">N° compte</th>
-            <th style="vertical-align:middle; color: #ffffff"> Date création </th>
-
-            <th style="vertical-align:middle; color: #ffffff">Objet</th>
-            <th style="vertical-align:middle; color: #ffffff">Cler en charge</th>
-
-            <th style="vertical-align:middle; color: #ffffff">Type de dossier</th>
-            <th style="vertical-align:middle; color: #ffffff">Type d'acte</th>
-            <th style="vertical-align:middle; color: #ffffff">Etape</th>
-          </tr>
-          {% for key,data in datas %}
-
-          <tr>
-            <td style = "vertical-align:middle;">{{ data['numeroOuverture'] }}</td>
-            <td style = "vertical-align:middle;">{{ data['numcompte'] }}</td>
-            <td style = "vertical-align:middle;">{{ data['dateCreation'] }}</td>
-            <td style = "vertical-align:middle;">{{ data['objet'] }}</td>
-            <td style = "vertical-align:middle;">{{ data['employe'] }}</td>
-            <td style = "vertical-align:middle;">{{ data['nature'] }}</td>
-            <td style = "vertical-align:middle;">{{ data['typeActe'] }}</td>
-            <td style = "vertical-align:middle;">{{ data['etape'] }}</td>
-
-          </tr>
-          {% endfor %}
-
-
-
-        </table>
-        {#
-      </div> #}
+    <div style="text-align: center;">
+      <b>NOTARIE</b><br>
+      BP V 43 ABIDJAN, TEL : 01 01 15 44 44<br>
+      Abidjan-Cocody<br>
+      <hr>
     </div>
   </div>
 
+  <div class="tables-container">
+    <!-- Premier tableau -->
+    <table class="second-table1">
+      <caption>POINT DES PAIEMENTS</caption>
+      <thead>
+        <tr>
+          <th>N°</th>
+          <th>Dossier</th>
+          <th>Client</th>
+          <th>Date </th>
+          <th>Montant payé</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for key, ligne in data %}
+        <tr>
+          <td>{{ key + 1 }}</td>
+          <td>
+            {% for identification in ligne.compte.client.identifications %}
+            {{ 'Dossier ' ~ identification.dossier.numeroOuverture }}
+            {% endfor %}
+          </td>
+          <td>{{ ligne.compte.client.nom }} {{ ligne.compte.client.prenom }}</td>
+          <td>{{ ligne.dateversementfrais | date('d/m/Y') }}</td>
+          <td>{{ ligne.montantverse | number_format(0, '.', '.') }}</td>
+        </tr>
+        {% else %}
+        <tr>
+          <td colspan="5">Aucune donnée trouvée</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
 
-  </div><br>
-  {# <div style="border-top:20px solid grey"></div><br> #}
-
-
-
+    <!-- Deuxième tableau -->
+    <table class="second-table">
+      <tbody>
+        {% set totalpayer = 0 %}
+        {% set totalapayer = 0 %}
+        {% set totalres = 0 %}
+        {% for key, ligne in data %}
+        {% set totalpayer = totalpayer + ligne.montantverse %}
+        {% set totalapayer = ligne.compte.montant %}
+        {% set totalres = ligne.compte.montant - totalpayer %}
+            {% endfor %}
+        <tr>
+          <th>MONTANT A PAYER</th>
+          <th>{{ totalapayer | number_format(0, '.', '.') }}</th>
+        </tr>
+        <tr>
+          <th>TOTAL PAYÉ</th>
+          <th>{{ totalpayer | number_format(0, '.', '.') }}</th>
+        </tr>
+        <tr>
+          <th>RESTE À PAYER</th>
+          <th>{{ totalres | number_format(0, '.', '.') }}</th>
+        </tr>
+       
+      </tbody>
+    </table>
   </div>
-
-  <htmlpagefooter name="pageFooter">
-    {# <table style="width:100%">
-      <tr>
-        <td style="width:50%;text-align:left;padding-bottom:8px">
-          <i><b>Client</b></i>
-        </td>
-        <td style="width:50%;text-align:right">
-          <i><b>Souche</b></i>
-        </td> secretariat@ufrseg-filierespro-ufhb.ci
-      </tr>
-    </table> #}
-    <div style="border-top:2px solid #000"></div>
-    <p align="center" style="align: center;margin-top:-1px">
-      UFHB/UFRSEG BP V43 ABIDJAN EMAIL:
-      <a href="mailto:secretariat@ufrseg-filierespro-ufhb.ci">secretariat@ufrseg-filierespro-ufhb.ci</a><br>
-      TEL : 01 01 15 44 44
-    </p>
-  </htmlpagefooter>
 </body>
 
 </html>

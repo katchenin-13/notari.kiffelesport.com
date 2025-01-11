@@ -18,12 +18,14 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Controller\BaseController;
+use App\Controller\FileTrait;
 use App\Entity\Client;
 use App\Entity\Compte;
 use App\Entity\Dossier;
 use App\Form\CalendarType;
 use App\Form\CompteType;
 use App\Repository\CompteRepository;
+use App\Repository\LigneversementfraisRepository;
 use Doctrine\ORM\QueryBuilder;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
@@ -31,6 +33,7 @@ use Symfony\Component\Form\Extension\Core\Type\DateType;
 #[Route('/ads/compte/frais')]
 class CompteController extends BaseController
 {
+    use FileTrait;
     const INDEX_ROOT_NAME = 'app_compte_frais_index';
 
     #[Route('/', name: 'app_compte_frais_index', methods: ['GET', 'POST'], options: ['expose' => true])]
@@ -499,52 +502,102 @@ class CompteController extends BaseController
         ]);
     }
 
-
     /**
      * @throws MpdfException
      */
+    #[Route('/imprime/all/{dossier}//{datedebut}/{datefin}/point des versements', name: 'app_compte_imprime_all', methods: ['GET', 'POST'])]
+    public function imprimerAll(Request $request, $dossier, $datedebut, $datefin, CompteRepository $compteRepository, LigneversementfraisRepository $ligneversementfraisRepository): Response
+    {
 
-    // #[Route('/imprime/etat/dossier', name: 'app_actes_dossier_imprime', methods: ['GET', 'POST'], options: ['expose' => true], condition: "request.query.has('filters')")]
-    #[Route('/imprime/all', name: 'app_compte_imprime_all', methods: ['GET'])]
-    public function imprimerEtatDossier(
-        $etat = null,
-        $clair = null,
-        CompteRepository $compteRepository
-    ): Response {
+       
 
-        $dossiers = $compteRepository->getListeDossierNative($clair);
-        $employe = $compteRepository->getEmployeNomPrenom($clair);
+      
+$totalImpaye=0;
+$total=0;
+$totalPayer=0;
+        $compteClient = $compteRepository->findOneBy(['client' => $dossier]);
 
-        $dataArray = [];
-        foreach ($dossiers as $key => $liste) {
-            $dataArray[] = [
-                'numeroOuverture' => $liste['numero_ouverture'],
-                'numcompte' => $liste['numcompte'],
-                'dateCreation' => $liste['date_creation'],
-                'objet' => $liste['objet'],
-                'employe' => $liste['employe_nom_prenom'],
-                'nature' => $liste['nature_dossier'],
-                'typeActe' => $liste['type_acte_nom'],
-                'etape' => $liste['etape'],
-            ];
+        if ($compteClient) {
+            $totalPayer  = $compteClient->getSolde();
+            $total  = $compteClient->getMontant();
+            $totalImpaye = $total - $totalPayer  ;        
         }
 
-        return $this->renderPdf('actes/dossier/imprime.html.twig', [
-            'datas' => $dataArray,
-            'emploi' => $employe,
-            'date' => new \DateTime(),
-            'entreprise' => ' ',
-            'employe' => $employe
+        //dd($totalPayer,$total,$totalImpaye);
+
+
+
+        //dd($dateNiveau);
+        return $this->renderPdf("compte/frais/imprime.html.twig", [
+            'total_payer' => $totalPayer,
+            'data' => $ligneversementfraisRepository->searchResult($dossier, $datedebut, $datefin),
+            'total_impaye' => $totalImpaye
+            //'data_info'=>$infoPreinscriptionRepository->findOneByPreinscription($preinscription)
         ], [
-            'orientation' => 'P',
+            'orientation' => 'p',
             'protected' => true,
+            'file_name' => "point_versments",
+
             'format' => 'A4',
+
             'showWaterkText' => true,
             'fontDir' => [
                 $this->getParameter('font_dir') . '/arial',
                 $this->getParameter('font_dir') . '/trebuchet',
             ],
             'watermarkImg' => '',
-        ]);
+            'entreprise' => ''
+        ], true);
+        //return $this->renderForm("stock/sortie/imprime.html.twig");
+
     }
+
+
+    // /**
+    //  * @throws MpdfException
+    //  */
+
+    // // #[Route('/imprime/etat/dossier', name: 'app_actes_dossier_imprime', methods: ['GET', 'POST'], options: ['expose' => true], condition: "request.query.has('filters')")]
+    // #[Route('/imprime/all', name: 'app_compte_imprime_all', methods: ['GET'])]
+    // public function imprimerEtatDossier(
+    //     $etat = null,
+    //     $clair = null,
+    //     CompteRepository $compteRepository
+    // ): Response {
+
+    //     $dossiers = $compteRepository->getListeDossierNative($clair);
+    //     $employe = $compteRepository->getEmployeNomPrenom($clair);
+
+    //     $dataArray = [];
+    //     foreach ($dossiers as $key => $liste) {
+    //         $dataArray[] = [
+    //             'numeroOuverture' => $liste['numero_ouverture'],
+    //             'numcompte' => $liste['numcompte'],
+    //             'dateCreation' => $liste['date_creation'],
+    //             'objet' => $liste['objet'],
+    //             'employe' => $liste['employe_nom_prenom'],
+    //             'nature' => $liste['nature_dossier'],
+    //             'typeActe' => $liste['type_acte_nom'],
+    //             'etape' => $liste['etape'],
+    //         ];
+    //     }
+
+    //     return $this->renderPdf('actes/dossier/imprime.html.twig', [
+    //         'datas' => $dataArray,
+    //         'emploi' => $employe,
+    //         'date' => new \DateTime(),
+    //         'entreprise' => ' ',
+    //         'employe' => $employe
+    //     ], [
+    //         'orientation' => 'P',
+    //         'protected' => true,
+    //         'format' => 'A4',
+    //         'showWaterkText' => true,
+    //         'fontDir' => [
+    //             $this->getParameter('font_dir') . '/arial',
+    //             $this->getParameter('font_dir') . '/trebuchet',
+    //         ],
+    //         'watermarkImg' => '',
+    //     ]);
+    // }
 }
