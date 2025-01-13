@@ -139,7 +139,7 @@
      
       });
     function executeGlobalFicheUrl(dossier, datedebut, datefin) {
-        const urlTemplate = "{{ path('app_compte_imprime_all', { 'dossier': 'dossier', 'datedebut': 'datedebut','datefin':'datefin' }) }}";
+        const urlTemplate = "{{ path('app_compte_imprime_all1', { 'dossier': 'dossier', 'datedebut': 'datedebut','datefin':'datefin' }) }}";
         const url = urlTemplate
             .replace('dossier', dossier || '')
             .replace('datedebut', datedebut || '')

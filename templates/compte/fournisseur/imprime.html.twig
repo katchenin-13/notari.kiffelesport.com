@@ -80,48 +80,44 @@
       <caption>POINT DES PAIEMENTS</caption>
       <thead>
         <tr>
-          <th>N°</th>
-          <th>DOSSIER</th>
-          <th>CLIENT</th>
+          <th>Fournisseur </th>
+          <th>MARCHE </th>
           <th>DATE </th>
-          <th>MONTANT A PAYER</th>
-          <th>TOTAL PAYÉ</th>
-          <th>RESTE PAYÉ</th>
-
-
+          <th>MONTANT A PAYER </th>
+          <th>TOTAL PAYÉ </th>
+          <th>RESTE À PAYER </th>
         </tr>
       </thead>
       <tbody>
-        {% for key, lignes in datas %}
+        {% for ligne in datas %}
         <tr>
-          <td>{{ key + 1 }}</td>
           <td>
-            {% for identification in lignes.client.identifications %}
-            {{ 'Dossier ' ~ identification.dossier.numeroOuverture }}
+            {% for fournisseur in ligne.marche.fournisseur %}
+            {{ fournisseur.nom }}
             {% endfor %}
           </td>
-          <td>{{ lignes.client.nom }} {{ lignes.client.prenom }}</td>
-          <td>{{ lignes.datecreation | date('d/m/Y') }}</td>
-          <td>{{ lignes.montant  | number_format(0, '.', '.') }}</td>
-          <td>{{ (lignes.montant - lignes.solde) | number_format(0, '.', '.') }}</td>
+          <td>{{ ligne.marche.libelle }} </td>
+          <td>{{ ligne.datecreation | date('d/m/Y') }}</td>
+          <td>{{ ligne.montanttotal | number_format(0, '.', '.') }}</td>
+          <td>{{ (ligne.montanttotal - ligne.solde) | number_format(0, '.', '.') }}</td>
+          <td>{{ ligne.solde | number_format(0, '.', '.') }}</td>
 
-          <td>{{ lignes.solde | number_format(0, '.', '.') }}</td>
 
         </tr>
         {% else %}
         <tr>
-          <td colspan="5">Aucune donnée trouvée</td>
+          <td colspan="6">Aucune donnée trouvée</td>
         </tr>
         {% endfor %}
       </tbody>
     </table>
 
-  <!-- Deuxième tableau -->
+    <!-- Deuxième tableau -->
     <table class="second-table">
       <thead>
         <tr class="entet">
           <th colspan="3">LISTE DES VERSEMENTS</th>
-    
+
         </tr>
         <tr>
           <th>N°</th>
@@ -133,7 +129,7 @@
         {% for key, ligne in data %}
         <tr>
           <td>{{ key + 1 }}</td>
-          <td>{{ ligne.dateversementfrais | date('d/m/Y') }}</td>
+          <td>{{ ligne.datepaiement | date('d/m/Y') }}</td>
           <td>{{ ligne.montantverse | number_format(0, '.', '.') }}</td>
         </tr>
         {% else %}
@@ -143,8 +139,8 @@
         {% endfor %}
       </tbody>
     </table>
-   
   </div>
+
 </body>
 
 </html>

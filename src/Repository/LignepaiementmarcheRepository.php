@@ -21,6 +21,66 @@ class LignepaiementmarcheRepository extends ServiceEntityRepository
         parent::__construct($registry, Lignepaiementmarche::class);
     }
 
+    public function add(Lignepaiementmarche $entity, bool $flush = false): void
+    {
+        $this->getEntityManager()->persist($entity);
+
+        if ($flush) {
+            $this->getEntityManager()->flush();
+        }
+    }
+
+    public function remove(Lignepaiementmarche $entity, bool $flush = false): void
+    {
+        $this->getEntityManager()->remove($entity);
+
+        if ($flush) {
+            $this->getEntityManager()->flush();    
+            }
+    } 
+    
+    public function searchResult($marche, $datedebut, $datefin)
+    {
+        $sql = $this->createQueryBuilder('l')
+
+        ->join('l.marche', 'marche')
+        ->join('l.comptefour', 'comptefour') 
+      
+        ->addSelect('marche', 'comptefour');
+
+         if ($marche  || $datedebut || $datefin) {
+            if ($marche != "null") {
+                $sql->andWhere('marche.id = :marche')
+                ->setParameter('marche', $marche);
+            }
+
+            if ($datedebut != null && $datefin == null) {
+                $truc = explode('-', str_replace("/", "-", $datedebut));
+                $new_date_debut = $truc[2] . '-' . $truc[1] . '-' . $truc[0];
+                $sql->andWhere('l.datepaiement = :datedebut')
+                ->setParameter('datedebut', $new_date_debut);
+            }
+            if ($datefin != "null" && $datedebut == "null") {
+                $truc = explode('-', str_replace("/", "-", $datefin));
+                $new_date_fin = $truc[2] . '-' . $truc[1] . '-' . $truc[0];
+                $sql->andWhere('l.datepaiement = :datefin')
+                ->setParameter('datefin', $new_date_fin);
+            }
+
+            if ($datedebut != null && $datefin != null) {
+                $truc = explode('-', str_replace("/", "-", $datedebut));
+                $new_date_debut = $truc[2] . '-' . $truc[1] . '-' . $truc[0];
+                $truc = explode('-', str_replace("/", "-", $datefin));
+                $new_date_fin = $truc[2] . '-' . $truc[1] . '-' . $truc[0];
+                $sql->andWhere('l.datepaiement BETWEEN :datedebut AND :datefin')
+                ->setParameter('datedebut', $new_date_debut)
+                ->setParameter('datefin', $new_date_fin);
+            }
+            # code...
+         }
+        return $sql->getQuery()->getResult();
+    }
+
 //    /**
 //     * @return Lignepaiementmarche[] Returns an array of Lignepaiementmarche objects
 //     */

@@ -505,7 +505,7 @@ class CompteController extends BaseController
     /**
      * @throws MpdfException
      */
-    #[Route('/imprime/all/{dossier}//{datedebut}/{datefin}/point des versements', name: 'app_compte_imprime_all', methods: ['GET', 'POST'])]
+    #[Route('/imprime/all/{dossier}/{datedebut}/{datefin}/point des versements', name: 'app_compte_imprime_all1', methods: ['GET', 'POST'])]
     public function imprimerAll(Request $request, $dossier, $datedebut, $datefin, CompteRepository $compteRepository, LigneversementfraisRepository $ligneversementfraisRepository): Response
     {
 
@@ -530,6 +530,7 @@ $totalPayer=0;
         //dd($dateNiveau);
         return $this->renderPdf("compte/frais/imprime.html.twig", [
             'total_payer' => $totalPayer,
+            'datas' => $compteRepository->searchResultAll($dossier),
             'data' => $ligneversementfraisRepository->searchResult($dossier, $datedebut, $datefin),
             'total_impaye' => $totalImpaye
             //'data_info'=>$infoPreinscriptionRepository->findOneByPreinscription($preinscription)
