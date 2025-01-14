@@ -45,7 +45,7 @@ class ComptefourController extends BaseController
         $datefin = $request->query->get('datefin');
         $builder = $this->createFormBuilder(null, [
             'method' => 'GET',
-            'action' => $this->generateUrl(self::INDEX_ROOT_NAME, ['marche' => $marche, 'datedebut' => $datedebut, 'datefin' => $datefin]),
+            'action' => $this->generateUrl('app_compte_fournisseur_index', ['marche' => $marche, 'datedebut' => $datedebut, 'datefin' => $datefin]),
         ])
         
             ->add('marche', EntityType::class, [
