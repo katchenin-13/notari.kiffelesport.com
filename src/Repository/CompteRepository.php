@@ -40,35 +40,7 @@ class CompteRepository extends ServiceEntityRepository
             }
            
 
-            // dd($datedebut);
-
-            // if ($datedebut != null && $datefin == null) {
-            //     $truc = explode('-', str_replace("/", "-", $datedebut));
-            //     $new_date_debut = $truc[2] . '-' . $truc[1] . '-' . $truc[0];
-
-            //     $sql->andWhere('c.datecreation = :datedebut')
-            //     ->setParameter('datedebut', $new_date_debut);
-            // }
-            // if ($datefin != "null" && $datedebut == "null") {
-
-            //     $truc = explode('-', str_replace("/", "-", $datefin));
-            //     $new_date_fin = $truc[2] . '-' . $truc[1] . '-' . $truc[0];
-
-            //     $sql->andWhere('c.datecreation  = :datefin')
-            //     ->setParameter('datefin', $new_date_fin);
-            // }
-            // if ($datedebut != "null" && $datefin != "null") {
-
-            //     $truc_debut = explode('-', str_replace("/", "-", $datedebut));
-            //     $new_date_debut = $truc_debut[2] . '-' . $truc_debut[1] . '-' . $truc_debut[0];
-
-            //     $truc = explode('-', str_replace("/", "-", $datefin));
-            //     $new_date_fin = $truc[2] . '-' . $truc[1] . '-' . $truc[0];
-
-            //     $sql->andWhere('c.datecreation BETWEEN :datedebut AND :datefin')
-            //     ->setParameter('datedebut', $new_date_debut)
-            //         ->setParameter("datefin", $new_date_fin);
-            // }
+           
  }
 
         // Retourner les résultats

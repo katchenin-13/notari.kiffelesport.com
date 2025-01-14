@@ -2399,25 +2399,12 @@ et indication du nombre des rôles, mots et chiffres nuls
         DossierRepository $dossierRepository
     ): Response {
 
-        $dossiers = $dossierRepository->getListeDossierNative($clair);
         $employe = $dossierRepository->getEmployeNomPrenom($clair);
 
-        $dataArray = [];
-        foreach ($dossiers as $key => $liste) {
-            $dataArray[] = [
-                'numeroOuverture' => $liste['numero_ouverture'],
-                'numcompte' => $liste['numcompte'],
-                'dateCreation' => $liste['date_creation'],
-                'objet' => $liste['objet'],
-                'employe' => $liste['employe_nom_prenom'],
-                'nature' => $liste['nature_dossier'],
-                'typeActe' => $liste['type_acte_nom'],
-                'etape' => $liste['etape'],
-            ];
-        }
+    
 
         return $this->renderPdf('actes/dossier/imprime.html.twig', [
-            'datas' => $dataArray,
+            'datas' => $dossierRepository->getListeDossierNative($clair),
             'emploi' => $employe,
             'date' => new \DateTime(),
             'entreprise' => ' ',
