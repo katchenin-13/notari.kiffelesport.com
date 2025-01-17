@@ -1,5 +1,16 @@
 <?php
-class   methodeenvoiiemail
+namespace App\Controller\Agenda;
+
+use App\Entity\Calendar;
+use App\Form\CalendarType;
+use App\Service\FormError;
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Routing\Annotation\Route;
+
+class   MethodeEnvoiEmailController
 {
     public function __invoke()
     {

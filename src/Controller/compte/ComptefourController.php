@@ -36,7 +36,7 @@ class ComptefourController extends BaseController
     use FileTrait;
     const INDEX_ROOT_NAME = 'app_compte_fournisseur_index';
 
-    #[Route('/', name: 'app_compte_fournisseur_index', methods: ['GET', 'POST'])]
+    #[Route('/', name: 'app_compte_fournisseur_index', methods: ['GET', 'POST'], options: ['expose' => true])]
     public function index(Request $request, DataTableFactory $dataTableFactory): Response
     {
 

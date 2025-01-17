@@ -90,6 +90,13 @@
     <script>
 
         $(function () {
+            const grid_prefix_id = "{{ grid_id }}";
+                const $old_grid = $('#grid_app_compte_fournisseur_' + grid_prefix_id);
+
+               const $marche = $('#{{ form.marche.vars.id }}');
+        const $datedebut = $('#{{ form.datedebut.vars.id }}');
+        const $datefin = $('#{{ form.datefin.vars.id }}');
+        
             $('.no-auto').each(function () {
                 const $this = $(this);
                 const $id = $('#' + $this.attr('id'));
@@ -101,8 +108,6 @@
                     $(this).val(picker.startDate.format('DD/MM/YYYY'));
                 });
             });
-            const grid_prefix_id = "{{ grid_id }}";
-            const $old_grid = $('#grid_app_compte_fournisseur_' + grid_prefix_id);
             init_select2('.has-select2');
 
             function loadDataTable($grid, marche, datedebut, datefin, options = null, contents = '') {
@@ -127,9 +132,7 @@
             });
       }
 
-        const $marche = $('#{{ form.marche.vars.id }}');
-        const $datedebut = $('#{{ form.datedebut.vars.id }}');
-        const $datefin = $('#{{ form.datefin.vars.id }}');
+     
 
         $('.imprimer').on('click', function (e) {
             e.preventDefault();
