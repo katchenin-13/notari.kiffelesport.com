@@ -509,36 +509,14 @@ class CompteController extends BaseController
     public function imprimerAll(Request $request, $dossier, $datedebut, $datefin, CompteRepository $compteRepository, LigneversementfraisRepository $ligneversementfraisRepository): Response
     {
 
-       
 
-      
-$totalImpaye=0;
-$total=0;
-$totalPayer=0;
-        $compteClient = $compteRepository->findOneBy(['client' => $dossier]);
-
-        if ($compteClient) {
-            $totalPayer  = $compteClient->getSolde();
-            $total  = $compteClient->getMontant();
-            $totalImpaye = $total - $totalPayer  ;        
-        }
-
-        //dd($totalPayer,$total,$totalImpaye);
-
-
-
-        //dd($dateNiveau);
         return $this->renderPdf("compte/frais/imprime.html.twig", [
-            'total_payer' => $totalPayer,
             'datas' => $compteRepository->searchResultAll($dossier),
             'data' => $ligneversementfraisRepository->searchResult($dossier, $datedebut, $datefin),
-            'total_impaye' => $totalImpaye
-            //'data_info'=>$infoPreinscriptionRepository->findOneByPreinscription($preinscription)
         ], [
             'orientation' => 'p',
             'protected' => true,
             'file_name' => "point_versments",
-
             'format' => 'A4',
 
             'showWaterkText' => true,
@@ -553,52 +531,4 @@ $totalPayer=0;
 
     }
 
-
-    // /**
-    //  * @throws MpdfException
-    //  */
-
-    // // #[Route('/imprime/etat/dossier', name: 'app_actes_dossier_imprime', methods: ['GET', 'POST'], options: ['expose' => true], condition: "request.query.has('filters')")]
-    // #[Route('/imprime/all', name: 'app_compte_imprime_all', methods: ['GET'])]
-    // public function imprimerEtatDossier(
-    //     $etat = null,
-    //     $clair = null,
-    //     CompteRepository $compteRepository
-    // ): Response {
-
-    //     $dossiers = $compteRepository->getListeDossierNative($clair);
-    //     $employe = $compteRepository->getEmployeNomPrenom($clair);
-
-    //     $dataArray = [];
-    //     foreach ($dossiers as $key => $liste) {
-    //         $dataArray[] = [
-    //             'numeroOuverture' => $liste['numero_ouverture'],
-    //             'numcompte' => $liste['numcompte'],
-    //             'dateCreation' => $liste['date_creation'],
-    //             'objet' => $liste['objet'],
-    //             'employe' => $liste['employe_nom_prenom'],
-    //             'nature' => $liste['nature_dossier'],
-    //             'typeActe' => $liste['type_acte_nom'],
-    //             'etape' => $liste['etape'],
-    //         ];
-    //     }
-
-    //     return $this->renderPdf('actes/dossier/imprime.html.twig', [
-    //         'datas' => $dataArray,
-    //         'emploi' => $employe,
-    //         'date' => new \DateTime(),
-    //         'entreprise' => ' ',
-    //         'employe' => $employe
-    //     ], [
-    //         'orientation' => 'P',
-    //         'protected' => true,
-    //         'format' => 'A4',
-    //         'showWaterkText' => true,
-    //         'fontDir' => [
-    //             $this->getParameter('font_dir') . '/arial',
-    //             $this->getParameter('font_dir') . '/trebuchet',
-    //         ],
-    //         'watermarkImg' => '',
-    //     ]);
-    // }
 }

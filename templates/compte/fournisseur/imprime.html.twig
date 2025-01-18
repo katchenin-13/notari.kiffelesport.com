@@ -92,14 +92,12 @@
         {% for ligne in datas %}
         <tr>
           <td>
-            {% for fournisseur in ligne.marche.fournisseur %}
-            {{ fournisseur.nom }}
-            {% endfor %}
+            {{ ligne.fournisseurs.nom }}
           </td>
-          <td>{{ ligne.marche.libelle }} </td>
-          <td>{{ ligne.datecreation | date('d/m/Y') }}</td>
-          <td>{{ ligne.montanttotal | number_format(0, '.', '.') }}</td>
-          <td>{{ (ligne.montanttotal - ligne.solde) | number_format(0, '.', '.') }}</td>
+          <td>{{ ligne.marches.libelle }} </td>
+          <td>{{ ligne.marches.datecreation | date('d/m/Y') }}</td>
+          <td>{{ ligne.montant | number_format(0, '.', '.') }}</td>
+          <td>{{ (ligne.montant - ligne.solde) | number_format(0, '.', '.') }}</td>
           <td>{{ ligne.solde | number_format(0, '.', '.') }}</td>
 
 

@@ -275,17 +275,17 @@ class LignepaiementmarcheController extends BaseController
             $redirect = '';
             // $redirect = $this->generateUrl('app_comptabilte_lignepaiementmarche_index', [ 'id' => $ligneversementfrai->getCompte()->getId() ]);
             $montantnew = (int)$form->get('montantverse')->getData();
-           $date = $form->get('dateversementfrais')->getData();
+           $date = $form->get('datepaiement')->getData();
             $somme = 0;
            
 
            // dd($montantnew, $montantold);
 
             if ($form->isValid()) {
+                $compte = $lignepaiementmarche->getComptefour();
 
                 if($montantnew !=  $montantold){
                    
-                    $compte = $lignepaiementmarche->getComptefour();
                     $solde = (int)str_replace(' ', '', $compte->getSolde()) -  abs($montantnew  - $montantold);
                    // dd($solde);
                    

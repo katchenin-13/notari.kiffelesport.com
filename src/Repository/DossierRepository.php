@@ -75,7 +75,16 @@ class DossierRepository extends ServiceEntityRepository
 
         return $qb->getSingleScalarResult();  // Retourne une seule valeur
     }
-
+    public function getDossier($id)
+    {
+        return $this->createQueryBuilder('d')
+           
+            ->innerJoin('d.employe', 'e')
+            ->where('e.id = :id')
+            ->setParameter('id', $id)
+            ->getQuery();
+ // Retourne une seule valeur
+    }
 
     public function getListeDossierNative(int $clair): array
     {

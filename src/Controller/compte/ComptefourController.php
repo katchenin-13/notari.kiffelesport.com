@@ -2,30 +2,26 @@
 
 namespace App\Controller\Compte;
 
-use App\Entity\Calendar;
-use App\Form\Calendar1Type;
-use App\Repository\CalendarRepository;
+
 use App\Service\ActionRender;
 use App\Service\FormError;
 use Omines\DataTablesBundle\Adapter\Doctrine\ORMAdapter;
-use Omines\DataTablesBundle\Column\BoolColumn;
 use Omines\DataTablesBundle\Column\DateTimeColumn;
 use Omines\DataTablesBundle\Column\TextColumn;
 use Omines\DataTablesBundle\DataTableFactory;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Controller\BaseController;
 use App\Controller\FileTrait;
-use App\Entity\Compte;
 use App\Entity\Comptefour;
 use App\Entity\Marche;
-use App\Form\CalendarType;
 use App\Form\ComptefourType;
 use App\Form\CompteType;
+use App\Repository\ComptefourRepository;
 use App\Repository\LignepaiementmarcheRepository;
+use App\Repository\MarcheRepository;
 use Doctrine\ORM\QueryBuilder;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
@@ -43,6 +39,7 @@ class ComptefourController extends BaseController
         $marche = $request->query->get('marche');
         $datedebut = $request->query->get('datedebut');
         $datefin = $request->query->get('datefin');
+        
         $builder = $this->createFormBuilder(null, [
             'method' => 'GET',
             'action' => $this->generateUrl('app_compte_fournisseur_index', ['marche' => $marche, 'datedebut' => $datedebut, 'datefin' => $datefin]),
@@ -103,6 +100,7 @@ class ComptefourController extends BaseController
                         ->orderBy('c.id ', 'DESC');
 
                 if ($marche || $datedebut || $datefin) {
+                   
                     if ($marche) {
                         $qb->andWhere('m.id = :marche')
                             ->setParameter('marche', $marche);
@@ -477,17 +475,18 @@ class ComptefourController extends BaseController
         ]);
     }
 
-    #[Route('/imprime/all/{marche}//{datedebut}/{datefin}/point des versements', name: 'app_compte_imprime_all', methods: ['GET', 'POST'])]
-    public function imprimeAllResult(Request $request, $dossier, $datedebut, $datefin,Comptefour $comptefour,LignepaiementmarcheRepository $lignepaiementmarcheRepository){
+    #[Route('/imprime/all/{marche}/{datedebut}/{datefin}/point des versements', name: 'app_compte_imprime_marche_all', methods: ['GET', 'POST'])]
+    public function imprimeAllResult(Request $request, $marche, $datedebut, $datefin,ComptefourRepository $comptefourRepository,MarcheRepository $marcheRepository, LignepaiementmarcheRepository $compteFo,LignepaiementmarcheRepository $lignepaiementmarcheRepository){
 
-        return $this->renderPdf("compte/fournisseur/imprime.html.tiwg",[
-            'data' => $lignepaiementmarcheRepository->searchResult($dossier, $datedebut, $datefin),
+        return $this->renderPdf(
+            "compte/fournisseur/imprime.html.twig",[
+            'data' => $lignepaiementmarcheRepository->searchResult($marche, $datedebut, $datefin),
+            'datas' => $comptefourRepository->searchResultAll($marche),
 
         ],[
                 'orientation' => 'p',
                 'protected' => true,
                 'file_name' => "point_versments",
-
                 'format' => 'A4',
 
                 'showWaterkText' => true,
@@ -497,8 +496,7 @@ class ComptefourController extends BaseController
                 ],
                 'watermarkImg' => '',
                 'entreprise' => '' 
-            ],true
-    );
+            ],true);
     }
 
 }

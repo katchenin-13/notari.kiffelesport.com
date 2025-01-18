@@ -2400,11 +2400,11 @@ et indication du nombre des rôles, mots et chiffres nuls
     ): Response {
 
         $employe = $dossierRepository->getEmployeNomPrenom($clair);
-
-    
+        $employes = $dossierRepository->findAll();
+    dd('dssdsdsdsd');
 
         return $this->renderPdf('actes/dossier/imprime.html.twig', [
-            'datas' => $dossierRepository->getListeDossierNative($clair),
+            // 'datas' => $dossierRepository->findBy($clair),
             'emploi' => $employe,
             'date' => new \DateTime(),
             'entreprise' => ' ',

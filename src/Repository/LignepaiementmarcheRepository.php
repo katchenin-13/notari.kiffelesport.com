@@ -43,10 +43,10 @@ class LignepaiementmarcheRepository extends ServiceEntityRepository
     {
         $sql = $this->createQueryBuilder('l')
 
-        ->join('l.marche', 'marche')
-        ->join('l.comptefour', 'comptefour') 
-      
-        ->addSelect('marche', 'comptefour');
+        ->join('l.comptefours', 'comptefour')
+        ->join('comptefour.marches', 'marche')
+        ->addSelect('comptefour', 'marche')
+      ;
 
          if ($marche  || $datedebut || $datefin) {
             if ($marche != "null") {
