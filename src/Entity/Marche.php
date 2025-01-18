@@ -23,9 +23,9 @@ class Marche
     #[ORM\Column(length: 255)]
     private ?string $montanttotal = null;
 
-    #[ORM\Column(length: 255)]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?string $solde = null;
+    // #[ORM\Column(length: 255)]
+    // #[ORM\JoinColumn(nullable: false)]
+    // private ?string $solde = null;
 
 
 
@@ -119,17 +119,17 @@ class Marche
     }
 
 
-    public function getSolde(): ?string
-    {
-        return $this->solde;
-    }
+    // public function getSolde(): ?string
+    // {
+    //     return $this->solde;
+    // }
 
-    public function setSolde(string $solde): static
-    {
-        $this->solde = $solde;
+    // public function setSolde(string $solde): static
+    // {
+    //     $this->solde = $solde;
 
-        return $this;
-    }
+    //     return $this;
+    // }
 
    
     /**

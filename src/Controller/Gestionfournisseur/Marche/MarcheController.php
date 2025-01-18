@@ -41,7 +41,7 @@ class MarcheController extends BaseController
             ->add('datecreation', DateTimeColumn::class, ['label' => 'Date de creation', 'format' => 'd/m/Y'])
             ->add('libelle', TextColumn::class, ['label' => 'Objet du marché'])
             ->add('montanttotal', TextColumn::class, ['label' => 'Montant'])
-            ->add('solde', TextColumn::class, ['label' => 'Solde'])
+            // ->add('solde', TextColumn::class, ['label' => 'Solde'])
             // ->add('montantpaye', TextColumn::class, [
             //     'label' => 'Total payé',
             //     "searchable" => false,
@@ -247,7 +247,7 @@ class MarcheController extends BaseController
                     throw new \Exception("Le montant total est obligatoire");
                 }
                 //dd($comptefour);
-                $marche->setSolde($montants);
+                // $marche->setSolde($montants);
                 $entityManager->persist($marche);
                 $entityManager->flush();
 
