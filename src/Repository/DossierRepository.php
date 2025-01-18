@@ -40,6 +40,30 @@ class DossierRepository extends ServiceEntityRepository
             $this->getEntityManager()->flush();
         }
     }
+    public function findDossiersByEmploye($cler)
+    {
+        $query = $this->createQueryBuilder('d')
+            ->select('
+            d.numeroOuverture, 
+            d.numcompte, 
+            d.dateCreation, 
+            d.objet, 
+            e.nom AS employe, 
+            d.natureDossier AS nature, 
+            t.nom AS typeActe, 
+            d.etape
+        ')
+            ->join('d.employe', 'e')
+            ->join('d.typeActe', 't')
+            ->where('e.id = :employeId')
+            ->setParameter('employeId', $cler)
+            ->getQuery();
+
+     
+
+        // This should return an array of results (multiple rows)
+        return $query->getResult();
+    }
 
     public function getListe($etat, $titre)
     {
@@ -53,16 +77,16 @@ class DossierRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    public function listeActe($acte)
-    {
-        return $this->createQueryBuilder("d")
-            ->innerJoin('d.typeActe', 't')
-            ->where('d.active=:active')
-            ->andWhere('t.id=:acte')
-            ->setParameters(array('active' => 1, 'acte' => $acte))
-            ->getQuery()
-            ->getResult();
-    }
+    // public function listeActe($acte)
+    // {
+    //     return $this->createQueryBuilder("d")
+    //         ->innerJoin('d.typeActe', 't')
+    //         ->where('d.active=:active')
+    //         ->andWhere('t.id=:acte')
+    //         ->setParameters(array('active' => 1, 'acte' => $acte))
+    //         ->getQuery()
+    //         ->getResult();
+    // }
 
     public function getEmployeNomPrenom($id)
     {
@@ -85,6 +109,9 @@ class DossierRepository extends ServiceEntityRepository
             ->getQuery();
  // Retourne une seule valeur
     }
+
+   
+
 
     public function getListeDossierNative(int $clair): array
     {

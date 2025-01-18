@@ -121,7 +121,7 @@
     });
 
     function executeGlobalFicheUrl(etat, clair) {
-        const urlTemplate = "{{ path('app_actes_dossier_imprime_all', { 'etat': 'etat', 'clair': 'clair' }) }}";
+        const urlTemplate = "{{ path('app__imprime_dossier_all', { 'etat': 'etat', 'clair': 'clair' }) }}";
         const url = urlTemplate.replace('etat', etat || '').replace('clair', clair || '');
         window.open(url, '_blank');
     }

@@ -103,273 +103,7 @@ class DossierController extends BaseController
         return $response;
     }
 
-    #[Route('/{id}/print-cr', name: 'app_reunion_print_cr', methods: ['DELETE', 'GET'])]
-    public function printAction(Request $request, Dossier $dossier, IdentificationRepository $identificationRepository)
-    {
-
-        $language = new \PhpOffice\PhpWord\Style\Language(\PhpOffice\PhpWord\Style\Language::FR_FR);
-        $phpWord  = new \PhpOffice\PhpWord\PhpWord();
-        $phpWord->getSettings()->setThemeFontLang($language);
-
-        $phpWord->setDefaultFontName('Arial Narrow');
-
-        $section = $phpWord->addSection([
-            'orientation' => 'portrait',
-        ]);
-
-        $phpWord->addParagraphStyle('pJustify', array('align' => 'both', 'spaceBefore' => 3, 'spaceAfter' => 3, 'spacing' => 3));
-
-        /* Utils::wordHeader($phpWord, $this->getParameter('assets_dir'), $section, 'landscape', null, 'first');
-        Utils::wordFooter($section, 'landscape');
-
-
-        $textBox = $section->addTextBox([
-            'alignment'   => \PhpOffice\PhpWord\SimpleType\Jc::CENTER, 'spaceAfter' => 0
-            //, 'positioning' => 'absolute'
-
-            , 'width' => 700,
-            'height'      => 1,
-            'borderSize'  => 2,
-            'borderColor' => '#cf2e2e',
-            //'borderStyle' => 'double',
-            //'wrap' => 'square'
-        ]); */
-
-
-
-        $fontSize   = 7;
-        $bold       = ['bold' => true, 'size' => $fontSize];
-        $center     = ['align' => 'center', 'spaceAfter' => 0];
-        $numRapport = 10 + 1;
-        $padSize    = str_pad($numRapport, 3, '0', STR_PAD_LEFT);
-
-        /* $section->addTextBreak(1.2); */
-        $section->addText('BORDEREAU des ACTES DEPOSES
-        COCODY
-        01 JANVIER 2023
-        ', ['bold' => true, 'size' => 14, 'underline' => 'single'], ['align' => 'center']);
-
-        $box = $section->addTextBox([
-            'alignment'   => \PhpOffice\PhpWord\SimpleType\Jc::START,
-            'width' => 450,
-            'height'      => 50,
-            'borderSize'  => 2,
-            'borderColor' => 'black',
-            //'borderStyle' => 'double',
-            //'wrap' => 'square'
-        ]);
-        $box->addText('(1) N°  du compte                                                                                                  Bordereau……….……………                                                  
-        ',);
-        $box->addText('Enreg le……..……………..…                                                                                 Vol……..f..°……...n°…………',);
-
-
-        /* $section->addTextBox([
-            'alignment'   => \PhpOffice\PhpWord\SimpleType\Jc::END,  'width' => 100,
-            'height'      => 100,
-            'borderSize'  => 2,
-            'borderColor' => 'black',
-            //'borderStyle' => 'double',
-            //'wrap' => 'square'
-        ]); */
-        /* $section->addTextBreak(1); */
-
-
-
-
-
-
-        $noSpace         = ['spaceAfter' => 0];
-        $styleTable      = ['borderSize' => 6, 'borderColor' => '000000', 'cellPadding' => 40, 'cellMargin' => 40];
-        $cellRowSpan     = ['vMerge' => 'restart', 'valign' => 'center'];
-        $cellRowSpanC     = ['vMerge' => 'continue', 'valign' => 'center'];
-        $cellRowContinue = ['vMerge' => 'continue'];
-        $cellColSpan     = ['gridSpan' => 2, 'valign' => 'center'];
-        $cellHCentered   = ['align' => 'center'];
-        $cellVCentered   = ['valign' => 'center'];
-        $cellHRight      = ['align' => 'right'];
-
-        $cellHCenteredNoSpace = array_merge($cellHCentered, $noSpace);
-
-        $phpWord->addTableStyle('Colspan Rowspan', $styleTable);
-
-        $w1             = 3500;
-        $w2             = 1500;
-        $noBorderBottom = ['borderBottomSize' => 0, 'borderBottomColor' => 'FFFFFF'];
-        $noBorderTop    = ['borderTopSize' => 0, 'borderTopColor' => 'FFFFFF'];
-        $noBorderLeft   = ['borderLeftSize' => 0, 'borderLeftColor' => 'FFFFFF'];
-        $noBorderRight  = ['borderRightSize' => 0, 'borderRightColor' => 'FFFFFF'];
-
-        $cellVCenteredBg = array_merge($cellVCentered, ['bgColor' => 'white', 'color' => 'FFFFFF', 'valign' => 'center', 'spaceAfter' => 0]);
-
-        //c5e0b3
-
-        //$section->addPageBreak();
-
-
-        /*   $section = $phpWord->addSection([
-            'orientation' => 'landscape',
-        ]); */
-
-        /* $bgColor = '#cf2e2e'; */
-        $bgColor = '#ffff';
-
-        $table = $section->addTable('Colspan Rowspan');
-
-
-        $w2 = 5000;
-        $w3 = 3000;
-        $w4 = 25;
-        $w5 = 1500;
-
-
-        $cellRowSpan2 = array('vMerge' => 'restart');
-        $cellRowContinue2 = array('vMerge' => 'continue');
-        $cellColSpan2 = array('gridSpan' => 2);
-        $cellColSpan3 = array('gridSpan' => 3);
-        $cellColSpan6 = array('gridSpan' => 6);
-
-        $cellVCenteredBg['bgColor'] = $bgColor;
-        $table->addRow(null, ['cantSplit' => true]);
-        $cell    = $table->addCell($w4, $cellVCenteredBg);
-        $textRun = $cell->addTextRun($cellHCenteredNoSpace);
-        $textRun->addText('N° D’ORDRE', ['bold' => false, 'allCaps' => true, 'color' => 'black'], ['align' => 'center']);
-        $cell    = $table->addCell($w3, $cellVCenteredBg);
-        $textRun = $cell->addTextRun($cellHCenteredNoSpace);
-        $textRun->addText('DATE DE L’ACTE
-et indication du nombre des rôles, mots et chiffres nuls
-', ['bold' => false, 'allCaps' => true, 'color' => 'black'], ['align' => 'center']);
-        $cell    = $table->addCell($w2, $cellColSpan2);
-        $textRun = $cell->addTextRun($cellHCenteredNoSpace);
-        $textRun->addText('NATURE    DE    L’ACTE
-        Et noms des parties 
-        ', ['bold' => false, 'allCaps' => true, 'color' => 'black'], ['align' => 'center']);
-        $cell    = $table->addCell($w3, $cellVCenteredBg);
-        $textRun = $cell->addTextRun($cellHCenteredNoSpace);
-        $textRun->addText('MONTANT
-        Des
-        droits perçus
-        ', ['bold' => false, 'allCaps' => true, 'color' => 'black'], ['align' => 'center']);
-        $cell    = $table->addCell($w5, $cellVCenteredBg);
-        $textRun = $cell->addTextRun($cellHCenteredNoSpace);
-        $textRun->addText('NUMERO', ['bold' => false, 'allCaps' => true, 'color' => 'black'], ['align' => 'center']);
-
-        /* NOUVELLE LIGNE */
-
-        $table->addRow(null, ['cantSplit' => true, 'align' => 'center']);
-        $table->addCell($w4, $cellRowSpan2)->addTextRun($cellHCenteredNoSpace)->addText("1", ['align' => 'center']);
-        $table->addCell($w3, $cellRowSpan2)->addTextRun($cellHCenteredNoSpace)->addText("Date de l’acte : 
-        31 décembre 2022 et Janvier 2023
-        ………4 Rôles ½ 
-        …00…/ …Renvois
-        …00…/..Lignes nulles
-        ……00/   Mots nuls
-        …00…/…Chiffres
-        ", ['align' => 'center']);
-        $table->addCell($w2, $cellColSpan2)->addTextRun($cellHCenteredNoSpace)->addText("VENTE PAR MOSNIEUR " . $identificationRepository->findOneBy(array('dossier' => $dossier->getId()))->getAcheteur()->getNom() . ' ' . $identificationRepository->findOneBy(array('dossier' => $dossier->getId()))->getAcheteur()->getPrenom() . "AU PROFIT DE MONSIEUR" . $identificationRepository->findOneBy(array('dossier' => $dossier->getId()))->getVendeur()->getNom() . ' ' . $identificationRepository->findOneBy(array('dossier' => $dossier->getId()))->getVendeur()->getPrenom(), ['bold' => true, 'allCaps' => true, 'color' => 'black'],);
-        $table->addCell($w3, $cellRowContinue2)->addText("");
-        $table->addCell($w5, $cellRowSpan2)->addText("");
-
-        $table->addRow(null, ['cantSplit' => true]);
-        $table->addCell($w4, $cellRowContinue2);
-        $table->addCell($w3, $cellRowContinue2);
-        $table->addCell($w2, $cellColSpan2, ['borderSize' => 0, 'borderColor' => false])->addTextRun($cellHCenteredNoSpace)->addText("Lot 01 – Ilot 02                                                                     
-
-        Titre Foncier 03 Cocody
-        ", ['bold' => true, 'allCaps' => true, 'color' => 'black']);
-
-        $table->addCell($w3, $cellRowContinue2)->addText("");
-        $table->addCell($w5, $cellRowContinue2);
-
-        $table->addRow(null, ['cantSplit' => true]);
-        $table->addCell($w4, $cellRowContinue2);
-        $table->addCell($w3, $cellRowContinue2);
-        $table->addCell($w2, $cellColSpan2)->addTextRun($cellHCenteredNoSpace)->addText("REP: 1234                                                              DF", ['bold' => true, 'allCaps' => true, 'color' => 'black'],);
-        $table->addCell($w3)->addTextRun($cellHCenteredNoSpace)->addText("18.000 FCFA", ['bold' => true, 'allCaps' => true, 'color' => 'black'],);
-        $table->addCell($w5, $cellRowContinue2);
-
-        /* Nouvelle ligne */
-        $table->addRow(null, ['cantSplit' => true]);
-        $table->addCell($w4, $cellVCenteredBg)->addTextRun($cellHCenteredNoSpace)->addText("2", ['align' => 'center']);
-        $table->addCell($w3, $cellVCenteredBg)->addTextRun($cellHCenteredNoSpace)->addText("Date de l’acte : 
-        ………0 Rôle
-        …00…/ …Renvois
-        …00…/..Lignes nulles
-        ……00/   Mots nuls
-        …00…/…Chiffres
-        ", ['align' => 'center']);
-        $table->addCell($w2, $cellColSpan2)->addText("");
-        $table->addCell($w3, $cellVCenteredBg)->addText("");
-        $table->addCell($w5, $cellVCenteredBg)->addText("");
-
-
-
-        /* NOUVELLE LIGNE */
-
-        $table->addRow(null, ['cantSplit' => true]);
-        $table->addCell($w4, $cellVCenteredBg)->addTextRun($cellHCenteredNoSpace)->addText("3");
-        $table->addCell($w3, $cellVCenteredBg)->addText("");
-        $table->addCell($w2, $cellColSpan2)->addText("");
-        $table->addCell($w3, $cellVCenteredBg)->addText("");
-        $table->addCell($w5, $cellVCenteredBg)->addText("");
-
-        /* NOUVELLE LIGNE */
-
-        $table->addRow(null, ['cantSplit' => true]);
-        $table->addCell(null, $cellColSpan3)->addTextRun($cellHCenteredNoSpace)->addText("Le   présent   bordereau   contenant    UN     acte 
-         Numéroté de   1   à   1   est  certifié  exact  et  complet À     
-         Abidjan, le  01 Janvier 2023.                                                                                          
-         Signature du notaire                                
-         ");
-        $table->addCell(null, $cellColSpan3)->addTextRun($cellHCenteredNoSpace)->addText("Arrêt le présent bordereau à la somme  
-        
-        (en toutes lettres)                                                         
-        Cachet du bureau :
-        ");
-
-        /* NOUVELLE LIGNE */
-
-        $table->addRow(null, ['cantSplit' => true]);
-        $table->addCell(null, $cellColSpan6)->addTextRun($cellHCenteredNoSpace)->addText("                             CADRE   RESERVE   A   L ’ADMINISTRATION   (Dépouillement des droits perçus)                               
-         ", ['align' => 'center']);
-        /*             NOUEVLLE LIGNE */
-
-        $table->addRow(null, ['cantSplit' => true]);
-        $table->addCell(null, $cellColSpan2)->addTextRun($cellHCenteredNoSpace)->addText("NATURE", $cellHCenteredNoSpace);
-        $table->addCell($w3, $cellVCenteredBg)->addTextRun($cellHCenteredNoSpace)->addText("NOMBRE");
-        $table->addCell($w2, $cellVCenteredBg)->addTextRun($cellHCenteredNoSpace)->addText("MONTANT");
-        $table->addCell($w3, $cellVCenteredBg)->addText("");
-        $table->addCell($w3, $cellVCenteredBg)->addTextRun($cellHCenteredNoSpace)->addText("OBSERVATION");
-
-        $table->addRow(null, ['cantSplit' => true]);
-        $table->addCell(null, $cellColSpan2)->addText("", $cellHCenteredNoSpace);
-        $table->addCell($w3, $cellVCenteredBg)->addText("");
-        $table->addCell($w2, $cellVCenteredBg)->addText("");
-        $table->addCell($w3, $cellVCenteredBg)->addText("");
-        $table->addCell($w3, $cellVCenteredBg)->addText("");
-
-        $table->addRow(null, ['cantSplit' => true]);
-        $table->addCell(null, $cellColSpan2)->addText("", $cellHCenteredNoSpace);
-        $table->addCell($w3, $cellVCenteredBg)->addText("");
-        $table->addCell($w2, $cellVCenteredBg)->addText("");
-        $table->addCell($w3, $cellVCenteredBg)->addText("");
-        $table->addCell($w3, $cellVCenteredBg)->addText("");
-
-        $table->addRow(null, ['cantSplit' => true]);
-        $table->addCell(null, $cellColSpan2)->addText("", $cellHCenteredNoSpace);
-        $table->addCell($w3, $cellVCenteredBg)->addText("");
-        $table->addCell($w2, $cellVCenteredBg)->addText("");
-        $table->addCell($w3, $cellVCenteredBg)->addText("");
-        $table->addCell($w3, $cellVCenteredBg)->addText("");
-
-
-
-
-        $objWriter = \PhpOffice\PhpWord\IOFactory::createWriter($phpWord, 'Word2007');
-        $fileName  = $this->getUploadDir('reunions/rapports', true) . '/rapport_reunion_' . $dossier->getNumeroOuverture() . '_' . date(strtotime("now")) . '.docx';
-        $objWriter->save($fileName);
-
-        return $this->file($fileName);
-    }
+    
 
 
 
@@ -378,18 +112,12 @@ et indication du nombre des rôles, mots et chiffres nuls
     {
 
         $clair = $request->query->get('clair');
-
         $permission = $this->menu->getPermissionIfDifferentNull($this->security->getUser()->getGroupe()->getId(), self::INDEX_ROOT_NAME);
-
-
-
         $builder = $this->createFormBuilder(null, [
             'method' => 'GET',
             'action' => $this->generateUrl('app_actes_dossier_index', ['etat' => $etat, 'clair' => $clair])
         ])
-
-
-            ->add('clair', EntityType::class, [
+          ->add('clair', EntityType::class, [
                 'class' => Employe::class,
                 'query_builder' => function (EntityRepository $er) {
                     return $er->createQueryBuilder('u')
@@ -417,23 +145,18 @@ et indication du nombre des rôles, mots et chiffres nuls
             ->add('natureDossier', TextColumn::class, ['label' => 'Type de dossier'])
 
             ->add('etape', TextColumn::class, ['className' => 'w-100px', 'field' => 'l.id', 'label' => 'Etape', 'render' => function ($value, Dossier $context) {
-
-
                 return $context->getEtape() == '' ? 'Non entamé ' : $context->getEtape();
             }])
+
             ->createAdapter(ORMAdapter::class, [
                 'entity' => Dossier::class,
                 'query' => function (QueryBuilder $qb) use ($etat, $clair) {
-                    $qb->select(['p', 't'])
+                    $qb->select(['p','t'])
                         ->from(Dossier::class, 'p')
                         ->join('p.entreprise', 'en')
                         ->leftjoin('p.employe', 'emp')
                         ->innerJoin('p.typeActe', 't')
-
                         ->orderBy('p.id ', 'DESC');
-
-
-
 
                     if ($etat == 'termine') {
                         $qb->andWhere("JSON_CONTAINS(p.etat, '1', '$.termine') = 1");
@@ -444,17 +167,11 @@ et indication du nombre des rôles, mots et chiffres nuls
                         ->orWhere("JSON_CONTAINS(p.etat, '1', '$.en_cours') = 1");
                     }
 
-
-
                     if ($clair) {
                         $qb
                             ->andWhere('p.employe = :clair')
                             ->setParameter('clair', $clair);
                     }
-
-
-
-
 
                     if ($this->groupe != "SADM") {
                         $qb->andWhere('en = :entreprise')
@@ -462,6 +179,7 @@ et indication du nombre des rôles, mots et chiffres nuls
                     }
                 }
             ])
+            
             ->setName('dt_app_actes_dossier_' . $etat . '_' . $clair);
 
         $form = $builder->getForm();
@@ -2387,38 +2105,77 @@ et indication du nombre des rôles, mots et chiffres nuls
     }
 
 
+
+
     /**
      * @throws MpdfException
      */
-
-    // #[Route('/imprime/etat/dossier', name: 'app_actes_dossier_imprime', methods: ['GET', 'POST'], options: ['expose' => true], condition: "request.query.has('filters')")]
-    #[Route('/imprime/all/{etat}/{clair}', name: 'app_actes_dossier_imprime_all', methods: ['GET'])]
-    public function imprimerEtatDossier(
+    #[Route('/imprime/all/{etat}/{clair}/point des versements', name: 'app__imprime_dossier_all', methods: ['GET', 'POST'])]
+    public function imprimerAll(Request $request,
         $etat = null,
         $clair = null,
-        DossierRepository $dossierRepository
-    ): Response {
+        DossierRepository $dossierRepository): Response
+    {
 
         $employe = $dossierRepository->getEmployeNomPrenom($clair);
         $employes = $dossierRepository->findAll();
-    dd('dssdsdsdsd');
-
-        return $this->renderPdf('actes/dossier/imprime.html.twig', [
-            // 'datas' => $dossierRepository->findBy($clair),
-            'emploi' => $employe,
-            'date' => new \DateTime(),
-            'entreprise' => ' ',
-            'employe' => $employe
+        $dossiers = $dossierRepository->findDossiersByEmploye($clair);
+dd($etat);
+        return $this->renderPdf("actes/dossier/imprime.html.twig", [
+            'datas' => $dossierRepository->getEmployeNomPrenom($clair),
+            'data' => $dossierRepository->findDossiersByEmploye($clair),
         ], [
-            'orientation' => 'P',
+            'orientation' => 'p',
             'protected' => true,
+            'file_name' => "point_versments",
             'format' => 'A4',
+
             'showWaterkText' => true,
             'fontDir' => [
                 $this->getParameter('font_dir') . '/arial',
                 $this->getParameter('font_dir') . '/trebuchet',
             ],
             'watermarkImg' => '',
-        ]);
+            'entreprise' => ''
+        ], true);
+        //return $this->renderForm("stock/sortie/imprime.html.twig");
+
     }
+
+    // /**
+    //  * @throws MpdfException
+    //  */
+
+    // // #[Route('/imprime/etat/dossier', name: 'app_actes_dossier_imprime', methods: ['GET', 'POST'], options: ['expose' => true], condition: "request.query.has('filters')")]
+    // #[Route('/imprime/all/{etat}/{clair}', name: 'app_actes_dossier_imprime_all', methods: ['GET'])]
+    // public function imprimerEtatDossier(
+    //     $etat = null,
+    //     $clair = null,
+    //     DossierRepository $dossierRepository
+    // ): Response {
+
+    //     $employe = $dossierRepository->getEmployeNomPrenom($clair);
+    //     $employes = $dossierRepository->findAll();
+    //     $dossiers = $dossierRepository->findDossiersByEmploye($clair);
+
+    // dd($dossiers);
+
+    //     return $this->renderPdf('actes/dossier/imprime.html.twig', [
+    //         // 'datas' => $dossierRepository->findBy($clair),
+    //         'emploi' => $employe,
+    //         'date' => new \DateTime(),
+    //         'entreprise' => ' ',
+    //         'employe' => $employe
+    //     ], [
+    //         'orientation' => 'P',
+    //         'protected' => true,
+    //         'format' => 'A4',
+    //         'showWaterkText' => true,
+    //         'fontDir' => [
+    //             $this->getParameter('font_dir') . '/arial',
+    //             $this->getParameter('font_dir') . '/trebuchet',
+    //         ],
+    //         'watermarkImg' => '',
+    //     ]);
+    // }
 }
