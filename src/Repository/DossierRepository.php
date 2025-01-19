@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Dossier;
+use App\Entity\Employe;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -40,30 +41,8 @@ class DossierRepository extends ServiceEntityRepository
             $this->getEntityManager()->flush();
         }
     }
-    public function findDossiersByEmploye($cler)
-    {
-        $query = $this->createQueryBuilder('d')
-            ->select('
-            d.numeroOuverture, 
-            d.numcompte, 
-            d.dateCreation, 
-            d.objet, 
-            e.nom AS employe, 
-            d.natureDossier AS nature, 
-            t.nom AS typeActe, 
-            d.etape
-        ')
-            ->join('d.employe', 'e')
-            ->join('d.typeActe', 't')
-            ->where('e.id = :employeId')
-            ->setParameter('employeId', $cler)
-            ->getQuery();
 
-     
 
-        // This should return an array of results (multiple rows)
-        return $query->getResult();
-    }
 
     public function getListe($etat, $titre)
     {
@@ -77,28 +56,8 @@ class DossierRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    // public function listeActe($acte)
-    // {
-    //     return $this->createQueryBuilder("d")
-    //         ->innerJoin('d.typeActe', 't')
-    //         ->where('d.active=:active')
-    //         ->andWhere('t.id=:acte')
-    //         ->setParameters(array('active' => 1, 'acte' => $acte))
-    //         ->getQuery()
-    //         ->getResult();
-    // }
+ 
 
-    public function getEmployeNomPrenom($id)
-    {
-        $qb = $this->createQueryBuilder('d')
-            ->select('CONCAT(e.nom, \' \', e.prenom)')
-            ->innerJoin('d.employe', 'e')
-            ->where('e.id = :id')
-            ->setParameter('id', $id)
-            ->getQuery();
-
-        return $qb->getSingleScalarResult();  // Retourne une seule valeur
-    }
     public function getDossier($id)
     {
         return $this->createQueryBuilder('d')
@@ -110,7 +69,18 @@ class DossierRepository extends ServiceEntityRepository
  // Retourne une seule valeur
     }
 
-   
+    public function findEmployeDossier($clair)
+    {
+        $qb = $this->createQueryBuilder('d')
+            ->select('e.nom, e.prenom')
+            ->innerJoin('d.employe', 'e')
+            ->setMaxResults(1);
+        if ($clair !== null) {
+                    $qb->andWhere('e.id = :clair')
+                        ->setParameter('clair', $clair);
+        }
+        return $qb->getQuery()->getOneOrNullResult();
+    }
 
 
     public function getListeDossierNative(int $clair): array
@@ -149,82 +119,7 @@ SQL;
         return $stmt->fetchAllAssociative();
     }
 
-    public function countAll($etat, $searchValue = null)
-    {
-        $em = $this->getEntityManager();
-        $connection = $em->getConnection();
-        $sql = <<<SQL
-SELECT COUNT(id)
-FROM dossier
-WHERE  1 = 1
-SQL;
-        $params = [];
 
-        if ($etat == 'termine') {
-            $sql .= " AND (JSON_CONTAINS(etat, '1', '$.termine') = 1)";
-        } elseif ($etat == 'archive') {
-            $sql .= " AND (JSON_CONTAINS(etat, '1', '$.archive') = 1)";
-        } else {
-            $sql .= " AND ((JSON_CONTAINS(etat, '1', '$.cree') = 1) or (JSON_CONTAINS(etat, '1', '$.en_cours')= 1))";
-        }
-
-
-
-        $sql .= $this->getSearchColumns($searchValue, $params, ['d.numero_ouverture']);
-
-
-
-        $stmt = $connection->executeQuery($sql, $params);
-
-
-        return intval($stmt->fetchOne());
-    }
-
-
-
-    public function getAll($etat, $limit, $offset, $searchValue = null)
-    {
-        $em = $this->getEntityManager();
-        $connection = $em->getConnection();
-
-        $sql = <<<SQL
-SELECT
-id,
-date_creation,
-numero_ouverture,
-objet,
-etape,
-type_acte_id
-FROM dossier
-WHERE  1 = 1
-
-SQL;
-        $params = [];
-
-
-        if ($etat == 'termine') {
-            $sql .= " AND (JSON_CONTAINS(etat, '1', '$.termine') = 1)";
-        } elseif ($etat == 'archive') {
-            $sql .= " AND (JSON_CONTAINS(etat, '1', '$.archive') = 1)";
-        } else {
-            $sql .= " AND ((JSON_CONTAINS(etat, '1', '$.cree') = 1) or (JSON_CONTAINS(etat, '1', '$.en_cours') = 1))";
-        }
-
-        $sql .= $this->getSearchColumns($searchValue, $params, ['d.numero_ouverture']);
-
-        $sql .= ' ORDER BY id DESC';
-
-        if ($limit && $offset == null) {
-            $sql .= " LIMIT {$limit}";
-        } else if ($limit && $offset) {
-            $sql .= " LIMIT {$offset},{$limit}";
-        }
-
-
-
-        $stmt = $connection->executeQuery($sql, $params);
-        return $stmt->fetchAllAssociative();
-    }
 
 
 

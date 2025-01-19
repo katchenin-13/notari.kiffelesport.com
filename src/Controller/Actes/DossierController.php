@@ -61,6 +61,7 @@ use App\Repository\WorkflowRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\QueryBuilder;
+use Doctrine\Persistence\ManagerRegistry;
 use Egulias\EmailValidator\Parser\Comment;
 use PhpOffice\PhpSpreadsheet\Style\Alignment;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -818,7 +819,7 @@ class DossierController extends BaseController
                 $em->persist($dossier);
                 $em->flush();
                 /*  }
- */
+      */
                 $modal = false;
                 $data = null;
 
@@ -2114,16 +2115,14 @@ class DossierController extends BaseController
     public function imprimerAll(Request $request,
         $etat = null,
         $clair = null,
+       
         DossierRepository $dossierRepository): Response
     {
 
-        $employe = $dossierRepository->getEmployeNomPrenom($clair);
-        $employes = $dossierRepository->findAll();
-        $dossiers = $dossierRepository->findDossiersByEmploye($clair);
-dd($etat);
+
         return $this->renderPdf("actes/dossier/imprime.html.twig", [
-            'datas' => $dossierRepository->getEmployeNomPrenom($clair),
-            'data' => $dossierRepository->findDossiersByEmploye($clair),
+            'data' =>  $dossierRepository->getListeDossierNative($clair),
+             'nomEmploye' => $dossierRepository->findEmployeDossier($clair),
         ], [
             'orientation' => 'p',
             'protected' => true,
@@ -2138,44 +2137,11 @@ dd($etat);
             'watermarkImg' => '',
             'entreprise' => ''
         ], true);
-        //return $this->renderForm("stock/sortie/imprime.html.twig");
 
     }
 
-    // /**
-    //  * @throws MpdfException
-    //  */
+  
 
-    // // #[Route('/imprime/etat/dossier', name: 'app_actes_dossier_imprime', methods: ['GET', 'POST'], options: ['expose' => true], condition: "request.query.has('filters')")]
-    // #[Route('/imprime/all/{etat}/{clair}', name: 'app_actes_dossier_imprime_all', methods: ['GET'])]
-    // public function imprimerEtatDossier(
-    //     $etat = null,
-    //     $clair = null,
-    //     DossierRepository $dossierRepository
-    // ): Response {
 
-    //     $employe = $dossierRepository->getEmployeNomPrenom($clair);
-    //     $employes = $dossierRepository->findAll();
-    //     $dossiers = $dossierRepository->findDossiersByEmploye($clair);
-
-    // dd($dossiers);
-
-    //     return $this->renderPdf('actes/dossier/imprime.html.twig', [
-    //         // 'datas' => $dossierRepository->findBy($clair),
-    //         'emploi' => $employe,
-    //         'date' => new \DateTime(),
-    //         'entreprise' => ' ',
-    //         'employe' => $employe
-    //     ], [
-    //         'orientation' => 'P',
-    //         'protected' => true,
-    //         'format' => 'A4',
-    //         'showWaterkText' => true,
-    //         'fontDir' => [
-    //             $this->getParameter('font_dir') . '/arial',
-    //             $this->getParameter('font_dir') . '/trebuchet',
-    //         ],
-    //         'watermarkImg' => '',
-    //     ]);
-    // }
+   
 }

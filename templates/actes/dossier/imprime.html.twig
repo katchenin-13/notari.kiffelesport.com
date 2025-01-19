@@ -3,137 +3,123 @@
 
 <head>
   <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Liste des Dossiers</title>
+  <title>Liste des Paiements</title>
   <style>
-    @page {
-      margin-footer: 0.5cm;
-      footer: html_pageFooter;
-      margin-top: 0.5cm;
-      margin-header: 0cm;
+    body {
+      font-size: 12px;
+      font-family: Arial, sans-serif;
     }
 
     .clearfix:after {
-      clear: both;
-    }
-
-    .clearfix:before {
-      content: " ";
+      content: "";
       display: table;
-    }
-
-    .clearfix:after {
       clear: both;
-    }
-
-    .mention {
-      position: absolute;
-      bottom: 100px;
-    }
-
-    caption {
-      margin-bottom: 15px;
-    }
-
-    fieldset {
-      border: 1px solid #000 !important;
-      margin: 0;
-      padding: 10px;
-      position: relative;
-      border-radius: 4px;
-      background-color: #fff;
-      padding-left: 10px !important;
-    }
-
-    legend {
-      padding: 0 10px;
-      margin-left: 100px;
-      font-size: 14px;
-      font-weight: bold;
-      margin-bottom: 0px;
-      width: 35%;
-      border: 1px solid #ddd;
-      border-radius: 4px;
-      background-color: #ffffff;
     }
 
     table {
-      font-family: arial, sans-serif;
       border-collapse: collapse;
+      margin-top: 20px;
+    }
+
+    th,
+    td {
+      border: 1px solid #ddd;
+      padding: 8px;
+      text-align: center;
+    }
+
+    caption {
+      background-color: rgba(229, 219, 216, 0.7);
+      padding: 10px;
+      font-weight: bold;
+      border: 2px solid black;
+    }
+
+    .entet {
+      color: red;
+      font-size: 18px;
+      background-color: #ede2e2;
+    }
+
+    .tables-container {
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    table:first-of-type {
+      width: 65%;
+      margin-right: auto;
+    }
+
+    table.second-table1 {
       width: 100%;
     }
 
-    td,
-    th {
-      border: 1px solid #dddddd;
-      text-align: left;
-      padding: 8px;
-    }
-
-    tr:nth-child(even) {}
-
-    .content {}
-
-    .double_underline {
-      text-decoration: underline;
-      border-bottom: 1px solid #000;
-      text-align: center;
+    table.second-table {
+      width: 50%;
+      margin-left: auto;
     }
   </style>
 </head>
 
-<body style="font-size:12px;">
+<body>
   <div class="clearfix">
-    <div class="header">
-      <div style="width:100%; text-align:center; padding-top:40px;">
-        <div class="texte-center" style="border: 1px solid #000; padding:8px;">
-          <b style="font-size:15px; font-weight:bold;">CLERC EN CHARGE : {{ emploi|upper }} </b><br>
-        </div>
-        <br><br>
-        <table>
-          <caption>
-            <b style="font-size:15px; font-weight:bold; text-decoration:underline;">LISTE DES DOSSIERS</b><br>
-          </caption>
-          <thead>
-            <tr style="background-color: #ff6600">
-              <th style="vertical-align:middle; color: #ffffff">N° ouverture</th>
-              <th style="vertical-align:middle; color: #ffffff">N° compte</th>
-              <th style="vertical-align:middle; color: #ffffff">Date création</th>
-              <th style="vertical-align:middle; color: #ffffff">Objet</th>
-              <th style="vertical-align:middle; color: #ffffff">Clerc en charge</th>
-              <th style="vertical-align:middle; color: #ffffff">Type de dossier</th>
-              <th style="vertical-align:middle; color: #ffffff">Type d'acte</th>
-              <th style="vertical-align:middle; color: #ffffff">Etape</th>
-            </tr>
-          </thead>
-          <tbody>
-            {% for data in datas %}
-            <tr>
-              <td style="vertical-align:middle;">{{ data.numeroOuverture }}</td>
-              <td style="vertical-align:middle;">{{ data.numcompte }}</td>
-              <td style="vertical-align:middle;">{{ data.dateCreation|date('d/m/Y') }}</td>
-              <td style="vertical-align:middle;">{{ data.objet }}</td>
-              <td style="vertical-align:middle;">{{ data.employe }}</td>
-              <td style="vertical-align:middle;">{{ data.nature }}</td>
-              <td style="vertical-align:middle;">{{ data.typeActe }}</td>
-              <td style="vertical-align:middle;">{{ data.etape }}</td>
-            </tr>
-            {% endfor %}
-          </tbody>
-        </table>
-      </div>
+    <div style="text-align: center;">
+      <b>NOTARIE</b><br>
+      BP V 43 ABIDJAN, TEL : 01 01 15 44 44<br>
+      Abidjan-Cocody<br>
+      <hr>
     </div>
   </div>
 
-  <htmlpagefooter name="pageFooter">
-    <div style="border-top:2px solid #000;"></div>
-    <p align="center" style="margin-top:-1px">
-      UFHB/UFRSEG BP V43 ABIDJAN EMAIL: <a
-        href="mailto:secretariat@ufrseg-filierespro-ufhb.ci">secretariat@ufrseg-filierespro-ufhb.ci</a><br>
-      TEL : 01 01 15 44 44
-    </p>
-  </htmlpagefooter>
+  <div class="tables-container">
+    <!-- Premier tableau -->
+    <table class="second-table1">
+    {% if nomEmploye %}
+    <caption style="text-align: center;">
+      LISTE DES DOSSIERS EN CHARGE DE {{ (nomEmploye.nom ~ ' ' ~ nomEmploye.prenom) | upper }}
+    </caption>
+    {% else %}
+    <h2 style="text-align: center;">LISTE DES DOSSIERS</h2>
+    {% endif %}
+      <thead>
+       
+          <tr style="background-color: #ff6600">
+            <th >N° ouverture</th>
+            <th >N° compte</th>
+            <th >Date création</th>
+            <th >Objet</th>
+            <th >Clerc en charge</th>
+            <th >Type de dossier</th>
+            <th >Type d'acte</th>
+            <th >Etape</th>
+        </tr>
+          </thead>
+      <tbody>
+        {% for ligne in data %}
+          <tr>
+            <td>{{ ligne.numero_ouverture }}</td>
+            <td>{{ ligne.numcompte }}</td>
+            <td>{{ ligne.date_creation|date('d/m/Y') }}</td>
+            <td>{{ ligne.objet }}</td>
+            <td>{{ ligne.employe_nom_prenom }}</td>
+            <td>{{ ligne.nature_dossier }}</td>
+            <td>{{ ligne.type_acte_nom }}</td>
+            <td>{{ ligne.etape }}</td>
+          </tr>
+        {% else %}
+        <tr>
+          <td colspan="6">Aucune donnée trouvée</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+
+ 
+  </div>
+
 </body>
 
 </html>
