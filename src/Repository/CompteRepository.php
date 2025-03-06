@@ -2,10 +2,10 @@
 
 namespace App\Repository;
 
-
+use App\Entity\Compte;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
-use Proxies\__CG__\App\Entity\Compte;
+
 
 /**
  * @extends ServiceEntityRepository<Compte>
@@ -21,6 +21,32 @@ class CompteRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Compte::class);
     }
+
+    public function searchResultAll($client )
+    {
+        $sql = $this->createQueryBuilder('c')
+
+            ->join('c.client', 'client')
+            ->join('client.identifications', 'id')
+            ->join('id.dossier', 'd')
+            ->addSelect('client', 'id',);
+    
+
+        if ($client ) {
+
+            if ($client != "null") {
+                $sql->andWhere('client.id = :client')
+                ->setParameter('client', $client);
+            }
+           
+
+           
+ }
+
+        // Retourner les résultats
+        return $sql->getQuery()->getResult();
+    }
+
 
 //    /**
 //     * @return Compte[] Returns an array of Compte objects

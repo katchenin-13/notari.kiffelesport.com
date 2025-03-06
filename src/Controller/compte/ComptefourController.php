@@ -2,38 +2,79 @@
 
 namespace App\Controller\Compte;
 
-use App\Entity\Calendar;
-use App\Form\Calendar1Type;
-use App\Repository\CalendarRepository;
+
 use App\Service\ActionRender;
 use App\Service\FormError;
 use Omines\DataTablesBundle\Adapter\Doctrine\ORMAdapter;
-use Omines\DataTablesBundle\Column\BoolColumn;
 use Omines\DataTablesBundle\Column\DateTimeColumn;
 use Omines\DataTablesBundle\Column\TextColumn;
 use Omines\DataTablesBundle\DataTableFactory;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Controller\BaseController;
-use App\Entity\Compte;
+use App\Controller\FileTrait;
 use App\Entity\Comptefour;
-use App\Form\CalendarType;
+use App\Entity\Marche;
 use App\Form\ComptefourType;
 use App\Form\CompteType;
+use App\Repository\ComptefourRepository;
+use App\Repository\LignepaiementmarcheRepository;
+use App\Repository\MarcheRepository;
 use Doctrine\ORM\QueryBuilder;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 
 #[Route('/ads/compte/fournisseur')]
 class ComptefourController extends BaseController
 {
+    use FileTrait;
     const INDEX_ROOT_NAME = 'app_compte_fournisseur_index';
 
-    #[Route('/', name: 'app_compte_fournisseur_index', methods: ['GET', 'POST'])]
+    #[Route('/', name: 'app_compte_fournisseur_index', methods: ['GET', 'POST'], options: ['expose' => true])]
     public function index(Request $request, DataTableFactory $dataTableFactory): Response
     {
 
+        $marche = $request->query->get('marche');
+        $datedebut = $request->query->get('datedebut');
+        $datefin = $request->query->get('datefin');
+        
+        $builder = $this->createFormBuilder(null, [
+            'method' => 'GET',
+            'action' => $this->generateUrl('app_compte_fournisseur_index', ['marche' => $marche, 'datedebut' => $datedebut, 'datefin' => $datefin]),
+        ])
+        
+            ->add('marche', EntityType::class, [
+                'class' => Marche::class,
+                'choice_label' => function (Marche $marche) {
+                    return $marche->getLibelle();
+                },
+                'label' => 'Marché',
+                'placeholder' => '---',
+                'required' => false,
+                'attr' => ['class' => 'form-control-sm has-select2'],
+                'choice_attr' => function (Marche $marche) {
+                    return ['data-type' => $marche->getId()];
+                },
+            ])
+            ->add('datedebut', DateType::class, [
+                'widget' => 'single_text',
+                'label'   => 'Date début',
+                'format'  => 'dd/MM/yyyy',
+                'required' => false,
+                'html5' => false,
+                'attr'    => ['autocomplete' => 'off', 'class' => 'form-control-sm datepicker no-auto'],
+            ])
+            ->add('datefin', DateType::class, [
+                'widget' => 'single_text',
+                'label'   => 'Date fin',
+                'format'  => 'dd/MM/yyyy',
+                'required' => false,
+                'html5' => false,
+                'attr'    => ['autocomplete' => 'off', 'class' => 'form-control-sm datepicker no-auto'],
+            ])
+            ;
 
         $permission = $this->menu->getPermissionIfDifferentNull($this->security->getUser()->getGroupe()->getId(), self::INDEX_ROOT_NAME);
 
@@ -51,15 +92,57 @@ class ComptefourController extends BaseController
 
             ->createAdapter(ORMAdapter::class, [
                 'entity' => Comptefour::class,
-                'query' => function (QueryBuilder $qb) {
+                'query' => function (QueryBuilder $qb) use ($marche, $datedebut,$datefin) {
                     $qb->select(['c', 'f', 'm'])
                         ->from(Comptefour::class, 'c')
                         ->join('c.fournisseurs', 'f')
                         ->join('c.marches', 'm')
                         ->orderBy('c.id ', 'DESC');
+
+                if ($marche || $datedebut || $datefin) {
+                   
+                    if ($marche) {
+                        $qb->andWhere('m.id = :marche')
+                            ->setParameter('marche', $marche);
+                    }
+                    if ($datedebut != null && $datefin == null) {
+                        try {
+                            $new_date_debut = (new \DateTime($datedebut))->format('Y-m-d');
+
+                            $qb->andWhere('c.datecreation = :dateDebut')
+                            ->setParameter('dateDebut', $new_date_debut);
+                        } catch (\Exception $e) {
+                            // Gérez l'erreur si la date n'est pas au bon format
+                        }
+                    }
+
+                    if ($datefin != null && $datedebut == null) {
+                        try {
+                            $new_date_fin = (new \DateTime($datefin))->format('Y-m-d');
+
+                            $qb->andWhere('c.datecreation = :datefin')
+                            ->setParameter('datefin', $new_date_fin);
+                        } catch (\Exception $e) {
+                            // Gérez l'erreur si la date n'est pas au bon format
+                        }
+                    }
+
+                    if ($datedebut != null && $datefin != null) {
+                        try {
+                            $new_date_debut = (new \DateTime($datedebut))->format('Y-m-d');
+                            $new_date_fin = (new \DateTime($datefin))->format('Y-m-d');
+
+                            $qb->andWhere('c.datecreation BETWEEN :datedebut AND :datefin')
+                            ->setParameter('datedebut', $new_date_debut)
+                            ->setParameter('datefin', $new_date_fin);
+                        } catch (\Exception $e) {
+                            // Gérez l'erreur si la date n'est pas au bon format
+                        }
+                    }
+                }
                 }
             ])
-            ->setName('dt_app_compte_fournisseur');
+            ->setName('dt_app_compte_fournisseur_' . $marche);
         if ($permission != null) {
 
             $renders = [
@@ -111,7 +194,7 @@ class ComptefourController extends BaseController
 
             ];
 
-
+            $gridId = $marche;
             $hasActions = false;
 
             foreach ($renders as $_ => $cb) {
@@ -175,6 +258,8 @@ class ComptefourController extends BaseController
             }
         }
 
+        $form = $builder->getForm();
+
         $table->handleRequest($request);
 
         if ($table->isCallback()) {
@@ -185,6 +270,8 @@ class ComptefourController extends BaseController
         return $this->render('compte/fournisseur/index.html.twig', [
             'datatable' => $table,
             'permition' => $permission,
+            'form' => $form->createView(),
+            'grid_id' => $gridId,
             'titre' => "Liste des  activités"
         ]);
     }
@@ -387,4 +474,29 @@ class ComptefourController extends BaseController
             'form' => $form,
         ]);
     }
+
+    #[Route('/imprime/all/{marche}/{datedebut}/{datefin}/point des versements', name: 'app_compte_imprime_marche_all', methods: ['GET', 'POST'])]
+    public function imprimeAllResult(Request $request, $marche, $datedebut, $datefin,ComptefourRepository $comptefourRepository,MarcheRepository $marcheRepository, LignepaiementmarcheRepository $compteFo,LignepaiementmarcheRepository $lignepaiementmarcheRepository){
+
+        return $this->renderPdf(
+            "compte/fournisseur/imprime.html.twig",[
+            'data' => $lignepaiementmarcheRepository->searchResult($marche, $datedebut, $datefin),
+            'datas' => $comptefourRepository->searchResultAll($marche),
+
+        ],[
+                'orientation' => 'p',
+                'protected' => true,
+                'file_name' => "point_versments",
+                'format' => 'A4',
+
+                'showWaterkText' => true,
+                'fontDir' => [
+                    $this->getParameter('font_dir') . '/arial',
+                    $this->getParameter('font_dir') . '/trebuchet',
+                ],
+                'watermarkImg' => '',
+                'entreprise' => '' 
+            ],true);
+    }
+
 }

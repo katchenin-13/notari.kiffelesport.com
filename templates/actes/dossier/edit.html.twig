@@ -1,74 +1,246 @@
 {% block page_content %}
-    {% form_theme form 'widget/fields-block.html.twig' %}
-    <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Edition Dossier</h5>
-        <div class="btn btn-icon btn-sm  ms-2" data-bs-dismiss="modal" aria-label="Close">
-            <span class="svg-icon svg-icon-2x text-white">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-					<rect opacity="0.5" x="6" y="17.3137" width="16" height="2" rx="1" transform="rotate(-45 6 17.3137)" fill="currentColor"></rect>
-					<rect x="7.41422" y="6" width="16" height="2" rx="1" transform="rotate(45 7.41422 6)" fill="currentColor"></rect>
-				</svg>
-            </span>
-        </div>
-    </div>
-    {{ form_start(form, {'attr': {'role':'form', 'class': 'form'}}) }}
-    <div class="modal-body content-doc">
-        {{ include('_includes/ajax/response.html.twig') }}
-         <div class="contenu" style="margin-top: -10px">
-            <div class="row">
-                <div class="col-md-12">
-                    {{ include('_includes/ajax/response.html.twig') }}
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-2 ">
-                    {{ form_row(form.dateCreation) }}
-                </div>
-                <div class="col-md-5 ">
-                    {{ form_row(form.numeroOuverture) }}
-                </div>
-                <div class="col-md-5">
-                    {{ form_row(form.typeActe) }}
-                </div>
-            
-            </div>
-            <div class="row">
-                <div class="col-md-4 ">
-                    {{ form_row(form.employe) }}
-                </div>
-                <div class="col-md-4 ">
-                    {{ form_row(form.objet) }}
-                </div>
-                <div class="col-md-4 ">
-                    {{ form_row(form.conservation) }}
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-12"> {{ form_row(form.description) }}</div>
-            </div>
-              <div class="row">
-                <div class="col-md-6"> {{ form_row(form.montantTotal) }}</div>
-                <div class="col-md-6"> {{ form_row(form.numeroRepertoire) }}</div>
-            </div>
+{% form_theme form 'widget/fields-block.html.twig' %}
+{% from '_macros/ligneidentificationclient.html.twig' import prototype_identification %}
 
+<div class="modal-header">
+    <h5 class="modal-title" id="exampleModalLabel">Edition Dossier</h5>
+    <div class="btn btn-icon btn-sm  ms-2" data-bs-dismiss="modal" aria-label="Close">
+        <span class="svg-icon svg-icon-2x text-white">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect opacity="0.5" x="6" y="17.3137" width="16" height="2" rx="1" transform="rotate(-45 6 17.3137)"
+                    fill="currentColor"></rect>
+                <rect x="7.41422" y="6" width="16" height="2" rx="1" transform="rotate(45 7.41422 6)"
+                    fill="currentColor"></rect>
+            </svg>
+        </span>
+    </div>
+</div>
+{{ form_start(form, {'attr': {'role':'form', 'class': 'form'}}) }}
+<div class="modal-body content-doc">
+    {{ include('_includes/ajax/response.html.twig') }}
+    <div class="contenu" style="margin-top: -10px">
+        <div class="row">
+            <div class="col-md-12">
+                {{ include('_includes/ajax/response.html.twig') }}
+            </div>
         </div>
+        <div class="row">
+            <div class="col-md-6 ">
+                {{ form_row(form.dateCreation) }}
+            </div>
+            <div class="col-md-6 ">
+                {{ form_row(form.numeroOuverture) }}
+            </div>
+        
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                {{ form_row(form.typeActe) }}
+            </div>
+            <div class="col-md-6">
+                {{ form_row(form.natureDossier) }}
+            </div>
+        </div>
+        <div class="row">
+        
+            <div class="col-md-6">
+                {{ form_row(form.employe) }}
+            </div>
+        
+            <div class="col-md-6">
+                {{ form_row(form.conservation) }}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 ">
+                {{ form_row(form.objet) }}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12"> {{ form_row(form.description) }}</div>
+        </div>
+        <div class="row">
+            <div class="col-md-4"> {{ form_row(form.montantTotal) }}</div>
+            <div class="col-md-4"> {{ form_row(form.numcompte) }}</div>
+            <div class="col-md-4"> {{ form_row(form.numeroRepertoire) }}</div>
+        
+        </div>
+
+        </br>
     </div>
-    <div class="modal-footer">
-        {# {{ include('_includes/ajax/loader.html.twig') }} #}
-        <button type="button" class="btn btn-default btn-sm" data-bs-dismiss="modal">Annuler</button>
-        <button type="submit" class="btn btn-main btn-ajax btn-sm"><span class="spinner-border d-none  spinner-ajax spinner-border-sm" role="status" aria-hidden="true"></span> Valider</button>
-    </div>
-    {{ form_widget(form._token) }}
-    {{ form_end(form, {render_rest: false}) }}
+    {{ prototype_identification(form) }}
+
+</div>
+<div class="modal-footer">
+    {# {{ include('_includes/ajax/loader.html.twig') }} #}
+    <button type="button" class="btn btn-default btn-sm" data-bs-dismiss="modal">Annuler</button>
+    <button type="submit" class="btn btn-main btn-ajax btn-sm"><span
+            class="spinner-border d-none  spinner-ajax spinner-border-sm" role="status" aria-hidden="true"></span>
+        Valider</button>
+</div>
+{{ form_widget(form._token) }}
+{{ form_end(form, {render_rest: false}) }}
 {% endblock %}
 
 {% block java %}
-    <script>
-        $(function () {
-            init_select2('select');
+<script>
+
+    $(function () {
+        init_select2('select', null, '#exampleModalSizeSm2');
+    });
+    /**
+     * This function sums all the values in the fields with class 'input-mnt' and
+     * puts the result in the field with class 'col-total'.
+     * @return {void}
+     */
+    function getTotal() {
+        let total = 0;
+        $("#exampleModalSizeSm2").find('.input-mnt').each(function (e) {
+            const $this = $(this);
+            //somme = somme +parseInt($this.val())
+            total = total + parseInt($this.val().replaceAll(' ', ''));
+        })
+
+        $("#exampleModalSizeSm2").find('.col-total').html(total)
+    }
+    $("#exampleModalSizeSm2").find('.input-mnt').on('input', function (e, val, element) {
+
+        total = 0;
+        $("#exampleModalSizeSm2").find('.input-mnt').each(function (e) {
+            const $this = $(this);
+            //somme = somme +parseInt($this.val())
+            total = total + parseInt($this.val().replaceAll(' ', ''));
+        })
+
+
+
+        $("#exampleModalSizeSm2").find('.col-total').html(total)
+
+    })
+
+
+    $(function () {
+        getTotal();
+
+        const $container = $('.proto-container');
+
+        var index = $container.find('.row-colonne').length;
+
+
+        $(document).on('select2:select', '.select-type', function (e) {
+            const $this = $(this);
+            let field_str = $this.find('option:selected').attr('data-require-fields');
+            const $parent = $this.closest('.row-colonne');
+            let fields = [];
+            if (typeof field_str != 'undefined') {
+                fields = field_str.split(',');
+                for (let field of fields) {
+                    $parent.find('.' + field).removeClass('d-none');
+                }
+            } else {
+                $parent.find('.source,.valeurs').addClass('d-none');
+            }
         });
-        $(function () {
-            init_select2('select', null, '#exampleModalSizeSm2');
+
+
+        const $addLink = $('.add_line');
+        $addLink.click(function (e) {
+            const $this = $(this);
+            const proto_class = $this.attr('data-protoclass');
+            const name = $this.attr('data-protoname');
+            const $container = $($this.attr('data-container'));
+
+
+
+            addLine($container, name, proto_class);
+
+
+
+            e.preventDefault(); // évite qu'un # apparaisse dans l'URL
         });
-    </script>
+
+        if (index > 0) {
+            $container.children('.row-colonne').each(function () {
+                const $this = $(this);
+                addDeleteLink($this);
+                const $select = $this.find("select");
+
+
+
+
+                $select.each(function () {
+                    const $this = $(this);
+                    init_select2($this, null, '#exampleModalSizeSm2');
+                    if ($this.hasClass('select-type')) {
+                        let field_str = $this.find('option:selected').attr('data-require-fields');
+                        const $parent = $this.closest('.row-colonne');
+                        let fields = [];
+                        if (typeof field_str != 'undefined') {
+                            fields = field_str.split(',');
+                            for (let field of fields) {
+                                $parent.find('.' + field).removeClass('d-none');
+                            }
+                        } else {
+                            $parent.find('.source,.valeurs').addClass('d-none');
+                        }
+                    }
+                });
+
+            });
+
+        }
+
+
+
+
+        // La fonction qui ajoute un formulaire Categorie
+        function addLine($container, name, proto_class) {
+            // Dans le contenu de l'attribut « data-prototype », on remplace :
+            // - le texte "__name__label__" qu'il contient par le label du champ
+            // - le texte "__name__" qu'il contient par le numéro du champ
+
+            var $prototype = $($(proto_class).attr('data-prototype')
+                .replace(new RegExp(name + 'label__', 'g'), 'Colonne ' + (index + 1))
+                .replace(new RegExp(name, 'g'), index));
+
+
+            init_select2($prototype.find('select'), null, '#exampleModalSizeSm2');
+
+
+            // On ajoute au prototype un lien pour pouvoir supprimer la prestation
+            addDeleteLink($prototype, name);
+            // On ajoute le prototype modifié à la fin de la balise <div>
+            $container.append($prototype);
+
+            index++;
+        }
+
+
+        function addDeleteLink($prototype, name = null) {
+            // Création du lien
+            $deleteLink = $('<a href="#" class="btn btn-danger btn-xs"><span class="fa fa-trash"></span></a>');
+            // Ajout du lien
+            $prototype.find(".del-col").append($deleteLink);
+
+
+
+            // Ajout du listener sur le clic du lien
+            $deleteLink.click(function (e) {
+                const $this = $(this);
+                const $parent = $(this).closest('.row-colonne');
+                //console.log($(this).attr('data-parent'), $(this));
+                $parent.remove();
+
+                if (index > 0) {
+                    index -= 1;
+                }
+
+                e.preventDefault(); // évite qu'un # apparaisse dans l'URL
+            });
+        }
+
+
+
+    })
+</script>
 {% endblock %}

@@ -24,10 +24,10 @@ class Workflow
     #[ORM\Column(type: 'integer')]
     private $NombreJours;
 
-    #[ORM\ManyToOne(targetEntity: Type::class, inversedBy: 'workflows')]
+    #[ORM\ManyToOne(targetEntity: Type::class, inversedBy: 'workflows', cascade: ['persist'])]
     private $typeActe;
 
-    #[ORM\ManyToOne(targetEntity: GestionWorkflow::class, inversedBy: 'workflow')]
+    #[ORM\ManyToOne(targetEntity: GestionWorkflow::class, inversedBy: 'workflow', cascade: ['persist'])]
     private $gestionWorkflow;
 
 

@@ -83,7 +83,7 @@ trait FileTrait
         $mpdf->showWatermarkImage = $options['showWaterkImage'] ?? false;
 
 
-        $mpdf->watermark($options['entreprise'], 45, 90, 0.1);
+      //  $mpdf->watermark($options['entreprise'], 45, 90, 0.1);
         if ($options['watermarkImg'] != "") {
             $mpdf->watermarkImg($options['watermarkImg'], 0.1);
         }

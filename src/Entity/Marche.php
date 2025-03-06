@@ -23,9 +23,9 @@ class Marche
     #[ORM\Column(length: 255)]
     private ?string $montanttotal = null;
 
-    #[ORM\Column(length: 255)]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?string $solde = null;
+    // #[ORM\Column(length: 255)]
+    // #[ORM\JoinColumn(nullable: false)]
+    // private ?string $solde = null;
 
 
 
@@ -35,7 +35,7 @@ class Marche
 
     #[ORM\OneToOne(cascade: ["persist"], fetch: "EAGER")]
     #[ORM\JoinColumn(nullable: true)]
-    private ?FichierAdmin $path = null;
+    private ?FichierAdmin   $fichier = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
     #[Gedmo\Timestampable(on: 'create')]
@@ -78,14 +78,15 @@ class Marche
         return $this;
     }
 
-    public function getPath(): ?FichierAdmin
+
+    public function getFichier(): ?FichierAdmin
     {
-        return $this->path;
+        return $this->fichier;
     }
 
-    public function setPath(?FichierAdmin $path): self
+    public function setFichier(?FichierAdmin $fichier): self
     {
-        $this->path = $path;
+        $this->fichier = $fichier;
 
         return $this;
     }
@@ -118,17 +119,17 @@ class Marche
     }
 
 
-    public function getSolde(): ?string
-    {
-        return $this->solde;
-    }
+    // public function getSolde(): ?string
+    // {
+    //     return $this->solde;
+    // }
 
-    public function setSolde(string $solde): static
-    {
-        $this->solde = $solde;
+    // public function setSolde(string $solde): static
+    // {
+    //     $this->solde = $solde;
 
-        return $this;
-    }
+    //     return $this;
+    // }
 
    
     /**

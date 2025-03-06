@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Liste des Paiements</title>
+  <style>
+    body {
+      font-size: 12px;
+      font-family: Arial, sans-serif;
+    }
+
+    .clearfix:after {
+      content: "";
+      display: table;
+      clear: both;
+    }
+
+    table {
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+
+    th,
+    td {
+      border: 1px solid #ddd;
+      padding: 8px;
+      text-align: center;
+    }
+
+    caption {
+      background-color: rgba(229, 219, 216, 0.7);
+      padding: 10px;
+      font-weight: bold;
+      border: 2px solid black;
+    }
+
+    .entet {
+      color: red;
+      font-size: 18px;
+      background-color: #ede2e2;
+    }
+
+    .tables-container {
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    table:first-of-type {
+      width: 65%;
+      margin-right: auto;
+    }
+
+    table.second-table1 {
+      width: 100%;
+    }
+
+    table.second-table {
+      width: 50%;
+      margin-left: auto;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="clearfix">
+    <div style="text-align: center;">
+      <b>NOTARIE</b><br>
+      BP V 43 ABIDJAN, TEL : 01 01 15 44 44<br>
+      Abidjan-Cocody<br>
+      <hr>
+    </div>
+  </div>
+
+  <div class="tables-container">
+    <!-- Premier tableau -->
+    <table class="second-table1">
+    {% if nomEmploye %}
+    <caption style="text-align: center;">
+      LISTE DES DOSSIERS EN CHARGE DE {{ (nomEmploye.nom ~ ' ' ~ nomEmploye.prenom) | upper }}
+    </caption>
+    {% else %}
+    <h2 style="text-align: center;">LISTE DES DOSSIERS</h2>
+    {% endif %}
+      <thead>
+       
+          <tr style="background-color: #ff6600">
+            <th >N° ouverture</th>
+            <th >N° compte</th>
+            <th >Date création</th>
+            <th >Objet</th>
+            <th >Clerc en charge</th>
+            <th >Type de dossier</th>
+            <th >Type d'acte</th>
+            <th >Etape</th>
+        </tr>
+          </thead>
+      <tbody>
+        {% for ligne in data %}
+          <tr>
+            <td>{{ ligne.numero_ouverture }}</td>
+            <td>{{ ligne.numcompte }}</td>
+            <td>{{ ligne.date_creation|date('d/m/Y') }}</td>
+            <td>{{ ligne.objet }}</td>
+            <td>{{ ligne.employe_nom_prenom }}</td>
+            <td>{{ ligne.nature_dossier }}</td>
+            <td>{{ ligne.type_acte_nom }}</td>
+            <td>{{ ligne.etape }}</td>
+          </tr>
+        {% else %}
+        <tr>
+          <td colspan="6">Aucune donnée trouvée</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+
+ 
+  </div>
+
+</body>
+
+</html>

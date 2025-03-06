@@ -15,7 +15,8 @@ class CommentaireRedactionType extends AbstractType
     {
         $builder
         ->add('description',TextareaType::class,[
-            'label'=>'Commentaire'
+            'label'=>'Commentaire',
+            'required' => false,
         ])
 
             ->add('active', CheckboxType::class, [

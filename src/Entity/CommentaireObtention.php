@@ -19,6 +19,7 @@ class CommentaireObtention
 
     #[ORM\ManyToOne(inversedBy: 'commentaireObtentions')]
     private ?Dossier $dossier = null;
+    
     #[ORM\Column(type: 'boolean')]
     private $active;
 

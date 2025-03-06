@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Dossier;
+use App\Entity\Employe;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -41,6 +42,8 @@ class DossierRepository extends ServiceEntityRepository
         }
     }
 
+
+
     public function getListe($etat, $titre)
     {
         return $this->createQueryBuilder("d")
@@ -53,94 +56,70 @@ class DossierRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    public function listeActe($acte)
+ 
+
+    public function getDossier($id)
     {
-        return $this->createQueryBuilder("d")
-            ->innerJoin('d.typeActe', 't')
-            ->where('d.active=:active')
-            ->andWhere('t.id=:acte')
-            ->setParameters(array('active' => 1, 'acte' => $acte))
-            ->getQuery()
-            ->getResult();
+        return $this->createQueryBuilder('d')
+           
+            ->innerJoin('d.employe', 'e')
+            ->where('e.id = :id')
+            ->setParameter('id', $id)
+            ->getQuery();
+ // Retourne une seule valeur
     }
 
-
-    public function countAll($etat, $searchValue = null)
+    public function findEmployeDossier($clair)
     {
-        $em = $this->getEntityManager();
-        $connection = $em->getConnection();
-        $sql = <<<SQL
-SELECT COUNT(id)
-FROM dossier
-WHERE  1 = 1
-SQL;
-        $params = [];
-
-        if ($etat == 'termine') {
-            $sql .= " AND (JSON_CONTAINS(etat, '1', '$.termine') = 1)";
-        } elseif ($etat == 'archive') {
-            $sql .= " AND (JSON_CONTAINS(etat, '1', '$.archive') = 1)";
-        } else {
-            $sql .= " AND ((JSON_CONTAINS(etat, '1', '$.cree') = 1) or (JSON_CONTAINS(etat, '1', '$.en_cours')= 1))";
+        $qb = $this->createQueryBuilder('d')
+            ->select('e.nom, e.prenom')
+            ->innerJoin('d.employe', 'e')
+            ->setMaxResults(1);
+        if ($clair !== null) {
+                    $qb->andWhere('e.id = :clair')
+                        ->setParameter('clair', $clair);
         }
-
-
-
-        $sql .= $this->getSearchColumns($searchValue, $params, ['d.numero_ouverture']);
-
-
-
-        $stmt = $connection->executeQuery($sql, $params);
-
-
-        return intval($stmt->fetchOne());
+        return $qb->getQuery()->getOneOrNullResult();
     }
 
 
-
-    public function getAll($etat, $limit, $offset, $searchValue = null)
+    public function getListeDossierNative(int $clair): array
     {
         $em = $this->getEntityManager();
         $connection = $em->getConnection();
 
+        // Requête SQL avec les jointures et les conditions
         $sql = <<<SQL
-SELECT
-id,
-date_creation,
-numero_ouverture,
-objet,
-etape,
-type_acte_id
-FROM dossier
-WHERE  1 = 1
-
+SELECT 
+    d.*, 
+    CONCAT(e.nom, ' ', e.prenom) AS employe_nom_prenom, 
+    t.titre AS type_acte_nom
+FROM 
+    dossier d
+INNER JOIN 
+    _admin_employe e ON d.employe_id = e.id
+INNER JOIN 
+    type_acte t ON d.type_acte_id = t.id
+WHERE 
+    d.active = 1
+    AND (:clair IS NULL OR e.id = :clair)
+ORDER BY 
+    d.id DESC
 SQL;
-        $params = [];
 
+        // Définition des paramètres
+        $params = [
+            'clair' => $clair, // L'ID de l'employé
+        ];
 
-        if ($etat == 'termine') {
-            $sql .= " AND (JSON_CONTAINS(etat, '1', '$.termine') = 1)";
-        } elseif ($etat == 'archive') {
-            $sql .= " AND (JSON_CONTAINS(etat, '1', '$.archive') = 1)";
-        } else {
-            $sql .= " AND ((JSON_CONTAINS(etat, '1', '$.cree') = 1) or (JSON_CONTAINS(etat, '1', '$.en_cours') = 1))";
-        }
-
-        $sql .= $this->getSearchColumns($searchValue, $params, ['d.numero_ouverture']);
-
-        $sql .= ' ORDER BY id DESC';
-
-        if ($limit && $offset == null) {
-            $sql .= " LIMIT {$limit}";
-        } else if ($limit && $offset) {
-            $sql .= " LIMIT {$offset},{$limit}";
-        }
-
-
-
+        // Exécution de la requête
         $stmt = $connection->executeQuery($sql, $params);
+
+        // Récupération des résultats sous forme associative
         return $stmt->fetchAllAssociative();
     }
+
+
 
 
 

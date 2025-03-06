@@ -20,6 +20,24 @@ class ComptefourRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Comptefour::class);
     }
+    public function searchResultAll($marche)
+    {
+        $qb = $this->createQueryBuilder('c') // c est l'alias de l'entité Compte
+        ->join('c.marches', 'marche')    // Jointure avec l'entité Marches
+        ->join('marche.fournisseur', 'fournisseur')
+            ->addSelect('marche', 'fournisseur');           // Sélectionne également les données de l'entité Marches
+
+        if ($marche && $marche !== "null") {
+            $qb->andWhere('marche.id = :marche')
+            ->setParameter('marche', $marche);
+        }
+
+        return $qb->getQuery()->getResult();
+    }
+
+
+
+
 
 //    /**
 //     * @return Compte[] Returns an array of Compte objects

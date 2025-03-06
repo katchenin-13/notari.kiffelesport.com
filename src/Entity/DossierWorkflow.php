@@ -26,7 +26,6 @@ class DossierWorkflow
     private $workflow;
 
     #[ORM\ManyToOne(targetEntity: Dossier::class, inversedBy: 'dossierWorkflows')]
-    #[ORM\JoinColumn(onDelete: "CASCADE")]
     private $dossier;
 
     #[ORM\OneToOne(targetEntity: SuiviDossierWorkflow::class, mappedBy: 'dossierWorkflow', cascade: ['persist', 'remove'])]

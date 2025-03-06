@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Liste des maisons</title>
+    <style>
+        {
+            % block page_css %
+        }
+
+        @page {
+
+            margin-footer: 0.5cm;
+
+            /*header: html_headerContent;*/
+            footer: html_pageFooter;
+            margin-top: 0.5cm;
+            margin-header: 0cm;
+            margin-left: 1cm;
+            margin-right: 1cm;
+            /*background: ...
+  background-image: ...
+  background-position ...
+  background-repeat ...
+  background-color ...
+  background-gradient: ...*/
+        }
+
+        .clearfix:after,
+        {
+        % endblock %
+        }
+
+        .clearfix:before {
+            content: " ";
+            display: table;
+        }
+
+        .clearfix:after {
+            clear: both;
+        }
+
+        .mention {
+            position: absolute;
+            bottom: 100px;
+        }
+
+        .ok {
+            width: 30%;
+            border: 1px solid black;
+            text-align: center;
+        }
+
+        .deuxieme {
+            width: 38%;
+        }
+
+        .montant {
+            font-weight: bolder;
+        }
+
+        .Info_client h4 {
+            magin-left: 15px !important;
+        }
+
+        /*@page :first {
+   header: html_headerContent;
+}*/
+
+        .table {
+            width: 100%;
+            max-width: 100%;
+            border-collapse: collapse;
+
+        }
+
+        .table {
+            page-break-before: auto;
+        }
+
+        body {
+            font-family: Trebuchet, Arial, Helvetica;
+        }
+
+        .table td,
+        .table th {
+            padding: 2px;
+            vertical-align: top;
+            border-top: 1px solid #191919;
+        }
+
+        .table thead th {
+            vertical-align: bottom;
+            border-bottom: 2px solid #191919;
+        }
+
+        .table tbody+tbody {
+            border-top: 1px solid #191919;
+        }
+
+        .table .table {
+            background-color: #fff;
+        }
+
+        .table-sm td,
+        .table-sm th {
+            padding: 0.3rem;
+        }
+
+        .table-bordered {
+            border: 1px solid #191919;
+        }
+
+        .table-bordered td,
+        .table-bordered th {
+            border: 1px solid #191919;
+        }
+
+        .table-bordered thead td,
+        .table-bordered thead th {
+            border-bottom-width: 1px;
+        }
+
+        @media all {
+            /*.content { display: block; page-break-inside: avoid; }*/
+        }
+
+        .content {
+            /*margin-top: 18cm;*/
+        }
+
+        .table-responsive.table-bordered {
+            border: 0;
+        }
+
+        .double_underline {
+            text-decoration: underline;
+            border-bottom: 1px solid #000;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body style="font-size:12px;">
+
+ 
+    
+    <htmlpagefooter name="pageFooter">
+      
+    </htmlpagefooter>
+</body>
+
+</html>

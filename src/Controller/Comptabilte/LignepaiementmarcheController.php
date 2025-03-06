@@ -182,12 +182,12 @@ class LignepaiementmarcheController extends BaseController
                 
                 if ($montantSolde >= $montant) {
 
-                    $ligneversementfrai = new Lignepaiementmarche();
-                    $ligneversementfrai->setDatepaiement($date);
-                    $ligneversementfrai->setComptefour($comptefour);
-                    $ligneversementfrai->setMarches($comptefour->getMarches());
-                    $ligneversementfrai->setMontantverse($montant);
-                    $entityManager->persist($ligneversementfrai);
+                   $lignepaiementmarche = new Lignepaiementmarche();
+                    $lignepaiementmarche->setDatepaiement($date);
+                    $lignepaiementmarche->setComptefour($comptefour);
+                    $lignepaiementmarche->setMarches($comptefour->getMarches());
+                    $lignepaiementmarche->setMontantverse($montant);
+                    $entityManager->persist($lignepaiementmarche);
                     $entityManager->flush();
 
                     $comptefour->setSolde($resteAPayer);
@@ -275,17 +275,17 @@ class LignepaiementmarcheController extends BaseController
             $redirect = '';
             // $redirect = $this->generateUrl('app_comptabilte_lignepaiementmarche_index', [ 'id' => $ligneversementfrai->getCompte()->getId() ]);
             $montantnew = (int)$form->get('montantverse')->getData();
-           // $date = $form->get('dateversementfrais')->getData();
+           $date = $form->get('datepaiement')->getData();
             $somme = 0;
            
 
            // dd($montantnew, $montantold);
 
             if ($form->isValid()) {
+                $compte = $lignepaiementmarche->getComptefour();
 
                 if($montantnew !=  $montantold){
                    
-                    $compte = $lignepaiementmarche->getComptefour();
                     $solde = (int)str_replace(' ', '', $compte->getSolde()) -  abs($montantnew  - $montantold);
                    // dd($solde);
                    
@@ -294,6 +294,10 @@ class LignepaiementmarcheController extends BaseController
                     $entityManager->persist($compte);
                     $entityManager->flush();
                 }
+                $lignepaiementmarche->setDatepaiement($date);
+                $lignepaiementmarche->setComptefour($compte);
+                $lignepaiementmarche->setMarches($compte->getMarches());
+                $lignepaiementmarche->setMontantverse($montantnew);
                 $entityManager->persist($lignepaiementmarche);  
                 $entityManager->flush();
 

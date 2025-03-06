@@ -49,7 +49,7 @@
                 var index = $container.find('.row-colonne').length;
 
 
-                $(document).on('select2:select', '.select-type', function (e) {
+                $(document).on('select2', '.select-type', function (e) {
                     const $this = $(this);
                     let field_str = $this.find('option:selected').attr('data-require-fields');
                     const $parent = $this.closest('.row-colonne');

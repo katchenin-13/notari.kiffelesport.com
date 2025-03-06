@@ -50,6 +50,7 @@ class Dossier
     private $objet;
 
     #[ORM\ManyToOne(targetEntity: Type::class, inversedBy: 'dossiers')]
+    // #[ORM\JoinColumn(nullable: false)]
     private $typeActe;
 
     #[ORM\OneToMany(targetEntity: DossierWorkflow::class, mappedBy: 'dossier', cascade: ['persist'])]
@@ -58,6 +59,8 @@ class Dossier
     #[ORM\OneToMany(targetEntity: Identification::class, mappedBy: 'dossier', cascade: ['persist'])]
     #[Assert\Valid(groups: ['identification'])]
     private $identifications;
+
+
 
     #[ORM\OneToMany(targetEntity: Piece::class, mappedBy: 'dossier', cascade: ['persist'])]
     private $pieces;
@@ -95,10 +98,11 @@ class Dossier
     #[ORM\Column(type: 'string', length: 255)]
     private $montantTotal;
 
-    #[ORM\ManyToOne(targetEntity: Conservation::class, inversedBy: 'dossiers')]
+    #[ORM\ManyToOne(targetEntity: Conservation::class, inversedBy: 'dossiers', cascade: ['persist'])]
+    #[ORM\JoinColumn(nullable: true)]
     private $conservation;
 
-    #[ORM\OneToMany(targetEntity: PaiementFrais::class, mappedBy: 'dossier', cascade: ['persist', 'remove'])]
+    #[ORM\OneToMany(targetEntity: PaiementFrais::class, mappedBy: 'dossier', cascade: ['persist'])]
     private $paiementFrais;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true, unique: true)]
@@ -116,7 +120,7 @@ class Dossier
     // #[Gedmo\Blameable(on: 'create')]
     // private ?utilisateur $utilisateur = null;
 
-    #[ORM\OneToMany(targetEntity: Calendar::class, mappedBy: 'dossier', cascade: ['persist'])]
+    #[ORM\OneToMany(targetEntity: Calendar::class, mappedBy: 'dossier',  cascade: ['persist'] )]
     private $calendars;
 
     #[ORM\ManyToOne(inversedBy: 'dossiers')]
@@ -124,14 +128,14 @@ class Dossier
     #[Gedmo\Blameable(on: 'create')]
     private ?Utilisateur $utilisateur = null;
 
-    #[ORM\OneToMany(mappedBy: 'dossier', targetEntity: Compte::class)]
-    private Collection $comptes;
+    // #[ORM\OneToMany(mappedBy: 'dossier', targetEntity: Compte::class)]
+    // private Collection $comptes;
 
-    #[ORM\OneToMany(mappedBy: 'dossier', targetEntity: DocumentSigneFichier::class, cascade: ['persist', 'remove'])]
+    #[ORM\OneToMany(mappedBy: 'dossier', targetEntity: DocumentSigneFichier::class, cascade: ['persist'])]
     private Collection $documentSigneFichiers;
 
-    #[ORM\OneToMany(mappedBy: 'dossier', targetEntity: CommentaireIdentification::class, cascade: ['persist'])]
-    private Collection $CommentaireIdentifications;
+    // #[ORM\OneToMany(mappedBy: 'dossier', targetEntity: CommentaireIdentification::class)]
+    // private Collection $CommentaireIdentifications;
 
     #[ORM\OneToMany(mappedBy: 'dossier', targetEntity: CommentairePiece::class, cascade: ['persist'])]
     private Collection $commentairePieces;
@@ -142,6 +146,7 @@ class Dossier
     #[ORM\OneToMany(mappedBy: 'dossier', targetEntity: CommentaireRedaction::class, cascade: ['persist'])]
     private Collection $commentaireRedactions;
 
+
     #[ORM\OneToMany(mappedBy: 'dossier', targetEntity: CommentaireSignature::class, cascade: ['persist'])]
     private Collection $commentaireSignatures;
 
@@ -150,10 +155,21 @@ class Dossier
 
     #[ORM\OneToMany(mappedBy: 'dossier', targetEntity: CommentaireObtention::class, cascade: ['persist'])]
     private Collection $commentaireObtentions;
-
     #[ORM\OneToMany(mappedBy: 'dossier', targetEntity: EnregistrementDocument::class, cascade: ['persist'])]
     private Collection $enregistrementDocuments;
 
+   
+
+    #[ORM\Column(length: 50)]
+    #[ORM\JoinColumn(nullable: true)]
+    #[Assert\Choice(choices: ['societe', 'notariat'], message: 'Veuillez sélectionner une option valide.')]
+    private ?string $natureDossier;
+
+    #[ORM\Column(length: 255)]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?string $numcompte=null;
+
+  
 
     public function __construct()
     {
@@ -173,9 +189,9 @@ class Dossier
         $this->setMontantVendeur(0);
         $this->paiementFrais = new ArrayCollection();
         $this->dateCreation = new DateTime();
-        $this->comptes = new ArrayCollection();
+    //    $this->comptes = new ArrayCollection();
         $this->documentSigneFichiers = new ArrayCollection();
-        $this->CommentaireIdentifications = new ArrayCollection();
+        // $this->CommentaireIdentifications = new ArrayCollection();
         $this->commentairePieces = new ArrayCollection();
         $this->commentairePaiements = new ArrayCollection();
         $this->commentaireRedactions = new ArrayCollection();
@@ -183,7 +199,6 @@ class Dossier
         $this->commentaireEngs = new ArrayCollection();
         $this->commentaireObtentions = new ArrayCollection();
         $this->enregistrementDocuments = new ArrayCollection();
-      
     }
 
 
@@ -376,6 +391,37 @@ class Dossier
 
         return $this;
     }
+
+    //  /**
+    //  * @return Collection<int, Compte>
+    //  */
+    // public function getComptes(): Collection
+    // {
+    //     return $this->comptes;
+    // }
+
+    // public function addCompte(Compte $compte): static
+    // {
+    //     if (!$this->comptes->contains($compte)) {
+    //         $this->comptes->add($compte);
+    //         $compte->setDossier($this);
+    //     }
+
+    //     return $this;
+    // }
+
+    // public function removeCompte(Compte $compte): static
+    // {
+    //     if ($this->comptes->removeElement($compte)) {
+    //         // set the owning side to null (unless already changed)
+    //         if ($compte->getDossier() === $this) {
+    //             $compte->setDossier(null);
+    //         }
+    //     }
+
+    //     return $this;
+    // }
+
 
     /**
      * @return Collection<int, Piece>
@@ -629,7 +675,7 @@ class Dossier
         return $this;
     }
 
-    public function removeRemiseActe(RemiseActe $remiseActe): self
+    public function removeRemiseActe(RemiseActe $remiseActe): void
     {
         if ($this->remiseActes->removeElement($remiseActe)) {
             // set the owning side to null (unless already changed)
@@ -755,7 +801,7 @@ class Dossier
         return $this->entreprise;
     }
 
-    public function setEntreprise(?Entreprise $entreprise): static
+    public function setEntreprise(?Entreprise $entreprise): self
     {
         $this->entreprise = $entreprise;
 
@@ -819,42 +865,14 @@ class Dossier
         return $this->utilisateur;
     }
 
-    public function setUtilisateur(?Utilisateur $utilisateur): static
+    public function setUtilisateur(?Utilisateur $utilisateur): self
     {
         $this->utilisateur = $utilisateur;
 
         return $this;
     }
 
-    /**
-     * @return Collection<int, Compte>
-     */
-    public function getComptes(): Collection
-    {
-        return $this->comptes;
-    }
-
-    public function addCompte(Compte $compte): static
-    {
-        if (!$this->comptes->contains($compte)) {
-            $this->comptes->add($compte);
-            $compte->setDossier($this);
-        }
-
-        return $this;
-    }
-
-    public function removeCompte(Compte $compte): static
-    {
-        if ($this->comptes->removeElement($compte)) {
-            // set the owning side to null (unless already changed)
-            if ($compte->getDossier() === $this) {
-                $compte->setDossier(null);
-            }
-        }
-
-        return $this;
-    }
+  
 
     /**
      * @return Collection<int, DocumentSigneFichier>
@@ -864,7 +882,7 @@ class Dossier
         return $this->documentSigneFichiers;
     }
 
-    public function addDocumentSigneFichier(DocumentSigneFichier $documentSigneFichier): static
+    public function addDocumentSigneFichier(DocumentSigneFichier $documentSigneFichier): self
     {
         if (!$this->documentSigneFichiers->contains($documentSigneFichier)) {
             $this->documentSigneFichiers->add($documentSigneFichier);
@@ -874,7 +892,7 @@ class Dossier
         return $this;
     }
 
-    public function removeDocumentSigneFichier(DocumentSigneFichier $documentSigneFichier): static
+    public function removeDocumentSigneFichier(DocumentSigneFichier $documentSigneFichier): self
     {
         if ($this->documentSigneFichiers->removeElement($documentSigneFichier)) {
             // set the owning side to null (unless already changed)
@@ -886,35 +904,35 @@ class Dossier
         return $this;
     }
 
-    /**
-     * @return Collection<int, CommentaireIdentification>
-     */
-    public function getCommentaireIdentifications(): Collection
-    {
-        return $this->CommentaireIdentifications;
-    }
+    // /**
+    //  * @return Collection<int, CommentaireIdentification>
+    //  */
+    // public function getCommentaireIdentifications(): Collection
+    // {
+    //     return $this->CommentaireIdentifications;
+    // }
 
-    public function addCommentaireIdentification(CommentaireIdentification $CommentaireIdentification): static
-    {
-        if (!$this->CommentaireIdentifications->contains($CommentaireIdentification)) {
-            $this->CommentaireIdentifications->add($CommentaireIdentification);
-            $CommentaireIdentification->setDossier($this);
-        }
+    // public function addCommentaireIdentification(CommentaireIdentification $CommentaireIdentification): self
+    // {
+    //     if (!$this->CommentaireIdentifications->contains($CommentaireIdentification)) {
+    //         $this->CommentaireIdentifications->add($CommentaireIdentification);
+    //         $CommentaireIdentification->setDossier($this);
+    //     }
 
-        return $this;
-    }
+    //     return $this;
+    // }
 
-    public function removeCommentaireIdentification(CommentaireIdentification $CommentaireIdentification): static
-    {
-        if ($this->CommentaireIdentifications->removeElement($CommentaireIdentification)) {
-            // set the owning side to null (unless already changed)
-            if ($CommentaireIdentification->getDossier() === $this) {
-                $CommentaireIdentification->setDossier(null);
-            }
-        }
+    // public function removeCommentaireIdentification(CommentaireIdentification $CommentaireIdentification): self
+    // {
+    //     if ($this->CommentaireIdentifications->removeElement($CommentaireIdentification)) {
+    //         // set the owning side to null (unless already changed)
+    //         if ($CommentaireIdentification->getDossier() === $this) {
+    //             $CommentaireIdentification->setDossier(null);
+    //         }
+    //     }
 
-        return $this;
-    }
+    //     return $this;
+    // }
 
     /**
      * @return Collection<int, CommentairePiece>
@@ -924,7 +942,7 @@ class Dossier
         return $this->commentairePieces;
     }
 
-    public function addCommentairePiece(CommentairePiece $commentairePiece): static
+    public function addCommentairePiece(CommentairePiece $commentairePiece): self
     {
         if (!$this->commentairePieces->contains($commentairePiece)) {
             $this->commentairePieces->add($commentairePiece);
@@ -934,7 +952,7 @@ class Dossier
         return $this;
     }
 
-    public function removeCommentairePiece(CommentairePiece $commentairePiece): static
+    public function removeCommentairePiece(CommentairePiece $commentairePiece): self
     {
         if ($this->commentairePieces->removeElement($commentairePiece)) {
             // set the owning side to null (unless already changed)
@@ -954,7 +972,7 @@ class Dossier
         return $this->commentairePaiements;
     }
 
-    public function addCommentairePaiement(CommentairePaiement $commentairePaiement): static
+    public function addCommentairePaiement(CommentairePaiement $commentairePaiement): self
     {
         if (!$this->commentairePaiements->contains($commentairePaiement)) {
             $this->commentairePaiements->add($commentairePaiement);
@@ -964,7 +982,7 @@ class Dossier
         return $this;
     }
 
-    public function removeCommentairePaiement(CommentairePaiement $commentairePaiement): static
+    public function removeCommentairePaiement(CommentairePaiement $commentairePaiement): self
     {
         if ($this->commentairePaiements->removeElement($commentairePaiement)) {
             // set the owning side to null (unless already changed)
@@ -984,7 +1002,7 @@ class Dossier
         return $this->commentaireRedactions;
     }
 
-    public function addCommentaireRedaction(CommentaireRedaction $commentaireRedaction): static
+    public function addCommentaireRedaction(CommentaireRedaction $commentaireRedaction): self
     {
         if (!$this->commentaireRedactions->contains($commentaireRedaction)) {
             $this->commentaireRedactions->add($commentaireRedaction);
@@ -994,7 +1012,7 @@ class Dossier
         return $this;
     }
 
-    public function removeCommentaireRedaction(CommentaireRedaction $commentaireRedaction): static
+    public function removeCommentaireRedaction(CommentaireRedaction $commentaireRedaction): self
     {
         if ($this->commentaireRedactions->removeElement($commentaireRedaction)) {
             // set the owning side to null (unless already changed)
@@ -1014,7 +1032,7 @@ class Dossier
         return $this->commentaireSignatures;
     }
 
-    public function addCommentaireSignature(CommentaireSignature $commentaireSignature): static
+    public function addCommentaireSignature(CommentaireSignature $commentaireSignature): self
     {
         if (!$this->commentaireSignatures->contains($commentaireSignature)) {
             $this->commentaireSignatures->add($commentaireSignature);
@@ -1024,7 +1042,7 @@ class Dossier
         return $this;
     }
 
-    public function removeCommentaireSignature(CommentaireSignature $commentaireSignature): static
+    public function removeCommentaireSignature(CommentaireSignature $commentaireSignature): self
     {
         if ($this->commentaireSignatures->removeElement($commentaireSignature)) {
             // set the owning side to null (unless already changed)
@@ -1044,7 +1062,7 @@ class Dossier
         return $this->commentaireEngs;
     }
 
-    public function addCommentaireEng(CommentaireEng $commentaireEng): static
+    public function addCommentaireEng(CommentaireEng $commentaireEng): self
     {
         if (!$this->commentaireEngs->contains($commentaireEng)) {
             $this->commentaireEngs->add($commentaireEng);
@@ -1054,7 +1072,7 @@ class Dossier
         return $this;
     }
 
-    public function removeCommentaireEng(CommentaireEng $commentaireEng): static
+    public function removeCommentaireEng(CommentaireEng $commentaireEng): self
     {
         if ($this->commentaireEngs->removeElement($commentaireEng)) {
             // set the owning side to null (unless already changed)
@@ -1074,7 +1092,7 @@ class Dossier
         return $this->commentaireObtentions;
     }
 
-    public function addCommentaireObtention(CommentaireObtention $commentaireObtention): static
+    public function addCommentaireObtention(CommentaireObtention $commentaireObtention): self
     {
         if (!$this->commentaireObtentions->contains($commentaireObtention)) {
             $this->commentaireObtentions->add($commentaireObtention);
@@ -1084,7 +1102,7 @@ class Dossier
         return $this;
     }
 
-    public function removeCommentaireObtention(CommentaireObtention $commentaireObtention): static
+    public function removeCommentaireObtention(CommentaireObtention $commentaireObtention): self
     {
         if ($this->commentaireObtentions->removeElement($commentaireObtention)) {
             // set the owning side to null (unless already changed)
@@ -1104,7 +1122,7 @@ class Dossier
         return $this->enregistrementDocuments;
     }
 
-    public function addEnregistrementDocument(EnregistrementDocument $enregistrementDocument): static
+    public function addEnregistrementDocument(EnregistrementDocument $enregistrementDocument): self
     {
         if (!$this->enregistrementDocuments->contains($enregistrementDocument)) {
             $this->enregistrementDocuments->add($enregistrementDocument);
@@ -1114,7 +1132,7 @@ class Dossier
         return $this;
     }
 
-    public function removeEnregistrementDocument(EnregistrementDocument $enregistrementDocument): static
+    public function removeEnregistrementDocument(EnregistrementDocument $enregistrementDocument): self
     {
         if ($this->enregistrementDocuments->removeElement($enregistrementDocument)) {
             // set the owning side to null (unless already changed)
@@ -1126,6 +1144,31 @@ class Dossier
         return $this;
     }
 
-   
+    
+
+    public function getNatureDossier(): ?string
+    {
+        return $this->natureDossier;
+    }
+
+    public function setNatureDossier(string $natureDossier): self
+    {
+        $this->natureDossier = $natureDossier;
+
+        return $this;
+    }
+
+    public function getNumcompte(): ?string
+    {
+        return $this->numcompte;
+    }
+
+    public function setNumcompte(string $numcompte): static
+    {
+        $this->numcompte = $numcompte;
+
+        return $this;
+    }
+
 
 }

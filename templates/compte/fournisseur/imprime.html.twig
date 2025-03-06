@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Liste des Paiements</title>
+  <style>
+    body {
+      font-size: 12px;
+      font-family: Arial, sans-serif;
+    }
+
+    .clearfix:after {
+      content: "";
+      display: table;
+      clear: both;
+    }
+
+    table {
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+
+    th,
+    td {
+      border: 1px solid #ddd;
+      padding: 8px;
+      text-align: center;
+    }
+
+    caption {
+      background-color: rgba(229, 219, 216, 0.7);
+      padding: 10px;
+      font-weight: bold;
+      border: 2px solid black;
+    }
+
+    .entet {
+      color: red;
+      font-size: 18px;
+      background-color: #ede2e2;
+    }
+
+    .tables-container {
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    table:first-of-type {
+      width: 65%;
+      margin-right: auto;
+    }
+
+    table.second-table1 {
+      width: 100%;
+    }
+
+    table.second-table {
+      width: 50%;
+      margin-left: auto;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="clearfix">
+    <div style="text-align: center;">
+      <b>NOTARIE</b><br>
+      BP V 43 ABIDJAN, TEL : 01 01 15 44 44<br>
+      Abidjan-Cocody<br>
+      <hr>
+    </div>
+  </div>
+
+  <div class="tables-container">
+    <!-- Premier tableau -->
+    <table class="second-table1">
+      <caption>POINT DES PAIEMENTS</caption>
+      <thead>
+        <tr>
+          <th>Fournisseur </th>
+          <th>MARCHE </th>
+          <th>DATE </th>
+          <th>MONTANT A PAYER </th>
+          <th>TOTAL PAYÉ </th>
+          <th>RESTE À PAYER </th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for ligne in datas %}
+        <tr>
+          <td>
+            {{ ligne.fournisseurs.nom }}
+          </td>
+          <td>{{ ligne.marches.libelle }} </td>
+          <td>{{ ligne.marches.datecreation | date('d/m/Y') }}</td>
+          <td>{{ ligne.montant | number_format(0, '.', '.') }}</td>
+          <td>{{ (ligne.montant - ligne.solde) | number_format(0, '.', '.') }}</td>
+          <td>{{ ligne.solde | number_format(0, '.', '.') }}</td>
+
+
+        </tr>
+        {% else %}
+        <tr>
+          <td colspan="6">Aucune donnée trouvée</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+
+    <!-- Deuxième tableau -->
+    <table class="second-table">
+      <thead>
+        <tr class="entet">
+          <th colspan="3">LISTE DES VERSEMENTS</th>
+
+        </tr>
+        <tr>
+          <th>N°</th>
+          <th>DATE</th>
+          <th>MONTANT PAYÉ</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for key, ligne in data %}
+        <tr>
+          <td>{{ key + 1 }}</td>
+          <td>{{ ligne.datepaiement | date('d/m/Y') }}</td>
+          <td>{{ ligne.montantverse | number_format(0, '.', '.') }}</td>
+        </tr>
+        {% else %}
+        <tr>
+          <td colspan="3">Aucune donnée trouvée</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+</body>
+
+</html>

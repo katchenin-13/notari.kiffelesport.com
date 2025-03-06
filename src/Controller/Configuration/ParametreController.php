@@ -112,10 +112,16 @@ class ParametreController extends BaseController
                     'id' => 'param_employe',
                     'href' => $this->generateUrl('app_utilisateur_employe_index')
                 ],
+          
                 [
                     'label' => 'Permissions',
                     'id' => 'param_permission',
                     'href' => $this->generateUrl('app_utilisateur_permition_index')
+                ],
+                 [
+                    'label' => 'Compte utilisateurs ',
+                    'id' => 'param_utilisateur',
+                    'href' => $this->generateUrl('app_utilisateur_utilisateur_index')
                 ],
                 [
                     'label' => 'Configuration application',

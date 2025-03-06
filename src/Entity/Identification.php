@@ -16,26 +16,24 @@ class Identification
     #[ORM\Column(type: 'integer')]
     private $id;
 
-    // #[ORM\ManyToOne(targetEntity: Client::class, inversedBy: 'vendeurs')]
-    // #[Assert\NotBlank(message: 'Veuillez sélectionner un vendeur', groups: ['identification'])]
-    // private $vendeur;
+
 
     #[ORM\ManyToOne(targetEntity: Dossier::class, inversedBy: 'identifications',)]
     #[ORM\JoinColumn(onDelete: "CASCADE")]
     private $dossier;
-
-    // #[ORM\ManyToOne(targetEntity: Client::class, inversedBy: 'acheteurs')]
-    // #[Assert\NotBlank(message: 'Veuillez sélectionner un acheteur', groups: ['identification'])]
-    // private $acheteur;
+ 
 
     #[ORM\ManyToOne(inversedBy: 'identifications')]
     private ?Client $clients = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $attribut = null;
+    private ?string $attribut= null;
 
     #[ORM\ManyToOne(inversedBy: 'identifications')]
     private ?TypeClient $type = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $montant = null;
 
 
     public function getId(): ?int
@@ -84,7 +82,7 @@ class Identification
         return $this->attribut;
     }
 
-    public function setAttribut(string $attribut): static
+    public function setAttribut(string $attribut): self
     {
         $this->attribut = $attribut;
 
@@ -96,7 +94,7 @@ class Identification
         return $this->clients;
     }
 
-    public function setClients(?Client $clients): static
+        public function setClients(?Client $clients): self
     {
         $this->clients = $clients;
 
@@ -108,9 +106,21 @@ class Identification
         return $this->type;
     }
 
-    public function setType(?TypeClient $type): static
+    public function setType(?TypeClient $type): self
     {
         $this->type = $type;
+
+        return $this;
+    }
+
+    public function getMontant(): ?string
+    {
+        return $this->montant;
+    }
+
+    public function setMontant(string $montant): static
+    {
+        $this->montant = $montant;
 
         return $this;
     }

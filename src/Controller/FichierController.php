@@ -16,12 +16,12 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('fichier')]
 class FichierController extends AbstractController
 {
-    #[Route('/{id}', name: 'fichier_index', methods: ['GET'])]
+    #[Route('/{id}/fichier', name: 'fichier_index', methods: ['GET'])]
     public function show(Request $request, FichierAdmin $fichier)
     {
         $fileName = $fichier->getFileName();
-        $filePath = $fichier->getPath();
-        //dd($filePath);
+        $filePath = $fichier->getAlt();
+        dd($filePath);
         $download = $request->query->get('download');
 
         $file = $this->getUploadDir($filePath . '/' . $fileName);
