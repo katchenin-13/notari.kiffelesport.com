@@ -1,4 +1,9 @@
 <?php
+/**
+ * Génération de fil d'ariane
+ */
+namespace App\Service;
+
 class ChiffreEnLettre
 {
     //NE GERE PAS TOUT (les pluriels...)
