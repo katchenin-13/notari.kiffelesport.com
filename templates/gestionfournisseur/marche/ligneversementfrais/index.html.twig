@@ -3,14 +3,9 @@
     <div class="row">
 
         <div class="col-sm-12">
-<<<<<<< HEAD:templates/gestionfournisseur/marche/ligneversementfrais/index.html.twig
-            <div id="grid_app_comptabilte_ligneversementfrais" class="grid-dt-wrapper"
-                data-bs-reflech="{{ path('app_comptabilte_ligneversementfrais_index', {'idR': id}) }}">Chargement....</div>
-=======
             <div id="grid_app_comptabilte_lignepaiementmarche" class="grid-dt-wrapper"
                 data-bs-reflech="{{ path('app_comptabilte_lignepaiementmarche_index', {'idR': id}) }}">Chargement....
             </div>
->>>>>>> 11b7eb5 (save pour review):templates/comptabilte/lignepaiementmarche/index.html.twig
         </div>
     </div>
 
@@ -31,11 +26,7 @@
     $(function () {
         $('#grid_app_comptabilte_ligneversementfrais').initDataTables({{ datatable_settings(datatable) }}, {
         searching: true,
-<<<<<<< HEAD:templates/gestionfournisseur/marche/ligneversementfrais/index.html.twig
-        ajaxUrl: "{{ path('app_comptabilte_ligneversementfrais_index', {'idR': id}) }}",
-=======
         ajaxUrl: "{{ path('app_comptabilte_lignepaiementmarche_index', {'idR': id}) }}",
->>>>>>> 11b7eb5 (save pour review):templates/comptabilte/lignepaiementmarche/index.html.twig
         language: {
             url: asset_base_path + "/js/i18n/French.json"
         },

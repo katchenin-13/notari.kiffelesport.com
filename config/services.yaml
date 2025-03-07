@@ -61,6 +61,26 @@ services:
         arguments:
             $renderer: '@twig.form.renderer'
 
+    # services:
+    #     _defaults:
+    #         autowire: true    # Active l'autowiring pour éviter d'enregistrer manuellement chaque service
+    #         autoconfigure: true # Active l'autoconfiguration
+
+    #     App\Controller\:
+    #         resource: '../src/Controller/'
+    #         tags: ['controller.service_arguments']
+
+    #     App\Service\:
+    #         resource: '../src/Service/'
+
+    services:
+        App\Controller\Agenda\MethodeEnvoiEmailController:
+            arguments:
+                $entityManager: '@doctrine.orm.entity_manager'
+                $mailer: '@mailer.mailer'
+                $formError: '@App\Service\FormError'
+
+
     #datadog.event_subscriber.audit:
     #    class: App\EventSubscriber\AuditSubscriber
     #    arguments: ["@security.token_storage"]
