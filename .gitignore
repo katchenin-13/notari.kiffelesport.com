@@ -56,8 +56,8 @@ settings.json
 /.env.local.php
 /.env.*.local
 /config/secrets/prod/prod.decrypt.private.php
-#/public/bundles/
-#/public/uploads/
+/public/bundles/
+/public/uploads/
 /var/
 /vendor/
 
