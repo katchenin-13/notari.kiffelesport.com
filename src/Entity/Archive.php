@@ -18,11 +18,11 @@ class Archive
 
 
     #[ORM\ManyToOne(targetEntity: Client::class)]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(nullable: true)]
     private $acheteur;
 
     #[ORM\ManyToOne(targetEntity: Client::class)]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(nullable: true)]
     private $vendeur;
 
     /**
@@ -60,8 +60,9 @@ class Archive
     #[ORM\Column(type: 'string', length: 255)]
     private $description;
 
-    #[ORM\ManyToOne(inversedBy: 'archives')]
-    private ?Entreprise $entreprise = null;
+    // #[ORM\ManyToOne(inversedBy: 'archives')]
+    // #[Gedmo\Timestampable(on: 'create')]
+    // private ?Entreprise $entreprise = null;
 
     public function __construct()
     {
@@ -227,16 +228,16 @@ class Archive
         return $this;
     }
 
-    public function getEntreprise(): ?Entreprise
-    {
-        return $this->entreprise;
-    }
+    // public function getEntreprise(): ?Entreprise
+    // {
+    //     return $this->entreprise;
+    // }
 
-    public function setEntreprise(?Entreprise $entreprise): static
-    {
-        $this->entreprise = $entreprise;
+    // public function setEntreprise(?Entreprise $entreprise): static
+    // {
+    //     $this->entreprise = $entreprise;
 
-        return $this;
-    }
+    //     return $this;
+    // }
 
 }

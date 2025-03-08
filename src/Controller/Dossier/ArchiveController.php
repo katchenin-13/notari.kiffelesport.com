@@ -46,16 +46,16 @@ class ArchiveController extends BaseController
             ->createAdapter(ORMAdapter::class, [
                 'entity' => Archive::class,
                 'query' => function (QueryBuilder $qb) {
-                    $qb->select(['p', 'en', 't'])
+                    $qb->select(['p', 't'])
                         ->from(Archive::class, 'p')
-                        ->join('p.entreprise', 'en')
+                        // ->join('p.entreprise', 'en')
                     ->innerJoin('p.typeActe', 't')
 
                         ->orderBy('p.id ', 'DESC');
-                    if ($this->groupe != "SADM") {
-                        $qb->andWhere('en = :entreprise')
-                            ->setParameter('entreprise', $this->entreprise);
-                    }
+                    // if ($this->groupe != "SADM") {
+                    //     $qb->andWhere('en = :entreprise')
+                    //         ->setParameter('entreprise', $this->entreprise);
+                    // }
                 }
             ])
             ->setName('dt_app_dossier_archive');
