@@ -114,7 +114,8 @@ class DossierController extends BaseController
 
         $clair = $request->query->get('clair');
         $permission = $this->menu->getPermissionIfDifferentNull($this->security->getUser()->getGroupe()->getId(), self::INDEX_ROOT_NAME);
-       
+        $codeUser = $this->security->getUser()->getGroupe()->getCode();
+
 
         $builder = $this->createFormBuilder(null, [
             'method' => 'GET',
@@ -317,6 +318,7 @@ class DossierController extends BaseController
             'permition' => $permission,
             'etat' => $etat,
             'grid_id' => $gridId,
+            'codeUser' => $codeUser,
 
             'form' => $form->createView(),
         ]);

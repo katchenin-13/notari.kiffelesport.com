@@ -77,6 +77,17 @@
 {% block java %}
 <script src="{{ asset('assets/js/datatables.js') }}"></script>
 <script>
+   $(document).ready(function () {
+        let codeUser = "{{ codeUser|escape('js') }}";
+        console.log("Code User:", codeUser);
+
+        if (codeUser === 'COMPTA') {
+          
+            // Cache le bouton "Nouveau" si codeUser n'est pas 'COMPTA'
+            $("a[href='/ads/actes/dossier/new/new']").hide();
+        }
+    });
+
     $(function () {
         const grid_prefix_id = "{{ grid_id }}";
        
