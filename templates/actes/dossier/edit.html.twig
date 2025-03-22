@@ -84,7 +84,18 @@
 
 {% block java %}
 <script>
+    $(document).ready(function () {
+        let codeUser = "{{ codeUser|escape('js') }}";
+        console.log("Code User:", codeUser);
 
+        if (codeUser !== 'COMPTA') {
+            $("th:contains('Montant à payer')").hide(); // Cache l'en-tête de la colonne
+            $("#montatclient").closest("td").hide(); // Cache le <td> contenant le montant client
+            $("input[id^='dossier_identifications_'][id$='_montant']").closest("td").hide(); // Cache les <td> contenant des inputs dont l'ID commence par "dossier_identifications_" et se termine par "_attribut"
+            $("#dossier_numcompte").closest(".col-md-4").hide(); // Cache le champ "N° de compte"
+            $("#dossier_montantTotal").closest(".col-md-4").hide(); // Cache le champ "Montant des honoraires"
+        }
+    });
     $(function () {
         init_select2('select', null, '#exampleModalSizeSm2');
           $('.no-auto').each(function () {
@@ -217,7 +228,14 @@
 
             init_select2($prototype.find('select'), null, '#exampleModalSizeSm2');
 
+            // recuperation du code user
+            let codeUser = "{{ codeUser|escape('js') }}";
+            console.log("Code User:", codeUser);
 
+            if (codeUser !== 'COMPTA') {
+                $prototype.find("input[id^='dossier_identifications_'][id$='_montant']").closest("td").Show();
+            }
+            
             // On ajoute au prototype un lien pour pouvoir supprimer la prestation
             addDeleteLink($prototype, name);
             // On ajoute le prototype modifié à la fin de la balise <div>

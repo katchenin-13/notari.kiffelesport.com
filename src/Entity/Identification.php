@@ -32,9 +32,11 @@ class Identification
     #[ORM\ManyToOne(inversedBy: 'identifications')]
     private ?TypeClient $type = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255,nullable:false)]
     private ?string $montant = null;
+     
 
+    
 
     public function getId(): ?int
     {

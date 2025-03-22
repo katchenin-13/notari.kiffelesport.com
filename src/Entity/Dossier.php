@@ -95,7 +95,7 @@ class Dossier
     #[ORM\OneToOne(targetEntity: InfoClassification::class, mappedBy: 'dossier', cascade: ['persist', 'remove'])]
     private $infoClassification;
 
-    #[ORM\Column(type: 'string', length: 255)]
+    #[ORM\Column(type: 'string', length: 255,nullable: false)]
     private $montantTotal;
 
     #[ORM\ManyToOne(targetEntity: Conservation::class, inversedBy: 'dossiers', cascade: ['persist'])]
@@ -165,11 +165,16 @@ class Dossier
     #[Assert\Choice(choices: ['societe', 'notariat'], message: 'Veuillez sélectionner une option valide.')]
     private ?string $natureDossier;
 
-    #[ORM\Column(length: 255)]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?string $numcompte=null;
+    #[ORM\Column(length: 255, nullable: true)]
+    #[ORM\JoinColumn(nullable: true)]
+    private ?string $numcompte = null;
 
-  
+   
+
+   
+
+
+
 
     public function __construct()
     {
@@ -1169,6 +1174,8 @@ class Dossier
 
         return $this;
     }
+
+  
 
 
 }

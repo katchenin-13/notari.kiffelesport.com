@@ -114,6 +114,8 @@ class DossierController extends BaseController
 
         $clair = $request->query->get('clair');
         $permission = $this->menu->getPermissionIfDifferentNull($this->security->getUser()->getGroupe()->getId(), self::INDEX_ROOT_NAME);
+       
+
         $builder = $this->createFormBuilder(null, [
             'method' => 'GET',
             'action' => $this->generateUrl('app_actes_dossier_index', ['etat' => $etat, 'clair' => $clair])
@@ -346,7 +348,8 @@ class DossierController extends BaseController
         DossierRepository $repository,
         TypeRepository $typeRepository
     ): Response {
-
+        // dd($this->security->getUser()->getGroupe()->getCode());
+        $codeUser = $this->security->getUser()->getGroupe()->getCode();
         $dossier = new Dossier();
         $clientParties = new Identification();
         $dossier->addIdentification($clientParties);
@@ -468,6 +471,7 @@ class DossierController extends BaseController
             'dossier' => $dossier,
             'form' => $form,
             'montant' => $dossier->getMontantTotal(),
+            'codeUser' => $codeUser,
         ]);
     }
 
@@ -491,7 +495,7 @@ class DossierController extends BaseController
         DossierRepository $repository,
         TypeRepository $typeRepository
     ): Response {
-
+        $codeUser = $this->security->getUser()->getGroupe()->getCode();
         $form = $this->createForm(DossierType::class, $dossier, [
             'method' => 'POST',
             'action' => $this->generateUrl('app_actes_dossier_edit', [
@@ -616,6 +620,7 @@ class DossierController extends BaseController
         return $this->renderForm('actes/dossier/edit.html.twig', [
             'dossier' => $dossier,
             'form' => $form,
+            'codeUser' => $codeUser,
         ]);
     }
 
