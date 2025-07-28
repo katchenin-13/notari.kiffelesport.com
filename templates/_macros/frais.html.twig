@@ -120,7 +120,10 @@
          <div class="col-md-12">
         {{ form_row(colonne.description) }}
         </div>
-    </div>
+ <div class="col-md-12 mt-3 " style="font-weight: bold;font-size: 20px;color: red">
+        {{ form_row(colonne.active) }}
+    </div> 
+     </div>
 {% endmacro %}
 
 {% macro prototype_commentaire(form) %}

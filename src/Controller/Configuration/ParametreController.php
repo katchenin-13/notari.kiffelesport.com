@@ -48,7 +48,7 @@ class ParametreController extends BaseController
                 'icon' => 'bi bi-truck',
                 'href' => $this->generateUrl('app_config_parametre_ls', ['module' => 'rh'])
             ],*/
-            
+
             // [
             //     'label' => 'Gestion utilisateur',
             //     'icon' => 'bi bi-users',
@@ -108,17 +108,17 @@ class ParametreController extends BaseController
                     'href' => $this->generateUrl('app_parametre_fonction_index')
                 ],
                 [
-                    'label' => 'Liste des emplyés',
+                    'label' => 'Liste des employés',
                     'id' => 'param_employe',
                     'href' => $this->generateUrl('app_utilisateur_employe_index')
                 ],
-          
+
                 [
                     'label' => 'Permissions',
                     'id' => 'param_permission',
                     'href' => $this->generateUrl('app_utilisateur_permition_index')
                 ],
-                 [
+                [
                     'label' => 'Compte utilisateurs ',
                     'id' => 'param_utilisateur',
                     'href' => $this->generateUrl('app_utilisateur_utilisateur_index')
@@ -164,7 +164,7 @@ class ParametreController extends BaseController
                 // ],
                 //new  menu
                 [
-                    
+
                     'label' => 'Type de documents',
                     'id' => 'param_document',
                     'href' => $this->generateUrl('app_parametre_typedocument_index')
@@ -173,8 +173,8 @@ class ParametreController extends BaseController
                     'label' => 'Type de clients',
                     'id' => 'param_client',
                     'href' => $this->generateUrl('app_parametre_type_client_index')
-                ],  
-               
+                ],
+
                 [
                     'label' => 'Type de dossiers ',
                     'id' => 'param_acts',
@@ -197,7 +197,7 @@ class ParametreController extends BaseController
                     'id' => 'param_depen',
                     'href' => $this->generateUrl('app_parametre_typedepense_index')
                 ],
-                
+
                 //encien menu
                 // [
                 //     'label' => 'Icons',

@@ -35,7 +35,9 @@
                             {% if form.next is defined %}
                             {{ form_widget(form.next) }}
                             {% endif %}
-                            <a title="Générer le document" href="{{ path('app_reunion_print_cr',{'id':dossier.id }) }}"
+                            <a title="Générer le document" href="{{ path('fichier_index',{'id':dossier.id }) }}"
+                            {# <a title="Générer le document" class="btn btn-dark btn-sm" target="_blank" href="{{ asset('uploads/media_entreprise/' ~ dossier.children.path.vars.data) }} " download> <i class="bi bi-upload"></i> #}
+
                                 class="btn btn-secondary  test" target="_blank">Générer le document</a>
 
                         </div>

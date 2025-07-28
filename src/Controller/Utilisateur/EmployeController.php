@@ -40,7 +40,7 @@ class EmployeController extends BaseController
 
         $table = $dataTableFactory->create()
             ->add('matricule', TextColumn::class, ['label' => 'Matricule'])
-            ->add('entreprise', TextColumn::class, ['field' => 'en.denomination', 'label' => 'Entreprise'])
+            // ->add('entreprise', TextColumn::class, ['field' => 'en.denomination', 'label' => 'Entreprise'])
             ->add('fonction', TextColumn::class, ['field' => 'fonction.libelle', 'label' => 'Fonction'])
             ->add('nom', TextColumn::class, ['label' => 'Nom'])
             ->add('prenom', TextColumn::class, ['label' => 'Prénoms'])
@@ -50,10 +50,10 @@ class EmployeController extends BaseController
             ->createAdapter(ORMAdapter::class, [
                 'entity' => Employe::class,
                 'query' => function (QueryBuilder $qb) {
-                    $qb->select('en, e,fonction')
+                    $qb->select('e,fonction')
                         ->from(Employe::class, 'e')
                         ->leftjoin('e.fonction', 'fonction')
-                        ->leftjoin('e.entreprise', 'en')
+                        // ->leftjoin('e.entreprise', 'en')
                         ->orderBy('e.id ', 'DESC');
 
                     if ($this->groupe != "SADM") {
@@ -131,7 +131,11 @@ class EmployeController extends BaseController
 
             if ($hasActions) {
                 $table->add('id', TextColumn::class, [
-                    'label' => 'Actions', 'orderable' => false, 'globalSearchable' => false, 'className' => 'grid_row_actions', 'render' => function ($value, Employe $context) use ($renders) {
+                    'label' => 'Actions',
+                    'orderable' => false,
+                    'globalSearchable' => false,
+                    'className' => 'grid_row_actions',
+                    'render' => function ($value, Employe $context) use ($renders) {
                         $options = [
                             'default_class' => 'btn btn-xs btn-clean btn-icon mr-2 ',
                             'target' => '#exampleModalSizeLg2',
@@ -139,14 +143,26 @@ class EmployeController extends BaseController
                             'actions' => [
                                 'edit' => [
                                     'target' => '#exampleModalSizeSm2',
-                                    'url' => $this->generateUrl('app_utilisateur_employe_edit', ['id' => $value]), 'ajax' => true, 'icon' => '%icon% bi bi-pen', 'attrs' => ['class' => 'btn-default'], 'render' => $renders['edit']
+                                    'url' => $this->generateUrl('app_utilisateur_employe_edit', ['id' => $value]),
+                                    'ajax' => true,
+                                    'icon' => '%icon% bi bi-pen',
+                                    'attrs' => ['class' => 'btn-default'],
+                                    'render' => $renders['edit']
                                 ],
                                 'show' => [
-                                    'url' => $this->generateUrl('app_utilisateur_employe_show', ['id' => $value]), 'ajax' => true, 'icon' => '%icon% bi bi-eye', 'attrs' => ['class' => 'btn-primary'], 'render' => $renders['show']
+                                    'url' => $this->generateUrl('app_utilisateur_employe_show', ['id' => $value]),
+                                    'ajax' => true,
+                                    'icon' => '%icon% bi bi-eye',
+                                    'attrs' => ['class' => 'btn-primary'],
+                                    'render' => $renders['show']
                                 ],
                                 'delete' => [
                                     'target' => '#exampleModalSizeNormal',
-                                    'url' => $this->generateUrl('app_utilisateur_employe_delete', ['id' => $value]), 'ajax' => true, 'icon' => '%icon% bi bi-trash', 'attrs' => ['class' => 'btn-danger'],  'render' => $renders['delete']
+                                    'url' => $this->generateUrl('app_utilisateur_employe_delete', ['id' => $value]),
+                                    'ajax' => true,
+                                    'icon' => '%icon% bi bi-trash',
+                                    'attrs' => ['class' => 'btn-danger'],
+                                    'render' => $renders['delete']
                                 ]
                             ]
 
