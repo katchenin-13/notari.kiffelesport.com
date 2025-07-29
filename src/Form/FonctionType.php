@@ -15,31 +15,30 @@ class FonctionType extends AbstractType
 
     private $groupe;
     private $entreprise;
-    public function __construct(Security $security){
+    public function __construct(Security $security)
+    {
         $this->groupe = $security->getUser()->getGroupe()->getCode();
         $this->entreprise = $security->getUser()->getEmploye()->getEntreprise();
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        if($this->groupe == "SADM") {
-            $builder->add('entreprise', EntityType::class, [
-                'class' => Entreprise::class,
-                'choice_label' => 'denomination',
-                'label' => 'Entreprise',
-                'attr' => ['class' => 'has-select2 form-select']
-            ])
+        if ($this->groupe == "SADM") {
+            $builder
+                ->add('entreprise', EntityType::class, [
+                    'class' => Entreprise::class,
+                    'choice_label' => 'denomination',
+                    'label' => 'Entreprise',
+                    'attr' => ['class' => 'has-select2 form-select']
+                ])
                 ->add('libelle', null, ['label' => 'Libellé'])
                 /*->add('code', null, ['label' => 'Code'])*/
             ;
-        }else{
+        } else {
             $builder
                 ->add('libelle', null, ['label' => 'Libellé'])
-                /*->add('code', null, ['label' => 'Code'])*/
-            ;
+                /*->add('code', null, ['label' => 'Code'])*/;
         }
-
-
     }
 
     public function configureOptions(OptionsResolver $resolver): void

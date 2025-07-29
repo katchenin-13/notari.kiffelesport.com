@@ -7,6 +7,7 @@
 node_modules/
 dist/
 
+
 # Compiled Java class files
 *.class
 
@@ -52,11 +53,13 @@ settings.json
 ###> symfony/framework-bundle ###
 /.env
 /.history
+/.htaccess
 /.env.local
 /.env.local.php
 /.env.*.local
 /config/secrets/prod/prod.decrypt.private.php
 /public/bundles/
+/public/.htaccess
 /public/uploads/
 /var/
 /vendor/

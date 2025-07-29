@@ -14,6 +14,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
+
 class IdentificationType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
@@ -29,7 +30,11 @@ class IdentificationType extends AbstractType
             ->add('clients', EntityType::class, [
                 'label' => false,
                 'class' => Client::class,
-                'choice_label' => 'nom',
+                'choice_label' => function($client){
+                    return $client->getNom() . ' ' . $client->getPrenom();
+
+                            
+                },
                 'attr' => ['class' => 'form-control has-select2 client']
             ])
             ->add('attribut', TextType::class, ['label' => 'Attribut', 'label' => false, 'required' => false])
