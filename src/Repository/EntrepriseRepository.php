@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Entity\Entreprise;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\ORM\QueryBuilder;
 
 /**
  * @extends ServiceEntityRepository<Entreprise>
@@ -38,6 +39,13 @@ class EntrepriseRepository extends ServiceEntityRepository
             $this->getEntityManager()->flush();
         }
     }
+
+//  public function withoutConfig(): QueryBuilder
+//     {
+//         return $this->createQueryBuilder('e')
+//             ->leftJoin('e.config', 'c')
+//             ->where('c.id IS NULL');
+//     } 
 
 //    /**
 //     * @return Entreprise[] Returns an array of Entreprise objects

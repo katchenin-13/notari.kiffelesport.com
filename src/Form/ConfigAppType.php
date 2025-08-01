@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\ConfigApp;
 use App\Entity\Entreprise;
+use Doctrine\ORM\EntityRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\ColorType;
@@ -16,12 +17,19 @@ class ConfigAppType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('entreprise', EntityType::class, [
-                'class' => Entreprise::class,
-                'choice_label' => 'denomination',
-                'label' => false,
-                'attr' => ['class' => 'has-select2 form-select']
-            ])
+          
+             ->add('entreprise', EntityType::class,
+                [
+                    'class' => Entreprise::class,
+                    'choice_label' => 'denomination',
+                    'attr' => ['class' => 'has-select2 form-select'],
+                    'query_builder' => function (EntityRepository $er) {
+                        return $er->createQueryBuilder('e')
+                                ->leftJoin('e.configApps', 'c')
+                                ->where('c.entreprise IS NULL');
+                    }
+                ]
+            )
 
             ->add(
                 'logo',
