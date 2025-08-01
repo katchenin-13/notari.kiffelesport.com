@@ -39,12 +39,12 @@ class ComptefourController extends BaseController
         $marche = $request->query->get('marche');
         $datedebut = $request->query->get('datedebut');
         $datefin = $request->query->get('datefin');
-        
+
         $builder = $this->createFormBuilder(null, [
             'method' => 'GET',
             'action' => $this->generateUrl('app_compte_fournisseur_index', ['marche' => $marche, 'datedebut' => $datedebut, 'datefin' => $datefin]),
         ])
-        
+
             ->add('marche', EntityType::class, [
                 'class' => Marche::class,
                 'choice_label' => function (Marche $marche) {
@@ -73,8 +73,7 @@ class ComptefourController extends BaseController
                 'required' => false,
                 'html5' => false,
                 'attr'    => ['autocomplete' => 'off', 'class' => 'form-control-sm datepicker no-auto'],
-            ])
-            ;
+            ]);
 
         $permission = $this->menu->getPermissionIfDifferentNull($this->security->getUser()->getGroupe()->getId(), self::INDEX_ROOT_NAME);
 
@@ -92,54 +91,54 @@ class ComptefourController extends BaseController
 
             ->createAdapter(ORMAdapter::class, [
                 'entity' => Comptefour::class,
-                'query' => function (QueryBuilder $qb) use ($marche, $datedebut,$datefin) {
+                'query' => function (QueryBuilder $qb) use ($marche, $datedebut, $datefin) {
                     $qb->select(['c', 'f', 'm'])
                         ->from(Comptefour::class, 'c')
                         ->join('c.fournisseurs', 'f')
                         ->join('c.marches', 'm')
                         ->orderBy('c.id ', 'DESC');
 
-                if ($marche || $datedebut || $datefin) {
-                   
-                    if ($marche) {
-                        $qb->andWhere('m.id = :marche')
-                            ->setParameter('marche', $marche);
-                    }
-                    if ($datedebut != null && $datefin == null) {
-                        try {
-                            $new_date_debut = (new \DateTime($datedebut))->format('Y-m-d');
+                    if ($marche || $datedebut || $datefin) {
 
-                            $qb->andWhere('c.datecreation = :dateDebut')
-                            ->setParameter('dateDebut', $new_date_debut);
-                        } catch (\Exception $e) {
-                            // Gérez l'erreur si la date n'est pas au bon format
+                        if ($marche) {
+                            $qb->andWhere('m.id = :marche')
+                                ->setParameter('marche', $marche);
+                        }
+                        if ($datedebut != null && $datefin == null) {
+                            try {
+                                $new_date_debut = (new \DateTime($datedebut))->format('Y-m-d');
+
+                                $qb->andWhere('c.datecreation = :dateDebut')
+                                    ->setParameter('dateDebut', $new_date_debut);
+                            } catch (\Exception $e) {
+                                // Gérez l'erreur si la date n'est pas au bon format
+                            }
+                        }
+
+                        if ($datefin != null && $datedebut == null) {
+                            try {
+                                $new_date_fin = (new \DateTime($datefin))->format('Y-m-d');
+
+                                $qb->andWhere('c.datecreation = :datefin')
+                                    ->setParameter('datefin', $new_date_fin);
+                            } catch (\Exception $e) {
+                                // Gérez l'erreur si la date n'est pas au bon format
+                            }
+                        }
+
+                        if ($datedebut != null && $datefin != null) {
+                            try {
+                                $new_date_debut = (new \DateTime($datedebut))->format('Y-m-d');
+                                $new_date_fin = (new \DateTime($datefin))->format('Y-m-d');
+
+                                $qb->andWhere('c.datecreation BETWEEN :datedebut AND :datefin')
+                                    ->setParameter('datedebut', $new_date_debut)
+                                    ->setParameter('datefin', $new_date_fin);
+                            } catch (\Exception $e) {
+                                // Gérez l'erreur si la date n'est pas au bon format
+                            }
                         }
                     }
-
-                    if ($datefin != null && $datedebut == null) {
-                        try {
-                            $new_date_fin = (new \DateTime($datefin))->format('Y-m-d');
-
-                            $qb->andWhere('c.datecreation = :datefin')
-                            ->setParameter('datefin', $new_date_fin);
-                        } catch (\Exception $e) {
-                            // Gérez l'erreur si la date n'est pas au bon format
-                        }
-                    }
-
-                    if ($datedebut != null && $datefin != null) {
-                        try {
-                            $new_date_debut = (new \DateTime($datedebut))->format('Y-m-d');
-                            $new_date_fin = (new \DateTime($datefin))->format('Y-m-d');
-
-                            $qb->andWhere('c.datecreation BETWEEN :datedebut AND :datefin')
-                            ->setParameter('datedebut', $new_date_debut)
-                            ->setParameter('datefin', $new_date_fin);
-                        } catch (\Exception $e) {
-                            // Gérez l'erreur si la date n'est pas au bon format
-                        }
-                    }
-                }
                 }
             ])
             ->setName('dt_app_compte_fournisseur_' . $marche);
@@ -176,6 +175,7 @@ class ComptefourController extends BaseController
                         return false;
                     }
                 }),
+
                 // 'show' => new ActionRender(function () use ($permission) {
                 //     if ($permission == 'R') {
                 //         return true;
@@ -191,6 +191,22 @@ class ComptefourController extends BaseController
                 //         return true;
                 //     }
                 // }),
+                // 'show' => new ActionRender(function () use ($permission) {
+                //     if ($permission == 'R') {
+                //         return true;
+                //     } elseif ($permission == 'RD') {
+                //         return true;
+                //     } elseif ($permission == 'RU') {
+                //         return true;
+                //     } elseif ($permission == 'CRUD') {
+                //         return true;
+                //     } elseif ($permission == 'CRU') {
+                //         return true;
+                //     } elseif ($permission == 'CR') {
+                //         return true;
+                //     }
+                // }),
+
 
             ];
 
@@ -476,14 +492,17 @@ class ComptefourController extends BaseController
     }
 
     #[Route('/imprime/all/{marche}/{datedebut}/{datefin}/point des versements', name: 'app_compte_imprime_marche_all', methods: ['GET', 'POST'])]
-    public function imprimeAllResult(Request $request, $marche, $datedebut, $datefin,ComptefourRepository $comptefourRepository,MarcheRepository $marcheRepository, LignepaiementmarcheRepository $compteFo,LignepaiementmarcheRepository $lignepaiementmarcheRepository){
+    public function imprimeAllResult(Request $request, $marche, $datedebut, $datefin, ComptefourRepository $comptefourRepository, MarcheRepository $marcheRepository, LignepaiementmarcheRepository $compteFo, LignepaiementmarcheRepository $lignepaiementmarcheRepository)
+    {
 
         return $this->renderPdf(
-            "compte/fournisseur/imprime.html.twig",[
-            'data' => $lignepaiementmarcheRepository->searchResult($marche, $datedebut, $datefin),
-            'datas' => $comptefourRepository->searchResultAll($marche),
+            "compte/fournisseur/imprime.html.twig",
+            [
+                'data' => $lignepaiementmarcheRepository->searchResult($marche, $datedebut, $datefin),
+                'datas' => $comptefourRepository->searchResultAll($marche),
 
-        ],[
+            ],
+            [
                 'orientation' => 'p',
                 'protected' => true,
                 'file_name' => "point_versments",
@@ -495,8 +514,9 @@ class ComptefourController extends BaseController
                     $this->getParameter('font_dir') . '/trebuchet',
                 ],
                 'watermarkImg' => '',
-                'entreprise' => '' 
-            ],true);
+                'entreprise' => ''
+            ],
+            true
+        );
     }
-
 }
