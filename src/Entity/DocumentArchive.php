@@ -13,9 +13,12 @@ class DocumentArchive
     #[ORM\Column(type: 'integer')]
     private $id;
 
-    #[ORM\ManyToOne(targetEntity: DocumentTypeActe::class)]
-    #[ORM\JoinColumn(nullable: false)]
-    private $document;
+    // #[ORM\ManyToOne(targetEntity: DocumentTypeActe::class)]
+    // #[ORM\JoinColumn(nullable: false)]
+    // private $document;
+    
+
+
 
     #[ORM\ManyToOne(cascade: ["persist"], fetch: "EAGER")]
     #[ORM\JoinColumn(nullable: true)]
@@ -24,6 +27,9 @@ class DocumentArchive
     #[ORM\ManyToOne(targetEntity: Archive::class, inversedBy: 'documents')]
     #[ORM\JoinColumn(nullable: false)]
     private $archive;
+
+    #[ORM\Column(length: 255)]
+    private ?string $document = null;
 
     public function getId(): ?int
     {

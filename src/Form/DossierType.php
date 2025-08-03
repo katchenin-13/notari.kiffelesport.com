@@ -99,7 +99,8 @@ class DossierType extends AbstractType
                     'format' => 'dd/MM/yyyy',
                     'empty_data' => date('d/m/Y')
                 ])
-                ->add('objet', null, ['label' => 'Objet'])
+                ->add('objet', TextareaType::class, ['label' => 'Objet'])
+
                 ->add('natureDossier', ChoiceType::class, [
                     'choices' => [
                         'Société' => 'societe',

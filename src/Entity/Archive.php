@@ -17,13 +17,13 @@ class Archive
     private $id;
 
 
-    #[ORM\ManyToOne(targetEntity: Client::class)]
-    #[ORM\JoinColumn(nullable: false)]
-    private $acheteur;
+    // #[ORM\ManyToOne(targetEntity: Client::class)]
+    // #[ORM\JoinColumn(nullable: false)]
+    // private $acheteur;
 
-    #[ORM\ManyToOne(targetEntity: Client::class)]
-    #[ORM\JoinColumn(nullable: false)]
-    private $vendeur;
+    // #[ORM\ManyToOne(targetEntity: Client::class)]
+    // #[ORM\JoinColumn(nullable: false)]
+    // private $vendeur;
 
     /**
      * @Gedmo\Timestampable(on="create")
@@ -76,29 +76,29 @@ class Archive
     }
 
 
-    public function getAcheteur(): ?Client
-    {
-        return $this->acheteur;
-    }
+    // public function getAcheteur(): ?Client
+    // {
+    //     return $this->acheteur;
+    // }
 
-    public function setAcheteur(?Client $acheteur): self
-    {
-        $this->acheteur = $acheteur;
+    // public function setAcheteur(?Client $acheteur): self
+    // {
+    //     $this->acheteur = $acheteur;
 
-        return $this;
-    }
+    //     return $this;
+    // }
 
-    public function getVendeur(): ?Client
-    {
-        return $this->vendeur;
-    }
+    // public function getVendeur(): ?Client
+    // {
+    //     return $this->vendeur;
+    // }
 
-    public function setVendeur(?Client $vendeur): self
-    {
-        $this->vendeur = $vendeur;
+    // public function setVendeur(?Client $vendeur): self
+    // {
+    //     $this->vendeur = $vendeur;
 
-        return $this;
-    }
+    //     return $this;
+    // }
 
     public function getDateCreation(): ?\DateTimeInterface
     {

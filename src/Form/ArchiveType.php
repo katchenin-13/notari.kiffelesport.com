@@ -20,50 +20,50 @@ class ArchiveType extends AbstractType
     {
         $builder
 
-            ->add('acheteur', EntityType::class, [
-                'required' => false,
-                'class' => Client::class,
-                'query_builder' => function (EntityRepository $er) {
-                    return $er->createQueryBuilder('u')
-                        ->where('u.active = :val')
-                        ->setParameter('val', 1)
-                        ->orderBy('u.id', 'DESC');
-                },
-                'label' => false,
-                'placeholder' => "Veuillez selectionner un acheteur",
-                'choice_label' => function ($client) {
-                    if ($client->getRaisonSocial() == "") {
-                        return $client->getNom() . ' ' . $client->getPrenom();
-                    } else {
+            // ->add('acheteur', EntityType::class, [
+            //     'required' => false,
+            //     'class' => Client::class,
+            //     'query_builder' => function (EntityRepository $er) {
+            //         return $er->createQueryBuilder('u')
+            //             ->where('u.active = :val')
+            //             ->setParameter('val', 1)
+            //             ->orderBy('u.id', 'DESC');
+            //     },
+            //     'label' => false,
+            //     'placeholder' => "Veuillez selectionner un acheteur",
+            //     'choice_label' => function ($client) {
+            //         if ($client->getRaisonSocial() == "") {
+            //             return $client->getNom() . ' ' . $client->getPrenom();
+            //         } else {
 
-                        return $client->getRaisonSocial();
-                    }
-                },
-                'attr' => ['class' => 'form-control has-select2']
+            //             return $client->getRaisonSocial();
+            //         }
+            //     },
+            //     'attr' => ['class' => 'form-control has-select2']
 
-            ])
-            ->add('vendeur', EntityType::class, [
-                'required' => false,
-                'class' => Client::class,
-                'query_builder' => function (EntityRepository $er) {
-                    return $er->createQueryBuilder('u')
-                        ->where('u.active = :val')
-                        ->setParameter('val', 1)
-                        ->orderBy('u.id', 'DESC');
-                },
-                'label' => false,
-                'placeholder' => 'Veuillez selectionner un vendeur',
-                'choice_label' => function ($client) {
-                    if ($client->getRaisonSocial() == "") {
-                        return $client->getNom() . ' ' . $client->getPrenom();
-                    } else {
+            // ])
+            // ->add('vendeur', EntityType::class, [
+            //     'required' => false,
+            //     'class' => Client::class,
+            //     'query_builder' => function (EntityRepository $er) {
+            //         return $er->createQueryBuilder('u')
+            //             ->where('u.active = :val')
+            //             ->setParameter('val', 1)
+            //             ->orderBy('u.id', 'DESC');
+            //     },
+            //     'label' => false,
+            //     'placeholder' => 'Veuillez selectionner un vendeur',
+            //     'choice_label' => function ($client) {
+            //         if ($client->getRaisonSocial() == "") {
+            //             return $client->getNom() . ' ' . $client->getPrenom();
+            //         } else {
 
-                        return $client->getRaisonSocial();
-                    }
-                },
-                'attr' => ['class' => 'form-control has-select2']
+            //             return $client->getRaisonSocial();
+            //         }
+            //     },
+            //     'attr' => ['class' => 'form-control has-select2']
 
-            ])
+            // ])
             ->add('numeroClassification', null, ['label' => 'Numéro de classification', 'empty_data' =>  ''])
             ->add('numeroOuverture', null, ['label' => 'Numéro d\'ouverture', 'empty_data' =>  ''])
         ->add('typeActe', EntityType::class, [

@@ -165,6 +165,12 @@ class ParametreController extends BaseController
                 //new  menu
                 [
 
+                    'label' => 'Identification du cabinet',
+                    'id' => 'param_cabinet',
+                    'href' => $this->generateUrl('app_parametre_cabinet_index')
+                ],
+                [
+
                     'label' => 'Type de documents',
                     'id' => 'param_document',
                     'href' => $this->generateUrl('app_parametre_typedocument_index')

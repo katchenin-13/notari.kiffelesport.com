@@ -104,7 +104,7 @@ class DossierController extends BaseController
         return $response;
     }
 
-    
+
 
 
 
@@ -121,7 +121,7 @@ class DossierController extends BaseController
             'method' => 'GET',
             'action' => $this->generateUrl('app_actes_dossier_index', ['etat' => $etat, 'clair' => $clair])
         ])
-          ->add('clair', EntityType::class, [
+            ->add('clair', EntityType::class, [
                 'class' => Employe::class,
                 'query_builder' => function (EntityRepository $er) {
                     return $er->createQueryBuilder('u')
@@ -155,7 +155,7 @@ class DossierController extends BaseController
             ->createAdapter(ORMAdapter::class, [
                 'entity' => Dossier::class,
                 'query' => function (QueryBuilder $qb) use ($etat, $clair) {
-                    $qb->select(['p','t'])
+                    $qb->select(['p', 't'])
                         ->from(Dossier::class, 'p')
                         ->join('p.entreprise', 'en')
                         ->leftjoin('p.employe', 'emp')
@@ -168,7 +168,7 @@ class DossierController extends BaseController
                         $qb->andWhere("JSON_CONTAINS(p.etat, '1', '$.archive') = 1");
                     } elseif ($etat == 'cree') {
                         $qb->andWhere("JSON_CONTAINS(p.etat, '1', '$.cree') = 1")
-                        ->orWhere("JSON_CONTAINS(p.etat, '1', '$.en_cours') = 1");
+                            ->orWhere("JSON_CONTAINS(p.etat, '1', '$.en_cours') = 1");
                     }
 
                     if ($clair) {
@@ -179,11 +179,11 @@ class DossierController extends BaseController
 
                     if ($this->groupe != "SADM") {
                         $qb->andWhere('en = :entreprise')
-                        ->setParameter('entreprise', $this->entreprise);
+                            ->setParameter('entreprise', $this->entreprise);
                     }
                 }
             ])
-            
+
             ->setName('dt_app_actes_dossier_' . $etat . '_' . $clair);
 
         $form = $builder->getForm();
@@ -409,17 +409,16 @@ class DossierController extends BaseController
                     //creation de compte pour chaque partie
                     foreach ($parties as $key => $value) {
                         //verification du montant des parties
-                        
-                            //si ok alors on creer un  compte pour le client de pour ce dossier(compte pour la partie)
-                            $compte = new Compte();
-                            $compte->setClient($value->getClients())
-                                ->setMontant($value->getMontant())
-                                ->setSolde($value->getMontant())
-                                //  ->setDossier($value->getDossier())
-                                ->setActive(1);
-                            $em->persist($compte);
-                            $em->flush();
-                        
+
+                        //si ok alors on creer un  compte pour le client de pour ce dossier(compte pour la partie)
+                        $compte = new Compte();
+                        $compte->setClient($value->getClients())
+                            ->setMontant($value->getMontant())
+                            ->setSolde($value->getMontant())
+                            //  ->setDossier($value->getDossier())
+                            ->setActive(1);
+                        $em->persist($compte);
+                        $em->flush();
                     }
 
 
@@ -514,7 +513,7 @@ class DossierController extends BaseController
         $form->handleRequest($request);
 
         if ($form->isSubmitted()) {
-         //recuperation du montant total des parties de ce dossiers
+            //recuperation du montant total des parties de ce dossiers
             $sommeMontantParties = 0;
             $parties = $form->get('identifications')->getData();
             foreach ($parties as $key => $value) {
@@ -539,7 +538,7 @@ class DossierController extends BaseController
                 if ($formatsommeMontantParties != $formatmontant) {
                     $statut = 0;
                     $message       = sprintf('Le montant total doit être égal à celui des honoraires');
-              } else {
+                } else {
                     $currentDate = new \DateTimeImmutable();
                     $currentDate->setTime(0, 0);
                     $acteVente = $dossier->getTypeActe();
@@ -599,8 +598,7 @@ class DossierController extends BaseController
                     $message = 'Opération effectuée avec succès';
                     $statut = 1;
                     $this->addFlash('success', $message);
-              }
-              
+                }
             } else {
                 $message = $formError->all($form);
                 $statut = 0;
@@ -2119,17 +2117,18 @@ class DossierController extends BaseController
      * @throws MpdfException
      */
     #[Route('/imprime/all/{etat}/{clair}/point des versements', name: 'app__imprime_dossier_all', methods: ['GET', 'POST'])]
-    public function imprimerAll(Request $request,
+    public function imprimerAll(
+        Request $request,
         $etat = null,
         $clair = null,
-       
-        DossierRepository $dossierRepository): Response
-    {
+
+        DossierRepository $dossierRepository
+    ): Response {
 
 
         return $this->renderPdf("actes/dossier/imprime.html.twig", [
             'data' =>  $dossierRepository->getListeDossierNative($clair),
-             'nomEmploye' => $dossierRepository->findEmployeDossier($clair),
+            'nomEmploye' => $dossierRepository->findEmployeDossier($clair),
         ], [
             'orientation' => 'p',
             'protected' => true,
@@ -2144,11 +2143,5 @@ class DossierController extends BaseController
             'watermarkImg' => '',
             'entreprise' => ''
         ], true);
-
     }
-
-  
-
-
-   
 }
