@@ -229,12 +229,13 @@ index + 1
 init_select2($prototype.find('select'), null, '#exampleModalSizeSm2');
 
 // recuperation du code user
-let codeUser = "{{ codeUser|escape('js') }}";
-console.log("Code User:", codeUser);
 
-if (codeUser !== 'COMPTA') {
-$prototype.find("input[id^='dossier_identifications_'][id$='_montant']").closest("td").Show();
-}
+// let codeUser = "{{ codeUser|escape('js') }}";
+// console.log("Code User:", codeUser);
+
+// if (codeUser !== 'COMPTA') {
+// $prototype.find("input[id^='dossier_identifications_'][id$='_montant']").closest("td").Show();
+// }
 
 // On ajoute au prototype un lien pour pouvoir supprimer la prestation
 addDeleteLink($prototype, name);
