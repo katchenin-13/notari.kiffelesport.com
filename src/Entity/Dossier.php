@@ -169,6 +169,9 @@ class Dossier
     #[ORM\JoinColumn(nullable: true)]
     private ?string $numcompte = null;
 
+    #[ORM\Column(length: 255)]
+    private ?string $delai_execution = null;
+
    
 
    
@@ -1171,6 +1174,18 @@ class Dossier
     public function setNumcompte(string $numcompte): static
     {
         $this->numcompte = $numcompte;
+
+        return $this;
+    }
+
+    public function getDelaiExecution(): ?string
+    {
+        return $this->delai_execution;
+    }
+
+    public function setDelaiExecution(string $delai_execution): static
+    {
+        $this->delai_execution = $delai_execution;
 
         return $this;
     }

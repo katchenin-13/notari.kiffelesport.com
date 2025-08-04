@@ -37,8 +37,8 @@ class DossierType extends AbstractType
                 ->add('numeroRepertoire', null, ['label' => 'Numéro répertoire'])
                 ->add('description', TextareaType::class, ['label' => 'Description'])
                 ->add('montantTotal', TextType::class, ['label' => 'Montant des honoraires', 'attr' => ['class' => 'input-money input-mnt'], 'empty_data' => '0',])
-                ->add('numcompte', TextType::class, ['label' => 'N° de compte',
-                'required' => false,])
+                ->add('numcompte', TextType::class, ['label' => 'N° de compte','required' => false,])
+                ->add('delai_execution', TextType::class, ['label' => 'Délai d\' exécution','required' => false,])
                 ->add('typeActe', EntityType::class, [
                     'required' => true,
                     'class' => Type::class,
