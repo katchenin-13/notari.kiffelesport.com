@@ -46,14 +46,7 @@ class PieceType extends AbstractType
             'attr' => ['class' => 'form-control has-select2']
         ])
         ->add('path', FichierType::class, ['label' => false,  'doc_options' => $options['doc_options'], 'required' => $options['doc_required'] ?? true])
-       /*  ->add(
-            'montant',
-            TextType::class,
-            [
-                'label' => false,
-                'attr' => ['class' => 'input-money input-mnt'], 'empty_data' => '0',
-            ]
-        ) */
+       
         ->add('attribut', TextType::class, ['label' => 'Attribut', 'label' => false, 'required' => false]);
     }
 
