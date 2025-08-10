@@ -692,10 +692,10 @@ class DossierController extends BaseController
         $typeActe = $dossier->getTypeActe();
         //$documents =  $documentTypeActeRepository->getDocumentsEtape($typeActe, 'piece');
 
-        /* dd($dossier->getPieces()); */
+        // dd($dossier->getPieces());
         $identification = $dossier->getIdentifications()->first();
 
-
+        //dd($identification);
 
         $prefixe = $typeActe->getCode();
         $currentRoute = $request->attributes->get('_route');
@@ -704,7 +704,7 @@ class DossierController extends BaseController
 
         $oldPieces = $dossier->getPieces();
 
-        //dd($dossier->getPieces());
+        // dd($oldPieces);
 
 
         if (!$dossier->getCommentairePieces()->count()) {
@@ -728,6 +728,9 @@ class DossierController extends BaseController
                     $piece->setAttribut($value->getAttribut());
                     $piece->setClient($value->getClients());
                     $piece->setPath($doc->getFichier());
+                    $dossier->addPiece($piece);
+                    $piece->setType($doc->getDocumentTypeClient()); // ou une autre méthode pour récupérer le type
+
                     $dossier->addPiece($piece);
                 }
             }

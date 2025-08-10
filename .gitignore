@@ -63,6 +63,7 @@ settings.json
 /public/uploads/
 /var/
 /vendor/
+/templates/_macros/piece.html copy.twig
 
 ###< symfony/framework-bundle ###
 
