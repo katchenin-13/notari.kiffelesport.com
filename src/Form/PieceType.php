@@ -55,7 +55,6 @@ class PieceType extends AbstractType
             ]
         ) */
         ->add('attribut', TextType::class, ['label' => 'Attribut', 'label' => false, 'required' => false]);
-        //$builder->get('montant')->addModelTransformer(new ThousandNumberTransformer());
     }
 
     public function configureOptions(OptionsResolver $resolver): void
