@@ -50,34 +50,25 @@ class CompteController extends BaseController
             ->add('dossier', EntityType::class, [
                 'class' => Client::class,
                 'choice_label' => function (Client $dossier) {
-                //   return 'Dossier N°_' . $dossier->getNumeroOuverture();
-                $typeClient = $dossier->getTypeClient(); 
-                if ($typeClient && $typeClient->getCode() === 'P') { // Si le type est "P"
-                    return $dossier->getNom() . ' ' . $dossier->getPrenom();
-                } elseif ($typeClient && $typeClient->getCode() === 'E') { // Si le type est "E"
-                    return $dossier->getNom();
-                }
-                return 'N/A'; 
+                    //   return 'Dossier N°_' . $dossier->getNumeroOuverture();
+                    $typeClient = $dossier->getTypeClient();
+                    if ($typeClient && $typeClient->getCode() === 'P') { // Si le type est "P"
+                        return $dossier->getNom() . ' ' . $dossier->getPrenom();
+                    } elseif ($typeClient && $typeClient->getCode() === 'E') { // Si le type est "E"
+                        return $dossier->getNom();
+                    }
+                    return 'N/A';
                 },
-            'choice_attr' => function (Client $user) {
-                return ['data-type' => $user->getId()];
-            },
+                'choice_attr' => function (Client $user) {
+                    return ['data-type' => $user->getId()];
+                },
                 'label' => 'Client conserné',
                 'placeholder' => '---',
                 'required' => false,
                 'attr' => ['class' => 'form-control-sm has-select2']
             ])
 
-            // ->add('dossier',EntityType::class,[
-            //     'class' => Dossier::class,
-            //     'choice_label'=> function(Dossier $dossier){
-            //         return 'Dossier N°_' . $dossier->getNumeroOuverture();
-            //     },
-            //     'label'   => 'Dossier',
-            //     'placeholder' => '---',
-            //     'required' => false,
-            //     'attr' => ['class' => 'form-control-sm has-select2']
-            // ])
+
 
             ->add('datedebut', DateType::class, [
                 'widget' => 'single_text',
@@ -112,63 +103,62 @@ class CompteController extends BaseController
             ->createAdapter(ORMAdapter::class, [
                 'entity' => Compte::class,
                 'query' => function (QueryBuilder $qb) use ($dossier, $datedebut, $datefin) {
-                    $qb->select(['c','cl',])
+                    $qb->select(['c', 'cl',])
                         ->from(Compte::class, 'c')
                         ->join('c.client', 'cl')
                         // ->join('cl.identifications','i')
                         // ->join('i.dossier','d' )
                         ->orderBy('c.id ', 'DESC');
-               
-               
+
+
                     if ($dossier || $datedebut || $datefin) {
-                    if ($dossier) {
-                        $qb->andWhere('cl.id = :dossier')
-                            ->setParameter('dossier', $dossier);
-                    }
+                        if ($dossier) {
+                            $qb->andWhere('cl.id = :dossier')
+                                ->setParameter('dossier', $dossier);
+                        }
 
-                    // if ($dossier) {
-                    //     $qb ->innerJoin('cl.identification','i')
-                    //     ->innerJoin('i.dossier','d' )
-                    //     ->andWhere('d = :dossier')
-                    //         ->setParameter('dossier', $dossier);
-                    // }
+                        // if ($dossier) {
+                        //     $qb ->innerJoin('cl.identification','i')
+                        //     ->innerJoin('i.dossier','d' )
+                        //     ->andWhere('d = :dossier')
+                        //         ->setParameter('dossier', $dossier);
+                        // }
 
-                    if ($datedebut != null && $datefin == null) {
-                        try {
-                            $new_date_debut = (new \DateTime($datedebut))->format('Y-m-d');
+                        if ($datedebut != null && $datefin == null) {
+                            try {
+                                $new_date_debut = (new \DateTime($datedebut))->format('Y-m-d');
 
-                            $qb->andWhere('c.datecreation = :dateDebut')
-                                ->setParameter('dateDebut', $new_date_debut);
-                        } catch (\Exception $e) {
-                            // Gérez l'erreur si la date n'est pas au bon format
+                                $qb->andWhere('c.datecreation = :dateDebut')
+                                    ->setParameter('dateDebut', $new_date_debut);
+                            } catch (\Exception $e) {
+                                // Gérez l'erreur si la date n'est pas au bon format
+                            }
+                        }
+
+                        if ($datefin != null && $datedebut == null) {
+                            try {
+                                $new_date_fin = (new \DateTime($datefin))->format('Y-m-d');
+
+                                $qb->andWhere('c.datecreation = :datefin')
+                                    ->setParameter('datefin', $new_date_fin);
+                            } catch (\Exception $e) {
+                                // Gérez l'erreur si la date n'est pas au bon format
+                            }
+                        }
+
+                        if ($datedebut != null && $datefin != null) {
+                            try {
+                                $new_date_debut = (new \DateTime($datedebut))->format('Y-m-d');
+                                $new_date_fin = (new \DateTime($datefin))->format('Y-m-d');
+
+                                $qb->andWhere('c.datecreation BETWEEN :datedebut AND :datefin')
+                                    ->setParameter('datedebut', $new_date_debut)
+                                    ->setParameter('datefin', $new_date_fin);
+                            } catch (\Exception $e) {
+                                // Gérez l'erreur si la date n'est pas au bon format
+                            }
                         }
                     }
-
-                    if ($datefin != null && $datedebut == null) {
-                        try {
-                            $new_date_fin = (new \DateTime($datefin))->format('Y-m-d');
-
-                            $qb->andWhere('c.datecreation = :datefin')
-                                ->setParameter('datefin', $new_date_fin);
-                        } catch (\Exception $e) {
-                            // Gérez l'erreur si la date n'est pas au bon format
-                        }
-                    }
-
-                    if ($datedebut != null && $datefin != null) {
-                        try {
-                            $new_date_debut = (new \DateTime($datedebut))->format('Y-m-d');
-                            $new_date_fin = (new \DateTime($datefin))->format('Y-m-d');
-
-                            $qb->andWhere('c.datecreation BETWEEN :datedebut AND :datefin')
-                                ->setParameter('datedebut', $new_date_debut)
-                                ->setParameter('datefin', $new_date_fin);
-                        } catch (\Exception $e) {
-                            // Gérez l'erreur si la date n'est pas au bon format
-                        }
-                    }
-                }
-
                 }
             ])
             ->setName('dt_app_compte_frais_' . $dossier);
@@ -530,5 +520,4 @@ class CompteController extends BaseController
         //return $this->renderForm("stock/sortie/imprime.html.twig");
 
     }
-
 }
