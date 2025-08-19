@@ -17,8 +17,9 @@ class CommentairePaiement
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $description = null;
 
-    #[ORM\ManyToOne(inversedBy: 'commentairePaiements')]
-    private ?Dossier $dossier = null;
+#[ORM\ManyToOne(targetEntity: Dossier::class, inversedBy: "commentairesPaiement")]
+#[ORM\JoinColumn(name: "dossier_id", referencedColumnName: "id", nullable: true, onDelete: "SET NULL")]
+private ?Dossier $dossier = null;
     
     #[ORM\Column(type: 'boolean')]
     private $active;

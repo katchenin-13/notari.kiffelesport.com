@@ -13,7 +13,8 @@ class EnregistrementDocument
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\ManyToOne(inversedBy: 'enregistrementDocuments')]
+    #[ORM\ManyToOne(targetEntity: Dossier::class, inversedBy: 'enregistrementDocuments')]
+    #[ORM\JoinColumn(name: "dossier_id", referencedColumnName: "id", nullable: true, onDelete: "SET NULL")]
     private ?Dossier $dossier = null;
 
     

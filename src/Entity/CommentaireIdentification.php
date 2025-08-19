@@ -17,7 +17,8 @@ class CommentaireIdentification
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $description = null;
 
-    #[ORM\ManyToOne(inversedBy: 'CommentaireIdentifications')]
+    #[ORM\ManyToOne(targetEntity: Dossier::class, inversedBy: 'CommentaireIdentifications')]
+    #[ORM\JoinColumn(name: "dossier_id", referencedColumnName: "id", nullable: true, onDelete: "SET NULL")]
     private ?Dossier $dossier = null;
 
 

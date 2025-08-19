@@ -28,7 +28,7 @@ class Enregistrement
 
 
     #[ORM\ManyToOne(targetEntity: Dossier::class, inversedBy: 'enregistrements')]
-    #[ORM\JoinColumn(onDelete: "CASCADE")]
+    #[ORM\JoinColumn(name: "dossier_id", referencedColumnName: "id", nullable: true, onDelete: "SET NULL")]
     private $dossier;
     
 
