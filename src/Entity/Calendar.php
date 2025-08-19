@@ -41,6 +41,8 @@ class Calendar
     private $active;
 
     #[ORM\ManyToOne(targetEntity: Dossier::class, inversedBy: 'calendars')]
+    #[ORM\JoinColumn(name: "dossier_id", referencedColumnName: "id", nullable: true, onDelete: "SET NULL")]
+
     private $dossier;
 
  
