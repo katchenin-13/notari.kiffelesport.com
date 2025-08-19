@@ -40,10 +40,9 @@ class Calendar
     #[ORM\Column(type: 'string', length: 255)]
     private $active;
 
-    #[ORM\ManyToOne(targetEntity: Dossier::class, inversedBy: 'calendars')]
-    #[ORM\JoinColumn(name: "dossier_id", referencedColumnName: "id", nullable: true, onDelete: "SET NULL")]
-
-    private $dossier;
+  #[ORM\ManyToOne(targetEntity: Dossier::class, inversedBy: "calendars")]
+#[ORM\JoinColumn(onDelete: "SET NULL", nullable: true)]
+private ?Dossier $dossier = null;
 
  
     #[ORM\ManyToOne(inversedBy: 'calendars')]
