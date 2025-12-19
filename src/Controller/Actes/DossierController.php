@@ -728,6 +728,9 @@ class DossierController extends BaseController
                     $piece->setAttribut($value->getAttribut());
                     $piece->setClient($value->getClients());
                     $piece->setPath($doc->getFichier());
+
+                    //recupération du type de document
+                    $piece->setType($doc->getDocumentTypeClient()); // ou une autre méthode pour récupérer le type
                     $dossier->addPiece($piece);
                     //recupération du type de document
                     $piece->setType($doc->getDocumentTypeClient()); // ou une autre méthode pour récupérer le type
