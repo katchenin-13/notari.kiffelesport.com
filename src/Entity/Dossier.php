@@ -50,6 +50,7 @@ class Dossier
     private $objet;
 
     #[ORM\ManyToOne(targetEntity: Type::class, inversedBy: 'dossiers')]
+    
     // #[ORM\JoinColumn(nullable: false)]
     private $typeActe;
 

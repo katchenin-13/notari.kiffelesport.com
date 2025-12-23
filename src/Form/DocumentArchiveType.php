@@ -14,14 +14,13 @@ class DocumentArchiveType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            // ->add('document', EntityType::class, [
-            //     'required' => false,
-            //     'label' => false,
-            //     'class' => DocumentTypeActe::class,
-            //     'choice_label' => 'libelle',
-            //     'attr' => ['class' => 'form-control has-select2']
-            // ])
-          ->add('document', null, ['label' => 'Numéro de classification', 'empty_data' =>  ''])
+            ->add('document', EntityType::class, [
+                'required' => false,
+                'label' => false,
+                'class' => DocumentTypeActe::class,
+                'choice_label' => 'libelle',
+                'attr' => ['class' => 'form-control has-select2']
+            ])
 
             ->add('fichier', FichierType::class, ['label' => 'Fichier', 'label' => false, 'doc_options' => $options['doc_options'], 'required' => $options['doc_required'] ?? true]);
     }

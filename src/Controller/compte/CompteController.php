@@ -22,6 +22,7 @@ use App\Controller\FileTrait;
 use App\Entity\Client;
 use App\Entity\Compte;
 use App\Entity\Dossier;
+use App\Entity\Identification;
 use App\Form\CalendarType;
 use App\Form\CompteType;
 use App\Repository\CompteRepository;
@@ -92,24 +93,38 @@ class CompteController extends BaseController
 
         $table = $dataTableFactory->create()
             ->add('client', TextColumn::class, ['label' => 'Client', 'field' => 'cl.nom'])
-            // ->add('dossier', TextColumn::class, ['label' => 'Objet du dossier', 'field' => 'd.objet'])
-            ->add('datecreation', DateTimeColumn::class,  ['label' => 'Date de creation ', 'format' => 'd/m/Y', 'searchable' => false])
-            ->add('montant', TextColumn::class,  ['label' => 'Montant dû '])
-            ->add('montantpaye', TextColumn::class, ['label' => 'Total payé', "searchable" => false, 'render' => function ($value, Compte $context) {
-                $montantpaye = (float)$context->getMontant() - (float)$context->getSolde();
-                return $montantpaye;
-            }])
-            ->add('solde', TextColumn::class,  ['label' => 'Solde '])
+            ->add('dossier_numero', TextColumn::class, [
+                'label' => 'N° dossier',
+                'field' => 'd.numeroOuverture'
+            ])
+            ->add('dossier_objet', TextColumn::class, [
+                'label' => 'Objet du dossier',
+                'field' => 'd.objet'
+            ])
+            ->add('datecreation', DateTimeColumn::class,  [
+                'label' => 'Date de creation',
+                'format' => 'd/m/Y',
+                'searchable' => false
+            ])
+            ->add('montant', TextColumn::class, ['label' => 'Montant dû '])
+            ->add('montantpaye', TextColumn::class, [
+                'label' => 'Total payé',
+                "searchable" => false,
+                'render' => function ($value, Compte $context) {
+                    $montantpaye = (float)$context->getMontant() - (float)$context->getSolde();
+                    return $montantpaye;
+                }
+            ])
+            ->add('solde', TextColumn::class, ['label' => 'Solde '])
             ->createAdapter(ORMAdapter::class, [
                 'entity' => Compte::class,
                 'query' => function (QueryBuilder $qb) use ($dossier, $datedebut, $datefin) {
-                    $qb->select(['c', 'cl',])
+                    $qb->select('c, cl, d,i')
                         ->from(Compte::class, 'c')
-                        ->join('c.client', 'cl')
-                        // ->join('cl.identifications','i')
-                        // ->join('i.dossier','d' )
-                        ->orderBy('c.id ', 'DESC');
-
+                        ->innerJoin('c.client', 'cl')
+                        ->innerJoin('cl.identifications', 'i')
+                        ->innerJoin('i.dossier', 'd')
+                        ->orderBy('c.id', 'DESC');
 
                     if ($dossier || $datedebut || $datefin) {
                         if ($dossier) {

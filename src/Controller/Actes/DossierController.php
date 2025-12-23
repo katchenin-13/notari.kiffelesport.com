@@ -161,14 +161,23 @@ class DossierController extends BaseController
                         ->leftjoin('p.employe', 'emp')
                         ->innerJoin('p.typeActe', 't')
                         ->orderBy('p.id ', 'DESC');
-
                     if ($etat == 'termine') {
-                        $qb->andWhere("JSON_CONTAINS(p.etat, '1', '$.termine') = 1");
+                        $qb->andWhere("
+                        JSON_CONTAINS(p.etat, '1', '$.termine') = 1
+                        OR p.etape = :classification
+                    ")
+                            ->setParameter('classification', 'classification');
                     } elseif ($etat == 'archive') {
                         $qb->andWhere("JSON_CONTAINS(p.etat, '1', '$.archive') = 1");
                     } elseif ($etat == 'cree') {
-                        $qb->andWhere("JSON_CONTAINS(p.etat, '1', '$.cree') = 1")
-                            ->orWhere("JSON_CONTAINS(p.etat, '1', '$.en_cours') = 1");
+                        $qb->andWhere("
+                            (
+                                JSON_CONTAINS(p.etat, '1', '$.cree') = 1
+                                OR JSON_CONTAINS(p.etat, '1', '$.en_cours') = 1
+                            )
+                            AND p.etape != :classification
+                        ")
+                            ->setParameter('classification', 'classification');
                     }
 
                     if ($clair) {
