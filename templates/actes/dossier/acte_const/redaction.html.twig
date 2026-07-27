@@ -3,7 +3,6 @@
 {% form_theme form 'widget/fields-block.html.twig' %}
 
 {% from '_admin/macros/acte_vente.html.twig' import redaction %}
-{% from '_admin/macros/acte_vente.html.twig' import prototype_commentaire %}
 <div class="row">
     <div class="col-md-12">
         <div class="card">
@@ -19,8 +18,7 @@
                     {{ redaction(redaction)}}
                     {% endfor %}
                 </div>
-                {{ prototype_commentaire(form) }}
-                <br>
+                                <br>
                 <div class="row">
                     <div class="col-xl-12">
                         <div class="text-right">
