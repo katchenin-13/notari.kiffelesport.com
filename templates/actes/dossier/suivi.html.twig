@@ -487,6 +487,27 @@
             });
         }
 
+        // Expose a global function for admin.js to call upon successful step validation
+        window.suivi_load_next = function(urlObj) {
+            if (urlObj && urlObj.url && urlObj.tab) {
+                const hash = urlObj.tab;
+                const $link = $('#smartwizard-3').find('[href="' + hash + '"]');
+                const $li = $link.parent('li');
+                $li.removeClass('d-none');
+                
+                if (urlObj.current) {
+                    const $currentLink = $('#smartwizard-3').find('[href="' + urlObj.current + '"]');
+                    $currentLink.parent('li').addClass('has-value done').removeClass('active is-current');
+                }
+
+                if (!$link.attr('data-href')) {
+                    $link.attr('data-href', urlObj.url);
+                }
+                
+                $link.trigger('click');
+            }
+        };
+
         $('#smartwizard-3').on('click shown.bs.tab', '.nav-link', function (e) {
             e.preventDefault();
             e.stopPropagation();

@@ -707,7 +707,13 @@ $(function () {
                                 $link.attr('data-href', url.url);
                             }
 
-                            load_tab(tabId, null, $li.index());
+                            // If a custom wizard handler is registered (e.g. suivi dossier modal),
+                            // delegate to it instead of the generic load_tab which would conflict.
+                            if (typeof window.suivi_load_next === 'function') {
+                                window.suivi_load_next(url);
+                            } else {
+                                load_tab(tabId, null, $li.index());
+                            }
 
                             if (currentTab && currentTab.url && currentTab.tab) {
 
