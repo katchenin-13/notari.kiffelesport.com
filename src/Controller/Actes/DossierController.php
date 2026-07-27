@@ -329,7 +329,7 @@ class DossierController extends BaseController
     public function suivi(Request $request, Dossier $dossier, WorkflowRepository $workflowRepository)
     {
         $typeActe = $dossier->getTypeActe();
-        $etapes = $workflowRepository->findBy(['active' => 1, 'typeActe' => $typeActe], ['numeroEtape' => 'asc']);
+        $etapes = $workflowRepository->findBy(['active' => '1', 'typeActe' => $typeActe], ['numeroEtape' => 'asc']);
         //dd($etapes);
         return $this->render('actes/dossier/suivi.html.twig', [
             'dossier' => $dossier,

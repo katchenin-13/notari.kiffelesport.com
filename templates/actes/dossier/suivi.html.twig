@@ -104,7 +104,13 @@
                             {% endfor %}
                             </ul>
 	                    </div>
-                        <div id="form-content"></div>
+                        <div id="form-content">
+                            {% if etapes is empty %}
+                                <div class="alert alert-warning text-center mt-4">
+                                    Aucune étape n'est configurée pour ce type d'acte.
+                                </div>
+                            {% endif %}
+                        </div>
                     </div>
                 </div>
             </div>
@@ -186,8 +192,10 @@
                 }
             });
 
-            
-            load_content($('.li-step.active').first().find('a').attr('data-href'));
+            let activeHref = $('.li-step.active').first().find('a').attr('data-href');
+            if (activeHref) {
+                load_content(activeHref);
+            }
         });
     </script>
 {% endblock %}
