@@ -1,201 +1,524 @@
 {% block inline_stylesheets %}
 <style>
-    .sw-theme-dots>ul.step-anchor>li.done>a:after {
-        background: green;
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+    /* ============================================================
+       DOSSIER SUIVI - PREMIUM DESIGN
+    ============================================================ */
+
+    /* Modal overrides */
+    #exampleModalSizeSm2 .modal-dialog {
+        max-width: 95vw;
     }
-    .sw-theme-dots>ul.step-anchor>li.active>a:after {
-        background: orangered;
-    }
-    .sw-theme-dots>ul.step-anchor>li>a:after {
-        background: grey;
+    #exampleModalSizeSm2 .modal-content {
+        border: none;
+        border-radius: 16px;
+        overflow: hidden;
+        box-shadow: 0 25px 60px rgba(0,0,0,.25);
+        font-family: 'Inter', sans-serif;
     }
 
+    /* ---- HEADER ---- */
+    .suivi-modal-header {
+        background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+        padding: 20px 28px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        border-bottom: none;
+    }
+    .suivi-modal-header .dossier-title {
+        display: flex;
+        flex-direction: column;
+    }
+    .suivi-modal-header .dossier-label {
+        font-size: 10px;
+        font-weight: 600;
+        letter-spacing: 2px;
+        color: rgba(255,255,255,.5);
+        text-transform: uppercase;
+        margin-bottom: 2px;
+    }
+    .suivi-modal-header .dossier-name {
+        font-size: 18px;
+        font-weight: 700;
+        color: #fff;
+        letter-spacing: .3px;
+    }
+    .suivi-modal-header .close-btn {
+        width: 34px;
+        height: 34px;
+        border-radius: 50%;
+        background: rgba(255,255,255,.1);
+        border: none;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: background .2s;
+        color: #fff;
+    }
+    .suivi-modal-header .close-btn:hover {
+        background: rgba(255,255,255,.2);
+    }
 
-    /*progressbar*/
-#progressbar {
-	margin-bottom: 30px;
-	overflow: hidden;
-	/*CSS counters to number the steps*/
-	counter-reset: step;
-}
-#progressbar li {
-	list-style-type: none;
-	color: white;
-	text-transform: uppercase;
-	font-size: 9px;
-	width: 33.33%;
-	float: left;
-	position: relative;
-}
-#progressbar li:before {
-	content: counter(step);
-	counter-increment: step;
-	width: 20px;
-	line-height: 20px;
-	display: block;
-	font-size: 10px;
-	color: #333;
-	background: white;
-	border-radius: 3px;
-	margin: 0 auto 5px auto;
-}
-/*progressbar connectors*/
-#progressbar li:after {
-	content: '';
-	width: 100%;
-	height: 2px;
-	background: white;
-	position: absolute;
-	left: -50%;
-	top: 9px;
-	z-index: -1; /*put it behind the numbers*/
-}
-#progressbar li:first-child:after {
-	/*connector not needed before the first step*/
-	content: none; 
-}
-/*marking active/completed steps green*/
-/*The number of the step and the connector before it = green*/
-#progressbar li.active:before,  #progressbar li.active:after{
-	background: #27AE60;
-	color: white;
-}
+    /* ---- STEP WIZARD ---- */
+    .suivi-steps-wrapper {
+        background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+        padding: 0 28px 24px;
+    }
+    .suivi-steps-list {
+        display: flex;
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        gap: 4px;
+        overflow-x: auto;
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+    }
+    .suivi-steps-list::-webkit-scrollbar { display: none; }
+
+    .li-step {
+        flex: 1;
+        min-width: 80px;
+        position: relative;
+    }
+
+    /* Connector line between steps */
+    .li-step:not(:last-child)::after {
+        content: '';
+        position: absolute;
+        top: 20px;
+        right: -2px;
+        width: 4px;
+        height: 2px;
+        background: rgba(255,255,255,.15);
+        z-index: 1;
+    }
+
+    .li-step a.nav-link {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 12px 6px 10px;
+        border-radius: 10px;
+        text-decoration: none;
+        transition: all .25s ease;
+        position: relative;
+        border: 1.5px solid transparent;
+        cursor: pointer;
+    }
+
+    /* Step number bubble */
+    .li-step a.nav-link .step-num {
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 14px;
+        font-weight: 700;
+        background: rgba(255,255,255,.1);
+        color: rgba(255,255,255,.5);
+        border: 2px solid rgba(255,255,255,.15);
+        margin-bottom: 6px;
+        transition: all .25s ease;
+        position: relative;
+        z-index: 2;
+    }
+
+    .li-step a.nav-link .step-label {
+        font-size: 9px;
+        font-weight: 500;
+        color: rgba(255,255,255,.4);
+        text-align: center;
+        line-height: 1.3;
+        letter-spacing: .3px;
+        max-width: 80px;
+        transition: color .25s;
+    }
+
+    /* DONE state */
+    .li-step.done a.nav-link {
+        background: rgba(16,185,129,.08);
+        border-color: rgba(16,185,129,.25);
+    }
+    .li-step.done a.nav-link .step-num {
+        background: #10b981;
+        border-color: #10b981;
+        color: #fff;
+        box-shadow: 0 0 0 4px rgba(16,185,129,.2);
+    }
+    .li-step.done a.nav-link .step-num::after {
+        content: '✓';
+        position: absolute;
+        font-size: 14px;
+    }
+    .li-step.done a.nav-link .step-num-text {
+        display: none;
+    }
+    .li-step.done a.nav-link .step-label {
+        color: #10b981;
+    }
+
+    /* ACTIVE state */
+    .li-step.active a.nav-link {
+        background: rgba(99,102,241,.15);
+        border-color: rgba(99,102,241,.4);
+    }
+    .li-step.active a.nav-link .step-num {
+        background: linear-gradient(135deg, #6366f1, #8b5cf6);
+        border-color: transparent;
+        color: #fff;
+        box-shadow: 0 0 0 4px rgba(99,102,241,.25), 0 4px 12px rgba(99,102,241,.4);
+        animation: pulse-active 2s infinite;
+    }
+    .li-step.active a.nav-link .step-label {
+        color: #a5b4fc;
+        font-weight: 600;
+    }
+
+    @keyframes pulse-active {
+        0%, 100% { box-shadow: 0 0 0 4px rgba(99,102,241,.25), 0 4px 12px rgba(99,102,241,.4); }
+        50%       { box-shadow: 0 0 0 8px rgba(99,102,241,.1),  0 4px 16px rgba(99,102,241,.5); }
+    }
+
+    /* Hover on non-disabled */
+    .li-step a.nav-link[data-href]:hover {
+        background: rgba(255,255,255,.07);
+        border-color: rgba(255,255,255,.2);
+        transform: translateY(-2px);
+    }
+    .li-step a.nav-link[data-href]:hover .step-num {
+        border-color: rgba(255,255,255,.4);
+        color: #fff;
+    }
+    .li-step a.nav-link:not([data-href]) {
+        opacity: .5;
+        cursor: not-allowed;
+    }
+
+    /* ---- BODY ---- */
+    .suivi-modal-body {
+        background: #f8fafc;
+        padding: 24px 28px;
+        min-height: 300px;
+    }
+
+    /* ---- FORM CONTENT AREA ---- */
+    #form-content {
+        min-height: 200px;
+    }
+
+    #form-content .card {
+        border: none;
+        border-radius: 12px;
+        box-shadow: 0 2px 12px rgba(0,0,0,.06);
+    }
+    #form-content .card-body {
+        padding: 24px;
+    }
+    #form-content h3 {
+        font-size: 16px;
+        font-weight: 700;
+        color: #0f3460;
+        margin-bottom: 20px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding-bottom: 12px;
+        border-bottom: 2px solid #e2e8f0;
+    }
+    #form-content h3::before {
+        content: '';
+        width: 4px;
+        height: 20px;
+        background: linear-gradient(135deg, #6366f1, #8b5cf6);
+        border-radius: 2px;
+        flex-shrink: 0;
+    }
+
+    /* Buttons */
+    #form-content .btn-primary {
+        background: linear-gradient(135deg, #6366f1, #8b5cf6) !important;
+        border: none;
+        border-radius: 8px;
+        padding: 9px 20px;
+        font-weight: 600;
+        font-size: 13px;
+        letter-spacing: .3px;
+        transition: all .2s;
+        box-shadow: 0 4px 12px rgba(99,102,241,.3);
+    }
+    #form-content .btn-primary:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 6px 16px rgba(99,102,241,.4);
+    }
+    #form-content .btn-success {
+        background: linear-gradient(135deg, #10b981, #059669) !important;
+        border: none;
+        border-radius: 8px;
+        padding: 9px 20px;
+        font-weight: 600;
+        font-size: 13px;
+        box-shadow: 0 4px 12px rgba(16,185,129,.3);
+        transition: all .2s;
+    }
+    #form-content .btn-success:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 6px 16px rgba(16,185,129,.4);
+    }
+
+    /* Loading skeleton */
+    .step-loading {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 14px;
+        padding: 48px 24px;
+        background: #fff;
+        border-radius: 12px;
+        box-shadow: 0 2px 12px rgba(0,0,0,.06);
+    }
+    .step-loading .spinner-ring {
+        width: 36px;
+        height: 36px;
+        border: 3px solid #e2e8f0;
+        border-top-color: #6366f1;
+        border-radius: 50%;
+        animation: spin .7s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .step-loading span {
+        font-size: 14px;
+        font-weight: 500;
+        color: #64748b;
+    }
+
+    /* ---- FOOTER ---- */
+    .suivi-modal-footer {
+        background: #f8fafc;
+        border-top: 1px solid #e2e8f0;
+        padding: 14px 28px;
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+    }
+    .suivi-modal-footer .btn-close-modal {
+        background: #f1f5f9;
+        border: 1px solid #e2e8f0;
+        color: #64748b;
+        border-radius: 8px;
+        padding: 8px 18px;
+        font-size: 13px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all .2s;
+    }
+    .suivi-modal-footer .btn-close-modal:hover {
+        background: #e2e8f0;
+        color: #1e293b;
+    }
+
+    /* Table overrides inside steps */
+    #form-content .table-custom {
+        border-radius: 10px;
+        overflow: hidden;
+        border: 1px solid #e2e8f0 !important;
+    }
+    #form-content .table-custom thead {
+        background: linear-gradient(135deg, #1a1a2e, #0f3460);
+        color: #fff;
+    }
+    #form-content .table-custom thead th {
+        font-size: 11px;
+        font-weight: 600;
+        letter-spacing: .8px;
+        text-transform: uppercase;
+        padding: 12px 14px;
+        border: none;
+        color: rgba(255,255,255,.85);
+    }
+    #form-content .table-custom tbody tr {
+        transition: background .15s;
+    }
+    #form-content .table-custom tbody tr:hover {
+        background: #f0f4ff;
+    }
+
+    /* Empty state */
+    .empty-steps-state {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 56px 24px;
+        gap: 12px;
+    }
+    .empty-steps-state .empty-icon {
+        width: 64px;
+        height: 64px;
+        border-radius: 50%;
+        background: #fef3c7;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 28px;
+    }
+    .empty-steps-state p {
+        font-size: 14px;
+        color: #64748b;
+        text-align: center;
+        max-width: 320px;
+        margin: 0;
+    }
 
 </style>
-
 {% endblock %}
+
 {% block page_content %}
-   {#  {% form_theme form 'widget/fields-block.html.twig' %} #}
-    <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">SUIVI DOSSIER -{{ dossier.objet | upper }}</h5>
-        <div class="btn btn-icon btn-sm  ms-2" data-bs-dismiss="modal" aria-label="Close">
-            <span class="svg-icon svg-icon-2x text-white">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-					<rect opacity="0.5" x="6" y="17.3137" width="16" height="2" rx="1" transform="rotate(-45 6 17.3137)" fill="currentColor"></rect>
-					<rect x="7.41422" y="6" width="16" height="2" rx="1" transform="rotate(45 7.41422 6)" fill="currentColor"></rect>
-				</svg>
-            </span>
+    {# ========== HEADER ========== #}
+    <div class="suivi-modal-header">
+        <div class="dossier-title">
+            <span class="dossier-label">Suivi de dossier</span>
+            <span class="dossier-name">{{ dossier.objet | upper }}</span>
         </div>
+        <button class="close-btn" data-bs-dismiss="modal" aria-label="Close" title="Fermer">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect opacity="0.6" x="6" y="17.3137" width="16" height="2" rx="1" transform="rotate(-45 6 17.3137)" fill="currentColor"/>
+                <rect x="7.41422" y="6" width="16" height="2" rx="1" transform="rotate(45 7.41422 6)" fill="currentColor"/>
+            </svg>
+        </button>
     </div>
-    
-    <div class="modal-body content-doc" data-url="{{ base_url }}" data-reload="true">
-       
-         <div class="row">
-            <div class="col-md-12">
-                <div class="card">
-                    <div class="card-body">
-                        <div id="smartwizard-3" class="sw-main sw-theme-dots">
-                            <ul class="nav nav-tabs step-anchor">
-                            {% for etape in etapes %}
-                                {% set _index = loop.index %}
-                                {% if etape.propriete != 'infoClassification' %}
-                                    {% set has_value = attribute(dossier, 'get' ~ (etape.propriete|title))|length %}
-                                {% else %}
-                                    {% set has_value = attribute(dossier, 'get' ~ (etape.propriete|title))['id']|default(0) %}
-                                {% endif %}
-                                {% set is_done = (_index == 1 or has_value) %}
-                                {% set is_current = (etape.route == dossier.etape) %}
-                                <li class="nav-item li-step {% if has_value %}has-value{% endif %}  {% if (etape.route == dossier.etape) or (dossier.etape == '' and _index == 1) %}active{% endif %} {% if _index == 1 and not has_value %}active{% endif %} {% if has_value %}done{% endif %}">
-                                    <a href="#{{ etape.route }}" data-numero="{{ etape.numeroEtape }}" class="nav-link" title="{{ etape.libelleEtape }}" {% if is_done or is_current %}data-href="{{ path(type_acte.code ~ '_' ~ etape.route, {id:  dossier.id}) }}"{% endif %}>
-                                        {{ _index }}
-                                        <span class="sr-only">{{ etape.libelleEtape }}</span>
-                                    </a>
-                                </li>
-                            {% endfor %}
-                            </ul>
-	                    </div>
-                        <div id="form-content">
-                            {% if etapes is empty %}
-                                <div class="alert alert-warning text-center mt-4">
-                                    Aucune étape de workflow n'est configurée et active pour le type d'acte : <strong>{{ dossier.typeActe ? dossier.typeActe.titre : 'Aucun' }}</strong>.
-                                </div>
-                            {% endif %}
-                        </div>
-                    </div>
+
+    {# ========== STEP WIZARD ========== #}
+    <div class="suivi-steps-wrapper">
+        <ul id="smartwizard-3" class="suivi-steps-list">
+        {% for etape in etapes %}
+            {% set _index = loop.index %}
+            {% if etape.propriete != 'infoClassification' %}
+                {% set has_value = attribute(dossier, 'get' ~ (etape.propriete|title))|length %}
+            {% else %}
+                {% set has_value = attribute(dossier, 'get' ~ (etape.propriete|title))['id']|default(0) %}
+            {% endif %}
+            {% set is_current = (etape.route == dossier.etape) or (dossier.etape == '' and _index == 1) or (_index == 1 and not has_value and not dossier.etape) %}
+
+            <li class="nav-item li-step
+                {% if has_value %}has-value done{% endif %}
+                {% if is_current and not has_value %}active{% endif %}
+                {% if etape.route == dossier.etape %}active{% endif %}
+            ">
+                <a href="#{{ etape.route }}"
+                   data-numero="{{ etape.numeroEtape }}"
+                   class="nav-link"
+                   title="{{ etape.libelleEtape }}"
+                   {% if has_value or is_current %}data-href="{{ path(type_acte.code ~ '_' ~ etape.route, {id: dossier.id}) }}"{% endif %}>
+                    <span class="step-num">
+                        {% if has_value %}
+                            <span class="step-check">✓</span>
+                        {% else %}
+                            <span class="step-num-text">{{ _index }}</span>
+                        {% endif %}
+                    </span>
+                    <span class="step-label">{{ etape.libelleEtape }}</span>
+                </a>
+            </li>
+        {% endfor %}
+        </ul>
+    </div>
+
+    {# ========== BODY ========== #}
+    <div class="suivi-modal-body">
+        <div id="form-content">
+            {% if etapes is empty %}
+                <div class="empty-steps-state">
+                    <div class="empty-icon">⚠️</div>
+                    <p>Aucune étape de workflow n'est configurée et active pour le type d'acte : <strong>{{ dossier.typeActe ? dossier.typeActe.titre : 'Aucun' }}</strong>.</p>
                 </div>
-            </div>
+            {% endif %}
         </div>
     </div>
-    <div class="modal-footer">
-        {# {{ include('_includes/ajax/loader.html.twig') }} #}
-        <button type="button" class="btn btn-default btn-sm" data-bs-dismiss="modal">Annuler</button>
-        
+
+    {# ========== FOOTER ========== #}
+    <div class="suivi-modal-footer">
+        <button type="button" class="btn-close-modal" data-bs-dismiss="modal">Fermer</button>
     </div>
-    
 {% endblock %}
 
 {% block java %}
-    
-
-    <script>
-        $(function () {
-             $('.no-auto').each(function () {
-                const $this = $(this);
-                const $id = $('#' + $this.attr('id'));
-                init_date_picker($id, 'down', (start, e) => {
-                    //$this.val(start.format('DD/MM/YYYY'));
-                }, null, null, false);
-
-                $id.on('apply.daterangepicker', function (ev, picker) {
-                    $(this).val(picker.startDate.format('DD/MM/YYYY'));
-                });
+<script>
+    $(function () {
+        $('.no-auto').each(function () {
+            const $this = $(this);
+            const $id = $('#' + $this.attr('id'));
+            init_date_picker($id, 'down', (start, e) => {}, null, null, false);
+            $id.on('apply.daterangepicker', function (ev, picker) {
+                $(this).val(picker.startDate.format('DD/MM/YYYY'));
             });
-            function load_content(url) {
-                const $form_content = $('#form-content');
-                $.ajax({
-                    url: url,
-                    method: 'GET',
-                    dataType: 'html',
-                    beforeSend: function () {
-                        $form_content.html(`<div class="d-flex align-items-center">
-  <strong>Chargement des données de l'étape</strong>
-  <div class="spinner-border ms-auto" role="status" aria-hidden="true"></div>
-</div>`);
-                    },
-                    success: function (html) {
-                        
-                        $form_content.html(html);
-                    },
-                   
-                    error: function () {
-                        $form_content.html('<div class="text-center text-danger">Une erreur est survenue...</div>');
-                    }
-                })
-            }
+        });
 
-            $('#smartwizard-3').on('click', '.nav-link', function (e) {
-                e.preventDefault();
-                const $this = $(this);
-                if ($this.attr('data-href')) {
-                    load_content($this.attr('data-href'));
-                    const $parent = $this.closest('li');
-                    $parent.removeClass('done is-current').addClass('active');
-                  
-                    $('.li-step').not($parent).each(function () {
-                        const $_this = $(this);
-                        $_this.removeClass('done active is-current');
-                        if ($_this.hasClass('has-value')) {
-                            $_this.addClass('done');
-                        } else {
-
-                        }
-
-
-                        if ($_this.find('a').attr('data-href') && !$_this.hasClass('has-value')) {
-                            if (!$_this.hasClass('is-current')) {
-                                $_this.addClass('is-current');
-                            }
-                            
-                        }
-                    });
-
+        function load_content(url) {
+            const $form_content = $('#form-content');
+            $.ajax({
+                url: url,
+                method: 'GET',
+                dataType: 'html',
+                beforeSend: function () {
+                    $form_content.html(`
+                        <div class="step-loading">
+                            <div class="spinner-ring"></div>
+                            <span>Chargement de l'étape…</span>
+                        </div>
+                    `);
+                },
+                success: function (html) {
+                    $form_content.hide().html(html).fadeIn(250);
+                },
+                error: function () {
+                    $form_content.html(`
+                        <div class="empty-steps-state">
+                            <div class="empty-icon">❌</div>
+                            <p>Une erreur est survenue lors du chargement de cette étape.</p>
+                        </div>
+                    `);
                 }
             });
+        }
 
-            let activeHref = $('.li-step.active').first().find('a').attr('data-href');
-            if (activeHref) {
-                load_content(activeHref);
+        $('#smartwizard-3').on('click shown.bs.tab', '.nav-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            e.stopImmediatePropagation();
+            const $this = $(this);
+            if ($this.attr('data-href')) {
+                load_content($this.attr('data-href'));
+                const $parent = $this.closest('li');
+                $parent.removeClass('done is-current').addClass('active');
+
+                $('.li-step').not($parent).each(function () {
+                    const $_this = $(this);
+                    $_this.removeClass('active is-current');
+                    if ($_this.hasClass('has-value')) {
+                        $_this.addClass('done');
+                    }
+                    if ($_this.find('a').attr('data-href') && !$_this.hasClass('has-value')) {
+                        $_this.addClass('is-current');
+                    }
+                });
             }
         });
-    </script>
+
+        // Auto-load active step on open
+        let activeHref = $('.li-step.active').first().find('a').attr('data-href');
+        if (!activeHref) {
+            // fallback: first step with data-href
+            activeHref = $('.li-step').first().find('a[data-href]').attr('data-href');
+        }
+        if (activeHref) {
+            load_content(activeHref);
+        }
+    });
+</script>
 {% endblock %}

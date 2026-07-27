@@ -1,0 +1,137 @@
+{# Shared premium step styles for all dossier workflow steps #}
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+    .form-card {
+        font-family: 'Inter', sans-serif !important;
+    }
+    .form-card h3.step-title {
+        font-size: 15px;
+        font-weight: 700;
+        color: #0f3460;
+        margin-bottom: 20px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding-bottom: 12px;
+        border-bottom: 2px solid #e2e8f0;
+    }
+    .form-card h3.step-title .step-title-bar {
+        width: 4px;
+        height: 20px;
+        background: linear-gradient(135deg, #6366f1, #8b5cf6);
+        border-radius: 2px;
+        flex-shrink: 0;
+    }
+
+    /* === Buttons === */
+    .form-card .btn-primary,
+    .form-card .btn[class*="btn-primary"] {
+        background: linear-gradient(135deg, #6366f1, #8b5cf6) !important;
+        border: none !important;
+        border-radius: 8px !important;
+        padding: 9px 22px !important;
+        font-weight: 600 !important;
+        font-size: 13px !important;
+        letter-spacing: .3px !important;
+        transition: all .2s !important;
+        box-shadow: 0 4px 12px rgba(99,102,241,.3) !important;
+        color: #fff !important;
+    }
+    .form-card .btn-primary:hover {
+        transform: translateY(-1px) !important;
+        box-shadow: 0 6px 18px rgba(99,102,241,.45) !important;
+    }
+    .form-card .btn-success,
+    .form-card .btn[class*="btn-success"] {
+        background: linear-gradient(135deg, #10b981, #059669) !important;
+        border: none !important;
+        border-radius: 8px !important;
+        padding: 9px 22px !important;
+        font-weight: 600 !important;
+        font-size: 13px !important;
+        box-shadow: 0 4px 12px rgba(16,185,129,.3) !important;
+        transition: all .2s !important;
+        color: #fff !important;
+    }
+    .form-card .btn-success:hover {
+        transform: translateY(-1px) !important;
+        box-shadow: 0 6px 18px rgba(16,185,129,.45) !important;
+    }
+
+    /* === Tables === */
+    .form-card .table-custom {
+        border-radius: 10px;
+        overflow: hidden;
+        border: 1px solid #e2e8f0 !important;
+        font-size: 13px;
+    }
+    .form-card .table-custom thead tr:first-child {
+        background: linear-gradient(135deg, #1a1a2e, #0f3460) !important;
+    }
+    .form-card .table-custom thead th {
+        font-size: 10.5px;
+        font-weight: 600;
+        letter-spacing: .8px;
+        text-transform: uppercase;
+        padding: 11px 14px;
+        border: none;
+        color: rgba(255,255,255,.85);
+        background: transparent;
+    }
+    .form-card .table-custom tbody tr {
+        transition: background .15s;
+        border-bottom: 1px solid #f1f5f9;
+    }
+    .form-card .table-custom tbody tr:hover {
+        background: #f0f4ff;
+    }
+    .form-card .table-custom .del-col .btn {
+        border-radius: 6px;
+        padding: 4px 8px;
+        font-size: 11px;
+    }
+
+    /* Add line button */
+    .form-card #add_ligne,
+    .form-card .add_line {
+        background: rgba(99,102,241,.1) !important;
+        color: #6366f1 !important;
+        border: 1.5px dashed #6366f1 !important;
+        border-radius: 6px !important;
+        font-size: 11px !important;
+        font-weight: 600 !important;
+        padding: 4px 10px !important;
+        transition: all .2s !important;
+    }
+    .form-card #add_ligne:hover,
+    .form-card .add_line:hover {
+        background: rgba(99,102,241,.18) !important;
+        transform: none !important;
+    }
+
+    /* Form controls */
+    .form-card .form-control,
+    .form-card select.form-control {
+        border-radius: 7px;
+        border: 1.5px solid #e2e8f0;
+        font-size: 13px;
+        transition: border-color .2s, box-shadow .2s;
+    }
+    .form-card .form-control:focus {
+        border-color: #6366f1;
+        box-shadow: 0 0 0 3px rgba(99,102,241,.15);
+        outline: none;
+    }
+
+    /* Action row */
+    .form-card .action-row {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        gap: 10px;
+        margin-top: 20px;
+        padding-top: 16px;
+        border-top: 1px solid #e2e8f0;
+    }
+</style>

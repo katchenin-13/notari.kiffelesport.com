@@ -1,21 +1,22 @@
 {% block page_content %}
 
 {% form_theme form 'widget/fields-block.html.twig' %}
+{{ include('_includes/dossier_step_styles.html.twig') }}
 
 {% from '_admin/macros/acte_vente.html.twig' import obtention %}
 {% from '_admin/macros/acte_vente.html.twig' import commentairesignature %}
 
 <div class="row">
     <div class="col-md-12">
-        <div class="card">
-            <div class="card-body form-card">
+        <div class="card border-0 shadow-sm" style="border-radius:14px;overflow:hidden">
+            <div class="card-body form-card" style="padding:28px">
                 {{ form_start(form, {'attr': {'role':'form', 'class': 'form', 'id': route_without_prefix}}) }}
                 <div id="prototype" data-prototype="{{ obtention(form.obtentions.vars.prototype, 1)|e }}"></div>
                 <div id="prototypeg"
                     data-prototype="{{ commentairesignature(form.commentaireObtentions.vars.prototype, 1)|e }}"></div>
 
                 {{ include('_includes/ajax/response.html.twig') }}
-                <h3 style="color: orangered">Obtention documents</h3>
+                <h3 class="step-title"><span class="step-title-bar"></span>Obtention documents</h3>
                 <button type="button" class="add-document btn btn-sm btn-info mb-4" data-container=".doc-list">Ajouter
                     un document</button>
 
