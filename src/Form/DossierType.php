@@ -174,19 +174,19 @@ class DossierType extends AbstractType
 
 
 
-        // if ($etape == 'identification') {
-        //     $builder->add('identifications', CollectionType::class, [
-        //         'entry_type' => IdentificationType::class,
-        //         'entry_options' => [
-        //             'label' => false
-        //         ],
-        //         'allow_add' => true,
-        //         'label' => false,
-        //         'by_reference' => false,
-        //         'allow_delete' => true,
-        //         'prototype' => true,
+        if ($etape == 'identification') {
+            $builder->add('identifications', CollectionType::class, [
+                'entry_type' => IdentificationType::class,
+                'entry_options' => [
+                    'label' => false
+                ],
+                'allow_add' => true,
+                'label' => false,
+                'by_reference' => false,
+                'allow_delete' => true,
+                'prototype' => true,
 
-        //     ]);
+            ]);
         //     $builder->add('CommentaireIdentifications', CollectionType::class, [
         //         'entry_type' => CommentaireIdentificationType::class,
         //         'entry_options' => [
@@ -199,7 +199,7 @@ class DossierType extends AbstractType
         //         'prototype' => true,
 
         //     ]);
-        // }
+        }
 
         if ($etape == 'remise_acte') {
             $builder->add('remiseActes', CollectionType::class, [
