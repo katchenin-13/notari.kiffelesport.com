@@ -143,8 +143,13 @@ class FichierAdmin
 
         $this->url = $fileExt;
 
-        // Et on génère l'attribut alt de la balise <img>, à la valeur du nom du fichier sur le PC de l'internaute
-        $this->alt = substr(str_slug($baseName, '_'), 0, 255 - 1 - strlen($fileExt)) . '.' . $fileExt;
+        // Génère un nom de fichier unique avec un identifiant horodaté
+        // afin d'éviter tout écrasement d'un fichier existant portant le même nom original.
+        $uniqueId = substr(md5(uniqid('', true)), 0, 10);
+        $slugBase  = str_slug($baseName, '_');
+        // On laisse de la place pour le suffixe _XXXXXXXXXXXX.ext
+        $maxBaseLen = 255 - 1 - strlen($fileExt) - 1 - strlen($uniqueId);
+        $this->alt = substr($slugBase, 0, $maxBaseLen) . '_' . $uniqueId . '.' . $fileExt;
         $this->size      = $this->file->getSize();
     }
 

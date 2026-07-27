@@ -10,16 +10,15 @@
 
 	<tr class="row-colonne even pointer table-light">
 		<td class="p-2">
-        
-			<div style="display:no " class="field-matiere">{{ form_widget(colonne.type,{'attr':{'readOnly':'readOnly'}}) }}
+			<div class="field-matiere">
+				{{ form_widget(colonne.type, {'attr': {'class': 'form-control readonly-select', 'style': 'pointer-events:none;background:#f8f9fa;'}}) }}
                 {{ form_errors(colonne.type) }}
 			</div>
-
 		</td>
 		<td class="p-2">
-			<div style="display:non" class="field-matiere">{{ form_widget(colonne.client,{'attr':{'readOnly':'readOnly'}})
-								            }}</div>
-
+			<div class="field-matiere">
+				{{ form_widget(colonne.client, {'attr': {'class': 'form-control readonly-select', 'style': 'pointer-events:none;background:#f8f9fa;'}}) }}
+			</div>
 		</td>
 
 		<div style="display:none " class="field-matiere">{{ form_widget(colonne.attribut,{'attr':{'readOnly':'readOnly'}})

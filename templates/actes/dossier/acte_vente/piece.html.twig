@@ -60,9 +60,9 @@
     })
 
 
-    $(function () {
-        init_select2(null, null, '.form-card');
-    });
+    // Initialize select2 immediately (page is already DOM-ready when loaded via AJAX)
+    init_select2(null, null, '.form-card');
+
     $(function () {
         getTotal();
 
@@ -113,7 +113,7 @@
 
                 $select.each(function () {
                     const $this = $(this);
-                    init_select2($this, null, '#exampleModalSizeSm2');
+                    init_select2($this, null, '.form-card');
                     if ($this.hasClass('select-type')) {
                         let field_str = $this.find('option:selected').attr('data-require-fields');
                         const $parent = $this.closest('.row-colonne');
@@ -147,7 +147,7 @@
                 .replace(new RegExp(name, 'g'), index));
 
 
-            init_select2($prototype.find('select'), null, '#exampleModalSizeSm2');
+            init_select2($prototype.find('select'), null, '.form-card');
             /* init_select2($this, null, '#exampleModalSizeSm2'); */
 
 
