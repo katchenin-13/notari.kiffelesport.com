@@ -1,0 +1,232 @@
+{% block page_content %}
+
+{% form_theme form 'widget/fields-block.html.twig' %}
+
+{% from '_macros/ligneidentificationclient.html.twig' import prototype_identification %}
+{% from '_macros/ligneidentificationclient.html.twig' import prototype_commentaire %}
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body form-card">
+                {{ form_start(form, {'attr': {'role':'form', 'class': 'form', 'id': route_without_prefix}}) }}
+                {{ include('_includes/ajax/response.html.twig') }}
+                <h3 style="color: orangered">Identification des différentes parties</h3>
+                {{ prototype_identification(form) }}
+                {{ prototype_commentaire(form) }}
+                <br>
+                <div class="row">
+                    <div class="col-xl-12">
+                        <div class="text-right">
+                            {{ form_widget(form.save) }}
+                            {% if form.next is defined %}
+                            {{ form_widget(form.next) }}
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block javascripts %}
+<script>
+    $(function () {
+        init_select2(null, null, '.form-card');
+    });
+
+
+    function load_content() {
+
+
+        $(".type").each(function () {
+            const $this = $(this);
+
+            var urlTemplate = "{{ path('app_get_fullname', {id: 'id'}) }}";
+
+            var url = urlTemplate
+                .replace('id', $this.val());
+            $.ajax({
+                url: url,
+                type: 'get',
+                async: false,
+                dataType: 'json',
+                success: function (json) {
+                    const client = $this.closest('.row-colonne').find('.client').val();
+                    $this.closest('.row-colonne').find(".client").html(''); //je vide la 2ème list
+
+                    $.each(json, function (index, value) { // et une boucle sur la réponse contenu dans la variable passé à la function du success "json"                     
+                        $('#' + $this.closest('.row-colonne').find('.client').attr("id")).append('<option value="' + value.id + '" ' + (value.id == client ? 'selected' : '') + '  >' + value.nom + '</option>');
+                    });
+                }
+            });
+            init_select2('select', null, '#exampleModalSizeSm2');
+
+        });
+    }
+
+    function load(id, element) {
+
+        var urlTemplate = "{{ path('app_get_fullname', {id: 'id'}) }}";
+
+        var url = urlTemplate
+            .replace('id', id);
+        $.ajax({
+            url: url,
+            type: 'get',
+            async: false,
+            dataType: 'json',
+            success: function (json) {
+                console.log(element.closest('.row-colonne').find('.client').attr("id"))
+                element.closest('.row-colonne').find(".client").html(''); //je vide la 2ème list
+                $('#' + element.closest('.row-colonne').find('.client').attr("id")).append('<option value selected="default" >Choisissez</option>');
+                $.each(json, function (index, value) { // et une boucle sur la réponse contenu dans la variable passé à la function du success "json"                     
+                    $('#' + element.closest('.row-colonne').find('.client').attr("id")).append('<option value="' + value.id + '"   >' + value.nom + '</option>');
+                });
+            }
+        });
+        init_select2('select', null, '#exampleModalSizeSm2');
+        /*  init_select2($this, null, '#exampleModalSizeSm2'); */
+    }
+    $(function () {
+
+        load_content();
+        $(".type").on('change', function (e) {
+            const $this = $(this);
+
+            load($this.val(), $this)
+
+
+        });
+
+
+        const $container = $('.proto-container');
+
+        var index = $container.find('.row-colonne').length;
+
+
+        $(document).on('select2:select', '.select-type', function (e) {
+            const $this = $(this);
+            let field_str = $this.find('option:selected').attr('data-require-fields');
+            const $parent = $this.closest('.row-colonne');
+            let fields = [];
+            if (typeof field_str != 'undefined') {
+                fields = field_str.split(',');
+                for (let field of fields) {
+                    $parent.find('.' + field).removeClass('d-none');
+                }
+            } else {
+                $parent.find('.source,.valeurs').addClass('d-none');
+            }
+        });
+
+
+        const $addLink = $('.add_line');
+        $addLink.click(function (e) {
+            const $this = $(this);
+            const proto_class = $this.attr('data-protoclass');
+            const name = $this.attr('data-protoname');
+            const $container = $($this.attr('data-container'));
+
+
+
+            addLine($container, name, proto_class);
+            load_content();
+
+
+            $(".type").on('change', function (e) {
+                const $this = $(this);
+
+                load($this.val(), $this)
+
+
+            });
+
+            e.preventDefault(); // évite qu'un # apparaisse dans l'URL
+        });
+
+        if (index > 0) {
+            $container.children('.row-colonne').each(function () {
+                const $this = $(this);
+                addDeleteLink($this);
+                const $select = $this.find("select");
+
+
+
+                $select.each(function () {
+                    const $this = $(this);
+                    init_select2($this, null, '#exampleModalSizeSm2');
+                    if ($this.hasClass('select-type')) {
+                        let field_str = $this.find('option:selected').attr('data-require-fields');
+                        const $parent = $this.closest('.row-colonne');
+                        let fields = [];
+                        if (typeof field_str != 'undefined') {
+                            fields = field_str.split(',');
+                            for (let field of fields) {
+                                $parent.find('.' + field).removeClass('d-none');
+                            }
+                        } else {
+                            $parent.find('.source,.valeurs').addClass('d-none');
+                        }
+                    }
+                });
+
+            });
+
+        }
+
+
+
+
+        // La fonction qui ajoute un formulaire Categorie
+        function addLine($container, name, proto_class) {
+            // Dans le contenu de l'attribut « data-prototype », on remplace :
+            // - le texte "__name__label__" qu'il contient par le label du champ
+            // - le texte "__name__" qu'il contient par le numéro du champ
+
+            var $prototype = $($(proto_class).attr('data-prototype')
+                .replace(new RegExp(name + 'label__', 'g'), 'Colonne ' + (index + 1))
+                .replace(new RegExp(name, 'g'), index));
+
+
+            init_select2($prototype.find('select'), null, '#exampleModalSizeSm2');
+
+
+            // On ajoute au prototype un lien pour pouvoir supprimer la prestation
+            addDeleteLink($prototype, name);
+            // On ajoute le prototype modifié à la fin de la balise <div>
+            $container.append($prototype);
+
+            index++;
+        }
+
+
+        function addDeleteLink($prototype, name = null) {
+            // Création du lien
+            $deleteLink = $('<a href="#" class="btn btn-danger btn-xs"><span class="fa fa-trash"></span></a>');
+            // Ajout du lien
+            $prototype.find(".del-col").append($deleteLink);
+
+
+
+            // Ajout du listener sur le clic du lien
+            $deleteLink.click(function (e) {
+                const $this = $(this);
+                const $parent = $(this).closest('.row-colonne');
+                //console.log($(this).attr('data-parent'), $(this));
+                $parent.remove();
+
+                if (index > 0) {
+                    index -= 1;
+                }
+
+                e.preventDefault(); // évite qu'un # apparaisse dans l'URL
+            });
+        }
+
+
+
+    })
+</script>
+{% endblock %}

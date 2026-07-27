@@ -673,6 +673,8 @@ class DossierController extends BaseController
 
     /**
      * @Route("/dossier/{id}/receuil-piece", name="acte_vente_piece", methods={"GET", "POST", "PUT"})
+
+     * @Route("/dossier/{id}/receuil-piece-const", name="acte_const_piece", methods={"GET", "POST", "PUT"})
      *
      */
     public function piece(
@@ -863,130 +865,138 @@ class DossierController extends BaseController
 
 
 
-    // #[Route('/dossier/{id}/identification', name: 'acte_vente_identification', methods: ['GET', 'POST', 'PUT'])]    
-    // public function identification(  Request $request,Dossier $dossier, EntityManagerInterface $em,FormError $formError,WorkflowRepository $workflowRepository, DossierWorkflowRepository $dossierWorkflowRepository) {
-    //     $typeActe = $dossier->getTypeActe();
-    //     $prefixe = $typeActe->getCode();
-    //     $currentRoute = $request->attributes->get('_route');
-    //     $routeWithoutPrefix = str_replace("{$prefixe}_", '', $currentRoute);
-
-
-    //     $current = $workflowRepository->findOneBy(['typeActe' => $typeActe, 'route' => $routeWithoutPrefix]);
-
-    //     if(!$dossier->getCommentaireIdentifications()->count()){
-    //         $commentaire = new CommentaireIdentification();
-    //         $commentaire->setDescription("");
-    //         $dossier->addCommentaireIdentification($commentaire);
-    //     }
-
-    //     if (!$dossier->getIdentifications()->count()) {
-    //         $identification = new Identification();
-    //         $dossier->addIdentification($identification);
-    //     }
-
-    //     $urlParams = ['id' => $dossier->getId()];
-
-
-    //     $next = $workflowRepository->getNext($typeActe->getId(), $current->getNumeroEtape());
-
-
-    //     $form = $this->createForm(DossierType::class, $dossier, [
-    //         'method' => 'POST',
-    //         'current_etape' => $dossier->getEtape(),
-    //         'etape' => strtolower(__FUNCTION__),
-    //         'validation_groups' => ['Default', $routeWithoutPrefix],
-    //         'action' => $this->generateUrl($currentRoute, ['id' => $dossier->getId()])
-    //     ]);
-    //     $form->handleRequest($request);
-
-    //     $data = null;
-    //     $url = null;
-    //     $tabId = null;
-    //     $modal = true;
-
-    //     $isAjax = $request->isXmlHttpRequest();
+    #[Route('/dossier/{id}/identification', name: 'acte_vente_identification', methods: ['GET', 'POST', 'PUT'])]
 
 
 
-    //     if ($form->isSubmitted()) {
-
-    //         $response = [];
-    //         $redirect = $this->generateUrl($currentRoute, $urlParams);
-    //         $isNext = $form->has('next') && $form->get('next')->isClicked();
-
-    //         if ($form->isValid()) {
-    //             if ($this->dossierWorkflow->can($dossier, 'post_creation')) {
-    //                 $this->dossierWorkflow->apply($dossier, 'post_creation');
-    //             }
-
-    //             $suiviDossierRepository = $em->getRepository(SuiviDossierWorkflow::class);
-    //             $dossierWorkflow = $dossierWorkflowRepository->findOneBy(['dossier' => $dossier, 'workflow' => $current]);
-
-    //             $suivi = $suiviDossierRepository->findOneBy(compact('dossierWorkflow'));
-
-    //             if (!$suivi) {
-    //                 $date = new \DateTime();
-    //                 $suivi = new SuiviDossierWorkflow();
-    //                 $suivi->setDossierWorkflow($dossierWorkflow);
-    //                 $suivi->setDateDebut($date);
-    //                 $suivi->setDateFin($date);
-    //             }
-    //             if ($isNext && $next) {
-
-    //                 $url = [
-    //                     'url' => $this->generateUrl($next['code'] . '_' . $next['route'], $urlParams),
-    //                     'tab' => '#' . $next['route'],
-    //                     'current' => '#' . $routeWithoutPrefix
-    //                 ];
-    //                 $hash = $next['route'];
-    //                 $tabId = self::TAB_ID;
-    //                 $redirect = $url['url'];
-
-    //                 if (!$suivi->getEtat()) {
-    //                     $suivi->setDateFin(new \DateTime());
-    //                     $dossier->setEtape($next['route']);
-    //                 }
-    //                 $suivi->setEtat(true);
-    //             } else {
-    //                 $redirect = $this->generateUrl($currentRoute, $urlParams);
-    //             }
-    //             $modal = false;
-    //             $em->persist($suivi);
-    //             $em->persist($dossier);
-    //             $em->flush();
-    //             $data = null;
-
-    //             $message       = 'Opération effectuée avec succès';
-    //             $statut = 1;
-    //             $this->addFlash('success', $message);
-    //         } else {
-    //             $message = $formError->all($form);
-    //             $statut = 0;
-    //             if (!$isAjax) {
-    //                 $this->addFlash('warning', $message);
-    //             }
-    //         }
 
 
-    //         if ($isAjax) {
-    //             return $this->json(compact('statut', 'message', 'redirect', 'data', 'url', 'tabId', 'modal'));
-    //         } else {
-    //             if ($statut == 1) {
-    //                 return $this->redirect($redirect);
-    //             }
-    //         }
-    //     }
+    #[Route('/dossier/{id}/identification-const', name: 'acte_const_identification', methods: ['GET', 'POST', 'PUT'])]    
+    public function identification(  Request $request,Dossier $dossier, EntityManagerInterface $em,FormError $formError,WorkflowRepository $workflowRepository, DossierWorkflowRepository $dossierWorkflowRepository) {
+        $typeActe = $dossier->getTypeActe();
+        $prefixe = $typeActe->getCode();
+        $currentRoute = $request->attributes->get('_route');
+        $routeWithoutPrefix = str_replace("{$prefixe}_", '', $currentRoute);
 
 
-    //     return $this->render("actes/dossier/{$prefixe}/{$routeWithoutPrefix}.html.twig",  [
-    //         'dossier' => $dossier,
-    //         'route_without_prefix' => $routeWithoutPrefix,
-    //         'form' => $form->createView()
-    //     ]);
-    // }
+        $current = $workflowRepository->findOneBy(['typeActe' => $typeActe, 'route' => $routeWithoutPrefix]);
+
+        // if(!$dossier->getCommentaireIdentifications()->count()){
+        //     $commentaire = new CommentaireIdentification();
+        //     $commentaire->setDescription("");
+        //     $dossier->addCommentaireIdentification($commentaire);
+        // }
+
+        if (!$dossier->getIdentifications()->count()) {
+            $identification = new Identification();
+            $dossier->addIdentification($identification);
+        }
+
+        $urlParams = ['id' => $dossier->getId()];
+
+
+        $next = $workflowRepository->getNext($typeActe->getId(), $current->getNumeroEtape());
+
+
+        $form = $this->createForm(DossierType::class, $dossier, [
+            'method' => 'POST',
+            'current_etape' => $dossier->getEtape(),
+            'etape' => strtolower(__FUNCTION__),
+            'validation_groups' => ['Default', $routeWithoutPrefix],
+            'action' => $this->generateUrl($currentRoute, ['id' => $dossier->getId()])
+        ]);
+        $form->handleRequest($request);
+
+        $data = null;
+        $url = null;
+        $tabId = null;
+        $modal = true;
+
+        $isAjax = $request->isXmlHttpRequest();
+
+
+
+        if ($form->isSubmitted()) {
+
+            $response = [];
+            $redirect = $this->generateUrl($currentRoute, $urlParams);
+            $isNext = $form->has('next') && $form->get('next')->isClicked();
+
+            if ($form->isValid()) {
+                if ($this->dossierWorkflow->can($dossier, 'post_creation')) {
+                    $this->dossierWorkflow->apply($dossier, 'post_creation');
+                }
+
+                $suiviDossierRepository = $em->getRepository(SuiviDossierWorkflow::class);
+                $dossierWorkflow = $dossierWorkflowRepository->findOneBy(['dossier' => $dossier, 'workflow' => $current]);
+
+                $suivi = $suiviDossierRepository->findOneBy(compact('dossierWorkflow'));
+
+                if (!$suivi) {
+                    $date = new \DateTime();
+                    $suivi = new SuiviDossierWorkflow();
+                    $suivi->setDossierWorkflow($dossierWorkflow);
+                    $suivi->setDateDebut($date);
+                    $suivi->setDateFin($date);
+                }
+                if ($isNext && $next) {
+
+                    $url = [
+                        'url' => $this->generateUrl($next['code'] . '_' . $next['route'], $urlParams),
+                        'tab' => '#' . $next['route'],
+                        'current' => '#' . $routeWithoutPrefix
+                    ];
+                    $hash = $next['route'];
+                    $tabId = self::TAB_ID;
+                    $redirect = $url['url'];
+
+                    if (!$suivi->getEtat()) {
+                        $suivi->setDateFin(new \DateTime());
+                        $dossier->setEtape($next['route']);
+                    }
+                    $suivi->setEtat(true);
+                } else {
+                    $redirect = $this->generateUrl($currentRoute, $urlParams);
+                }
+                $modal = false;
+                $em->persist($suivi);
+                $em->persist($dossier);
+                $em->flush();
+                $data = null;
+
+                $message       = 'Opération effectuée avec succès';
+                $statut = 1;
+                $this->addFlash('success', $message);
+            } else {
+                $message = $formError->all($form);
+                $statut = 0;
+                if (!$isAjax) {
+                    $this->addFlash('warning', $message);
+                }
+            }
+
+
+            if ($isAjax) {
+                return $this->json(compact('statut', 'message', 'redirect', 'data', 'url', 'tabId', 'modal'));
+            } else {
+                if ($statut == 1) {
+                    return $this->redirect($redirect);
+                }
+            }
+        }
+
+
+        return $this->render("actes/dossier/{$prefixe}/{$routeWithoutPrefix}.html.twig",  [
+            'dossier' => $dossier,
+            'route_without_prefix' => $routeWithoutPrefix,
+            'form' => $form->createView()
+        ]);
+    }
 
     /**
      * @Route("/dossier/{id}/redaction", name="acte_vente_redaction", methods={"GET", "POST"})
+
+     * @Route("/dossier/{id}/redaction-const", name="acte_const_redaction", methods={"GET", "POST"})
      *
      */
     public function redaction(
@@ -1123,6 +1133,8 @@ class DossierController extends BaseController
 
     /**
      * @Route("/dossier/{id}/classification", name="acte_vente_classification", methods={"GET", "POST"})
+
+     * @Route("/dossier/{id}/classification-const", name="acte_const_classification", methods={"GET", "POST"})
      *
      */
     public function classification(
@@ -1244,6 +1256,8 @@ class DossierController extends BaseController
 
     /**
      * @Route("/dossier/{id}/signature-acte", name="acte_vente_signature", methods={"GET", "POST"})
+
+     * @Route("/dossier/{id}/signature-acte-const", name="acte_const_signature", methods={"GET", "POST"})
      *
      */
     public function signature(
@@ -1389,6 +1403,8 @@ class DossierController extends BaseController
 
     /**
      * @Route("/dossier/{id}/enregistrement-acte", name="acte_vente_enregistrement", methods={"GET", "POST"})
+
+     * @Route("/dossier/{id}/enregistrement-acte-const", name="acte_const_enregistrement", methods={"GET", "POST"})
      *
      */
     public function enregistrement(
@@ -1539,6 +1555,10 @@ class DossierController extends BaseController
 
 
     #[Route("/dossier/{id}/paiement-acte", name: "acte_vente_paiement", methods: ["GET", "POST"])]
+
+
+
+    #[Route("/dossier/{id}/paiement-acte-const", name: "acte_const_paiement", methods: ["GET", "POST"])]
     public function paiement(Request $request, Dossier $dossier, EntityManagerInterface $em, FormError $formError, WorkflowRepository $workflowRepository, DossierWorkflowRepository $dossierWorkflowRepository, DocumentClientRepository $documentClientRepository)
     {
         $typeActe = $dossier->getTypeActe();
@@ -1723,6 +1743,8 @@ class DossierController extends BaseController
 
     /**
      * @Route("/dossier/{id}/titre-propriete", name="acte_vente_remise", methods={"GET", "POST"})
+
+     * @Route("/dossier/{id}/titre-propriete-const", name="acte_const_remise", methods={"GET", "POST"})
      *
      */
     public function remise(
@@ -1851,6 +1873,8 @@ class DossierController extends BaseController
 
     /**
      * @Route("/dossier/{id}/obtention", name="acte_vente_obtention", methods={"GET", "POST"})
+
+     * @Route("/dossier/{id}/obtention-const", name="acte_const_obtention", methods={"GET", "POST"})
      *
      */
     public function obtention(
@@ -1987,6 +2011,8 @@ class DossierController extends BaseController
 
     /**
      * @Route("/dossier/{id}/remise-acte", name="acte_vente_remise_acte", methods={"GET", "POST"})
+
+     * @Route("/dossier/{id}/remise-acte-const", name="acte_const_remise_acte", methods={"GET", "POST"})
      */
     public function remiseActe(
         Request $request,
