@@ -107,7 +107,7 @@
                         <div id="form-content">
                             {% if etapes is empty %}
                                 <div class="alert alert-warning text-center mt-4">
-                                    Aucune étape n'est configurée pour ce type d'acte.
+                                    Aucune étape de workflow n'est configurée et active pour le type d'acte : <strong>{{ dossier.typeActe ? dossier.typeActe.titre : 'Aucun' }}</strong>.
                                 </div>
                             {% endif %}
                         </div>

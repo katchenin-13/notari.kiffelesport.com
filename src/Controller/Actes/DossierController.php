@@ -329,7 +329,7 @@ class DossierController extends BaseController
     public function suivi(Request $request, Dossier $dossier, WorkflowRepository $workflowRepository)
     {
         $typeActe = $dossier->getTypeActe();
-        $etapes = $workflowRepository->findBy(['active' => '1', 'typeActe' => $typeActe], ['numeroEtape' => 'asc']);
+        $etapes = $workflowRepository->findBy(['active' => 1, 'typeActe' => $typeActe], ['numeroEtape' => 'asc']);
         //dd($etapes);
         return $this->render('actes/dossier/suivi.html.twig', [
             'dossier' => $dossier,
@@ -386,8 +386,8 @@ class DossierController extends BaseController
             $response = [];
             $redirect = $this->generateUrl('app_config_parametre_dossier_index');
 
-            $acteVente = $typeRepository->findOneBy(['code' => 'acte_vente']);
-            $workflows = $workflowRepository->getFichier($acteVente->getId());
+            $typeActe = $dossier->getTypeActe();
+            $workflows = $typeActe ? $workflowRepository->getFichier($typeActe->getId()) : [];
             $listeDocument = $documentTypeActeRepository->getListeDocument();
 
             // $redirect = $this->generateUrl('dossierActeVente');
@@ -439,7 +439,6 @@ class DossierController extends BaseController
                     $this->dossierWorkflow->getMarking($dossier);
 
                     $dossier->setEntreprise($this->entreprise);
-                    $dossier->setTypeActe($acteVente);
                     $dossier->setEtape('');
                     $em->persist($dossier);
                     $entityManager->flush();
